@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": "."
+    },
+    {
+      "name": "service",
+      "path": "../service"
+    },
+    {
+      "name": "gitops",
+      "path": "../gitops"
+    },
+    {
+      "name": "infra",
+      "path": "../infra"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.DS_Store": true
+    }
+  }
+}
