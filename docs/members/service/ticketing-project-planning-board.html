@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ticketing Advanced Project Board</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --blue: #2563eb;
+      --green: #059669;
+      --amber: #d97706;
+      --red: #dc2626;
+      --violet: #7c3aed;
+      --cyan: #0891b2;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 36px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    header p {
+      margin: 0;
+      color: #d1d5db;
+      max-width: 980px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      min-height: calc(100vh - 112px);
+    }
+
+    nav {
+      border-right: 1px solid var(--line);
+      background: #fff;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    nav a {
+      display: block;
+      color: #344054;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    nav a:hover { background: #eef2ff; color: var(--blue); }
+
+    main { padding: 28px; }
+
+    section {
+      margin-bottom: 28px;
+      scroll-margin-top: 24px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .card p { margin: 0; color: var(--muted); }
+
+    .kpi {
+      display: grid;
+      gap: 6px;
+      min-height: 118px;
+    }
+
+    .kpi strong {
+      font-size: 24px;
+      color: var(--ink);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .tag.green { background: #ecfdf5; color: #047857; }
+    .tag.amber { background: #fffbeb; color: #b45309; }
+    .tag.red { background: #fef2f2; color: #b91c1c; }
+    .tag.cyan { background: #ecfeff; color: #0e7490; }
+    .tag.violet { background: #f5f3ff; color: #6d28d9; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .step {
+      min-height: 110px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      position: relative;
+    }
+
+    .step::after {
+      content: ">";
+      position: absolute;
+      right: -9px;
+      top: 42px;
+      color: #98a2b3;
+      font-weight: bold;
+    }
+
+    .step:last-child::after { display: none; }
+
+    .step b { display: block; margin-bottom: 6px; }
+    .step span { color: var(--muted); font-size: 13px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th { background: #f9fafb; color: #344054; }
+    tr:last-child td { border-bottom: 0; }
+
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      padding: 2px 5px;
+      font-size: 13px;
+    }
+
+    .lane {
+      display: grid;
+      grid-template-columns: 160px repeat(6, minmax(150px, 1fr));
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .lane .label {
+      background: #111827;
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      font-weight: bold;
+      min-height: 96px;
+    }
+
+    .phase {
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      min-height: 96px;
+    }
+
+    .phase b { display: block; margin-bottom: 6px; }
+    .phase small { color: var(--muted); }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .before { border-top: 4px solid var(--red); }
+    .after { border-top: 4px solid var(--green); }
+
+    .callout {
+      border-left: 5px solid var(--blue);
+      background: #eff6ff;
+      padding: 14px 16px;
+      border-radius: 8px;
+    }
+
+    .callout strong { color: #1d4ed8; }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+      .compare { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>공연 티켓 발행 서비스 심화 프로젝트 보드</h1>
+    <p>
+      서비스 설계, 프로젝트 목표, 성공 지표, 심화 과업 흐름을 한 화면에서 보는 HTML 보드다.
+      목표는 티켓 오픈 상황에서 구조적 선택의 효과를 숫자와 검증 증거로 증명하는 것이다.
+    </p>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <a href="#message">핵심 메시지</a>
+      <a href="#services">서비스 구성</a>
+      <a href="#flow">예매 흐름</a>
+      <a href="#goals">프로젝트 목표</a>
+      <a href="#metrics">성공 지표</a>
+      <a href="#validation">검증 시나리오</a>
+      <a href="#compare">Before / After</a>
+      <a href="#roadmap">심화 Roadmap</a>
+      <a href="#roles">3인 분담</a>
+      <a href="#deliverables">산출물</a>
+    </nav>
+
+    <main>
+      <section id="message">
+        <h2>핵심 메시지</h2>
+        <div class="callout">
+          <strong>티켓 오픈 순간의 문제를 구조적으로 줄인다.</strong><br>
+          같은 좌석 중복 발행을 막고, Kafka로 후속 처리를 분리하며, Istio와 Observability로 운영 안정성과 보안성을 보여준다.
+        </div>
+      </section>
+
+      <section id="services">
+        <h2>서비스 구성</h2>
+        <div class="grid cols-3">
+          <div class="card"><span class="tag">Auth</span><h3>auth-service</h3><p>로그인, JWT, role claim</p></div>
+          <div class="card"><span class="tag cyan">Catalog</span><h3>concert-service</h3><p>공연, 공연장, 좌석 조회</p></div>
+          <div class="card"><span class="tag amber">Core</span><h3>reservation-service</h3><p>좌석 lock, 예약 생성, 만료</p></div>
+          <div class="card"><span class="tag green">Payment</span><h3>payment-service</h3><p>결제 mock, 승인/실패 이벤트</p></div>
+          <div class="card"><span class="tag violet">Ticket</span><h3>ticket-service</h3><p>티켓 발행, QR/PDF, S3 저장</p></div>
+          <div class="card"><span class="tag red">Notify</span><h3>notification-service</h3><p>이벤트 기반 알림 저장</p></div>
+        </div>
+      </section>
+
+      <section id="flow">
+        <h2>예매 핵심 흐름</h2>
+        <div class="flow">
+          <div class="step"><b>1. Login</b><span>JWT 발급</span></div>
+          <div class="step"><b>2. Concert</b><span>공연/좌석 조회</span></div>
+          <div class="step"><b>3. Reserve</b><span>좌석 lock, 예약 생성</span></div>
+          <div class="step"><b>4. Payment</b><span>결제 mock 승인</span></div>
+          <div class="step"><b>5. Kafka</b><span>payment-approved</span></div>
+          <div class="step"><b>6. Ticket</b><span>티켓 발행, S3 저장</span></div>
+          <div class="step"><b>7. Notify</b><span>알림 저장/조회</span></div>
+        </div>
+      </section>
+
+      <section id="goals">
+        <h2>프로젝트 목표</h2>
+        <div class="grid cols-3">
+          <div class="card"><span class="tag green">Goal 1</span><h3>좌석 중복 0건</h3><p>동시 예매 상황에서도 한 좌석에는 하나의 유효 티켓만 발행한다.</p></div>
+          <div class="card"><span class="tag amber">Goal 2</span><h3>후속 처리 분리</h3><p>예약 API와 티켓/알림 후속 처리를 Kafka 이벤트로 분리한다.</p></div>
+          <div class="card"><span class="tag red">Goal 3</span><h3>장애 격리</h3><p>알림 장애가 결제 완료 티켓 발행 흐름을 실패시키지 않는다.</p></div>
+          <div class="card"><span class="tag violet">Goal 4</span><h3>mTLS와 트래픽 제어</h3><p>내부 서비스 통신을 보호하고 v1/v2 traffic split을 검증한다.</p></div>
+          <div class="card"><span class="tag cyan">Goal 5</span><h3>운영 가시성</h3><p>metric, log, trace로 병목과 장애 원인을 찾을 수 있다.</p></div>
+          <div class="card"><span class="tag">Goal 6</span><h3>Object Storage 분리</h3><p>티켓 QR/PDF artifact를 S3에 저장해 app pod를 stateless하게 유지한다.</p></div>
+        </div>
+      </section>
+
+      <section id="metrics">
+        <h2>성공 지표</h2>
+        <div class="grid cols-4">
+          <div class="card kpi"><span class="tag green">정합성</span><strong>0</strong><p><code>duplicate_ticket_count</code><br>같은 좌석 중복 티켓 수</p></div>
+          <div class="card kpi"><span class="tag amber">성능</span><strong>p95</strong><p><code>reservation_api_p95_ms</code><br>예약 API 응답 시간</p></div>
+          <div class="card kpi"><span class="tag cyan">이벤트</span><strong>lag</strong><p><code>kafka_consumer_lag</code><br>이벤트 처리 지연</p></div>
+          <div class="card kpi"><span class="tag red">장애</span><strong>5xx</strong><p><code>service_5xx_rate</code><br>서비스 장애율</p></div>
+          <div class="card kpi"><span class="tag violet">Mesh</span><strong>mTLS</strong><p><code>mtls_enabled_services</code><br>보안 통신 적용 범위</p></div>
+          <div class="card kpi"><span class="tag">Canary</span><strong>80/20</strong><p><code>traffic_split_ratio</code><br>v1/v2 traffic 비율</p></div>
+          <div class="card kpi"><span class="tag green">S3</span><strong>%</strong><p><code>upload_success_rate</code><br>티켓 artifact 저장 성공률</p></div>
+          <div class="card kpi"><span class="tag red">Alert</span><strong>time</strong><p><code>alert_firing_time</code><br>장애 감지까지 걸린 시간</p></div>
+        </div>
+      </section>
+
+      <section id="validation">
+        <h2>검증 시나리오</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>순서</th>
+              <th>검증 장면</th>
+              <th>증명할 구조</th>
+              <th>증거</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>같은 좌석에 동시 예매 요청</td>
+              <td>reservation-service의 좌석 lock과 unique constraint</td>
+              <td><code>duplicate_ticket_count = 0</code></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>결제 승인 후 Kafka 이벤트 발행</td>
+              <td>동기 API와 비동기 후속 처리 분리</td>
+              <td><code>payment-approved</code>, <code>ticket-issued</code></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>notification-service 장애 주입</td>
+              <td>핵심 티켓 발행 흐름과 알림 장애 격리</td>
+              <td><code>core_flow_success_rate</code>, retry count</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Istio mTLS와 traffic split</td>
+              <td>내부 통신 보안과 점진 배포</td>
+              <td><code>istioctl</code>, Grafana mesh metric</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Grafana/Loki/Tempo 확인</td>
+              <td>운영 가시성</td>
+              <td>p95, 5xx, lag, trace screenshot</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>티켓 QR/PDF S3 저장</td>
+              <td>stateless app과 object storage 분리</td>
+              <td>S3 object, DB s3Key</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="compare">
+        <h2>Before / After</h2>
+        <div class="compare">
+          <div class="card before">
+            <h3>Baseline</h3>
+            <p>동시 요청에서 좌석 중복 위험이 있고, 후속 처리를 동기로 묶으면 응답 시간이 늘며, 장애 원인을 로그만 보고 찾아야 한다.</p>
+          </div>
+          <div class="card after">
+            <h3>Advanced Architecture</h3>
+            <p>좌석 점유는 reservation-service가 보장하고, Kafka로 후속 처리를 분리하며, Istio와 Grafana stack으로 보안과 관측성을 확보한다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap">
+        <h2>심화 Roadmap</h2>
+        <div class="lane">
+          <div class="label">Phase</div>
+          <div class="phase"><b>0. Contract</b><small>API, event, env, metric 계약</small></div>
+          <div class="phase"><b>1. Core</b><small>auth, concert, reservation, payment, ticket, notification</small></div>
+          <div class="phase"><b>2. Platform</b><small>K8s, Kong, Kafka, DB</small></div>
+          <div class="phase"><b>3. Mesh</b><small>Istio, mTLS, traffic split</small></div>
+          <div class="phase"><b>4. Observability</b><small>Prometheus, Grafana, Loki, Tempo</small></div>
+          <div class="phase"><b>5. Cloud</b><small>RDS, S3, VPC Endpoint</small></div>
+
+          <div class="label">검증</div>
+          <div class="phase"><b>Contract Review</b><small>문서 합의</small></div>
+          <div class="phase"><b>Unit Test</b><small>pytest</small></div>
+          <div class="phase"><b>E2E</b><small>Newman</small></div>
+          <div class="phase"><b>Mesh Check</b><small>mTLS, split</small></div>
+          <div class="phase"><b>Dashboard</b><small>metric/log/trace</small></div>
+          <div class="phase"><b>Smoke</b><small>terraform plan, S3/RDS</small></div>
+        </div>
+      </section>
+
+      <section id="roles">
+        <h2>3인 분담</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <span class="tag">Person 1</span>
+            <h3>Platform / Cloud</h3>
+            <p>K8s, Kong/Istio 설치 기반, PDB/RBAC, AWS VPC/RDS/S3, secret/env runtime</p>
+          </div>
+          <div class="card">
+            <span class="tag violet">Person 2</span>
+            <h3>Service / Mesh</h3>
+            <p>서비스 API, Kafka event, 좌석 lock, ticket 발행, Kong route, Istio policy</p>
+          </div>
+          <div class="card">
+            <span class="tag green">Person 3</span>
+            <h3>Quality / Observability</h3>
+            <p>pytest/Newman/k6, Grafana/Loki/Tempo, Trivy/SonarQube, 요구사항 충족표</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="deliverables">
+        <h2>최종 산출물</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>분류</th>
+              <th>산출물</th>
+              <th>검증 증거</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>서비스</td>
+              <td>Ticketing MSA, API contract, Kafka event contract</td>
+              <td>API 응답, event payload, DB row</td>
+            </tr>
+            <tr>
+              <td>플랫폼</td>
+              <td>K8s/Kong/Istio manifests</td>
+              <td><code>kubectl</code>, <code>istioctl</code> 결과</td>
+            </tr>
+            <tr>
+              <td>관측성</td>
+              <td>Grafana dashboard, Loki query, Tempo trace</td>
+              <td>screenshot, alert firing</td>
+            </tr>
+            <tr>
+              <td>클라우드</td>
+              <td>RDS/S3/VPC Endpoint Terraform</td>
+              <td><code>terraform plan</code>, S3 object</td>
+            </tr>
+            <tr>
+              <td>검증</td>
+              <td>k6/Newman/CI security scan</td>
+              <td>duplicate count, p95, Trivy/SonarQube 결과</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

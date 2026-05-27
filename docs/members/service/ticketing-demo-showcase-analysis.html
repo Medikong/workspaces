@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>공연 티켓 서비스 목표와 수치화 전략</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.65; margin: 40px; color: #1f2937; }
+    h1, h2, h3 { color: #111827; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+    th, td { border: 1px solid #d1d5db; padding: 10px; vertical-align: top; }
+    th { background: #f3f4f6; }
+    code, pre { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; }
+    code { padding: 2px 5px; }
+    pre { padding: 14px; overflow-x: auto; }
+    .metric { background: #fff7ed; border-left: 4px solid #f97316; padding: 12px 16px; margin: 16px 0; }
+    .message { background: #ecfdf5; border-left: 4px solid #059669; padding: 12px 16px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+  <p><a href="./ticketing-project-planning-board.html">통합 HTML 보드 보기</a></p>
+  <h1>공연 티켓 서비스 목표와 수치화 전략</h1>
+
+  <section>
+    <h2>1. 프로젝트 목표 설정 방향</h2>
+    <p>
+      이 프로젝트의 목표는 기능 목록을 많이 만드는 것이 아니다. 티켓 오픈 상황에서 발생하는 문제를 구조적으로 줄이고,
+      그 차이를 가능한 한 수치로 검증하는 것이다.
+    </p>
+    <div class="message">
+      <strong>핵심 메시지:</strong>
+      이 구조는 트래픽 폭주, 좌석 중복, 장애 전파, 운영 가시성 부족 문제를 줄이기 위해 설계되었고,
+      각 목표는 측정 지표와 검증 시나리오를 가진다.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. 목표와 성공 지표</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>문제</th>
+          <th>구조적 해결</th>
+          <th>측정 지표</th>
+          <th>성공 기준</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>같은 좌석 중복 예매</td>
+          <td>reservation-service가 좌석 점유 단일 책임, DB unique constraint 또는 lock</td>
+          <td><code>duplicate_ticket_count</code>, <code>reservation_conflict_count</code></td>
+          <td>부하 테스트 후 중복 티켓 수가 0이어야 한다.</td>
+        </tr>
+        <tr>
+          <td>후속 처리 때문에 API 응답 지연</td>
+          <td>Kafka 이벤트 기반 티켓 발행/알림 분리</td>
+          <td><code>reservation_api_p95_ms</code>, <code>ticket_issue_delay_ms</code></td>
+          <td>후속 처리를 API 응답 경로에서 분리하고 p95 latency를 비교한다.</td>
+        </tr>
+        <tr>
+          <td>알림 장애가 전체 예매 실패로 전파</td>
+          <td>core flow와 notification flow 분리</td>
+          <td><code>core_flow_success_rate</code>, <code>notification_retry_count</code></td>
+          <td>notification 장애 중에도 결제 완료 티켓은 발행되어야 한다.</td>
+        </tr>
+        <tr>
+          <td>서비스 간 통신 보안 부족</td>
+          <td>Istio mTLS</td>
+          <td><code>mtls_enabled_services</code>, <code>service_to_service_rps</code></td>
+          <td>mesh 대상 서비스 간 통신이 mTLS로 보호됨을 검증한다.</td>
+        </tr>
+        <tr>
+          <td>배포 중 위험</td>
+          <td>Istio traffic split 또는 canary 후보</td>
+          <td><code>traffic_split_ratio</code>, <code>mesh_5xx_rate</code></td>
+          <td>설정한 traffic split 비율이 실제 요청 분포에 반영된다.</td>
+        </tr>
+        <tr>
+          <td>장애 원인 파악 어려움</td>
+          <td>Prometheus, Grafana, Loki, Tempo</td>
+          <td><code>p95_latency</code>, <code>5xx_rate</code>, <code>consumer_lag</code>, <code>trace_duration</code></td>
+          <td>대시보드와 trace로 병목 서비스를 찾는다.</td>
+        </tr>
+        <tr>
+          <td>티켓 파일 저장 안정성 부족</td>
+          <td>S3 object storage</td>
+          <td><code>ticket_artifact_upload_success_rate</code>, <code>s3_object_count</code></td>
+          <td>티켓 QR/PDF가 S3에 저장되고 DB에는 key만 남아야 한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 핵심 검증 시나리오 4개</h2>
+    <h3>검증 1. 좌석 중복 방지</h3>
+    <p>
+      같은 공연, 같은 좌석에 동시 요청을 넣는다. 성공은 1건만 발생하고 나머지는 <code>409 Conflict</code>가 되어야 한다.
+    </p>
+    <div class="metric">
+      목표 지표: <code>duplicate_ticket_count = 0</code>
+    </div>
+
+    <h3>검증 2. Kafka 기반 후속 처리 분리</h3>
+    <p>
+      결제 승인 이후 <code>payment-approved</code> 이벤트가 발행되고, ticket-service와 notification-service가 독립적으로 처리한다.
+    </p>
+    <div class="metric">
+      목표 지표: 예약 API p95 latency와 티켓 발행 지연을 분리해서 측정한다.
+    </div>
+
+    <h3>검증 3. 장애 격리</h3>
+    <p>
+      notification-service를 중단한 상태에서 결제와 티켓 발행이 유지되는지 검증한다.
+    </p>
+    <div class="metric">
+      목표 지표: <code>core_flow_success_rate</code>는 유지되고 <code>notification_retry_count</code>만 증가한다.
+    </div>
+
+    <h3>검증 4. Service Mesh와 Observability</h3>
+    <p>
+      Istio mTLS, traffic split, Grafana dashboard, trace를 함께 검증한다.
+    </p>
+    <div class="metric">
+      목표 지표: <code>mtls_enabled_services</code>, <code>traffic_split_ratio</code>, <code>service_p95_latency_ms</code>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Before/After 비교 설계</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>Baseline</th>
+          <th>개선 구조</th>
+          <th>비교 지표</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>좌석 동시성</td>
+          <td>동시 요청 시 중복 가능</td>
+          <td>좌석 lock/transaction</td>
+          <td>duplicate_ticket_count</td>
+        </tr>
+        <tr>
+          <td>후속 처리</td>
+          <td>동기 호출</td>
+          <td>Kafka event</td>
+          <td>reservation_api_p95_ms</td>
+        </tr>
+        <tr>
+          <td>알림 장애</td>
+          <td>전체 실패 가능</td>
+          <td>notification만 retry</td>
+          <td>core_flow_success_rate</td>
+        </tr>
+        <tr>
+          <td>서비스 통신</td>
+          <td>plain HTTP</td>
+          <td>Istio mTLS</td>
+          <td>mtls_enabled_services</td>
+        </tr>
+        <tr>
+          <td>운영 확인</td>
+          <td>로그 수동 확인</td>
+          <td>dashboard, alert, trace</td>
+          <td>alert_firing_time, trace_duration</td>
+        </tr>
+        <tr>
+          <td>티켓 artifact</td>
+          <td>pod/local 저장</td>
+          <td>S3 저장</td>
+          <td>upload_success_rate</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>5. 목표 검증 흐름</h2>
+    <ol>
+      <li>공연 티켓 오픈 상황과 프로젝트 목표 소개</li>
+      <li>서비스 구성과 이벤트 흐름 설명</li>
+      <li>좌석 동시 예매 부하 테스트 결과</li>
+      <li>Kafka 이벤트 기반 티켓 발행/알림 분리 검증</li>
+      <li>notification 장애 주입과 장애 격리 검증</li>
+      <li>Istio mTLS와 traffic split 설명</li>
+      <li>Grafana dashboard, Loki log, Tempo trace 확인</li>
+      <li>S3 티켓 artifact 저장 구조 확인</li>
+      <li>요구사항 충족표와 남은 개선점 정리</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>6. 역할별 목표 책임</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>담당</th>
+          <th>주제</th>
+          <th>검증 증거</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Person 1</td>
+          <td>실행 환경, AWS 데이터/스토리지, 보안 기반</td>
+          <td>K8s namespace, RDS/S3/VPC 설계, PDB/RBAC, S3 object</td>
+        </tr>
+        <tr>
+          <td>Person 2</td>
+          <td>서비스 설계, Gateway, Service Mesh</td>
+          <td>API flow, Kong route, Istio mTLS, traffic split</td>
+        </tr>
+        <tr>
+          <td>Person 3</td>
+          <td>테스트, 관측성, DevSecOps</td>
+          <td>k6/Newman 결과, Grafana dashboard, trace, Trivy/SonarQube</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>7. 결론</h2>
+    <p>
+      공연 티켓 서비스는 심화 프로젝트를 보여주기에 적합하다. 좌석 동시성, 트래픽 폭주, 이벤트 기반 후속 처리,
+      장애 격리, 티켓 artifact 저장, 서비스 간 보안 통신, 관측성을 자연스럽게 포함하기 때문이다.
+    </p>
+    <p>
+      프로젝트 결과는 기능 구현량보다 "구조를 적용했을 때 어떤 운영 문제가 줄었는가"를 수치와 검증 증거로 판단한다.
+    </p>
+  </section>
+</body>
+</html>
