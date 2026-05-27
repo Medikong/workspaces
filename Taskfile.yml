@@ -4,24 +4,24 @@ tasks:
   help:
     desc: 사용 가능한 workspace 명령을 보여줍니다.
     cmds:
-      - ./scripts/workspace.sh help
+      - bash ./scripts/workspace.sh help
 
   list:
     desc: repos.env 기준 repo 목록과 대상 경로를 보여줍니다.
     cmds:
-      - ./scripts/workspace.sh list
+      - bash ./scripts/workspace.sh list
 
   doctor:
     desc: Git, Bash, manifest, workspace 경로 설정을 검사합니다.
     cmds:
-      - ./scripts/workspace.sh doctor
+      - bash ./scripts/workspace.sh doctor
 
   bootstrap:
     desc: 없는 repo만 workspace 형제 폴더로 clone합니다.
     cmds:
-      - ./scripts/workspace.sh bootstrap
+      - bash ./scripts/workspace.sh bootstrap
 
   status:
     desc: repo 존재 여부, branch, dirty 상태, remote 불일치를 보여줍니다.
     cmds:
-      - ./scripts/workspace.sh status
+      - bash ./scripts/workspace.sh status
