@@ -21,6 +21,8 @@ related:
   - docs/adr/0002-use-docker-desktop-for-local-kubernetes-validation.md
   - docs/issues/
   - docs/projects_plan/
+  - GitHub Issues
+  - GitHub Projects
 links: []
 ---
 
@@ -52,6 +54,10 @@ Vagrant + VMware 기반 로컬 클러스터는 실제 검증과 반복 테스트
 ### Taskfile 이용
 
 반복 실행 명령은 Taskfile을 기준 진입점으로 둔다. workspace 수준에서는 repo 구성과 상태 확인을 담당하고, 각 repo의 개발, 배포, 검증 명령은 해당 repo의 Taskfile과 README를 기준으로 한다.
+
+### 일정관리
+
+프로젝트 일정과 작업 진행 관리는 GitHub Issues와 GitHub Projects를 사용한다. repo 안의 계획 문서와 회의록은 결정과 맥락을 남기는 기준 기록으로 두고, 실제 작업 상태와 일정 추적은 GitHub Issues / Projects에서 운영한다.
 
 ### 역할 분배
 
