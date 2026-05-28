@@ -1,0 +1,32 @@
+get:
+  summary: 티켓 상세 조회
+  operationId: getTicket
+  description: 로그인한 사용자 본인의 티켓 단건을 조회한다. 타인의 티켓은 403을 반환한다.
+  parameters:
+    - $ref: ../../../common/components.yaml#/components/parameters/RequestId
+    - $ref: ../../../common/components.yaml#/components/parameters/Id
+  responses:
+    "200":
+      description: 티켓 단건 반환 성공.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/Ticket
+          example:
+            id: 1
+            reservationId: reservation-1
+            userId: 1
+            concertId: concert-1
+            seatId: seat-A1
+            status: ISSUED
+            qrUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/qr.png"
+            pdfUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/ticket.pdf"
+            issuedAt: "2026-05-13T10:00:00Z"
+    "401":
+      $ref: ../../../common/components.yaml#/components/responses/Unauthorized
+    "403":
+      $ref: ../../../common/components.yaml#/components/responses/Forbidden
+    "404":
+      $ref: ../../../common/components.yaml#/components/responses/NotFound
+    "500":
+      $ref: ../../../common/components.yaml#/components/responses/InternalServerError

@@ -1,0 +1,46 @@
+post:
+  summary: 티켓 발행
+  operationId: issueTicket
+  description: |
+    내부 또는 이벤트 기반으로 티켓을 발행한다.
+    동일 reservationId로 중복 요청 시 기존 티켓을 반환한다.
+    발행 성공 시 ticket-issued 이벤트를 Kafka로 발행한다.
+  parameters:
+    - $ref: ../../../common/components.yaml#/components/parameters/RequestId
+    - $ref: ../../../common/components.yaml#/components/parameters/IdempotencyKey
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/TicketIssueRequest
+        example:
+          reservationId: reservation-1
+          userId: 1
+          concertId: concert-1
+          seatId: seat-A1
+  responses:
+    "200":
+      description: 티켓 발행 성공.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/Ticket
+          example:
+            id: 1
+            reservationId: reservation-1
+            userId: 1
+            concertId: concert-1
+            seatId: seat-A1
+            status: ISSUED
+            qrUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/qr.png"
+            pdfUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/ticket.pdf"
+            issuedAt: "2026-05-13T10:00:00Z"
+    "400":
+      $ref: ../../../common/components.yaml#/components/responses/BadRequest
+    "401":
+      $ref: ../../../common/components.yaml#/components/responses/Unauthorized
+    "422":
+      $ref: ../../../common/components.yaml#/components/responses/UnprocessableEntity
+    "500":
+      $ref: ../../../common/components.yaml#/components/responses/InternalServerError

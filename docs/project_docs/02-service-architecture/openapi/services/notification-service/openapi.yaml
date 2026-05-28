@@ -1,0 +1,89 @@
+openapi: 3.1.0
+info:
+  title: notification-service API
+  version: 0.1.0
+  description: 예매/결제/티켓 이벤트 기반 알림 저장 및 조회 서비스.
+
+servers:
+  - url: http://localhost:8084
+    description: local
+
+security:
+  - BearerAuth: []
+
+paths:
+  /notifications:
+    $ref: ./paths/notifications.yaml
+  /notifications/{id}:
+    $ref: ./paths/notifications_{id}.yaml
+
+components:
+  securitySchemes:
+    BearerAuth:
+      $ref: ../../common/components.yaml#/components/securitySchemes/BearerAuth
+
+  schemas:
+    Notification:
+      type: object
+      required:
+        - id
+        - userId
+        - type
+        - message
+        - status
+        - sourceId
+        - createdAt
+      properties:
+        id:
+          type: string
+          examples:
+            - 664f1a2b3c4d5e6f7a8b9c0d
+        userId:
+          type: integer
+          examples:
+            - 1
+        type:
+          type: string
+          enum:
+            - reservation-created
+            - reservation-expired
+            - payment-approved
+            - payment-failed
+            - ticket-issued
+          examples:
+            - payment-approved
+        message:
+          type: string
+          examples:
+            - 결제가 완료되었습니다. 결제 ID: payment-1
+        status:
+          type: string
+          enum:
+            - CREATED
+          examples:
+            - CREATED
+        sourceId:
+          type: string
+          examples:
+            - payment-1
+        metadata:
+          type: object
+          additionalProperties: true
+          examples:
+            - payment_id: payment-1
+              reservation_id: reservation-1
+        createdAt:
+          type: string
+          format: date-time
+          examples:
+            - "2026-05-13T10:00:00Z"
+
+    NotificationListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Notification"

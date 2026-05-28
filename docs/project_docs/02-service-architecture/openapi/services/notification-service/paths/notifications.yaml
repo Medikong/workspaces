@@ -1,0 +1,31 @@
+get:
+  summary: 내 알림 목록 조회
+  operationId: listNotifications
+  description: 로그인한 사용자 본인의 알림 목록을 최신순으로 반환한다.
+  parameters:
+    - $ref: ../../../common/components.yaml#/components/parameters/RequestId
+    - $ref: ../../../common/components.yaml#/components/parameters/Limit
+    - $ref: ../../../common/components.yaml#/components/parameters/Cursor
+  responses:
+    "200":
+      description: 알림 목록 반환 성공.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/NotificationListResponse
+          example:
+            items:
+              - id: "664f1a2b3c4d5e6f7a8b9c0d"
+                userId: 1
+                type: payment-approved
+                message: "결제가 완료되었습니다. 결제 ID: payment-1"
+                status: CREATED
+                sourceId: payment-1
+                metadata:
+                  payment_id: payment-1
+                  reservation_id: reservation-1
+                createdAt: "2026-05-13T10:00:00Z"
+    "401":
+      $ref: ../../../common/components.yaml#/components/responses/Unauthorized
+    "500":
+      $ref: ../../../common/components.yaml#/components/responses/InternalServerError
