@@ -41,6 +41,38 @@
 
 예약 API는 좌석 선점과 예약 생성까지만 동기 처리한다. 결제 이후 티켓 발행과 알림 저장은 Kafka 이벤트로 분리한다.
 
+### 서비스 간 의존 관계
+
+사용자 요청 경로의 동기 REST 호출과 Kafka 이벤트 기반 후속 처리를 예매 순서대로 나눈다.
+
+```mermaid
+sequenceDiagram
+    participant Dashboard as dashboard
+    participant Auth as auth-service
+    participant Concert as concert-service
+    participant Reservation as reservation-service
+    participant Payment as payment-service
+    participant Kafka as Kafka topics
+    participant Ticket as ticket-service
+    participant Notification as notification-service
+    participant S3 as S3
+
+    Dashboard->>Auth: login / refresh
+    Auth-->>Dashboard: JWT
+    Dashboard->>Concert: concert / performance / seat query
+    Concert-->>Dashboard: concert and seat state
+    Dashboard->>Reservation: reserve seat
+    Reservation-->>Kafka: reservation-created
+    Reservation-->>Dashboard: reservation id
+    Dashboard->>Payment: pay reservation
+    Payment-->>Kafka: payment-approved or payment-failed
+    Kafka-->>Ticket: payment-approved
+    Ticket->>S3: store QR/PDF
+    Ticket-->>Kafka: ticket-issued
+    Kafka-->>Reservation: payment-failed
+    Kafka-->>Notification: reservation / payment / ticket events
+```
+
 ## API 초안
 
 OpenAPI 작성 규약과 서비스별 분리 구조는 아직 확정 전이다. 팀 논의를 위해 [OpenAPI 규약 샘플](./02-service-architecture/openapi/README.md)에 공통 규약, 공통 컴포넌트, `reservation-service` 예시를 둔다.
