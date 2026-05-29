@@ -6,7 +6,7 @@ defaults:
   project: Service CI/CD Pipeline Recovery
   state: Backlog
   priority: 1
-  assignee: null
+  assignee:
   labels:
   - medikong
   - cicd
@@ -14,17 +14,16 @@ defaults:
   - service
   - gitops
 milestones:
-- id: cicd-phase-0
-  title: CI/CD baseline recovery
-  goal: 새 6개 서비스 기준으로 테스트, 이미지, GitOps 배포 대상의 불일치를 제거한다.
-- id: cicd-phase-1
-  title: Changed-service pipeline
-  goal: path filter 기반으로 변경된 서비스만 테스트, 빌드, 푸시, 배포되게 한다.
+- id: sprint-0-planning
+  title: Sprint 0 계획 기간
+  goal: 2026-05-25부터 2026-05-31까지 새 6개 서비스 CI/CD 전환 범위와 실행 일감을 정리한다.
+  start_date: '2026-05-25'
+  target_date: '2026-05-31'
 tasks:
 - local_id: cicd.service-target-inventory
   title: 새 6개 서비스와 CI/CD 대상 매핑을 확정한다
   type: planning
-  milestone: cicd-phase-0
+  milestone: sprint-0-planning
   labels:
   - repo:workspace
   - repo:service
@@ -50,10 +49,13 @@ tasks:
   - 서비스 CI/CD 대상 매핑 문서
   - 제외 또는 보류 서비스 목록
   estimate: 1.0
+  links:
+  - title: Medikong/workspace#1
+    url: https://github.com/Medikong/workspace/issues/1
 - local_id: cicd.service-unit-test-matrix
   title: 새 서비스 기준 단위 테스트 matrix를 구성한다
   type: implementation
-  milestone: cicd-phase-0
+  milestone: sprint-0-planning
   labels:
   - repo:service
   - unit-test
@@ -79,10 +81,13 @@ tasks:
   - GitHub Actions unit test run 링크
   - 서비스별 테스트 matrix 결과
   estimate: 2.0
+  links:
+  - title: Medikong/service#1
+    url: https://github.com/Medikong/service/issues/1
 - local_id: cicd.changed-service-detection
   title: path filter로 변경된 서비스 목록을 계산한다
   type: implementation
-  milestone: cicd-phase-1
+  milestone: sprint-0-planning
   labels:
   - repo:service
   - path-filter
@@ -109,10 +114,13 @@ tasks:
   - changed-services job 출력
   - path filter 테스트 PR 또는 dry-run 결과
   estimate: 1.5
+  links:
+  - title: Medikong/service#2
+    url: https://github.com/Medikong/service/issues/2
 - local_id: cicd.image-build-push
   title: 변경 서비스만 Docker build 후 registry에 push한다
   type: implementation
-  milestone: cicd-phase-1
+  milestone: sprint-0-planning
   labels:
   - repo:service
   - docker
@@ -143,10 +151,13 @@ tasks:
   metrics:
   - pushed_image_count
   estimate: 2.0
+  links:
+  - title: Medikong/service#3
+    url: https://github.com/Medikong/service/issues/3
 - local_id: cicd.gitops-argo-alignment
   title: GitOps values와 Argo Application을 새 서비스 기준으로 맞춘다
   type: implementation
-  milestone: cicd-phase-0
+  milestone: sprint-0-planning
   labels:
   - repo:gitops
   - argocd
@@ -173,10 +184,13 @@ tasks:
   - "`task validate` 결과"
   - Argo manifest diff
   estimate: 2.0
+  links:
+  - title: Medikong/gitops#1
+    url: https://github.com/Medikong/gitops/issues/1
 - local_id: cicd.gitops-validation-hardening
   title: GitOps 검증에서 Argo valueFiles 불일치를 잡는다
   type: test
-  milestone: cicd-phase-0
+  milestone: sprint-0-planning
   labels:
   - repo:gitops
   - validation
@@ -202,10 +216,13 @@ tasks:
   - GitOps validation failure/success run 링크
   - mismatch 검사 출력
   estimate: 1.5
+  links:
+  - title: Medikong/gitops#2
+    url: https://github.com/Medikong/gitops/issues/2
 - local_id: cicd.deploy-changed-services
   title: 변경 서비스만 Kubernetes 배포로 연결한다
   type: ops
-  milestone: cicd-phase-1
+  milestone: sprint-0-planning
   labels:
   - repo:service
   - repo:gitops
@@ -234,10 +251,13 @@ tasks:
   - Argo sync 결과
   - 변경 서비스 rollout status
   estimate: 2.0
+  links:
+  - title: Medikong/workspace#2
+    url: https://github.com/Medikong/workspace/issues/2
 - local_id: cicd.github-issues-project-sync
   title: workplan을 GitHub Issues와 Project로 등록한다
   type: ops
-  milestone: cicd-phase-1
+  milestone: sprint-0-planning
   labels:
   - repo:workspace
   - github-issues
@@ -263,3 +283,6 @@ tasks:
   - GitHub Issue URL 목록
   - GitHub Project item 목록
   estimate: 1.0
+  links:
+  - title: Medikong/workspace#3
+    url: https://github.com/Medikong/workspace/issues/3
