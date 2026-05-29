@@ -1,0 +1,265 @@
+---
+"$schema": "./template/linear-workplan.schema.json"
+version: 1
+defaults:
+  team: Medikong
+  project: Service CI/CD Pipeline Recovery
+  state: Backlog
+  priority: 1
+  assignee: null
+  labels:
+  - medikong
+  - cicd
+  - github-actions
+  - service
+  - gitops
+milestones:
+- id: cicd-phase-0
+  title: CI/CD baseline recovery
+  goal: 새 6개 서비스 기준으로 테스트, 이미지, GitOps 배포 대상의 불일치를 제거한다.
+- id: cicd-phase-1
+  title: Changed-service pipeline
+  goal: path filter 기반으로 변경된 서비스만 테스트, 빌드, 푸시, 배포되게 한다.
+tasks:
+- local_id: cicd.service-target-inventory
+  title: 새 6개 서비스와 CI/CD 대상 매핑을 확정한다
+  type: planning
+  milestone: cicd-phase-0
+  labels:
+  - repo:workspace
+  - repo:service
+  - repo:gitops
+  - service-map
+  depends_on: []
+  description: |
+    ## 목표
+    현재 `service`와 `gitops`에 섞여 있는 예전 의료 도메인 서비스와 새 티켓팅 도메인 서비스 기준을 분리하고, 이번 CI/CD 파이프라인의 대상 6개 서비스를 확정한다.
+
+    ## 현재 관찰
+    - 단위 테스트 대상은 `auth`, `patient`, `appointment`, `prescription`, `notification`, `payment` 기준이다.
+    - 이미지 빌드 대상은 `auth`, `concert`, `reservation`, `payment`, `ticket`, `notification` 기준이다.
+    - GitOps values는 새 티켓팅 서비스 기준이지만 Argo Application은 일부 예전 서비스 파일을 참조한다.
+
+    ## 산출물
+    서비스명, 코드 경로, 테스트 명령, Docker image repository, GitOps values 파일, Argo Application 파일의 매핑표를 남긴다.
+  done_when:
+  - CI/CD 대상 6개 서비스가 확정되어 있다.
+  - 서비스별 코드 경로, image repository, GitOps values 경로가 한 곳에 정리되어 있다.
+  - dashboard를 이번 6개 서비스 범위에 포함할지 제외할지 결정되어 있다.
+  evidence:
+  - 서비스 CI/CD 대상 매핑 문서
+  - 제외 또는 보류 서비스 목록
+  estimate: 1.0
+- local_id: cicd.service-unit-test-matrix
+  title: 새 서비스 기준 단위 테스트 matrix를 구성한다
+  type: implementation
+  milestone: cicd-phase-0
+  labels:
+  - repo:service
+  - unit-test
+  - matrix
+  depends_on:
+  - cicd.service-target-inventory
+  description: |
+    ## 목표
+    `service` repo의 GitHub Actions가 새 6개 서비스 기준으로 단위 테스트를 실행하도록 정리한다.
+
+    ## 구현 방향
+    - `Taskfile.yml`의 테스트 대상과 이미지 빌드 대상을 같은 서비스 집합으로 맞춘다.
+    - `requirements.txt` 기반 서비스와 `pyproject.toml`/`uv` 기반 서비스를 모두 처리한다.
+    - `packages/server` 변경 시 관련 서비스 테스트가 누락되지 않게 한다.
+
+    ## 산출물
+    서비스별 단위 테스트 명령과 GitHub Actions matrix 실행 결과를 남긴다.
+  done_when:
+  - 새 6개 서비스의 단위 테스트가 CI에서 실행된다.
+  - "`concert-service`와 `reservation-service`의 `uv` 기반 테스트가 CI에서 빠지지 않는다."
+  - 공통 패키지 변경 시 관련 테스트가 실행되는 기준이 정리되어 있다.
+  evidence:
+  - GitHub Actions unit test run 링크
+  - 서비스별 테스트 matrix 결과
+  estimate: 2.0
+- local_id: cicd.changed-service-detection
+  title: path filter로 변경된 서비스 목록을 계산한다
+  type: implementation
+  milestone: cicd-phase-1
+  labels:
+  - repo:service
+  - path-filter
+  - github-actions
+  depends_on:
+  - cicd.service-target-inventory
+  description: |
+    ## 목표
+    GitHub Actions에서 변경 파일을 기준으로 테스트, 빌드, 배포할 서비스만 계산한다.
+
+    ## 구현 방향
+    - `services/<service>/**` 변경은 해당 서비스만 대상으로 삼는다.
+    - `contracts/services/<service>/**` 변경은 해당 서비스 검증 대상으로 삼는다.
+    - `packages/server/**`, `Taskfile.yml`, 공통 workflow 변경은 영향 서비스 전체 또는 명시된 관련 서비스로 확장한다.
+    - 수동 실행에서는 서비스 목록을 입력하거나 전체 실행을 선택할 수 있게 한다.
+
+    ## 산출물
+    변경 서비스 JSON matrix와 변경 없음 처리 기준을 남긴다.
+  done_when:
+  - PR과 push에서 변경된 서비스 목록이 계산된다.
+  - 공통 경로 변경 시 누락 없이 서비스 matrix가 확장된다.
+  - 변경된 서비스가 없을 때 build/push/deploy 단계가 명확히 skip된다.
+  evidence:
+  - changed-services job 출력
+  - path filter 테스트 PR 또는 dry-run 결과
+  estimate: 1.5
+- local_id: cicd.image-build-push
+  title: 변경 서비스만 Docker build 후 registry에 push한다
+  type: implementation
+  milestone: cicd-phase-1
+  labels:
+  - repo:service
+  - docker
+  - registry
+  depends_on:
+  - cicd.service-unit-test-matrix
+  - cicd.changed-service-detection
+  description: |
+    ## 목표
+    단위 테스트가 통과한 변경 서비스만 Docker image를 빌드하고 Container Registry에 push한다.
+
+    ## 구현 방향
+    - image tag는 commit SHA 기반으로 고정한다.
+    - `latest` 또는 `dev` 같은 움직이는 태그는 보조 태그로만 사용한다.
+    - registry 로그인과 push 권한은 GitHub Actions secret 또는 OIDC 방식으로 분리한다.
+    - `concert-service`, `reservation-service`처럼 repo root context가 필요한 Dockerfile을 matrix에서 처리한다.
+
+    ## 산출물
+    서비스별 image URI와 digest를 GitHub Actions output 또는 artifact로 남긴다.
+  done_when:
+  - 변경된 서비스만 Docker build/push된다.
+  - image tag와 digest가 배포 단계에 전달된다.
+  - registry push 실패 시 배포 단계가 실행되지 않는다.
+  evidence:
+  - GitHub Actions build/push run 링크
+  - 서비스별 pushed image URI
+  - image digest 목록
+  metrics:
+  - pushed_image_count
+  estimate: 2.0
+- local_id: cicd.gitops-argo-alignment
+  title: GitOps values와 Argo Application을 새 서비스 기준으로 맞춘다
+  type: implementation
+  milestone: cicd-phase-0
+  labels:
+  - repo:gitops
+  - argocd
+  - helm
+  depends_on:
+  - cicd.service-target-inventory
+  description: |
+    ## 목표
+    `gitops` repo의 Helm values, namespace, Argo Application 파일을 새 6개 서비스 기준으로 정리한다.
+
+    ## 현재 관찰
+    - `appointment`, `patient`, `prescription` Argo Application은 존재하지 않는 values 파일을 참조한다.
+    - `concert`, `reservation`, `payment`, `ticket` values 파일은 있지만 AWS dev Argo Application이 없다.
+    - 일부 Argo destination namespace는 `medical-*`이고 values namespace는 `ticketing-*`이다.
+
+    ## 산출물
+    새 6개 서비스의 Argo Application과 values 파일 매핑을 정리하고 렌더링 검증을 통과시킨다.
+  done_when:
+  - Argo Application 목록이 새 6개 서비스 기준과 일치한다.
+  - 각 Argo Application의 valueFiles가 실제 존재한다.
+  - destination namespace와 values namespace의 기준이 일치한다.
+  evidence:
+  - GitOps service-to-Argo mapping
+  - "`task validate` 결과"
+  - Argo manifest diff
+  estimate: 2.0
+- local_id: cicd.gitops-validation-hardening
+  title: GitOps 검증에서 Argo valueFiles 불일치를 잡는다
+  type: test
+  milestone: cicd-phase-0
+  labels:
+  - repo:gitops
+  - validation
+  - argocd
+  depends_on:
+  - cicd.gitops-argo-alignment
+  description: |
+    ## 목표
+    현재처럼 `task validate`는 통과하지만 Argo sync에서 깨지는 상태를 막기 위해 GitOps 검증을 강화한다.
+
+    ## 구현 방향
+    - Argo Application의 `helm.valueFiles`가 실제 파일로 존재하는지 검사한다.
+    - `values/services/*.yaml`과 `argo/applications/aws-dev/services/*.yaml`의 서비스 목록 차이를 검사한다.
+    - Helm template 검증과 Argo Application 검증 결과를 CI에서 함께 실행한다.
+
+    ## 산출물
+    실패하는 fixture 또는 명시적 검사 결과를 통해 누락된 values/App mismatch가 검출되는지 확인한다.
+  done_when:
+  - 없는 values 파일을 참조하는 Argo Application이 CI에서 실패한다.
+  - values 파일만 있고 Argo Application이 없는 서비스가 CI에서 표시된다.
+  - GitOps validation workflow가 강화된 검사를 실행한다.
+  evidence:
+  - GitOps validation failure/success run 링크
+  - mismatch 검사 출력
+  estimate: 1.5
+- local_id: cicd.deploy-changed-services
+  title: 변경 서비스만 Kubernetes 배포로 연결한다
+  type: ops
+  milestone: cicd-phase-1
+  labels:
+  - repo:service
+  - repo:gitops
+  - deploy
+  - kubernetes
+  depends_on:
+  - cicd.image-build-push
+  - cicd.gitops-argo-alignment
+  description: |
+    ## 목표
+    registry에 push된 변경 서비스 image를 Kubernetes 배포 단계로 연결한다.
+
+    ## 설계 선택지
+    - service workflow가 gitops values의 image tag를 업데이트하고 PR 또는 commit을 만든다.
+    - Argo Image Updater가 registry image tag를 감지해 GitOps repo를 갱신한다.
+    - 단기 검증용으로는 workflow_dispatch에서 특정 서비스만 Helm/Argo sync를 실행한다.
+
+    ## 산출물
+    선택한 배포 경로와 rollback 기준을 남기고 변경 서비스만 배포되는 것을 확인한다.
+  done_when:
+  - 변경 서비스 image tag가 GitOps 배포 선언에 반영된다.
+  - 변경되지 않은 서비스는 재빌드 또는 재배포되지 않는다.
+  - 배포 실패 시 어떤 commit 또는 image tag로 되돌릴지 정리되어 있다.
+  evidence:
+  - GitOps tag update PR 또는 commit
+  - Argo sync 결과
+  - 변경 서비스 rollout status
+  estimate: 2.0
+- local_id: cicd.github-issues-project-sync
+  title: workplan을 GitHub Issues와 Project로 등록한다
+  type: ops
+  milestone: cicd-phase-1
+  labels:
+  - repo:workspace
+  - github-issues
+  - github-project
+  depends_on:
+  - cicd.service-target-inventory
+  description: |
+    ## 목표
+    이 workplan의 각 task를 GitHub Issue로 등록하고 Medikong GitHub Project에서 진행 상태를 추적한다.
+
+    ## 등록 기준
+    - `repo:service` 작업은 `Medikong/service` issue로 만든다.
+    - `repo:gitops` 작업은 `Medikong/gitops` issue로 만든다.
+    - repo 간 조율 또는 전체 추적 작업은 `Medikong/workspace` issue로 만든다.
+
+    ## 산출물
+    GitHub Issue URL과 Project item 등록 결과를 이 YAML 또는 별도 sync 결과 파일에 남긴다.
+  done_when:
+  - 각 task가 담당 repo의 GitHub Issue로 등록되어 있다.
+  - 생성된 Issue가 Medikong GitHub Project에 추가되어 있다.
+  - local_id와 GitHub Issue URL의 매핑이 남아 있다.
+  evidence:
+  - GitHub Issue URL 목록
+  - GitHub Project item 목록
+  estimate: 1.0
