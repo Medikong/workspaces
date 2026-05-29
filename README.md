@@ -69,7 +69,7 @@ Taskfile은 공식 사용자 진입점입니다. 실제 로직은 `scripts/works
 - `docs/adr/0001-use-workspace-as-polyrepo-helper.md`: workspace repo의 역할 결정을 기록합니다.
 - `docs/onboarding/quickstart.md`: 신규 참여자를 위한 첫 실행 흐름입니다.
 - `docs/architecture/repo-boundaries.md`: repo별 책임 경계입니다.
-- `docs/issues/README.md`: 진행 중 발견한 이슈의 인덱스와 파일별 기록 템플릿입니다.
+- `docs/trouble/README.md`: 진행 중 발생한 문제와 장애의 인덱스와 파일별 기록 템플릿입니다.
 - `docs/projects_plan/README.md`: 프로젝트 계획, workplan, 참고 문서의 읽는 순서와 폴더 역할입니다.
 
 ## 실행 환경
