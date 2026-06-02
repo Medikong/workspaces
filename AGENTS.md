@@ -14,6 +14,9 @@ VS Code 기준 폴더 구조는 `medikong.code-workspace`를 따른다. `medikon
 GitHub Issue나 Project 발행 후보를 다룰 때는 먼저 `docs/issues/README.md`를 읽고, 제목·발행 단위·repo 배치·본문 템플릿 기준을 따른다.
 실제 등록 전에는 사용자와 제목, repo 배치, 발행 단위를 확인한다.
 
+Pull Request를 작성할 때는 `docs/issues/template/pull-request.md`를 기준으로 변경 내용, 배경, 범위, 운영 영향, 배포 참고, 검증, 롤백, 리스크와 후속 작업, 관련 이슈를 정리한다.
+repo별 `.github` PR 템플릿이 필요해지면 `docs/issues/template`의 원본 문서를 기준으로 파생하고, 원본 규칙은 이 폴더에서 일원화해 관리한다.
+
 ## docs 폴더 기준
 
 `docs/`는 Medikong polyrepo 전체에서 공유할 문서 기준점을 둔다. 단, 실제 코드 수정, 배포 선언, 인프라 변경은 각 repo의 책임 경계를 따른다.
