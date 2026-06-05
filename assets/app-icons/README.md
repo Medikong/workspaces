@@ -1,8 +1,27 @@
 # Ticketmong app icons
 
-Source: `../ticketmong-app-logos.png` (1254x1254 PNG)
+App icon exports are grouped by icon variant first, then by target platform.
 
-## iOS
+```text
+app-icons/
+  primary/
+    source.png
+    ios/
+    android/
+    web/
+  mascot/
+    source.png
+    ios/
+    android/
+    web/
+```
+
+## Variants
+
+- `primary`: default app icon source and exports.
+- `mascot`: mascot-centered square icon source and exports.
+
+## iOS sizes
 
 - `ticketmong-icon-20.png`
 - `ticketmong-icon-29.png`
@@ -18,7 +37,7 @@ Source: `../ticketmong-app-logos.png` (1254x1254 PNG)
 - `ticketmong-icon-180.png`
 - `ticketmong-icon-1024.png`
 
-## Android
+## Android sizes
 
 - `ticketmong-icon-48.png`
 - `ticketmong-icon-72.png`
@@ -27,7 +46,7 @@ Source: `../ticketmong-app-logos.png` (1254x1254 PNG)
 - `ticketmong-icon-192.png`
 - `ticketmong-icon-512.png`
 
-## Web
+## Web sizes
 
 - `ticketmong-icon-16.png`
 - `ticketmong-icon-32.png`
@@ -35,4 +54,6 @@ Source: `../ticketmong-app-logos.png` (1254x1254 PNG)
 - `ticketmong-icon-192.png`
 - `ticketmong-icon-512.png`
 
-Note: the generated files preserve the source PNG alpha channel. If a store upload requires an opaque icon, flatten the final upload image against the icon background first.
+The `mascot` variant uses the same sizes with `ticketmong-mascot-icon-*.png` filenames.
+
+Note: `primary/source.png` preserves the original PNG alpha channel. `mascot/source.png` is RGB. If a store upload requires an opaque icon, flatten the final upload image against the icon background first.
