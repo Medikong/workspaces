@@ -22,6 +22,7 @@ ADR은 Architecture Decision Record의 약자로, 중요한 결정을 당시의 
 | ADR-0004 | accepted | 2026-06-04 | 관측성 신호별 수집 경로와 Trace 처리 기준을 분리한다 | `0004-observability-signal-routing-and-trace.md` |
 | ADR-0005 | accepted | 2026-06-04 | GitHub Actions의 AWS 인증은 OIDC 기반 IAM Role Assume을 사용한다 | `0005-use-github-oidc-for-aws-ci-authentication.md` |
 | ADR-0006 | accepted | 2026-06-08 | 서비스 간 Circuit Breaker는 Istio outlierDetection으로 시작한다 | `0006-use-istio-outlierdetection-for-mesh-circuit-breaker.md` |
+| ADR-0007 | accepted | 2026-06-08 | Istio 설치와 서비스 트래픽 정책은 ArgoCD Application으로 분리한다 | `0007-separate-istio-platform-and-traffic-policy-sync.md` |
 
 ## Frontmatter
 
