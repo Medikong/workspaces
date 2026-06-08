@@ -108,6 +108,8 @@ deployment:
 
 proxy resource annotation은 AWS dev 클러스터에서 rollout이 CPU request 부족으로 멈추지 않도록 낮게 잡은 값이다. 운영 기준값은 Envoy CPU/메모리 metric을 보고 별도로 재산정해야 한다.
 
+`ticket-service`는 Kafka consumer와 sidecar가 함께 올라가면서 작은 AWS dev 클러스터에서 두 번째 replica가 CPU request 부족으로 Pending이 될 수 있어, dev 검증용으로 app CPU request와 proxy CPU request를 더 낮게 둔다.
+
 ## 검증 명령
 
 렌더링 검증:
