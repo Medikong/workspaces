@@ -104,7 +104,7 @@ Secret에 ECR 토큰 포함 → 인증 성공 → 이미지 pull
 ```
 
 **한계**
-ECR 토큰 12시간마다 만료 → crontab으로 자동 갱신 설정
+ECR 토큰 12시간마다 만료 → crontab으로 자동 갱신 설정 (Day4에서 K8s CronJob 시도 후 crontab으로 최종 결정)
 
 ---
 
@@ -360,8 +360,10 @@ resource "aws_instance" "master" {
 }
 ```
 
-**향후 해결 방안**
-aws-cli + kubectl 포함된 커스텀 이미지 빌드 → ECR 등록 → K8s CronJob 적용
+**최종 결정**
+K8s CronJob은 Day4에서 실패 확인 후 제거. crontab + Terraform user_data 방식으로 최종 결정.
+→ K8s CronJob: gitops에서 삭제
+→ crontab: Terraform user_data에 등록하여 EC2 재생성 시에도 자동 적용
 
 ---
 
