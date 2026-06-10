@@ -120,6 +120,12 @@ medikong/
   infra/      # 클러스터, 클라우드, 네트워크 기반
 ```
 
+## AWS Dev 접속 주소
+
+| 이름 | 주소 | 비고 |
+| --- | --- | --- |
+| Grafana | http://medikong-default-kong-nlb-c17a54e23efd293c.elb.ap-northeast-2.amazonaws.com:32407/grafana/ | 보안그룹 `sg-00ec124430d0eab68`의 `32407` 허용 목록에 공인 IP가 있어야 접속할 수 있습니다. |
+
 ## 현재 진행상황
 
 기본 프로젝트에서는 모노레포와 대주제 중심 작업 분배로 인해 역할 충돌, 중복 작업, 진행상황 파악 문제가 있었습니다.
