@@ -5,12 +5,12 @@
 열린 질문:
 
 ```text
-aws-dev synthetic 대상 URL을 내부 Kong DNS로 둘지, 외부 Ingress DNS로 둘지 결정해야 한다.
+배포 환경 synthetic 대상 URL을 내부 Kong DNS로 둘지, 외부 Ingress DNS로 둘지 결정해야 한다.
 ```
 
 ## 결정
 
-aws-dev의 기본 synthetic E2E는 클러스터 내부의 CronJob에서 실행하되, 요청 대상은 외부 Ingress DNS로 둔다.
+배포 환경의 기본 synthetic E2E는 클러스터 내부의 CronJob에서 실행하되, 요청 대상은 외부 Ingress DNS로 둔다.
 
 ```text
 synthetic CronJob
@@ -45,7 +45,7 @@ synthetic CronJob
 | trace/log 시뮬레이션 | 내부 호출 기준으로 가능 | 실제 진입 경로 기준으로 더 자연스러움 |
 | 실패 원인 분리 | 쉬움 | 넓게 봐야 함 |
 | 로컬 개발 피드백 | 적합 | 환경 의존성이 큼 |
-| aws-dev 배포 검증 | 보조 확인에 적합 | 기본 검증에 적합 |
+| 배포 환경 검증 | 보조 확인에 적합 | 기본 검증에 적합 |
 | TLS/인증서 검증 | 불가 | 가능 |
 | 외부 DNS/LB 문제 탐지 | 불가 | 가능 |
 | 네트워크 구성 리스크 | 낮음 | hairpin, NAT, 보안그룹, DNS 정책 확인 필요 |
@@ -65,7 +65,7 @@ synthetic pod
 적합한 용도:
 
 - 로컬 개발 환경에서 1분 주기로 빠르게 피드백 받기
-- aws-dev에서 외부 경로 실패 시 내부 경로가 살아 있는지 비교하기
+- 배포 환경에서 외부 경로 실패 시 내부 경로가 살아 있는지 비교하기
 - Kong route와 service 연결 상태를 좁은 범위로 확인하기
 - 예약/결제 full journey를 붙이기 전 smoke check로 사용하기
 
@@ -87,7 +87,7 @@ synthetic pod
 
 적합한 용도:
 
-- aws-dev 배포 후 실제 진입 경로가 살아 있는지 확인하기
+- 배포 후 실제 진입 경로가 살아 있는지 확인하기
 - DNS, TLS, Load Balancer, Ingress, Kong, service 연결을 한 번에 검증하기
 - trace/log/metric이 실제 요청처럼 이어지는지 확인하기
 - route, 인증, 헤더, gateway 설정의 보강 지점을 찾기
@@ -123,7 +123,7 @@ values/local.yaml
 -> schedule="* * * * *"
 ```
 
-aws-dev는 외부 Ingress DNS를 기본으로 둔다.
+aws-dev 같은 배포 환경은 외부 Ingress DNS를 기본으로 둔다.
 
 ```text
 values/aws-dev.yaml
@@ -202,6 +202,6 @@ external 성공, internal 실패
 실제 트래픽에 가까운 배포 검증과 trace/log 시뮬레이션
 -> 외부 Ingress DNS
 
-aws-dev 기본 synthetic E2E
+배포 환경 기본 synthetic E2E
 -> 클러스터 내부 CronJob에서 외부 Ingress DNS 호출
 ```

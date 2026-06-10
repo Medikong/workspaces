@@ -10,12 +10,12 @@
 
 ## 결정
 
-aws-dev의 지속 synthetic E2E는 Kubernetes Secret을 credential source로 사용한다.
+지속 synthetic E2E는 Kubernetes Secret을 credential source로 사용한다.
 
 `/auth/demo-accounts` 같은 demo account endpoint는 계정 discovery와 seed 확인용으로만 사용하고, 비밀번호나 access token의 source of truth로 사용하지 않는다.
 
 ```text
-aws-dev synthetic CronJob
+synthetic CronJob
 -> Kubernetes Secret에서 synthetic 계정 email/password 읽기
 -> auth login 호출
 -> 매 실행마다 JWT 발급
@@ -197,7 +197,7 @@ demo account endpoint 실패
 ## 최종 기준
 
 ```text
-aws-dev credential source
+배포 환경 credential source
 -> Kubernetes Secret
 
 access token

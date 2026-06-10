@@ -117,7 +117,7 @@ sandbox/fake payment만 사용
 refund/cancel 보상 정책을 별도 문서로 정의
 ```
 
-현재 aws-dev synthetic E2E는 실제 비용이 발생하지 않는 결제 경로를 전제로 한다.
+현재 지속 synthetic E2E는 실제 비용이 발생하지 않는 결제 경로를 전제로 한다.
 
 ## 30일 정리와의 관계
 

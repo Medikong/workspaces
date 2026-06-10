@@ -118,10 +118,10 @@ seat pool은 실행 주기와 lookahead window를 기준으로 계산한다.
 따라서 초기값은 다음처럼 둔다.
 
 ```text
-aws-dev 10분 주기
+배포 환경 10분 주기
 -> showtime당 2,000석 이상
 
-aws-dev 5분 주기
+배포 환경 5분 주기
 -> showtime당 5,000석 권장
 
 local 1분 주기
