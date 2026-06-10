@@ -11,23 +11,23 @@
 ```mermaid
 flowchart LR
     subgraph Frontend["Frontend / 프론트엔드"]
-        UserAction["사용자 예매 행동<br/>client_action_id = CA-1<br/>user_id = U-123"]
-        Client["client<br/>trace_id = T-100<br/>traceparent header"]
+        UserAction["사용자 예매 행동<br/>client_action_id = 7f621e41-9a66-4df4-9f2f-8c0f831d0f26<br/>user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab"]
+        Client["client<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0<br/>traceparent header"]
     end
 
     subgraph Ingress["Ingress / Gateway"]
-        Kong["Kong Ingress<br/>request_id = REQ-1, REQ-2<br/>X-User-Id = U-123"]
+        Kong["Kong Ingress<br/>request_id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181, 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a<br/>X-User-Id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab"]
     end
 
     subgraph Backend["Backend MSA / 백엔드"]
-        Reservation["reservation-service<br/>service.name = reservation-service<br/>span_id = S-RES-1"]
-        Payment["payment-service<br/>service.name = payment-service<br/>span_id = S-PAY-1"]
-        Ticket["ticket-service<br/>service.name = ticket-service<br/>span_id = S-TIC-1"]
-        Notify["notification-service<br/>service.name = notification-service<br/>span_id = S-NOTI-1"]
+        Reservation["reservation-service<br/>service.name = reservation-service<br/>span_id = 6f1a2b3c4d5e6f70"]
+        Payment["payment-service<br/>service.name = payment-service<br/>span_id = 8a9b0c1d2e3f4051"]
+        Ticket["ticket-service<br/>service.name = ticket-service<br/>span_id = 1f2e3d4c5b6a7980"]
+        Notify["notification-service<br/>service.name = notification-service<br/>span_id = 9c8b7a6d5e4f3210"]
     end
 
     subgraph Messaging["Messaging Infra / 메시징 인프라"]
-        Kafka["Kafka topics<br/>domain_event_id = EVT-*<br/>event_type = reservation-created/payment-approved/ticket-issued<br/>correlation_id = C-1"]
+        Kafka["Kafka topics<br/>domain_event_id = c4d59d4a-7318-4b41-9a12-df1d1e4f1f10<br/>event_type = reservation-created/payment-approved/ticket-issued<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8"]
     end
 
     subgraph ObservabilityInfra["Observability Infra / 관측성 인프라"]
@@ -36,21 +36,21 @@ flowchart LR
     end
 
     subgraph AuditInfra["Audit Log Infra / 감사 로그 인프라"]
-        Audit["Elasticsearch/Kibana<br/>audit_event_id = AUD-*<br/>event_type + user_id + business IDs"]
+        Audit["Elasticsearch/Kibana<br/>audit_event_id = 76db2f8f-2f24-4f7a-b7da-ff6c4c3c1f2e<br/>event_type + user_id + business IDs"]
     end
 
-    BusinessContext["Business IDs<br/>reservation_id = RSV-1<br/>payment_id = PAY-1<br/>ticket_id = TIC-1"]
+    BusinessContext["Business IDs<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>payment_id = 7c9e6679-7425-40de-944b-e07fc1f90ae7<br/>ticket_id = 550e8400-e29b-41d4-a716-446655440000"]
 
     UserAction -->|"1. 사용자 행동 시작"| Client
 
     Client -->|"2. HTTP 호출<br/>traceparent"| Kong
-    Kong -->|"3. 예약 요청 전달<br/>POST /reservations<br/>request_id = REQ-1"| Reservation
-    Kong -->|"8. 결제 요청 전달<br/>POST /payments<br/>request_id = REQ-2"| Payment
+    Kong -->|"3. 예약 요청 전달<br/>POST /reservations<br/>request_id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181"| Reservation
+    Kong -->|"8. 결제 요청 전달<br/>POST /payments<br/>request_id = 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a"| Payment
 
-    Reservation -->|"7. reservation-created<br/>correlation_id = C-1"| Kafka
-    Payment -->|"12. payment-approved<br/>correlation_id = C-1"| Kafka
+    Reservation -->|"7. reservation-created<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8"| Kafka
+    Payment -->|"12. payment-approved<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8"| Kafka
     Kafka -->|"13. payment-approved 소비"| Ticket
-    Ticket -->|"17. ticket-issued<br/>correlation_id = C-1"| Kafka
+    Ticket -->|"17. ticket-issued<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8"| Kafka
     Kafka -->|"18. reservation/payment/ticket events 소비"| Notify
 
     BusinessContext -.->|"업무 ID 참조"| Reservation
@@ -58,10 +58,10 @@ flowchart LR
     BusinessContext -.->|"업무 ID 참조"| Ticket
     BusinessContext -.->|"업무 ID 참조"| Notify
 
-    Reservation -->|"4. span S-RES-1"| Tempo
-    Payment -->|"9. span S-PAY-1"| Tempo
-    Ticket -->|"14. span S-TIC-1"| Tempo
-    Notify -->|"19. span S-NOTI-1"| Tempo
+    Reservation -->|"4. span 6f1a2b3c4d5e6f70"| Tempo
+    Payment -->|"9. span 8a9b0c1d2e3f4051"| Tempo
+    Ticket -->|"14. span 1f2e3d4c5b6a7980"| Tempo
+    Notify -->|"19. span 9c8b7a6d5e4f3210"| Tempo
 
     Reservation -->|"5. app log"| Loki
     Payment -->|"10. app log"| Loki
@@ -97,6 +97,102 @@ flowchart LR
     style AuditInfra fill:#fef2f2,stroke:#dc2626,stroke-width:2px
 ```
 
+감사 로그 인프라에는 아래처럼 검색 가능한 구조화 JSON 데이터가 저장된다. 각 객체는 Elasticsearch/Kibana에 저장되는 감사 로그 한 건의 예시다. `audit_event_id`는 감사 로그 한 건을 구분하고, `domain_event_id`는 Kafka 도메인 이벤트와 연결할 때 쓴다. 장애 분석은 `trace_id`, `span_id`, `request_id`로 Tempo/Loki에 연결하고, 고객 문의나 운영 조회는 `user_id`, `reservation_id`, `payment_id`, `ticket_id`, `event_type`으로 찾는다.
+
+```json
+{
+  "audit_log_samples": [
+    {
+      "audit_event_id": "76db2f8f-2f24-4f7a-b7da-ff6c4c3c1f2e",
+      "domain_event_id": "c4d59d4a-7318-4b41-9a12-df1d1e4f1f10",
+      "event_type": "seat_hold_succeeded",
+      "occurred_at": "2026-06-10T12:00:01Z",
+      "observed_at": "2026-06-10T12:00:02Z",
+      "service.name": "reservation-service",
+      "service.version": "1.0.0",
+      "deployment.environment": "dev",
+      "trace_id": "4f3b2c1a9d8e7f60123456789abcdef0",
+      "span_id": "6f1a2b3c4d5e6f70",
+      "request_id": "0e6f2b3d-5f89-4b77-98d8-0ecab7359181",
+      "correlation_id": "2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8",
+      "client_action_id": "7f621e41-9a66-4df4-9f2f-8c0f831d0f26",
+      "user_id": "9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab",
+      "actor_type": "customer",
+      "resource": {
+        "reservation_id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "seat_id": "A-10"
+      },
+      "result": "success"
+    },
+    {
+      "audit_event_id": "9bba1c9e-2e8e-4f6d-8b2d-b8ac1f8a89fb",
+      "domain_event_id": "6b7f4d9c-5a58-4ad4-9150-8d3d2a5f6c21",
+      "event_type": "payment_approved",
+      "occurred_at": "2026-06-10T12:00:05Z",
+      "observed_at": "2026-06-10T12:00:06Z",
+      "service.name": "payment-service",
+      "service.version": "1.0.0",
+      "deployment.environment": "dev",
+      "trace_id": "4f3b2c1a9d8e7f60123456789abcdef0",
+      "span_id": "8a9b0c1d2e3f4051",
+      "request_id": "4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a",
+      "correlation_id": "2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8",
+      "client_action_id": "7f621e41-9a66-4df4-9f2f-8c0f831d0f26",
+      "user_id": "9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab",
+      "actor_type": "customer",
+      "resource": {
+        "reservation_id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "payment_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7"
+      },
+      "result": "success"
+    },
+    {
+      "audit_event_id": "4939f07f-30c0-47f4-8cdb-9f07d25d67a5",
+      "domain_event_id": "2a3b4c5d-6e7f-4890-9123-456789abcdef",
+      "event_type": "ticket_issued",
+      "occurred_at": "2026-06-10T12:00:07Z",
+      "observed_at": "2026-06-10T12:00:08Z",
+      "service.name": "ticket-service",
+      "service.version": "1.0.0",
+      "deployment.environment": "dev",
+      "trace_id": "4f3b2c1a9d8e7f60123456789abcdef0",
+      "span_id": "1f2e3d4c5b6a7980",
+      "correlation_id": "2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8",
+      "client_action_id": "7f621e41-9a66-4df4-9f2f-8c0f831d0f26",
+      "user_id": "9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab",
+      "actor_type": "system",
+      "resource": {
+        "reservation_id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "payment_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+        "ticket_id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "result": "success"
+    },
+    {
+      "audit_event_id": "bb8d0c48-83d6-4d72-a2f0-f59e2773f1f5",
+      "event_type": "notification_sent",
+      "occurred_at": "2026-06-10T12:00:09Z",
+      "observed_at": "2026-06-10T12:00:10Z",
+      "service.name": "notification-service",
+      "service.version": "1.0.0",
+      "deployment.environment": "dev",
+      "trace_id": "4f3b2c1a9d8e7f60123456789abcdef0",
+      "span_id": "9c8b7a6d5e4f3210",
+      "correlation_id": "2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8",
+      "client_action_id": "7f621e41-9a66-4df4-9f2f-8c0f831d0f26",
+      "user_id": "9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab",
+      "actor_type": "system",
+      "resource": {
+        "reservation_id": "0f8fad5b-d9cb-469f-a165-70867728950e",
+        "payment_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+        "ticket_id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "result": "success"
+    }
+  ]
+}
+```
+
 ## 시간 순서 ID 흐름
 
 다음 시퀀스는 사용자가 좌석을 선택하고 예약, 결제, 티켓 발급, 알림까지 이어질 때 어떤 ID가 생기고 전파되는지 보여준다. `trace_id`는 Tempo에서 호출 흐름을 이어 보기 위한 기술 ID이고, `request_id`는 API 요청 단위 ID다. `event_id`, `event_type`, `user_id`, `reservation_id`, `payment_id`, `ticket_id`는 감사 로그와 업무 이력 검색에서 더 중요하다.
@@ -116,37 +212,37 @@ sequenceDiagram
     participant Audit as Elasticsearch/Kibana
 
     User->>Client: 좌석 선택 후 예매 진행
-    Note over Client: user_id = U-123<br/>client_action_id = CA-1<br/>trace_id = T-100
+    Note over Client: user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>client_action_id = 7f621e41-9a66-4df4-9f2f-8c0f831d0f26<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0
 
-    Client->>Kong: POST /reservations<br/>Authorization: JWT(U-123)<br/>traceparent = T-100
-    Note over Kong: request_id = REQ-1<br/>trace_id = T-100 유지
-    Kong->>Reservation: POST /reservations<br/>X-Request-Id = REQ-1<br/>X-User-Id = U-123<br/>traceparent = T-100
-    Note over Reservation: service.name = reservation-service<br/>span_id = S-RES-1<br/>reservation_id = RSV-1<br/>correlation_id = C-1
-    Reservation-->>Tempo: span<br/>trace_id = T-100<br/>request_id = REQ-1<br/>service.name = reservation-service
-    Reservation-->>Audit: audit event<br/>event_id = AUD-1<br/>event_type = seat_hold_succeeded<br/>user_id = U-123<br/>reservation_id = RSV-1<br/>request_id = REQ-1<br/>trace_id = T-100
-    Reservation-->>Kafka: reservation-created<br/>event_id = EVT-1<br/>correlation_id = C-1<br/>traceparent = T-100
+    Client->>Kong: POST /reservations<br/>Authorization: JWT(9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab)<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
+    Note over Kong: request_id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0 유지
+    Kong->>Reservation: POST /reservations<br/>X-Request-Id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181<br/>X-User-Id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
+    Note over Reservation: service.name = reservation-service<br/>span_id = 6f1a2b3c4d5e6f70<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8
+    Reservation-->>Tempo: span<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0<br/>request_id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181<br/>service.name = reservation-service
+    Reservation-->>Audit: audit event<br/>event_id = 76db2f8f-2f24-4f7a-b7da-ff6c4c3c1f2e<br/>event_type = seat_hold_succeeded<br/>user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>request_id = 0e6f2b3d-5f89-4b77-98d8-0ecab7359181<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0
+    Reservation-->>Kafka: reservation-created<br/>event_id = c4d59d4a-7318-4b41-9a12-df1d1e4f1f10<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
 
-    Client->>Kong: POST /payments<br/>reservation_id = RSV-1<br/>traceparent = T-100
-    Note over Kong: request_id = REQ-2<br/>trace_id = T-100 유지
-    Kong->>Payment: POST /payments<br/>X-Request-Id = REQ-2<br/>X-User-Id = U-123<br/>traceparent = T-100
-    Note over Payment: service.name = payment-service<br/>span_id = S-PAY-1<br/>payment_id = PAY-1<br/>correlation_id = C-1
-    Payment-->>Tempo: span<br/>trace_id = T-100<br/>request_id = REQ-2<br/>service.name = payment-service
-    Payment-->>Audit: audit event<br/>event_id = AUD-2<br/>event_type = payment_approved<br/>user_id = U-123<br/>reservation_id = RSV-1<br/>payment_id = PAY-1<br/>request_id = REQ-2<br/>trace_id = T-100
-    Payment-->>Kafka: payment-approved<br/>event_id = EVT-2<br/>event_type = payment-approved<br/>correlation_id = C-1<br/>traceparent = T-100
+    Client->>Kong: POST /payments<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
+    Note over Kong: request_id = 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0 유지
+    Kong->>Payment: POST /payments<br/>X-Request-Id = 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a<br/>X-User-Id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
+    Note over Payment: service.name = payment-service<br/>span_id = 8a9b0c1d2e3f4051<br/>payment_id = 7c9e6679-7425-40de-944b-e07fc1f90ae7<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8
+    Payment-->>Tempo: span<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0<br/>request_id = 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a<br/>service.name = payment-service
+    Payment-->>Audit: audit event<br/>event_id = 9bba1c9e-2e8e-4f6d-8b2d-b8ac1f8a89fb<br/>event_type = payment_approved<br/>user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>payment_id = 7c9e6679-7425-40de-944b-e07fc1f90ae7<br/>request_id = 4a1f6c99-a1f6-4959-b4d6-3ec10bb74a2a<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0
+    Payment-->>Kafka: payment-approved<br/>event_id = 6b7f4d9c-5a58-4ad4-9150-8d3d2a5f6c21<br/>event_type = payment-approved<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
 
-    Kafka->>Ticket: consume payment-approved<br/>traceparent = T-100<br/>correlation_id = C-1
-    Note over Ticket: service.name = ticket-service<br/>span_id = S-TIC-1<br/>ticket_id = TIC-1
-    Ticket-->>Tempo: consumer span<br/>trace_id = T-100<br/>service.name = ticket-service
-    Ticket-->>Audit: audit event<br/>event_id = AUD-3<br/>event_type = ticket_issued<br/>user_id = U-123<br/>reservation_id = RSV-1<br/>payment_id = PAY-1<br/>ticket_id = TIC-1<br/>trace_id = T-100
-    Ticket-->>Kafka: ticket-issued<br/>event_id = EVT-3<br/>correlation_id = C-1<br/>traceparent = T-100
+    Kafka->>Ticket: consume payment-approved<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8
+    Note over Ticket: service.name = ticket-service<br/>span_id = 1f2e3d4c5b6a7980<br/>ticket_id = 550e8400-e29b-41d4-a716-446655440000
+    Ticket-->>Tempo: consumer span<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0<br/>service.name = ticket-service
+    Ticket-->>Audit: audit event<br/>event_id = 4939f07f-30c0-47f4-8cdb-9f07d25d67a5<br/>event_type = ticket_issued<br/>user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>reservation_id = 0f8fad5b-d9cb-469f-a165-70867728950e<br/>payment_id = 7c9e6679-7425-40de-944b-e07fc1f90ae7<br/>ticket_id = 550e8400-e29b-41d4-a716-446655440000<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0
+    Ticket-->>Kafka: ticket-issued<br/>event_id = 2a3b4c5d-6e7f-4890-9123-456789abcdef<br/>correlation_id = 2d2f6c42-1df5-4d3b-b9f3-c2b2253b63b8<br/>traceparent = 4f3b2c1a9d8e7f60123456789abcdef0
 
     Kafka->>Notify: consume reservation/payment/ticket events
-    Note over Notify: service.name = notification-service<br/>span_id = S-NOTI-1
-    Notify-->>Tempo: consumer span<br/>trace_id = T-100<br/>service.name = notification-service
-    Notify-->>Audit: audit event<br/>event_id = AUD-4<br/>event_type = notification_sent<br/>user_id = U-123<br/>trace_id = T-100
+    Note over Notify: service.name = notification-service<br/>span_id = 9c8b7a6d5e4f3210
+    Notify-->>Tempo: consumer span<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0<br/>service.name = notification-service
+    Notify-->>Audit: audit event<br/>event_id = bb8d0c48-83d6-4d72-a2f0-f59e2773f1f5<br/>event_type = notification_sent<br/>user_id = 9d1b5db4-7f45-4d0c-9a31-43f62fd5d3ab<br/>trace_id = 4f3b2c1a9d8e7f60123456789abcdef0
 ```
 
-위 흐름에서 `trace_id = T-100`은 클라이언트가 같은 사용자 행동 안에서 `traceparent`를 유지한다는 가정이다. 클라이언트가 요청마다 새 trace를 만들거나 `traceparent`를 전파하지 않으면 `POST /reservations`, `POST /payments`, Kafka consumer span이 서로 다른 trace로 갈라진다. 이 문제가 BFF를 두면 줄어든다. BFF가 사용자 행동 단위의 backend root span을 만들고, 각 MSA 서버로 같은 trace context를 전파할 수 있기 때문이다.
+위 흐름에서 `trace_id = 4f3b2c1a9d8e7f60123456789abcdef0`은 클라이언트가 같은 사용자 행동 안에서 `traceparent`를 유지한다는 가정이다. 클라이언트가 요청마다 새 trace를 만들거나 `traceparent`를 전파하지 않으면 `POST /reservations`, `POST /payments`, Kafka consumer span이 서로 다른 trace로 갈라진다. 이 문제가 BFF를 두면 줄어든다. BFF가 사용자 행동 단위의 backend root span을 만들고, 각 MSA 서버로 같은 trace context를 전파할 수 있기 때문이다.
 
 | ID | 생성 위치 | 전파 범위 | 주 조회 위치 |
 | --- | --- | --- | --- |
@@ -161,7 +257,7 @@ sequenceDiagram
 
 문서와 OpenTelemetry 기준에서는 `service_id`보다 `service.name`을 우선 쓴다. 같은 서비스 pod를 더 세밀하게 구분해야 하면 `service.instance.id`, `k8s.pod.name` 같은 resource attribute를 함께 둔다.
 
-`event_id`는 두 용도로 나뉠 수 있다. 감사 로그 한 건의 ID는 `AUD-*`처럼 감사 로그 저장과 검색을 위한 ID이고, Kafka 도메인 이벤트의 ID는 `EVT-*`처럼 메시지 중복 처리와 이벤트 체인 추적에 쓴다. 구현에서는 필드명을 하나로 둘지, `audit_event_id`와 `domain_event_id`로 분리할지 별도 계약에서 정한다.
+`event_id`는 두 용도로 나뉠 수 있다. 감사 로그 한 건의 ID는 `76db2f8f-2f24-4f7a-b7da-ff6c4c3c1f2e`처럼 감사 로그 저장과 검색을 위한 UUID이고, Kafka 도메인 이벤트의 ID는 `c4d59d4a-7318-4b41-9a12-df1d1e4f1f10`처럼 메시지 중복 처리와 이벤트 체인 추적에 쓰는 UUID다. 구현에서는 필드명을 하나로 둘지, `audit_event_id`와 `domain_event_id`로 분리할지 별도 계약에서 정한다.
 
 ## 관련 결정
 
