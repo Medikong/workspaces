@@ -554,6 +554,8 @@ curl -sS -X POST "$KONG_URL/auth/login" \
 
 ### 다음 task 3. 정상 예매 E2E 1회 성공
 
+상세 실행 계획은 [AWS dev 실제 검증 계획](./aws-dev-e2e-test-execution-plan.md)을 기준으로 한다.
+
 실행 흐름:
 
 ```text
