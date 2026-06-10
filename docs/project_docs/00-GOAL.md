@@ -18,8 +18,8 @@ updated: 2026-05-29
 
 ### 지표 정의와 수집
 
-- [ ] 모니터링 대상 서비스와 수집 지표(CPU·메모리·요청량·에러율·응답시간)를 정의하고 지표 수집 기준 문서를 작성한다.
-- [ ] Prometheus를 `kube-prometheus-stack` Helm Chart로 `monitoring` Namespace에 배포하고, 각 서비스의 `/metrics` 엔드포인트를 ServiceMonitor CRD로 scrape 대상에 등록한다.
+- [x] 모니터링 대상 서비스와 수집 지표(CPU·메모리·요청량·에러율·응답시간)를 정의하고 지표 수집 기준 문서를 작성한다.
+- [x] Prometheus를 `kube-prometheus-stack` Helm Chart로 `monitoring` Namespace에 배포하고, 각 서비스의 `/metrics` 엔드포인트를 ServiceMonitor CRD로 scrape 대상에 등록한다.
 
 ### 로그 수집과 처리
 
@@ -102,7 +102,7 @@ updated: 2026-05-29
 
 - [x] JUnit으로 각 서비스의 단위 테스트를 작성하고 CI 파이프라인에서 자동 실행한다.
 - [x] Postman Collection으로 서비스 간 연계 시나리오(환자 예약 → 예약 확정 이벤트 → 알림 발송)를 E2E 테스트로 작성한다.
-- [ ] Prometheus + Grafana로 서비스별 에러율과 API 응답 시간을 수집하고 배포 후 기본 Observability 확인 체계를 수립한다.
+- [x] Prometheus + Grafana로 서비스별 에러율과 API 응답 시간을 수집하고 배포 후 기본 Observability 확인 체계를 수립한다.
 
 ### 배포 독립성과 가용성
 

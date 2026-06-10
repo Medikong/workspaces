@@ -5,6 +5,13 @@
 - workspace#8: https://github.com/Medikong/workspace/issues/8
 - workspace#13: https://github.com/Medikong/workspace/issues/13
 
+관련 문서:
+
+- `service-metrics.md`: 서비스 공통/서비스별 애플리케이션 메트릭 구현 기준
+- `system-metrics.md`: Pod, Container, Node, Kubernetes 상태 메트릭 수집/해석 기준
+- `dashboard-authoring-options.md`: Grafana 대시보드 코드화 방식 검토 기록
+- `../../../runbooks/observability/local-metrics-verification.md`: 로컬 Kubernetes에서 서비스 metric 수집을 확인하는 런북
+
 ## 수집 목적
 
 관측 데이터는 대시보드를 꾸미기 위한 부가 데이터가 아니라, 장애와 이상 징후가 지나간 뒤에도 원인을 좁히기 위한 증거다. MSA에서는 하나의 예약/결제 흐름이 여러 서비스, DB, 메시지 브로커, 외부 결제사를 지나가므로 문제가 항상 같은 형태로 재현된다는 보장이 없다. 따라서 문제가 발생한 시점의 요청 흐름, 도메인 결과, 자원 상태, 배포 상태, 외부 의존성 상태를 나중에 다시 볼 수 있어야 한다.
