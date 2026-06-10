@@ -18,6 +18,8 @@
 | 영역 | 제목 | 파일 |
 | --- | --- | --- |
 | observability | 로컬 메트릭 수집 확인 | [observability/local-metrics-verification.md](observability/local-metrics-verification.md) |
+| observability | 로컬 Grafana 대시보드 피드백 | [observability/local-dashboard-feedback.md](observability/local-dashboard-feedback.md) |
+| observability | AWS Grafana SSH 터널 접속 | [observability/aws-grafana-tunnel.md](observability/aws-grafana-tunnel.md) |
 
 ## 작성 기준
 
