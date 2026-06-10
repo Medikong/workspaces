@@ -120,6 +120,12 @@ medikong/
   infra/      # 클러스터, 클라우드, 네트워크 기반
 ```
 
+## local 개발 접속 주소
+
+| 이름 | 주소 | 비고 |
+| --- | --- | --- |
+| Grafana | http://localhost/grafana | `gitops` 레포에서 `task dev` 혹은 `task --taskfile platform/monitoring/Taskfile.yml up` 실행 |
+
 ## AWS Dev 접속 주소
 
 | 이름 | 주소 | 비고 |
