@@ -18,9 +18,8 @@
 -> synthetic venue
 -> synthetic concert template
 
-주기적 생성
--> synthetic showtime
--> showtime별 synthetic seats
+자동 fixture 준비
+-> `task dev:synthetic` 또는 `task dev:synthetic:run` 실행 시 synthetic venue/concert/showtime/seats 준비
 
 매 실행 생성 후 누적
 -> reservation
@@ -90,13 +89,18 @@ showtime cadence: 하루 1회 또는 하루 2회
 seat count per showtime: 2,000-5,000
 ```
 
-예시:
+로컬 구현:
 
 ```text
-매일 00:00 fixture setup 실행
--> 앞으로 14일치 synthetic showtime 확인
--> 부족한 날짜만 생성
--> 각 showtime에 synthetic seat pool 생성
+task dev:synthetic
+-> CronJob 배포
+-> 내부 setup-fixture k6 Job 실행
+-> provider/admin/customer login
+-> venue/concert/showtime/seat-map/sale-policy/open schedule/sales start 준비
+
+task dev:synthetic:run
+-> 내부 setup-fixture k6 Job 실행
+-> CronJob template에서 manual full journey Job 생성
 ```
 
 showtime은 사용자가 조회할 수 있는 일반 공연 회차와 같은 API surface에 있어야 한다. synthetic runner만 쓰는 전용 target API는 만들지 않는다.
@@ -254,7 +258,7 @@ synthetic_actor = customer
 -> reservation, payment, ticket, notification 업무 record
 
 seat 선택
--> k6에서 공개 조회 API 기반으로 분산 선택
+-> k6에서 공개 조회 API 기반으로 synthetic 제목의 공연을 찾고 분산 선택
 -> synthetic 전용 target API는 만들지 않음
 
 정리

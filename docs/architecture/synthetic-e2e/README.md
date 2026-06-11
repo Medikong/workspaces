@@ -12,6 +12,7 @@
 관련 문서:
 
 - k6 조사와 적용 방향: [k6-research.md](k6-research.md)
+- k6 아키텍처 구조와 코드 샘플: [k6-architecture.md](k6-architecture.md)
 - 대상 URL 결정: [target-url-decision.md](target-url-decision.md)
 - 계정과 credential 결정: [credential-source-decision.md](credential-source-decision.md)
 - 테스트 데이터 생성 결정: [test-data-generation-decision.md](test-data-generation-decision.md)
@@ -44,9 +45,9 @@ traceparent, request id, 로그가 실패 지점 추적에 충분한가?
 | 보조 대상 | 내부 Kong DNS smoke |
 | 인증 | Kubernetes Secret의 계정으로 매 실행마다 login 후 JWT 발급 |
 | trace | 첫 요청은 `traceparent` 없이 호출, 응답 `traceparent`를 후속 요청에 릴레이 |
-| 테스트 데이터 | 계정/venue/concert는 고정, showtime/seats는 주기 생성, 예약/결제/티켓/알림 record는 매 실행 생성 |
+| 테스트 데이터 | `task dev:synthetic`과 `task dev:synthetic:run`이 내부 fixture setup을 먼저 실행하고, 예약/결제/티켓/알림 record는 매 실행 생성 |
 | 실패 처리 | 자동 cancel/refund/cleanup 없이 실패 상태를 남김 |
-| 실행 결과 | 1차는 Job 상태와 k6 로그, Loki 조회로 확인 |
+| 실행 결과 | 1차는 Job 상태와 k6 JSON line 로그, Collector `filelog` -> Loki 조회로 확인 |
 | k6 metric remote write | 1차에서는 제외, 2차 검토 |
 
 ## 실행 구조
@@ -185,13 +186,21 @@ X-Request-Id: synthetic-<run-id>
 -> notification 업무 record
 ```
 
-showtime과 seats는 fixture setup job이 주기적으로 만든다.
+로컬 개발 진입점은 별도 사용자용 fixture task를 노출하지 않는다. `task dev:synthetic`은 CronJob 배포 후 내부 `setup-fixture` k6 Job을 한 번 실행하고, `task dev:synthetic:run`도 수동 full journey Job을 만들기 전에 같은 fixture 준비를 먼저 실행한다.
+
+fixture setup은 provider/admin/customer credential Secret을 사용해 기존 API surface로 데이터를 만든다.
 
 ```text
-lookahead window: 14일
-retention window: 30일
-showtime cadence: 하루 1회 또는 하루 2회
-seat count per showtime: 2,000-5,000
+provider/admin/customer login
+-> provider venue 생성
+-> provider concert 생성
+-> provider showtime 생성
+-> provider seat-map 업로드
+-> provider sale-policy 제출
+-> admin sale-policy 승인
+-> admin open schedule 설정
+-> admin sales start
+-> public performances/seats 조회로 확인
 ```
 
 좌석 선택은 synthetic 전용 target API를 만들지 않고, k6가 실제 사용자와 같은 공개 조회 API를 이용한다.
@@ -254,6 +263,7 @@ k6
 -> process exit code
 -> Kubernetes Job succeeded/failed
 -> Pod log
+-> OpenTelemetry Collector
 -> Loki
 ```
 
@@ -278,6 +288,8 @@ export const options = {
 4. 실패 step과 request id 확인
 5. Tempo/Loki/DB에서 같은 요청 흐름 추적
 ```
+
+k6 Job 로그와 애플리케이션 로그는 stdout/stderr로 출력하고, OpenTelemetry Collector가 Kubernetes container log를 수집해 Loki로 보낸다. 서비스는 Loki를 직접 알지 않는다.
 
 k6 Prometheus remote write는 시나리오 구조, 단계 이름, label 정책이 안정된 뒤 2차로 검토한다. 서비스 metric은 서비스가 직접 노출하는 Prometheus metric으로 별도 관리한다.
 
@@ -331,4 +343,4 @@ infra
 - traceparent 릴레이, `X-Request-Id`, `X-Trace-Id`로 실패 요청을 추적할 수 있다.
 - showtime/seats는 주기적으로 준비되고, reservation/payment/ticket/notification record는 실행마다 생성된다.
 - 실패 시 자동 cleanup 없이 실패 상태가 남는다.
-- 실행 결과는 Kubernetes Job 상태와 k6 로그로 확인할 수 있다.
+- 실행 결과는 Kubernetes Job 상태와 Collector를 거친 k6/Loki 로그로 확인할 수 있다.

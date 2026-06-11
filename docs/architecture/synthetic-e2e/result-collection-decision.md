@@ -12,13 +12,14 @@ k6 metric을 Prometheus로 직접 보낼지, 우선 Loki 로그와 Kubernetes Jo
 
 1차 구현에서는 k6 metric을 Prometheus로 직접 보내지 않는다.
 
-우선 Kubernetes Job 상태와 k6 로그로 synthetic 실행이 잘 되는지 확인한다. k6 Prometheus remote write는 시나리오 구조, 단계 이름, label 정책이 안정된 뒤 2차로 검토한다.
+우선 Kubernetes Job 상태와 k6 로그로 synthetic 실행이 잘 되는지 확인한다. k6 Job 로그와 애플리케이션 로그는 OpenTelemetry Collector contrib DaemonSet이 Kubernetes container log에서 `filelog` receiver로 수집해 Loki의 OTLP endpoint로 보낸다. k6 Prometheus remote write는 시나리오 구조, 단계 이름, label 정책이 안정된 뒤 2차로 검토한다.
 
 ```text
 1차
 -> k6 threshold로 process exit code 결정
 -> Kubernetes Job succeeded/failed 확인
 -> k6 console/JSON log 확인
+-> OpenTelemetry Collector filelog receiver가 container log 수집
 -> Loki에서 실행 로그 조회
 -> X-Request-Id, X-Trace-Id, traceparent로 실패 지점 추적
 
@@ -70,6 +71,7 @@ k6
 -> process exit code
 -> Kubernetes Job succeeded/failed
 -> Pod log
+-> OpenTelemetry Collector
 -> Loki
 ```
 
@@ -104,6 +106,50 @@ ticket_id
 ```
 
 동적 ID는 Prometheus label로 올리지 않고 로그와 DB record에서만 확인한다.
+
+애플리케이션 로그도 같은 수집 경로를 사용한다.
+
+```text
+Application stdout/stderr
+-> Kubernetes container log
+-> OpenTelemetry Collector
+-> Loki
+-> Grafana
+```
+
+서비스와 k6 runner는 Loki로 직접 전송하지 않는다. 로그는 stdout/stderr에 JSON line 또는 구조화 로그로 남기고, Collector가 수집과 전송을 담당한다.
+
+Loki label은 낮은 cardinality 값만 사용한다.
+
+허용 label 후보:
+
+```text
+namespace
+pod
+container
+service_name
+app
+environment
+scenario
+step
+```
+
+label로 피할 값:
+
+```text
+trace_id
+request_id
+synthetic_run_id
+reservation_id
+payment_id
+ticket_id
+user_id
+email
+```
+
+이 값들은 로그 본문 JSON field로 남긴다.
+
+구현상 Collector는 Kubernetes metadata와 k6 JSON line의 `scenario`, `step`을 resource attribute로 승격한다. Loki는 `namespace`, `pod`, `container`, `app`, `environment`, `scenario`, `step`처럼 낮은 cardinality resource attribute만 index label로 사용한다. `trace_id`, `request_id`, `synthetic_run_id`, reservation/payment/ticket id는 Loki label이 아니라 로그 본문 field와 structured metadata에 남긴다.
 
 ## Prometheus remote write를 미루는 이유
 
@@ -157,7 +203,7 @@ request_id
 ```text
 1. CronJob schedule 확인
 2. Job succeeded/failed 확인
-3. 실패한 Pod log 확인
+3. 실패한 Pod log 또는 Loki 로그 확인
 4. 실패 step과 request id 확인
 5. Tempo/Loki/DB에서 같은 요청 흐름 추적
 ```
@@ -177,7 +223,7 @@ k6 Prometheus remote write
 1차 실행 결과 확인
 -> Kubernetes Job 상태
 -> k6 로그
--> Loki 조회
+-> Collector를 거친 Loki 조회
 
 k6 metric remote write
 -> 1차에서는 하지 않음

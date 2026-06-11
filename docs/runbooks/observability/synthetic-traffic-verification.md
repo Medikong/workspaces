@@ -41,7 +41,7 @@ synthetic traffic은 기본 `task dev`에 포함하지 않는다. 먼저 `task d
 ```bash
 cd /Users/danghamo/Documents/gituhb/medikong/gitops
 task dev
-task --dir platform/synthetic deploy
+task dev:synthetic
 ```
 
 로컬 Helm 렌더링만 확인할 때는 다음 명령을 사용한다.
@@ -53,10 +53,24 @@ task --dir platform/synthetic render
 로컬 image tag를 바꿀 때는 `DEV_IMAGE_TAG`를 넘긴다.
 
 ```bash
-task --dir platform/synthetic deploy DEV_REGISTRY=localhost:5001 DEV_IMAGE_TAG=dev
+task dev:synthetic DEV_REGISTRY=localhost:5001 DEV_IMAGE_TAG=dev
 ```
 
-`deploy`는 `platform/synthetic/runner` image를 빌드하고 registry에 push한 뒤 Helm release를 설치/갱신한다.
+`dev:synthetic`은 `platform/synthetic/runner` image를 빌드하고 registry에 push한 뒤 Helm release를 설치/갱신한다. 루트 task는 진입점만 제공하고, 실제 synthetic 작업은 `platform/synthetic/Taskfile.yml`이 소유한다.
+
+`dev:synthetic`은 CronJob 배포 후 내부 `setup-fixture` k6 Job을 자동 실행한다. 사용자가 별도 fixture task를 실행하지 않아도 provider/admin/customer login, venue/concert/showtime/seat-map 준비, sale policy 승인, sales start, public 조회 확인까지 먼저 수행한다.
+
+로컬 credential Secret은 task가 demo 계정 기본값으로 만든다. 다른 계정을 쓰려면 실행 전에 환경변수를 넘긴다.
+
+```bash
+SYNTHETIC_CUSTOMER_EMAIL=customer@example.com \
+SYNTHETIC_CUSTOMER_PASSWORD=customer1234 \
+SYNTHETIC_PROVIDER_EMAIL=provider@example.com \
+SYNTHETIC_PROVIDER_PASSWORD=provider1234 \
+SYNTHETIC_ADMIN_EMAIL=admin@example.com \
+SYNTHETIC_ADMIN_PASSWORD=admin1234 \
+task dev:synthetic
+```
 
 ## 2. aws-dev 배포 방식
 
@@ -68,6 +82,12 @@ gitops/platform/synthetic/values/aws-dev.yaml
 ```
 
 태그를 고정하고 싶으면 `values/aws-dev.yaml`의 `image.tag`를 commit SHA로 바꾼다.
+
+`values/aws-dev.yaml`의 `synthetic.baseUrl`과 `synthetic.externalBaseUrl`은 현재 다음 aws-dev 외부 DNS로 고정한다.
+
+```text
+http://medikong-default-kong-nlb-c17a54e23efd293c.elb.ap-northeast-2.amazonaws.com:32407
+```
 
 ## 3. CronJob 배포 상태 확인
 
@@ -97,8 +117,10 @@ kubectl -n synthetic describe cronjob synthetic-traffic
 주기 실행을 기다리지 않고 한 번 실행한다.
 
 ```bash
-task --dir platform/synthetic run
+task dev:synthetic:run
 ```
+
+`dev:synthetic:run`도 수동 Job을 만들기 전에 내부 `setup-fixture` k6 Job을 먼저 실행한다. fixture 준비가 실패하면 full journey를 실행하지 않고 해당 단계 로그에서 멈춘다.
 
 생성된 Job과 Pod를 확인한다.
 
@@ -114,13 +136,13 @@ kubectl -n synthetic logs -l app.kubernetes.io/name=synthetic-traffic --tail=200
 
 정상 기준:
 
-- 로그에 `scenario_started`와 `scenario_succeeded`가 모두 남는다.
-- 각 step 로그의 `status_code`가 기대 상태와 맞는다.
+- 로그에 `synthetic_run_started`와 `synthetic_run_finished`가 모두 남는다.
+- 각 step 로그의 `http_status`가 기대 상태와 맞는다.
 - Job `COMPLETIONS`가 `1/1`이다.
 
 실패 기준:
 
-- 로그에 `scenario_failed`가 남는다.
+- 로그에 `synthetic_run_failed`가 남는다.
 - Job이 `0/1` 또는 `Failed`로 남는다.
 - 실패 메시지에 단계명, HTTP status, 응답 본문 일부가 포함된다.
 
@@ -175,8 +197,6 @@ synthetic runner는 다음 값을 남긴다.
 
 - `X-Synthetic-Traffic: true`
 - `X-Request-Id: synthetic-<run-id>-<suffix>`
-- 공연 제목: `Synthetic Metric Live <run-id>`
-- 공연장 이름: `Synthetic Hall <run-id>`
 - 결제 idempotency key: `synthetic-<run-id>`
 
 주의:
@@ -201,13 +221,42 @@ kubectl -n synthetic describe pod -l app.kubernetes.io/name=synthetic-traffic
 
 ### 인증 실패
 
-로그에서 `auth.customer_login`, `auth.provider_login`, `auth.admin_login` 단계를 본다.
+로그에서 `auth.login` 단계를 본다.
 
 확인할 것:
 
 - auth-service가 demo user seed를 실행했는가?
-- ConfigMap의 `SYNTHETIC_*_EMAIL`, `SYNTHETIC_*_PASSWORD`가 auth-service seed와 맞는가?
+- `synthetic-traffic-credentials` Secret의 `SYNTHETIC_CUSTOMER_EMAIL`, `SYNTHETIC_CUSTOMER_PASSWORD`가 auth-service seed와 맞는가?
 - Kong JWT/identity header plugin이 auth token을 해석하는가?
+
+## 9. Loki 로그 확인
+
+k6 runner와 애플리케이션은 Loki를 직접 호출하지 않는다. 둘 다 stdout/stderr로 로그를 남기고, OpenTelemetry Collector가 Kubernetes container log를 수집해 Loki로 보내는 구조를 전제로 한다.
+
+현재 `gitops/platform/observability/collector/values/*.yaml`은 contrib Collector DaemonSet으로 배포되고, `/var/log/pods`와 `/var/log/containers`를 읽어 `filelog -> k8sattributes -> transform/log_labels -> otlphttp/loki` 경로로 Loki에 보낸다. 기존 trace pipeline은 같은 Collector에서 `otlp -> Tempo`로 유지한다.
+
+Collector 상태를 먼저 확인한다.
+
+```bash
+kubectl -n observability get daemonset,pod,svc -l app.kubernetes.io/name=opentelemetry-collector
+kubectl -n observability logs daemonset/opentelemetry-collector-agent --tail=200
+```
+
+Loki에서 synthetic runner 로그를 조회한다.
+
+```logql
+{k8s_namespace_name="synthetic", app="synthetic-traffic"}
+| json
+| event =~ "synthetic_run_started|synthetic_step|synthetic_run_finished|synthetic_run_failed"
+```
+
+단계별로 좁힐 때는 낮은 cardinality label만 사용한다.
+
+```logql
+{k8s_namespace_name="synthetic", app="synthetic-traffic", scenario="external-journey", step="payment.approve"}
+```
+
+`trace_id`, `request_id`, `synthetic_run_id`, reservation/payment/ticket id는 label이 아니라 로그 본문 field로 검색한다.
 
 ### 티켓 또는 알림 polling 실패
 

@@ -45,7 +45,7 @@ synthetic CronJob
 
 ## 역할별 계정 정책
 
-반복 synthetic flow에 모든 역할 credential을 항상 주입하지 않는다. 계정은 역할별로 목적을 나눈다.
+반복 synthetic flow는 customer credential로 실행한다. 다만 로컬 `task dev:synthetic`과 `task dev:synthetic:run`은 full journey 전에 내부 fixture setup Job을 실행하므로, 같은 Secret에 provider/admin credential도 함께 있어야 한다. 값이 없으면 fixture setup은 빠르게 실패한다.
 
 | 역할 | 반복 CronJob 사용 | 권장 용도 |
 |---|---|---|
@@ -57,10 +57,10 @@ synthetic CronJob
 
 ```text
 반복 synthetic CronJob
--> customer credential만 주입
+-> customer credential로 full journey 실행
 
-fixture setup Job 또는 수동 task
--> provider/admin credential 사용 가능
+로컬 내부 setup-fixture Job
+-> provider/admin credential로 fixture 준비
 ```
 
 이렇게 하면 반복 실행 Job의 권한 범위를 줄일 수 있고, synthetic flow가 실제 고객 행동에 더 가까워진다.

@@ -20,6 +20,7 @@ k6는 현재 synthetic E2E 방향에 잘 맞는다.
 
 관련 결정:
 
+- [k6 아키텍처 구조와 코드 샘플](k6-architecture.md)
 - [Synthetic 대상 URL 결정](target-url-decision.md)
 - [Synthetic 계정과 credential 결정](credential-source-decision.md)
 - [Synthetic 테스트 데이터 생성 결정](test-data-generation-decision.md)
@@ -174,6 +175,7 @@ Pod log
 
 ```text
 k6 summary
+-> OpenTelemetry Collector
 -> Loki log
 -> Prometheus remote write
 -> Grafana panel

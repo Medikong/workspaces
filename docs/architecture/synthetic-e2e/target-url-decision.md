@@ -39,7 +39,7 @@ synthetic CronJob
 
 | 기준 | 내부 Kong DNS | 외부 Ingress DNS |
 |---|---|---|
-| 예시 | `http://kong-kong-proxy.kong.svc.cluster.local` | `https://api.aws-dev.medikong.example` |
+| 예시 | `http://kong-kong-proxy.kong.svc.cluster.local` | `http://medikong-default-kong-nlb-c17a54e23efd293c.elb.ap-northeast-2.amazonaws.com:32407` |
 | 검증 범위 | Kong route, service 연결, backend 의존성 | DNS, TLS, AWS LB/Ingress, Kong, service, backend 의존성 |
 | 실제 트래픽 유사성 | 낮음 | 높음 |
 | trace/log 시뮬레이션 | 내부 호출 기준으로 가능 | 실제 진입 경로 기준으로 더 자연스러움 |
@@ -127,8 +127,14 @@ aws-dev 같은 배포 환경은 외부 Ingress DNS를 기본으로 둔다.
 
 ```text
 values/aws-dev.yaml
--> SYNTHETIC_BASE_URL=https://<aws-dev-ingress-host>
+-> SYNTHETIC_BASE_URL=http://medikong-default-kong-nlb-c17a54e23efd293c.elb.ap-northeast-2.amazonaws.com:32407
 -> schedule="*/5 * * * *" 또는 "*/10 * * * *"
+```
+
+현재 aws-dev synthetic E2E의 확정 외부 대상은 다음 값이다.
+
+```text
+http://medikong-default-kong-nlb-c17a54e23efd293c.elb.ap-northeast-2.amazonaws.com:32407
 ```
 
 ## 로그와 Trace 기준
