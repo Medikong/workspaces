@@ -23,16 +23,17 @@ updated: 2026-05-29
 
 ### 로그 수집과 처리
 
-- [ ] Fluentd를 DaemonSet으로 배포하여 전 Pod 로그를 수집하고 Elasticsearch에 서비스별 인덱스(`orders-logs-*`, `payments-logs-*`)로 적재하는 파이프라인을 구성한다.
-- [ ] Elasticsearch와 Splunk의 운영 비용·검색 성능·확장성을 비교 분석하고 선택 근거를 아키텍처 결정 기록(ADR) 문서로 작성한다.
-- [ ] 기본 프로젝트의 Fluentd를 Fluent Bit으로 교체하여 DaemonSet 메모리 사용량을 측정·비교하고, 리소스 절감 수치를 문서화한다.
-- [ ] Logstash 파이프라인에 서비스별 로그 필터링 규칙(민감 데이터 마스킹, 에러 레벨 자동 분류)을 추가한다.
+- [x] 각 서비스가 구조화된 JSON 로그를 출력하고 `trace_id`, `span_id`, `request_id`, `service.name`, `deployment.environment` 필드를 포함하도록 공통 로깅 설정을 정비한다.
+- [x] OpenTelemetry Collector의 로그 수집 파이프라인을 구성하여 서비스·애플리케이션 로그를 OTLP로 수신하고 Loki로 적재한다.
+- [ ] Collector processor에 민감 데이터 마스킹, 불필요한 속성 제거, 배치 처리, 메모리 제한 설정을 적용하고 리소스 사용량을 측정한다.
+- [x] Grafana 로그 분석 대시보드에서 서비스명·환경·로그 레벨·request_id·trace_id 기준 조회와 Tempo trace 연결을 검증한다.
 
 ### 대시보드
 
-- [ ] Kibana 대시보드에서 서비스별 에러 로그 필터, request_id 기반 요청 추적 뷰를 구성한다.
+- [x] Grafana 대시보드에서 Loki 로그를 서비스명·환경·로그 레벨·request_id·trace_id 기준으로 조회할 수 있는 로그 분석 패널을 구성한다.
+- [x] Grafana 대시보드에서 서비스별 에러 로그, 요청 흐름, Tempo trace 연계 링크를 한 화면에서 확인할 수 있도록 구성한다.
 - [ ] Grafana에 주문 처리량·결제 성공률·서비스별 응답 시간을 단일 화면으로 통합한 운영 대시보드를 구성하고, 임계치 초과 시 색상이 변하는 Threshold를 패널별로 설정한다.
-- [ ] Kibana/Grafana 대시보드를 서비스 운영 관점(에러율·응답시간·처리량)과 인프라 관점(CPU·메모리·네트워크)으로 분리하여 재설계한다.
+- [ ] Grafana 대시보드를 서비스 운영 관점(에러율·응답시간·처리량), 인프라 관점(CPU·메모리·네트워크), 로그 분석 관점(에러 로그·request_id·trace_id)으로 분리하여 재설계한다.
 - [ ] 에러율·응답시간 지표에 대해 단기(5분)·장기(24시간) 트렌드를 시각화하는 패널을 추가한다.
 
 ### 알림과 대응 기준
