@@ -20,6 +20,7 @@
 | TROUBLE-002 | open | p1 | deployment | 서비스 Pod 배포 후 DB 의존성 Pod 부재 | [2026-06-08-service-pods-without-database-dependencies.md](2026-06-08-service-pods-without-database-dependencies.md) |
 | TROUBLE-003 | triaged | p2 | service | 서비스 이미지 publish 빌드 시간 증가 | [2026-06-08-service-image-build-time-regression.md](2026-06-08-service-image-build-time-regression.md) |
 | TROUBLE-004 | resolved | p2 | observability | Synthetic 예약 충돌의 ERROR 로그 오분류 | [2026-06-11-synthetic-reservation-conflict-error-log.md](2026-06-11-synthetic-reservation-conflict-error-log.md) |
+| TROUBLE-005 | in_progress | p1 | observability | payment outbox trace context 컬럼 마이그레이션 누락 | [2026-06-11-payment-outbox-trace-context-migration.md](2026-06-11-payment-outbox-trace-context-migration.md) |
 
 새 트러블을 추가하면 위 표에 한 줄을 추가한다. 해결된 기록도 삭제하지 않고 `status: closed`로 유지한다.
 
