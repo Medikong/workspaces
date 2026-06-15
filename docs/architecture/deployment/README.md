@@ -130,7 +130,7 @@ helper 책임:
 - `BUMP`가 `patch`, `minor`, `major` 중 하나인지 확인한다.
 - `DRY_RUN=true`이면 tag 생성과 push 없이 deploy plan을 출력한다.
 - `git fetch --tags --force`로 tag를 최신화한다.
-- 단일 서비스는 `deploy/dev/<service-name>/v*.*.*` 중 최신 버전을 찾는다.
+- 서비스별 최신 버전은 `deploy/dev/<service-name>/v*.*.*` tag와 `changed`/`all` deploy plan annotation의 `services[].tag`를 함께 보고 찾는다.
 - `changed` 배포는 이전 묶음 배포 기준과 현재 `HEAD` 사이의 변경 파일로 영향받은 서비스 목록을 만든다.
 - `all` 배포는 전체 서비스 목록을 대상 서비스로 둔다.
 - 묶음 배포는 각 대상 서비스별 최신 SemVer를 찾고 같은 `BUMP` 규칙을 적용한다.

@@ -62,7 +62,7 @@ git status --short --branch
 task deploy:tag SERVICE=all BUMP=patch
 ```
 
-helper는 먼저 `git fetch --tags --force`를 실행한다. 단일 서비스는 `deploy/dev/<service>/v*.*.*` 중 최신 값을 기준으로 다음 SemVer를 계산한다. 초기 서비스 tag가 없으면 `v0.1.0`부터 시작한다.
+helper는 먼저 `git fetch --tags --force`를 실행한다. 서비스별 최신 SemVer는 `deploy/dev/<service>/v*.*.*` tag와 `deploy/dev/changed/*`, `deploy/dev/all/*` annotation의 `services[].tag`를 함께 보고 계산한다. 초기 서비스 tag가 없으면 `v0.1.0`부터 시작한다.
 
 ## changed 기준
 
