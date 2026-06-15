@@ -127,6 +127,18 @@ medikong/
 | Grafana | http://localhost/grafana | `gitops` 레포에서 `task dev` 혹은 `task --taskfile platform/monitoring/Taskfile.yml up` 실행 |
 | pgAdmin | http://localhost/pgadmin | `gitops` 레포에서 `task dev` 혹은 `task dev:data` 실행. 로그인 `admin@example.com` / `admin`, DB 접속 `user` / `password` |
 
+## GitHub 이미지 배포
+
+초기 전체 서비스 배포나 강제 전체 배포가 필요하면 `service` repo에서 먼저 미리보기 후 실제 태그를 만든다.
+
+```bash
+task deploy:tag SERVICE=all BUMP=patch DRY_RUN=true
+task deploy:tag SERVICE=all BUMP=patch
+```
+
+- 실행 절차: [docs/runbooks/deployment/tag-based-image-deploy.md](docs/runbooks/deployment/tag-based-image-deploy.md)
+- 배포 구조: [docs/architecture/deployment/README.md](docs/architecture/deployment/README.md)
+
 ## AWS Dev 접속 주소
 
 | 이름 | 주소 | 비고 |
@@ -173,6 +185,7 @@ medikong/
 ## 아키텍처
 
 - repo별 책임 경계: [docs/architecture/repo-boundaries.md](docs/architecture/repo-boundaries.md)
+- 태그 기반 이미지 배포: [docs/architecture/deployment/README.md](docs/architecture/deployment/README.md)
 - 관측성 아키텍처: [docs/architecture/observability/README.md](docs/architecture/observability/README.md)
 - 감사 로그 아키텍처: [docs/architecture/audit-logs/README.md](docs/architecture/audit-logs/README.md)
 
