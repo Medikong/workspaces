@@ -23,6 +23,7 @@
 | TROUBLE-005 | in_progress | p1 | observability | payment outbox trace context 컬럼 마이그레이션 누락 | [2026-06-11-payment-outbox-trace-context-migration.md](2026-06-11-payment-outbox-trace-context-migration.md) |
 | TROUBLE-006 | in_progress | p2 | observability | payment outbox DB 단독 trace의 작업 맥락 부재 | [2026-06-12-payment-outbox-db-only-trace.md](2026-06-12-payment-outbox-db-only-trace.md) |
 | TROUBLE-007 | triaged | p2 | observability | Kafka producer trace 계측이 호출부에 흩어지는 문제 | [2026-06-12-kafka-producer-trace-wrapper.md](2026-06-12-kafka-producer-trace-wrapper.md) |
+| TROUBLE-008 | resolved | p2 | observability | Grafana dashboard UID 길이 초과로 Load 50 미노출 | [2026-06-15-grafana-dashboard-uid-too-long.md](2026-06-15-grafana-dashboard-uid-too-long.md) |
 
 새 트러블을 추가하면 위 표에 한 줄을 추가한다. 해결된 기록도 삭제하지 않고 `status: closed`로 유지한다.
 
