@@ -25,6 +25,7 @@
 | TROUBLE-007 | triaged | p2 | observability | Kafka producer trace 계측이 호출부에 흩어지는 문제 | [2026-06-12-kafka-producer-trace-wrapper.md](2026-06-12-kafka-producer-trace-wrapper.md) |
 | TROUBLE-008 | resolved | p2 | observability | Grafana dashboard UID 길이 초과로 Load 50 미노출 | [2026-06-15-grafana-dashboard-uid-too-long.md](2026-06-15-grafana-dashboard-uid-too-long.md) |
 | TROUBLE-009 | triaged | p2 | observability | 로컬 부하테스트 k6 Pod IP 단위 Kong rate limit | [2026-06-16-local-loadtest-kong-ip-rate-limit.md](2026-06-16-local-loadtest-kong-ip-rate-limit.md) |
+| TROUBLE-010 | in_progress | p1 | observability | 부하테스트 중 auth login trace의 미계측 지연 구간 | [2026-06-16-auth-login-trace-latency-under-load.md](2026-06-16-auth-login-trace-latency-under-load.md) |
 
 새 트러블을 추가하면 위 표에 한 줄을 추가한다. 해결된 기록도 삭제하지 않고 `status: closed`로 유지한다.
 

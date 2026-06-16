@@ -4,6 +4,7 @@
 
 - 지표 정의와 수집 기준: `metrics/README.md`
 - Trace 수집 경로와 repo 책임: `tracing/README.md`
+- 프로파일링 수집 설계: `profiling/README.md`
 - Kafka producer trace wrapper 설계: `tracing/kafka-producer-wrapper.md`
 - Tempo/Grafana 조회 기준: `tracing/tempo-grafana-query.md`
 - Trace sampling과 retention 기준: `tracing/sampling-retention.md`
