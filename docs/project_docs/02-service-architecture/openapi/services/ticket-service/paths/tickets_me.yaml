@@ -1,7 +1,7 @@
 get:
   summary: 내 티켓 목록 조회
   operationId: listMyTickets
-  description: 로그인한 사용자 본인의 전체 티켓 목록을 반환한다.
+  description: 로그인한 사용자 본인의 티켓 목록을 cursor 기반 페이지 단위로 반환한다. 기본 limit은 20, 최대 limit은 100이다.
   parameters:
     - $ref: ../../../common/components.yaml#/components/parameters/RequestId
     - $ref: ../../../common/components.yaml#/components/parameters/Limit
@@ -24,6 +24,7 @@ get:
                 qrUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/qr.png"
                 pdfUrl: "https://ticketing-tickets.s3.ap-northeast-2.amazonaws.com/tickets/1/ticket.pdf"
                 issuedAt: "2026-05-13T10:00:00Z"
+            nextCursor: "1"
     "401":
       $ref: ../../../common/components.yaml#/components/responses/Unauthorized
     "500":

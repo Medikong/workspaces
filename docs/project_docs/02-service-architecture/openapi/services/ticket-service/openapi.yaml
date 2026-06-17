@@ -111,8 +111,16 @@ components:
       type: object
       required:
         - items
+        - nextCursor
       properties:
         items:
           type: array
           items:
             $ref: "#/components/schemas/Ticket"
+        nextCursor:
+          type:
+            - string
+            - "null"
+          description: Cursor for the next page. Null means there are no more tickets for this user.
+          examples:
+            - "123"
