@@ -23,6 +23,7 @@
 | TROUBLE-005 | in_progress | p1 | observability | payment outbox trace context 컬럼 마이그레이션 누락 | [2026-06-11-payment-outbox-trace-context-migration.md](2026-06-11-payment-outbox-trace-context-migration.md) |
 | TROUBLE-006 | in_progress | p2 | observability | payment outbox DB 단독 trace의 작업 맥락 부재 | [2026-06-12-payment-outbox-db-only-trace.md](2026-06-12-payment-outbox-db-only-trace.md) |
 | TROUBLE-007 | triaged | p2 | observability | Kafka producer trace 계측이 호출부에 흩어지는 문제 | [2026-06-12-kafka-producer-trace-wrapper.md](2026-06-12-kafka-producer-trace-wrapper.md) |
+| TROUBLE-008 | closed | p1 | security | NetworkPolicy runtime test에서 connect-only 검증이 Istio sidecar Pod에서 허용처럼 보이는 문제 | [2026-06-17-networkpolicy-connect-only-false-positive.md](2026-06-17-networkpolicy-connect-only-false-positive.md) |
 
 새 트러블을 추가하면 위 표에 한 줄을 추가한다. 해결된 기록도 삭제하지 않고 `status: closed`로 유지한다.
 

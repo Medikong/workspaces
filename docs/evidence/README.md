@@ -27,3 +27,4 @@ docs/evidence/security/network-policy-block/
 | 영역 | 용도 | 인덱스 |
 | --- | --- | --- |
 | observability | metric, log, trace, dashboard 검증 결과 | [observability/README.md](observability/README.md) |
+| security | RBAC, ServiceAccount, NetworkPolicy, Gateway 보안 정책 검증 결과 | [security/README.md](security/README.md) |
