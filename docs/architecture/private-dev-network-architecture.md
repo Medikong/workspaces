@@ -1,61 +1,61 @@
-# Private-dev private server network architecture
+# Private-dev 사설 서버 네트워크 아키텍처
 
 이 문서는 Medikong `private-dev` 사설 서버 환경에서 외부 HTTP 요청이 HAProxy, Kong, Kubernetes Ingress, 내부 Service로 이어지는 네트워크 구조를 설명한다.
 
 ## 한 줄 요약
 
-외부 사용자는 HTTP 기본 포트 `80`으로 공개 URL에 접근한다. OpenStack 안의 edge 역할 구간에서 이 요청이 HAProxy의 `32047` 바인딩으로 연결되고, HAProxy는 같은 OpenStack 사설망의 `node2:32047`에 요청을 전달한다. Kong Pod의 `hostPort`는 이 요청을 받아 Kubernetes Ingress 라우팅으로 내부 서비스에 연결한다.
+외부 사용자는 HTTP 기본 포트 `80`으로 공개 URL에 접근한다. OpenStack 안의 엣지 역할 구간에서 이 요청이 HAProxy의 `32047` 바인딩으로 연결되고, HAProxy는 같은 OpenStack 사설망의 `node2:32047`에 요청을 전달한다. Kong Pod의 `hostPort`는 이 요청을 받아 Kubernetes Ingress 라우팅으로 내부 서비스에 연결한다.
 
 ```text
-Public URL :80 -> HAProxy :32047 -> node2 :32047 -> Kong :8000 -> Ingress -> Service ClusterIP -> Pod
+공개 URL :80 -> HAProxy :32047 -> node2 :32047 -> Kong :8000 -> Ingress -> Service ClusterIP -> Pod
 ```
 
 ## 전체 경계
 
 ```mermaid
-flowchart LR
-    subgraph Internet["Public Internet"]
-        User["User / external client"]
-        DNS["DNS<br/>api.example.com -> OpenStack ingress endpoint"]
+flowchart TB
+    subgraph Internet["외부 인터넷"]
+        User["사용자 / 외부 클라이언트"]
+        DNS["DNS<br/>api.example.com -> OpenStack 진입 endpoint"]
     end
 
-    subgraph OpenStack["OpenStack private cloud / tenant network"]
-        subgraph Edge["Edge / DMZ-like zone"]
+    subgraph OpenStack["OpenStack 사설 클라우드 / 테넌트 네트워크"]
+        subgraph Edge["엣지 / DMZ 성격 구간"]
             HAProxy["HAProxy<br/>frontend :32047<br/>backend node2:32047"]
         end
 
-        subgraph PrivateNetwork["Private server network"]
-            Node2["node2 ingress node<br/>private IP 10.0.1.49<br/>hostPort :32047"]
+        subgraph PrivateNetwork["사설 서버 네트워크"]
+            Node2["node2 ingress node<br/>사설 IP 10.0.1.49<br/>hostPort :32047"]
         end
 
-        subgraph Kubernetes["Kubernetes Cluster"]
+        subgraph Kubernetes["Kubernetes 클러스터"]
             subgraph KongNamespace["namespace: kong"]
                 KongService["Service: kong-kong-proxy<br/>type: ClusterIP<br/>:80 -> targetPort :8000"]
                 KongPod["Kong Pod on node2<br/>containerPort :8000<br/>hostPort :32047"]
             end
 
-            subgraph AppNamespaces["Application Namespaces"]
-                Ingress["Ingress resources<br/>Host / Path routing"]
+            subgraph AppNamespaces["애플리케이션 네임스페이스"]
+                Ingress["Ingress resources<br/>Host / Path 라우팅"]
                 AppService["Application Service<br/>type: ClusterIP"]
                 AppPod["Application Pod"]
             end
 
-            subgraph Observability["Monitoring / Observability"]
-                Grafana["Grafana route<br/>for example /grafana"]
+            subgraph Observability["모니터링 / 관측성"]
+                Grafana["Grafana route<br/>예: /grafana"]
                 Metrics["Prometheus / Loki / Tempo"]
             end
         end
     end
 
     User -->|"http://api.example.com:80"| DNS
-    DNS -->|"A record"| HAProxy
-    HAProxy -->|"private backend node2:32047"| Node2
+    DNS -->|"A 레코드"| HAProxy
+    HAProxy -->|"사설 backend node2:32047"| Node2
     Node2 -->|"hostPort 32047 -> containerPort 8000"| KongPod
-    KongService -. "cluster-internal access only" .-> KongPod
+    KongService -. "클러스터 내부 접근" .-> KongPod
     KongPod --> Ingress
     Ingress -->|"serviceName + servicePort"| AppService
     AppService --> AppPod
-    Ingress -->|"dashboard path"| Grafana
+    Ingress -->|"대시보드 경로"| Grafana
     Grafana --> Metrics
 ```
 
@@ -66,7 +66,7 @@ flowchart LR
 ```text
 Client
   -> DNS
-  -> Public URL:80
+  -> 공개 URL:80
   -> HAProxy:32047
   -> node2:32047
   -> Kong Pod containerPort 8000
@@ -75,7 +75,7 @@ Client
   -> backend Pod
 ```
 
-DNS는 포트를 알지 못한다. DNS는 도메인을 OpenStack으로 들어오는 외부 endpoint로만 변환한다. 현재 구조에서는 클라이언트가 `http://<public-domain>`으로 접속하고, OpenStack 안의 edge 역할 구간에서 HAProxy `32047` 바인딩을 거쳐 사설망 backend `node2:32047`로 전달한다.
+DNS는 포트를 알지 못한다. DNS는 도메인을 OpenStack으로 들어오는 외부 endpoint로만 변환한다. 현재 구조에서는 클라이언트가 `http://<public-domain>`으로 접속하고, OpenStack 안의 엣지 역할 구간에서 HAProxy `32047` 바인딩을 거쳐 사설망 backend `node2:32047`로 전달한다.
 
 예시 구조:
 
@@ -129,7 +129,7 @@ kubectl -n kong get pod -l app.kubernetes.io/instance=kong -o wide
 
 ```mermaid
 flowchart LR
-    Pod["Cluster internal Pod"]
+    Pod["클러스터 내부 Pod"]
     KongService["kong-kong-proxy.kong.svc.cluster.local:80<br/>ClusterIP Service"]
     KongPod["Kong Pod<br/>containerPort :8000"]
     Ingress["Ingress route"]
