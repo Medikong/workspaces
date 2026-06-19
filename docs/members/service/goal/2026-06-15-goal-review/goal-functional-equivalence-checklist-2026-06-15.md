@@ -320,6 +320,8 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
   - ECR registry 403 에러 있음
   - ImagePullBackOff,  arm64, amd64  서비스는 멀티 빌드가 챙겨져있는데 다른 것들은 누락하다보니 이런 문제가 발생함.
   - 부하테스트할때  부하너무 서비스자체에서 readness liveness 쿠버네티스에서 트래픽 단절 ( 머신 성능 문제 )
+  - 근거: [ECR registry 403 ImagePullBackOff trouble](../../../../trouble/ecr-registry-403/README.md)로 반복 장애 패턴 1차 증거를 분리했다.
+  - 근거: [Image manifest pull failure on arm64 trouble](../../../../trouble/image-multi-arch-pull-failure/README.md)로 이미지 manifest/tag 문제를 ECR 인증 문제와 분리했다.
   - 근거: trouble 문서는 있으나 SLA/운영 보고 형태로 묶이지 않았다.
 
 - [x] 로그 분석 기반 SLA/장애 분석 화면을 구성할 수 있는 dashboard 기반이 있다. `기능 동등 충족`

@@ -22,6 +22,7 @@
 | observability | AWS Grafana SSH 터널 접속 | [observability/aws-grafana-tunnel.md](observability/aws-grafana-tunnel.md) |
 | observability | synthetic traffic 검증 | [observability/synthetic-traffic-verification.md](observability/synthetic-traffic-verification.md) |
 | deployment | 태그 기반 이미지 배포 | [deployment/tag-based-image-deploy.md](deployment/tag-based-image-deploy.md) |
+| deployment | ECR kubelet credential provider 도입 | [deployment/ecr-kubelet-credential-provider.md](deployment/ecr-kubelet-credential-provider.md) |
 
 ## 작성 기준
 
