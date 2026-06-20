@@ -29,6 +29,64 @@ flowchart LR
     A --> B --> C --> D --> E --> F --> A
 ```
 
+#### 사용자 예매 처리
+
+사용자 호출은 Kong을 지나 각 서비스로 전달되고, 결제 이후 티켓 발급과 알림은 Kafka 이벤트로 분리됩니다.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor user as 사용자 앱
+    participant gateway as Kong Gateway
+    box Kubernetes MSA
+        participant auth as auth-service
+        participant concert as concert-service
+        participant reservation as reservation-service
+        participant payment as payment-service
+        participant ticket as ticket-service
+        participant notification as notification-service
+    end
+    participant kafka as Kafka
+
+    user->>gateway: POST /auth/login
+    gateway->>auth: 로그인 요청
+    auth-->>gateway: JWT 발급
+    gateway-->>user: 로그인 완료
+
+    user->>gateway: 공연/회차/좌석 조회
+    gateway->>concert: GET /concerts/recommended
+    gateway->>concert: GET /concerts/{id}
+    gateway->>concert: GET /concerts/{id}/calendar
+    gateway->>concert: GET /concerts/{id}/dates/{date}/performances
+    gateway->>concert: GET /performances/{id}/seat-map
+    concert-->>gateway: 공연, 회차, 좌석 정보
+    gateway-->>user: 예매 가능 정보
+
+    user->>gateway: POST /reservations
+    gateway->>reservation: 좌석 예약 생성
+    reservation-->>gateway: 예약 생성 결과
+    reservation-)kafka: reservation event
+    gateway-->>user: 예약 완료
+
+    user->>gateway: POST /payments
+    gateway->>payment: 결제 승인 요청
+    payment-->>gateway: 결제 승인 결과
+    payment-)kafka: payment event
+    gateway-->>user: 결제 완료
+
+    kafka-)ticket: ticket issue
+    user->>gateway: GET /tickets/me
+    gateway->>ticket: 티켓 조회
+    ticket-->>gateway: 발급 티켓
+    gateway-->>user: 티켓 확인
+
+    kafka-)notification: notification
+    user->>gateway: GET /notifications
+    gateway->>notification: 알림 조회
+    notification-->>gateway: 예매 완료 알림
+    gateway-->>user: 알림 확인
+```
+
 ![티켓 예매부터 결제까지 주요 여정](assets/ticketmong-key-process.png)
 
 ### 주요 화면
