@@ -6,6 +6,7 @@
 
 | 날짜 | 주제 | 요약 | 문서 |
 | --- | --- | --- | --- |
+| 2026-06-20 | HPA spike test | capacity baseline CPU request 후보를 적용한 뒤 예매 전체 여정에서 HPA scale-out 반응을 검증하는 smoke/spike 구성 | [hpa-spike-test/README.md](hpa-spike-test/README.md) |
 | 2026-06-20 | stress find limit | 단일 replica 조건에서 SLO가 깨지는 경계와 첫 병목 후보를 찾기 위한 실험 기준 | [stress-find-limit/README.md](stress-find-limit/README.md) |
 | 2026-06-19 | capacity baseline | CPU request 기준 탐색을 위한 `capacity-baseline-load-test` 설계와 local smoke 결과 보관 | [capacity-baseline/README.md](capacity-baseline/README.md) |
 | 2026-06-19 | loadtest scenario redesign | 부하테스트를 반복 가능한 가설 검증 실험으로 재정의하고 서비스별/전체 E2E/보고서 계약을 분리한 설계안 | [scenario-redesign-2026-06-19/README.md](scenario-redesign-2026-06-19/README.md) |

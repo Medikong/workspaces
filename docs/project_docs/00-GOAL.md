@@ -68,7 +68,7 @@ updated: 2026-05-29
 
 - [ ] 각 서비스에 Deployment + HPA(CPU 70% 기준, 최소 2·최대 10 Replica)를 구성한다.
 - [ ] Readiness Probe(`/health/ready`, DB 연결 확인)와 Liveness Probe(`/health`, 프로세스 생존 확인)를 설정하여 배포 중 트래픽 단절이 없도록 한다.
-- [ ] Helm Chart로 서비스 배포 설정을 관리하고 Rolling Update 배포 전략을 적용한다.
+- [x] Helm Chart로 서비스 배포 설정을 관리하고 Rolling Update 배포 전략을 적용한다.
 
 ### 서비스 메시와 Canary
 

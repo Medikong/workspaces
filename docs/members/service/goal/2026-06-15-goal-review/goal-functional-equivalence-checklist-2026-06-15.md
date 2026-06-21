@@ -382,9 +382,6 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 - [ ] HPA 목표 수치 CPU 70%, min 2, max 10을 운영 또는 검증 scenario로 만족한다. `이번에 포함, 실험후 결과 정리`, `최범휘`
   - 세부 목표
     - scale-out 응답 시간을 측정한다.
-  - 현재 aws-dev 핵심 서비스는 대부분 max 1이라 운영값 기준 scale-out은 제한된다.
-  - Phase 7에서 `concert-service` 제한적 smoke로 HPA가 1 -> 2 scale-out 이벤트를 만들 수 있음을 확인했다.
-  - 
 
 - [x] Readiness Probe와 Liveness Probe를 구성한다. `기능 동등 충족`
   - 목표 문구는 `/health/ready`, `/health`지만 현재 서비스 표준은 `/readyz`, `/healthz`다.
@@ -522,7 +519,11 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
   - coverage report 생성 기반은 있으나 80% gate 증거는 부족하다.
   - [Service Unit Test 증거](../../../../evidence/ci/service-unit-tests/README.md)
 
-- [ ] Critical issue 발견 시 pipeline을 중단하고 PR comment를 게시한다. `이번에포함`, `미충족`, `이석진`
+- [x] Critical issue 발견 시 pipeline을 중단하고 PR comment를 게시한다. `이번에포함`, `Trivy 기준 충족`, `이석진`
+  - 근거: `gitops` PR [Medikong/gitops#30](https://github.com/Medikong/gitops/pull/30)에서 `Code scanning results / Trivy` check가 실패했고, `github-advanced-security[bot]`가 변경 라인에 inline PR comment를 게시했다.
+  - 증거: [Trivy PR comment와 failed check 검증](../../../../evidence/security/trivy-pr-comment-gate/README.md)
+  - 관련 trouble: [Trivy 보안 스캔이 PR comment와 failed check로 HIGH 이슈를 드러낸 상태](../../../../trouble/trivy-pr-comment-gate/README.md)
+  - 주의: 이 판정은 Trivy Kubernetes manifest scan 기준이다.
 
 - [x] Trivy image scan을 구성한다.
 
@@ -553,8 +554,8 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 - [ ] 기준 성능 baseline을 측정한다. P99, P95, P50 응답시간, 최대 처리량, 에러율을 보고서를 자동으로 생성한다. `이번에포함`, `증거 필요`, `최범휘`
   - 부하테스트  티켓 오픈 시점, 평상시 피크치  1만 MAU, 동접자 100명
 
-- [ ] aws에서 자동화 테스트 `synthetic`를 정기 실행한다. `이번에 포함`, `증거 필요`, `최범휘`
-  - synthetic은 현재 주기적으로 실행중이므로, 그 결과를 보고서랑 스크린샷으로 남기기
+- [x] aws에서 자동화 테스트 `synthetic`를 정기 실행한다. `이번에 포함`, `증거 완료`, `최범휘`
+  - [참고](../../../../../docs/evidence/observability/synthetic-automation/README.md)
 
 - [ ] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
 
@@ -623,4 +624,3 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] 최적화 결과와 점진적 적용 가이드라인을 팀 위키에 공유한다.
   - 발표때 팀 문서 공유로 남기고 있다라고 설명만 하기
-

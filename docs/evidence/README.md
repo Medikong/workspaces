@@ -26,6 +26,7 @@ docs/evidence/security/network-policy-block/
 
 | 영역 | 용도 | 인덱스 |
 | --- | --- | --- |
+| ci | CI 자동화 실행/커버리지/아티팩트 증빙 | [ci/README.md](ci/README.md) |
 | observability | metric, log, trace, dashboard 검증 결과 | [observability/README.md](observability/README.md) |
 | loadtest | k6 부하테스트 실행 조건, 결과, 병목 분석 근거 | [loadtest/README.md](loadtest/README.md) |
 | services | 서비스별 병목 원인과 개선 방향 정리 | [services/README.md](services/README.md) |

@@ -271,6 +271,7 @@ task deploy:tag SERVICE=all BUMP=patch
 ## 아키텍처
 
 - repo별 책임 경계: [docs/architecture/repo-boundaries.md](docs/architecture/repo-boundaries.md)
+- 온프레미스 private-dev 환경 계획: [docs/architecture/onprem-private-dev-environment.md](docs/architecture/onprem-private-dev-environment.md)
 - 태그 기반 이미지 배포: [docs/architecture/deployment/README.md](docs/architecture/deployment/README.md)
 - 관측성 아키텍처: [docs/architecture/observability/README.md](docs/architecture/observability/README.md)
 - 감사 로그 아키텍처: [docs/architecture/audit-logs/README.md](docs/architecture/audit-logs/README.md)
