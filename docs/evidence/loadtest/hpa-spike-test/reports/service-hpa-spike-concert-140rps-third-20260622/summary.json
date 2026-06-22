@@ -1,0 +1,69 @@
+{
+  "title": "service-hpa-spike concert-140rps third run",
+  "scenario": "service-hpa-spike-load-test",
+  "preset": "concert-140rps",
+  "command": "SCENARIO=service-hpa-spike-load-test PRESET=concert-140rps LOADTEST_READ_JOB_WAIT_SECONDS=3600 task --dir gitops dev:loadtest",
+  "dataset_job": "read-api-loadtest-dataset-manual-20260621160659",
+  "read_job": "read-api-loadtest-read-manual-20260621160921",
+  "run_id": "read-api-loadtest-read-manual-20260621160921-fhfxw",
+  "job_status": "Succeeded",
+  "k6_report_status": "FAIL",
+  "started_at_kst": "2026-06-22T01:09:23+09:00",
+  "finished_at_kst": "2026-06-22T01:33:09+09:00",
+  "test_run_duration_ms": 1421283.516448,
+  "environment": "local-hpa-spike",
+  "sqlalchemy_pool": {
+    "pool_size": 15,
+    "max_overflow": 0,
+    "pool_timeout_seconds": 15,
+    "pool_recycle_seconds": 1800
+  },
+  "uvicorn_workers": 2,
+  "hpa": {
+    "min_replicas": 1,
+    "max_replicas": 4,
+    "baseline_replicas": 1,
+    "max_desired_replicas": 4,
+    "hpa_decision_seconds": 57.818,
+    "scale_out_ready_seconds": 71.969,
+    "observed_scale_out": "1 -> 2 -> 3 -> 4"
+  },
+  "k6_metrics": {
+    "http_reqs_count": 119838,
+    "http_reqs_rate": 84.31674512027908,
+    "http_req_failed_rate": 0.34639263005056825,
+    "http_req_failed_passes": 41511,
+    "http_req_failed_fails": 78327,
+    "http_req_duration_avg_ms": 4176.95944278914,
+    "http_req_duration_p90_ms": 10142.5134718,
+    "http_req_duration_p95_ms": 10507.47449615,
+    "http_req_duration_p99_ms": 14885.29954787,
+    "http_req_duration_max_ms": 32516.958168,
+    "checks_rate": 0.45695910948963425,
+    "checks_passes": 68638,
+    "checks_fails": 81568,
+    "iterations_count": 75103,
+    "iterations_rate": 52.84167383274354,
+    "vus_max": 1000
+  },
+  "first_limit_candidate": {
+    "step": "capacity_baseline.concert.recommended",
+    "stage": "concert_recommended_baseline_rps_80",
+    "target_rps": 80,
+    "p95_ms": 10113.04187145,
+    "p99_ms": 10305.66430058,
+    "error_rate": 0.41947565543071164,
+    "checks_pass_rate": 0.5805243445692884
+  },
+  "error_summary": {
+    "k6_status_0_date_performances": 1048,
+    "k6_status_0_seat_map": 4778,
+    "k6_status_500_seat_map": 3,
+    "service_log_queuepool_limit": 2360,
+    "service_log_sqlalchemy_timeout_error": 1180,
+    "db_log_too_many_clients_already": 0,
+    "db_log_unexpected_eof": 579,
+    "db_log_connection_to_client_lost": 16
+  },
+  "conclusion": "HPA scale-out succeeded, but SQLAlchemy QueuePool timeout recurred under the 15/0 pool budget. PostgreSQL too many clients already was not observed in this run."
+}

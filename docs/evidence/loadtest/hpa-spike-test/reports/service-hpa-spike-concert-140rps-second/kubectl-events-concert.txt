@@ -1,0 +1,90 @@
+52m         Normal    Scheduled                      pod/concert-service-69c44568c8-29dmt      Successfully assigned ticketing-concert/concert-service-69c44568c8-29dmt to desktop-worker3
+64m         Normal    Scheduled                      pod/concert-service-5c78cf6cb8-kz5hm      Successfully assigned ticketing-concert/concert-service-5c78cf6cb8-kz5hm to desktop-worker
+60m         Normal    Scheduled                      pod/concert-service-bfb75f75-vqv8h        Successfully assigned ticketing-concert/concert-service-bfb75f75-vqv8h to desktop-worker2
+57m         Normal    Scheduled                      pod/concert-service-69c44568c8-6k5tf      Successfully assigned ticketing-concert/concert-service-69c44568c8-6k5tf to desktop-worker2
+36m         Normal    Scheduled                      pod/concert-service-69c44568c8-6xtvk      Successfully assigned ticketing-concert/concert-service-69c44568c8-6xtvk to desktop-worker2
+46m         Normal    Scheduled                      pod/concert-service-69c44568c8-psmmx      Successfully assigned ticketing-concert/concert-service-69c44568c8-psmmx to desktop-worker
+65m         Warning   Unhealthy                      pod/concert-service-858664678-b8qbj       Readiness probe failed: Get "http://10.244.3.146:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+64m         Normal    SuccessfulCreate               replicaset/concert-service-5c78cf6cb8     Created pod: concert-service-5c78cf6cb8-kz5hm
+64m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-5c78cf6cb8 from 0 to 1
+64m         Normal    Started                        pod/concert-service-5c78cf6cb8-kz5hm      Started container concert-service
+64m         Normal    Created                        pod/concert-service-5c78cf6cb8-kz5hm      Created container: concert-service
+64m         Normal    Pulled                         pod/concert-service-5c78cf6cb8-kz5hm      Successfully pulled image "localhost:5001/concert-service:dev" in 151ms (151ms including waiting). Image size: 84069556 bytes.
+64m         Normal    Pulling                        pod/concert-service-5c78cf6cb8-kz5hm      Pulling image "localhost:5001/concert-service:dev"
+64m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled down replica set concert-service-858664678 from 1 to 0
+64m         Normal    Killing                        pod/concert-service-858664678-b8qbj       Stopping container concert-service
+64m         Normal    SuccessfulDelete               replicaset/concert-service-858664678      Deleted pod: concert-service-858664678-b8qbj
+60m         Normal    SuccessfulCreate               replicaset/concert-service-bfb75f75       Created pod: concert-service-bfb75f75-vqv8h
+60m         Normal    Pulling                        pod/concert-service-bfb75f75-vqv8h        Pulling image "localhost:5001/concert-service:dev"
+60m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-bfb75f75 from 0 to 1
+60m         Normal    Started                        pod/concert-service-bfb75f75-vqv8h        Started container concert-service
+60m         Normal    Created                        pod/concert-service-bfb75f75-vqv8h        Created container: concert-service
+60m         Normal    Pulled                         pod/concert-service-bfb75f75-vqv8h        Successfully pulled image "localhost:5001/concert-service:dev" in 157ms (296ms including waiting). Image size: 84069556 bytes.
+60m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled down replica set concert-service-5c78cf6cb8 from 1 to 0
+60m         Normal    Killing                        pod/concert-service-5c78cf6cb8-kz5hm      Stopping container concert-service
+60m         Normal    SuccessfulDelete               replicaset/concert-service-5c78cf6cb8     Deleted pod: concert-service-5c78cf6cb8-kz5hm
+60m         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/concert-service   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+60m         Warning   FailedGetResourceMetric        horizontalpodautoscaler/concert-service   failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+57m         Normal    SuccessfulCreate               replicaset/concert-service-69c44568c8     Created pod: concert-service-69c44568c8-6k5tf
+57m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-69c44568c8 from 0 to 1
+57m         Normal    Pulled                         pod/concert-service-69c44568c8-6k5tf      Successfully pulled image "localhost:5001/concert-service:dev" in 83ms (182ms including waiting). Image size: 84069556 bytes.
+57m         Normal    Killing                        pod/concert-service-bfb75f75-vqv8h        Stopping container concert-service
+57m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled down replica set concert-service-bfb75f75 from 1 to 0
+57m         Normal    SuccessfulDelete               replicaset/concert-service-bfb75f75       Deleted pod: concert-service-bfb75f75-vqv8h
+56m         Warning   FailedGetResourceMetric        horizontalpodautoscaler/concert-service   failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+56m         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/concert-service   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+52m         Normal    SuccessfulRescale              horizontalpodautoscaler/concert-service   New size: 2; reason: cpu resource utilization (percentage of request) above target
+52m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-69c44568c8 from 1 to 2
+52m         Normal    SuccessfulCreate               replicaset/concert-service-69c44568c8     Created pod: concert-service-69c44568c8-29dmt
+52m         Normal    Pulled                         pod/concert-service-69c44568c8-29dmt      Successfully pulled image "localhost:5001/concert-service:dev" in 32ms (32ms including waiting). Image size: 84069556 bytes.
+46m         Normal    SuccessfulRescale              horizontalpodautoscaler/concert-service   New size: 3; reason: cpu resource utilization (percentage of request) above target
+46m         Normal    SuccessfulCreate               replicaset/concert-service-69c44568c8     Created pod: concert-service-69c44568c8-psmmx
+46m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-69c44568c8 from 2 to 3
+46m         Normal    Pulled                         pod/concert-service-69c44568c8-psmmx      Successfully pulled image "localhost:5001/concert-service:dev" in 63ms (63ms including waiting). Image size: 84069556 bytes.
+36m         Normal    ScalingReplicaSet              deployment/concert-service                Scaled up replica set concert-service-69c44568c8 from 3 to 4
+36m         Normal    SuccessfulRescale              horizontalpodautoscaler/concert-service   New size: 4; reason: cpu resource utilization (percentage of request) above target
+36m         Normal    SuccessfulCreate               replicaset/concert-service-69c44568c8     Created pod: concert-service-69c44568c8-6xtvk
+36m         Normal    Pulled                         pod/concert-service-69c44568c8-6xtvk      Successfully pulled image "localhost:5001/concert-service:dev" in 156ms (156ms including waiting). Image size: 84069556 bytes.
+13m         Warning   Unhealthy                      pod/concert-service-69c44568c8-psmmx      Liveness probe failed: Get "http://10.244.2.152:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+13m         Normal    Pulled                         pod/concert-service-69c44568c8-29dmt      Successfully pulled image "localhost:5001/concert-service:dev" in 588ms (588ms including waiting). Image size: 84069556 bytes.
+13m         Normal    Pulled                         pod/concert-service-69c44568c8-psmmx      Successfully pulled image "localhost:5001/concert-service:dev" in 452ms (452ms including waiting). Image size: 84069556 bytes.
+13m         Warning   Unhealthy                      pod/concert-service-69c44568c8-6xtvk      Liveness probe failed: Get "http://10.244.3.161:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m53s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6k5tf      Liveness probe failed: Get "http://10.244.3.159:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m51s       Warning   Unhealthy                      pod/concert-service-69c44568c8-psmmx      Readiness probe failed: Get "http://10.244.2.152:8082/health": dial tcp 10.244.2.152:8082: connect: connection refused (Client.Timeout exceeded while awaiting headers)
+6m43s       Warning   Unhealthy                      pod/concert-service-69c44568c8-29dmt      Liveness probe failed: Get "http://10.244.1.245:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m42s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6xtvk      Readiness probe failed: Get "http://10.244.3.161:8082/health": dial tcp 10.244.3.161:8082: connect: connection refused (Client.Timeout exceeded while awaiting headers)
+6m32s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6xtvk      Readiness probe failed: Get "http://10.244.3.161:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m31s       Warning   Unhealthy                      pod/concert-service-69c44568c8-psmmx      Liveness probe failed: Get "http://10.244.2.152:8082/health": dial tcp 10.244.2.152:8082: connect: connection refused
+6m28s       Normal    Killing                        pod/concert-service-69c44568c8-6k5tf      Container concert-service failed liveness probe, will be restarted
+6m26s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6k5tf      Readiness probe failed: Get "http://10.244.3.159:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m26s       Normal    Killing                        pod/concert-service-69c44568c8-psmmx      Container concert-service failed liveness probe, will be restarted
+6m15s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6k5tf      Readiness probe failed: Get "http://10.244.3.159:8082/health": read tcp 10.244.3.1:37998->10.244.3.159:8082: read: connection reset by peer
+6m14s       Normal    Pulled                         pod/concert-service-69c44568c8-6xtvk      Successfully pulled image "localhost:5001/concert-service:dev" in 2.553s (2.553s including waiting). Image size: 84069556 bytes.
+6m12s       Warning   Unhealthy                      pod/concert-service-69c44568c8-29dmt      Readiness probe failed: Get "http://10.244.1.245:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m6s        Warning   Unhealthy                      pod/concert-service-69c44568c8-psmmx      Readiness probe failed: Get "http://10.244.2.152:8082/health": dial tcp 10.244.2.152:8082: connect: connection refused
+5m54s       Warning   Unhealthy                      pod/concert-service-69c44568c8-psmmx      Readiness probe failed: Get "http://10.244.2.152:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+5m53s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6xtvk      Readiness probe failed: Get "http://10.244.3.161:8082/health": dial tcp 10.244.3.161:8082: connect: connection refused
+5m23s       Warning   Unhealthy                      pod/concert-service-69c44568c8-29dmt      Readiness probe failed: Get "http://10.244.1.245:8082/health": dial tcp 10.244.1.245:8082: connect: connection refused
+5m17s       Warning   Unhealthy                      pod/concert-service-69c44568c8-6k5tf      Readiness probe failed: Get "http://10.244.3.159:8082/health": dial tcp 10.244.3.159:8082: connect: connection refused
+5m5s        Warning   Unhealthy                      pod/concert-service-69c44568c8-6k5tf      Readiness probe failed: Get "http://10.244.3.159:8082/health": dial tcp 10.244.3.159:8082: connect: connection refused (Client.Timeout exceeded while awaiting headers)
+5m5s        Normal    Killing                        pod/concert-service-69c44568c8-29dmt      Container concert-service failed liveness probe, will be restarted
+4m58s       Normal    Pulling                        pod/concert-service-69c44568c8-6k5tf      Pulling image "localhost:5001/concert-service:dev"
+4m51s       Normal    Pulling                        pod/concert-service-69c44568c8-psmmx      Pulling image "localhost:5001/concert-service:dev"
+4m50s       Normal    Pulled                         pod/concert-service-69c44568c8-6k5tf      Successfully pulled image "localhost:5001/concert-service:dev" in 7.012s (7.012s including waiting). Image size: 84069556 bytes.
+4m45s       Normal    Created                        pod/concert-service-69c44568c8-6k5tf      Created container: concert-service
+4m42s       Normal    Pulled                         pod/concert-service-69c44568c8-psmmx      Successfully pulled image "localhost:5001/concert-service:dev" in 3.024s (9.298s including waiting). Image size: 84069556 bytes.
+4m41s       Normal    Created                        pod/concert-service-69c44568c8-psmmx      Created container: concert-service
+4m19s       Warning   Unhealthy                      pod/concert-db-0                          Readiness probe failed: command timed out: "pg_isready -U user -d concert_db" timed out after 1s
+3m52s       Normal    Killing                        pod/concert-service-69c44568c8-6xtvk      Container concert-service failed liveness probe, will be restarted
+3m51s       Normal    Started                        pod/concert-service-69c44568c8-psmmx      Started container concert-service
+3m51s       Normal    Pulling                        pod/concert-service-69c44568c8-29dmt      Pulling image "localhost:5001/concert-service:dev"
+3m51s       Normal    Started                        pod/concert-service-69c44568c8-6k5tf      Started container concert-service
+3m50s       Normal    Created                        pod/concert-service-69c44568c8-29dmt      Created container: concert-service
+3m50s       Normal    Pulled                         pod/concert-service-69c44568c8-29dmt      Successfully pulled image "localhost:5001/concert-service:dev" in 754ms (754ms including waiting). Image size: 84069556 bytes.
+3m49s       Normal    Started                        pod/concert-service-69c44568c8-29dmt      Started container concert-service
+3m45s       Normal    Pulled                         pod/concert-service-69c44568c8-6xtvk      Successfully pulled image "localhost:5001/concert-service:dev" in 376ms (376ms including waiting). Image size: 84069556 bytes.
+3m45s       Normal    Pulling                        pod/concert-service-69c44568c8-6xtvk      Pulling image "localhost:5001/concert-service:dev"
+3m45s       Normal    Created                        pod/concert-service-69c44568c8-6xtvk      Created container: concert-service
+3m44s       Normal    Started                        pod/concert-service-69c44568c8-6xtvk      Started container concert-service
+3m17s       Warning   FailedGetResourceMetric        horizontalpodautoscaler/concert-service   failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)
+3m17s       Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/concert-service   invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: unable to fetch metrics from resource metrics API: the server is currently unable to handle the request (get pods.metrics.k8s.io)

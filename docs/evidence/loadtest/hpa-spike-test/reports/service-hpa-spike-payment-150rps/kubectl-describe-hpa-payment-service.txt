@@ -1,0 +1,30 @@
+Name:                                                  payment-service
+Namespace:                                             ticketing-payment
+Labels:                                                app.kubernetes.io/instance=payment-local-docker-desktop
+                                                       app.kubernetes.io/managed-by=Helm
+                                                       app.kubernetes.io/name=payment-service
+                                                       app.kubernetes.io/part-of=medikong
+Annotations:                                           meta.helm.sh/release-name: payment-local-docker-desktop
+                                                       meta.helm.sh/release-namespace: ticketing-payment
+CreationTimestamp:                                     Sun, 21 Jun 2026 18:15:16 +0900
+Reference:                                             Deployment/payment-service
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  1% (13m) / 70%
+Min replicas:                                          1
+Max replicas:                                          4
+Deployment pods:                                       1 current / 1 desired
+Conditions:
+  Type            Status  Reason              Message
+  ----            ------  ------              -------
+  AbleToScale     True    ReadyForNewScale    recommended size matches current size
+  ScalingActive   True    ValidMetricFound    the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange  the desired count is within the acceptable range
+Events:
+  Type     Reason                        Age                From                       Message
+  ----     ------                        ----               ----                       -------
+  Warning  FailedGetResourceMetric       21m (x3 over 93m)  horizontal-pod-autoscaler  failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Warning  FailedComputeMetricsReplicas  21m (x3 over 93m)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Normal   SuccessfulRescale             17m                horizontal-pod-autoscaler  New size: 2; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             15m                horizontal-pod-autoscaler  New size: 3; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             7m                 horizontal-pod-autoscaler  New size: 2; reason: All metrics below target
+  Normal   SuccessfulRescale             6m                 horizontal-pod-autoscaler  New size: 1; reason: All metrics below target

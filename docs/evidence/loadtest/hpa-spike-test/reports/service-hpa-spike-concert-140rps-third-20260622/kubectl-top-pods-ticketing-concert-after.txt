@@ -1,0 +1,6 @@
+NAME                               CPU(cores)   MEMORY(bytes)   
+concert-db-0                       22m          298Mi           
+concert-service-6898cfcc46-5pc5f   22m          213Mi           
+concert-service-6898cfcc46-jxjpm   24m          286Mi           
+concert-service-6898cfcc46-n45sw   142m         271Mi           
+concert-service-6898cfcc46-vgn5j   36m          287Mi           

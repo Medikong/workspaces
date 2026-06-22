@@ -1,0 +1,363 @@
+Name:             concert-service-6898cfcc46-5pc5f
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  concert-service
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Mon, 22 Jun 2026 01:16:30 +0900
+Labels:           app=concert-service
+                  app.kubernetes.io/instance=concert-local-docker-desktop
+                  app.kubernetes.io/name=concert-service
+                  medikong.io/environment=local-hpa-spike
+                  pod-template-hash=6898cfcc46
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=concert
+                  ticketing.io/tier=api
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-22T00:53:38+09:00
+                  medikong.io/dev-rollout-id: local-hpa-spike-20260621T160523Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyCPULimit: 200m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.1.10
+IPs:
+  IP:           10.244.1.10
+Controlled By:  ReplicaSet/concert-service-6898cfcc46
+Containers:
+  concert-service:
+    Container ID:   containerd://a19672ea63e7fbdf30d2487ec62b3b8cffd6fe2898a73d3ed74ba25d0302828a
+    Image:          localhost:5001/concert-service:dev
+    Image ID:       localhost:5001/concert-service@sha256:50d516100d420f0b899eeb9766bc295780d86af40d08d2b2181aebe2ef16bd0c
+    Port:           8082/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Mon, 22 Jun 2026 01:33:06 +0900
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    137
+      Started:      Mon, 22 Jun 2026 01:16:33 +0900
+      Finished:     Mon, 22 Jun 2026 01:33:03 +0900
+    Ready:          True
+    Restart Count:  1
+    Requests:
+      cpu:      1
+      memory:   256Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-hpa-spike
+      SQLALCHEMY_POOL_SIZE:               15
+      SQLALCHEMY_MAX_OVERFLOW:            0
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  18m                   default-scheduler  Successfully assigned ticketing-concert/concert-service-6898cfcc46-5pc5f to desktop-worker3
+  Normal   Pulled     18m                   kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 525ms (525ms including waiting). Image size: 84069556 bytes.
+  Warning  Unhealthy  18m                   kubelet            Readiness probe failed: Get "http://10.244.1.10:8082/health": dial tcp 10.244.1.10:8082: connect: connection refused
+  Warning  Unhealthy  18m                   kubelet            Liveness probe failed: Get "http://10.244.1.10:8082/health": dial tcp 10.244.1.10:8082: connect: connection refused
+  Warning  Unhealthy  7m18s (x20 over 17m)  kubelet            Readiness probe failed: Get "http://10.244.1.10:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy  3m5s (x9 over 16m)    kubelet            Liveness probe failed: Get "http://10.244.1.10:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Normal   Killing    2m25s                 kubelet            Container concert-service failed liveness probe, will be restarted
+  Normal   Pulling    113s (x2 over 18m)    kubelet            Pulling image "localhost:5001/concert-service:dev"
+  Normal   Created    112s (x2 over 18m)    kubelet            Created container: concert-service
+  Normal   Pulled     112s                  kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 784ms (784ms including waiting). Image size: 84069556 bytes.
+  Normal   Started    110s (x2 over 18m)    kubelet            Started container concert-service
+
+
+Name:             concert-service-6898cfcc46-jxjpm
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  concert-service
+Node:             desktop-worker2/172.18.0.6
+Start Time:       Mon, 22 Jun 2026 01:13:29 +0900
+Labels:           app=concert-service
+                  app.kubernetes.io/instance=concert-local-docker-desktop
+                  app.kubernetes.io/name=concert-service
+                  medikong.io/environment=local-hpa-spike
+                  pod-template-hash=6898cfcc46
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=concert
+                  ticketing.io/tier=api
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-22T00:53:38+09:00
+                  medikong.io/dev-rollout-id: local-hpa-spike-20260621T160523Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyCPULimit: 200m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.3.178
+IPs:
+  IP:           10.244.3.178
+Controlled By:  ReplicaSet/concert-service-6898cfcc46
+Containers:
+  concert-service:
+    Container ID:   containerd://1f0b66c07eafcbe9231238be5ba0feb72b9bdfeb23b9300bb4b9a7c93e34cc95
+    Image:          localhost:5001/concert-service:dev
+    Image ID:       localhost:5001/concert-service@sha256:50d516100d420f0b899eeb9766bc295780d86af40d08d2b2181aebe2ef16bd0c
+    Port:           8082/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Mon, 22 Jun 2026 01:13:40 +0900
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      1
+      memory:   256Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-hpa-spike
+      SQLALCHEMY_POOL_SIZE:               15
+      SQLALCHEMY_MAX_OVERFLOW:            0
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  21m                  default-scheduler  Successfully assigned ticketing-concert/concert-service-6898cfcc46-jxjpm to desktop-worker2
+  Normal   Pulling    21m                  kubelet            Pulling image "localhost:5001/concert-service:dev"
+  Normal   Pulled     21m                  kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 808ms (808ms including waiting). Image size: 84069556 bytes.
+  Normal   Created    21m                  kubelet            Created container: concert-service
+  Normal   Started    21m                  kubelet            Started container concert-service
+  Warning  Unhealthy  21m                  kubelet            Readiness probe failed: Get "http://10.244.3.178:8082/health": dial tcp 10.244.3.178:8082: connect: connection refused
+  Warning  Unhealthy  2m47s (x8 over 18m)  kubelet            Liveness probe failed: Get "http://10.244.3.178:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy  113s (x18 over 18m)  kubelet            Readiness probe failed: Get "http://10.244.3.178:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
+
+Name:             concert-service-6898cfcc46-n45sw
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  concert-service
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Mon, 22 Jun 2026 01:10:25 +0900
+Labels:           app=concert-service
+                  app.kubernetes.io/instance=concert-local-docker-desktop
+                  app.kubernetes.io/name=concert-service
+                  medikong.io/environment=local-hpa-spike
+                  pod-template-hash=6898cfcc46
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=concert
+                  ticketing.io/tier=api
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-22T00:53:38+09:00
+                  medikong.io/dev-rollout-id: local-hpa-spike-20260621T160523Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyCPULimit: 200m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.1.9
+IPs:
+  IP:           10.244.1.9
+Controlled By:  ReplicaSet/concert-service-6898cfcc46
+Containers:
+  concert-service:
+    Container ID:   containerd://0ee2f8b21f74def127e77be1f1b2a83ab78e1a1af3e9b0ef373dd4006c4e8f11
+    Image:          localhost:5001/concert-service:dev
+    Image ID:       localhost:5001/concert-service@sha256:50d516100d420f0b899eeb9766bc295780d86af40d08d2b2181aebe2ef16bd0c
+    Port:           8082/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Mon, 22 Jun 2026 01:13:52 +0900
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Mon, 22 Jun 2026 01:10:26 +0900
+      Finished:     Mon, 22 Jun 2026 01:13:49 +0900
+    Ready:          True
+    Restart Count:  1
+    Requests:
+      cpu:      1
+      memory:   256Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-hpa-spike
+      SQLALCHEMY_POOL_SIZE:               15
+      SQLALCHEMY_MAX_OVERFLOW:            0
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  24m                   default-scheduler  Successfully assigned ticketing-concert/concert-service-6898cfcc46-n45sw to desktop-worker3
+  Normal   Pulled     24m                   kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 281ms (281ms including waiting). Image size: 84069556 bytes.
+  Normal   Killing    21m                   kubelet            Container concert-service failed liveness probe, will be restarted
+  Normal   Pulling    21m (x2 over 24m)     kubelet            Pulling image "localhost:5001/concert-service:dev"
+  Normal   Created    21m (x2 over 24m)     kubelet            Created container: concert-service
+  Normal   Pulled     21m                   kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 793ms (793ms including waiting). Image size: 84069556 bytes.
+  Normal   Started    21m (x2 over 24m)     kubelet            Started container concert-service
+  Warning  Unhealthy  12m (x9 over 24m)     kubelet            Liveness probe failed: Get "http://10.244.1.9:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy  3m21s (x28 over 24m)  kubelet            Readiness probe failed: Get "http://10.244.1.9:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+
+
+Name:             concert-service-6898cfcc46-vgn5j
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  concert-service
+Node:             desktop-worker/172.18.0.7
+Start Time:       Mon, 22 Jun 2026 01:05:25 +0900
+Labels:           app=concert-service
+                  app.kubernetes.io/instance=concert-local-docker-desktop
+                  app.kubernetes.io/name=concert-service
+                  medikong.io/environment=local-hpa-spike
+                  pod-template-hash=6898cfcc46
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=concert
+                  ticketing.io/tier=api
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-22T00:53:38+09:00
+                  medikong.io/dev-rollout-id: local-hpa-spike-20260621T160523Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyCPULimit: 200m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.2.163
+IPs:
+  IP:           10.244.2.163
+Controlled By:  ReplicaSet/concert-service-6898cfcc46
+Containers:
+  concert-service:
+    Container ID:   containerd://f87fadaefaa00127fd67046f3d0b96e2cb210ea9076c5ea78a54d786f487d598
+    Image:          localhost:5001/concert-service:dev
+    Image ID:       localhost:5001/concert-service@sha256:50d516100d420f0b899eeb9766bc295780d86af40d08d2b2181aebe2ef16bd0c
+    Port:           8082/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Mon, 22 Jun 2026 01:13:53 +0900
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Mon, 22 Jun 2026 01:05:27 +0900
+      Finished:     Mon, 22 Jun 2026 01:13:50 +0900
+    Ready:          True
+    Restart Count:  1
+    Requests:
+      cpu:      1
+      memory:   256Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-hpa-spike
+      SQLALCHEMY_POOL_SIZE:               15
+      SQLALCHEMY_MAX_OVERFLOW:            0
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  29m                   default-scheduler  Successfully assigned ticketing-concert/concert-service-6898cfcc46-vgn5j to desktop-worker
+  Normal   Pulled     29m                   kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 142ms (144ms including waiting). Image size: 84069556 bytes.
+  Warning  Unhealthy  29m                   kubelet            Readiness probe failed: Get "http://10.244.2.163:8082/health": dial tcp 10.244.2.163:8082: connect: connection refused
+  Normal   Killing    21m                   kubelet            Container concert-service failed liveness probe, will be restarted
+  Normal   Pulling    21m (x2 over 29m)     kubelet            Pulling image "localhost:5001/concert-service:dev"
+  Normal   Pulled     21m                   kubelet            Successfully pulled image "localhost:5001/concert-service:dev" in 643ms (644ms including waiting). Image size: 84069556 bytes.
+  Normal   Created    21m (x2 over 29m)     kubelet            Created container: concert-service
+  Normal   Started    21m (x2 over 29m)     kubelet            Started container concert-service
+  Warning  Unhealthy  2m11s (x10 over 21m)  kubelet            Liveness probe failed: Get "http://10.244.2.163:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy  2m10s (x19 over 24m)  kubelet            Readiness probe failed: Get "http://10.244.2.163:8082/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)

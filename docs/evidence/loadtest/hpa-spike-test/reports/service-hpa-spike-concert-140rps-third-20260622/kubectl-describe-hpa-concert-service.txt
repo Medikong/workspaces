@@ -1,0 +1,32 @@
+Name:                                                  concert-service
+Namespace:                                             ticketing-concert
+Labels:                                                app.kubernetes.io/instance=concert-local-docker-desktop
+                                                       app.kubernetes.io/managed-by=Helm
+                                                       app.kubernetes.io/name=concert-service
+                                                       app.kubernetes.io/part-of=medikong
+Annotations:                                           meta.helm.sh/release-name: concert-local-docker-desktop
+                                                       meta.helm.sh/release-namespace: ticketing-concert
+CreationTimestamp:                                     Sun, 21 Jun 2026 18:15:16 +0900
+Reference:                                             Deployment/concert-service
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  2% (26m) / 70%
+Min replicas:                                          1
+Max replicas:                                          4
+Deployment pods:                                       4 current / 4 desired
+Conditions:
+  Type            Status  Reason               Message
+  ----            ------  ------               -------
+  AbleToScale     True    ScaleDownStabilized  recent recommendations were higher than current one, applying the highest recent recommendation
+  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
+Events:
+  Type     Reason                        Age                From                       Message
+  ----     ------                        ----               ----                       -------
+  Normal   SuccessfulRescale             42m                horizontal-pod-autoscaler  New size: 3; reason: All metrics below target
+  Normal   SuccessfulRescale             41m                horizontal-pod-autoscaler  New size: 2; reason: All metrics below target
+  Normal   SuccessfulRescale             41m (x2 over 65m)  horizontal-pod-autoscaler  New size: 1; reason: All metrics below target
+  Normal   SuccessfulRescale             24m (x2 over 54m)  horizontal-pod-autoscaler  New size: 2; reason: cpu resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             21m (x2 over 51m)  horizontal-pod-autoscaler  New size: 3; reason: cpu resource utilization (percentage of request) above target
+  Warning  FailedGetResourceMetric       20m (x5 over 59m)  horizontal-pod-autoscaler  failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Warning  FailedComputeMetricsReplicas  20m (x5 over 59m)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+  Normal   SuccessfulRescale             18m (x2 over 49m)  horizontal-pod-autoscaler  New size: 4; reason: cpu resource utilization (percentage of request) above target

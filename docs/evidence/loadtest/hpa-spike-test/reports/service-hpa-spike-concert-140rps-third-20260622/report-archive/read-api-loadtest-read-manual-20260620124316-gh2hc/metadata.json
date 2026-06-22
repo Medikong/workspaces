@@ -1,0 +1,11 @@
+{
+  "run_id": "read-api-loadtest-read-manual-20260620124316-gh2hc",
+  "scenario": "capacity-baseline-load-test",
+  "environment": "local",
+  "base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "vus": 5,
+  "duration": "1m",
+  "git_sha": "unknown",
+  "started_at": "2026-06-20T12:45:19.320Z",
+  "finished_at": "2026-06-20T12:45:19.325Z"
+}

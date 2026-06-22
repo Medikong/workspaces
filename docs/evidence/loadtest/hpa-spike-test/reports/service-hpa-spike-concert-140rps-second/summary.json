@@ -1,0 +1,42 @@
+{
+  "result": "failed",
+  "primary_failure": "capacity_baseline.concert.seat_map failed with status 0 and concert-service health probes timed out",
+  "hpa": {
+    "scale_out_observed": true,
+    "replica_sequence": [1, 2, 3, 4],
+    "max_observed_replicas": 4,
+    "evidence": [
+      "kubectl-describe-hpa-concert-service.txt",
+      "kubectl-events-concert.txt",
+      "kubectl-get-pods-concert-service.txt"
+    ]
+  },
+  "connection_budget": {
+    "pool_size": 15,
+    "max_overflow": 0,
+    "uvicorn_workers": 2,
+    "hpa_max_replicas": 4,
+    "api_connection_budget": 120,
+    "db_max_connections": 200,
+    "too_many_clients_observed": false,
+    "sqlalchemy_pool_exhaustion_observed": false
+  },
+  "job": {
+    "name": "read-api-loadtest-read-manual-20260621143331",
+    "run_id": "read-api-loadtest-read-manual-20260621143331-7wpl8",
+    "status": "Failed",
+    "reason": "DeadlineExceeded",
+    "active_deadline_seconds": 1800,
+    "started_at_utc": "2026-06-21T14:33:31Z"
+  },
+  "report_archive": {
+    "path": "/loadtest/reports/read-api-loadtest-read-manual-20260621143331-7wpl8",
+    "file_count": 0,
+    "note": "The directory was created, but k6 summary files were not written because the job ended by deadline before normal summary handling."
+  },
+  "notes": [
+    "Kong rate limits were restored to 120 after the run.",
+    "DB logs did not include too many clients already, remaining connection slots, SQLAlchemy QueuePool, or OperationalError patterns.",
+    "PostgreSQL logged unexpected EOF and connection to client lost after service pod health failures, which is interpreted as a consequence of client/pod termination rather than the original connection-budget failure."
+  ]
+}

@@ -1,0 +1,5 @@
+ticketing-rate-limit-concerts=120
+ticketing-rate-limit-reservations=120
+ticketing-rate-limit-payments=120
+ticketing-rate-limit-tickets=120
+ticketing-rate-limit-notifications=120

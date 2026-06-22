@@ -1,0 +1,1 @@
+Error from server (BadRequest): previous terminated container "concert-service" in pod "concert-service-6898cfcc46-jxjpm" not found

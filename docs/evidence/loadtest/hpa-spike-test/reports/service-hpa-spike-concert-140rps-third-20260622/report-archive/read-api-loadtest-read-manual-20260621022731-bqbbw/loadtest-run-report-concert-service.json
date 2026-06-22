@@ -1,0 +1,1060 @@
+{
+  "event": "loadtest_run_report",
+  "timestamp": "2026-06-21T02:57:00.785Z",
+  "test_type": "loadtest",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621022731-bqbbw",
+  "scenario": "capacity-baseline-load-test",
+  "report_phase": "service_step_complete",
+  "measured_service": "concert-service",
+  "environment": "local",
+  "target": "local",
+  "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "status": "FAIL",
+  "execution_conditions": {
+    "loadtest_run_id": "read-api-loadtest-read-manual-20260621022731-bqbbw",
+    "phase": "summary",
+    "scenario": "capacity-baseline-load-test",
+    "environment": "local",
+    "target": "local",
+    "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+    "revision": "dev",
+    "image": "localhost:5001/read-api-loadtest:dev",
+    "image_tag": "dev",
+    "release": "read-api-loadtest",
+    "namespace": "loadtest",
+    "k6_command": "k6",
+    "k6_command_args": [
+      "run",
+      "--log-format=raw",
+      "/loadtest/scenarios/capacity-baseline-load-test.js"
+    ],
+    "k6_extra_args": [],
+    "k6_output": "",
+    "k6_scenario_file": "/loadtest/scenarios/capacity-baseline-load-test.js",
+    "executor": "ramping-arrival-rate",
+    "vus": 5,
+    "rate": 1,
+    "time_unit": "1s",
+    "pre_allocated_vus": 400,
+    "max_vus": 1000,
+    "duration": "1m",
+    "service_steps": [
+        "auth-service",
+        "concert-service",
+        "reservation-service",
+        "payment-service",
+        "ticket-service",
+        "notification-service"
+      ],
+    "stages": [
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        }
+      ],
+    "service_stages": {
+        "auth-service": [
+          {
+            "duration": "60s",
+            "target": 10
+          },
+          {
+            "duration": "60s",
+            "target": 30
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          }
+        ],
+        "concert-service": [
+          {
+            "duration": "60s",
+            "target": 20
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          },
+          {
+            "duration": "60s",
+            "target": 80
+          },
+          {
+            "duration": "60s",
+            "target": 120
+          },
+          {
+            "duration": "60s",
+            "target": 160
+          }
+        ],
+        "notification-service": [
+          {
+            "duration": "60s",
+            "target": 40
+          },
+          {
+            "duration": "60s",
+            "target": 80
+          },
+          {
+            "duration": "60s",
+            "target": 160
+          },
+          {
+            "duration": "60s",
+            "target": 240
+          },
+          {
+            "duration": "60s",
+            "target": 320
+          }
+        ],
+        "payment-service": [
+          {
+            "duration": "60s",
+            "target": 5
+          },
+          {
+            "duration": "60s",
+            "target": 10
+          },
+          {
+            "duration": "60s",
+            "target": 20
+          },
+          {
+            "duration": "60s",
+            "target": 30
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          }
+        ],
+        "reservation-service": [
+          {
+            "duration": "60s",
+            "target": 10
+          },
+          {
+            "duration": "60s",
+            "target": 20
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          },
+          {
+            "duration": "60s",
+            "target": 80
+          },
+          {
+            "duration": "60s",
+            "target": 120
+          }
+        ],
+        "ticket-service": [
+          {
+            "duration": "60s",
+            "target": 5
+          },
+          {
+            "duration": "60s",
+            "target": 10
+          },
+          {
+            "duration": "60s",
+            "target": 20
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          },
+          {
+            "duration": "60s",
+            "target": 60
+          }
+        ]
+      },
+    "graceful_stop": "15s",
+    "think_time_seconds": 0,
+    "ticket_list_limit": 20,
+    "active_customer_count": 200,
+    "payment_amount": 50000,
+    "concert_limit": 20,
+    "performance_limit": 20,
+    "seat_limit": 200,
+    "threshold_http_req_failed_rate": 0.01,
+    "threshold_http_req_duration_p95_ms": 150,
+    "threshold_http_req_duration_p99_ms": 300,
+    "threshold_checks_rate": 0.99,
+    "capacity_baseline_target_utilization": 0.7,
+    "capacity_baseline_seed_method": "deterministic_bulk_insert",
+    "capacity_baseline_fixed_conditions": {
+        "authTokenTtlSeconds": "7200",
+        "cpuLimit": "none",
+        "cpuRequest": "1000m",
+        "hpa": "disabled",
+        "replicas": "1"
+      },
+    "capacity_baseline_schema_revisions": {
+        "auth-service": "model-v1",
+        "concert-service": "model-v1",
+        "notification-service": "model-v1",
+        "payment-service": "model-v1",
+        "reservation-service": "model-v1",
+        "ticket-service": "model-v1"
+      },
+    "capacity_baseline_seed_row_counts": {
+        "admin_count": 1,
+        "concert_count": 270,
+        "customer_count": 100000,
+        "notification_count": 354000,
+        "payment_count": 184000,
+        "payment_event_count": 184000,
+        "payment_pool_count": 184000,
+        "performance_count": 810,
+        "provider_count": 1,
+        "reservation_history_count": 261000,
+        "seat_count": 567000,
+        "seat_grade_count": 3240,
+        "ticket_count": 170000,
+        "ticket_issue_pool_count": 170000
+      },
+    "capacity_baseline_resource_observation": {
+        "enabled": true,
+        "source": "metrics-api",
+        "prometheusUrl": "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090",
+        "queryWindow": "1m",
+        "pollEveryIterations": 5,
+        "targets": [
+          {
+            "service": "auth-service",
+            "namespace": "ticketing-auth",
+            "podSelector": "app.kubernetes.io/name=auth-service",
+            "podRegex": "auth-service-.*"
+          },
+          {
+            "service": "concert-service",
+            "namespace": "ticketing-concert",
+            "podSelector": "app.kubernetes.io/name=concert-service",
+            "podRegex": "concert-service-.*"
+          },
+          {
+            "service": "reservation-service",
+            "namespace": "ticketing-reservation",
+            "podSelector": "app.kubernetes.io/name=reservation-service",
+            "podRegex": "reservation-service-.*"
+          },
+          {
+            "service": "payment-service",
+            "namespace": "ticketing-payment",
+            "podSelector": "app.kubernetes.io/name=payment-service",
+            "podRegex": "payment-service-.*"
+          },
+          {
+            "service": "ticket-service",
+            "namespace": "ticketing-ticket",
+            "podSelector": "app.kubernetes.io/name=ticket-service",
+            "podRegex": "ticket-service-.*"
+          },
+          {
+            "service": "notification-service",
+            "namespace": "ticketing-notification",
+            "podSelector": "app.kubernetes.io/name=notification-service",
+            "podRegex": "notification-service-.*"
+          }
+        ]
+      },
+    "measurement_window_source": "grafana_time_range",
+    "traffic_model_preset": "local-baseline-1000m",
+    "dataset_profile": "capacity-baseline",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "dataset_title_prefix": "Medikong Loadtest",
+    "dataset_concerts": 270,
+    "dataset_performances_per_concert": 3,
+    "dataset_total_performances": 810,
+    "dataset_seat_sections": 1,
+    "dataset_seat_rows": 20,
+    "dataset_seats_per_row": 35,
+    "dataset_seats_per_performance": 700,
+    "dataset_total_seats": 567000,
+    "dataset_discovery_limit": 200,
+    "customer_pool_size": 100000,
+    "customer_pool_revision": "capacity-baseline-half-year-early-growth-v2",
+    "customer_pool_email_prefix": "capacity-customer",
+    "customer_pool_email_domain": "loadtest.medikong.local"
+  },
+  "scenario_report": {
+    "report_type": "capacity_baseline",
+    "scenario": "capacity-baseline-load-test",
+    "traffic_model_preset": "local-baseline-1000m",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "seed_method": "deterministic_bulk_insert",
+    "schema_revisions": {
+      "auth-service": "model-v1",
+      "concert-service": "model-v1",
+      "notification-service": "model-v1",
+      "payment-service": "model-v1",
+      "reservation-service": "model-v1",
+      "ticket-service": "model-v1"
+    },
+    "seed_row_counts": {
+      "admin_count": 1,
+      "concert_count": 270,
+      "customer_count": 100000,
+      "notification_count": 354000,
+      "payment_count": 184000,
+      "payment_event_count": 184000,
+      "payment_pool_count": 184000,
+      "performance_count": 810,
+      "provider_count": 1,
+      "reservation_history_count": 261000,
+      "seat_count": 567000,
+      "seat_grade_count": 3240,
+      "ticket_count": 170000,
+      "ticket_issue_pool_count": 170000
+    },
+    "endpoint_slo_p95_ms": {
+      "capacity_baseline.auth.login": 300,
+      "capacity_baseline.concert.calendar": 80,
+      "capacity_baseline.concert.date_performances": 80,
+      "capacity_baseline.concert.detail": 80,
+      "capacity_baseline.concert.recommended": 80,
+      "capacity_baseline.concert.seat_map": 150,
+      "capacity_baseline.notification.list": 80,
+      "capacity_baseline.payment.create": 120,
+      "capacity_baseline.reservation.create": 120,
+      "capacity_baseline.ticket.issue": 120,
+      "capacity_baseline.ticket.list": 100
+    },
+    "target_utilization": 0.7,
+    "service_steps": [
+      "auth-service",
+      "concert-service",
+      "reservation-service",
+      "payment-service",
+      "ticket-service",
+      "notification-service"
+    ],
+    "default_stages": [
+      {
+        "duration": "60s",
+        "target": 10
+      },
+      {
+        "duration": "60s",
+        "target": 20
+      },
+      {
+        "duration": "60s",
+        "target": 40
+      },
+      {
+        "duration": "60s",
+        "target": 80
+      },
+      {
+        "duration": "60s",
+        "target": 160
+      }
+    ],
+    "service_stages": {
+      "auth-service": [
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 30
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        }
+      ],
+      "concert-service": [
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        }
+      ],
+      "notification-service": [
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        },
+        {
+          "duration": "60s",
+          "target": 240
+        },
+        {
+          "duration": "60s",
+          "target": 320
+        }
+      ],
+      "payment-service": [
+        {
+          "duration": "60s",
+          "target": 5
+        },
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 30
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        }
+      ],
+      "reservation-service": [
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        }
+      ],
+      "ticket-service": [
+        {
+          "duration": "60s",
+          "target": 5
+        },
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 60
+        }
+      ]
+    },
+    "resource_observation_source": "metrics-api",
+    "services": [
+      {
+        "service": "concert-service",
+        "stages": [
+          {
+            "duration": "60s",
+            "target": 20
+          },
+          {
+            "duration": "60s",
+            "target": 40
+          },
+          {
+            "duration": "60s",
+            "target": 80
+          },
+          {
+            "duration": "60s",
+            "target": 120
+          },
+          {
+            "duration": "60s",
+            "target": 160
+          }
+        ],
+        "max_valid_rps": 20,
+        "cpu_usage_m_at_max_valid_rps": 282.1353355000001,
+        "request_candidate_m": 404,
+        "target_utilization": 0.7,
+        "status": "candidate_ready",
+        "basis_capacity_step": "concert_rps_20"
+      }
+    ],
+    "step_results": [
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+        "step": "capacity_baseline.concert.recommended",
+        "capacity_step": "concert_rps_20",
+        "target_rps": 20,
+        "per_pod_rps": 20,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 41.868795899999995,
+        "p99_ms": 85.03508883999999,
+        "error_rate": 0,
+        "cpu_usage_m": 282.1353355000001,
+        "cpu_throttling": 0,
+        "request_candidate_m": 404,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}",
+        "step": "capacity_baseline.concert.detail",
+        "capacity_step": "concert_rps_20",
+        "target_rps": 20,
+        "per_pod_rps": 20,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 34.143895900000004,
+        "p99_ms": 53.79456217999999,
+        "error_rate": 0,
+        "cpu_usage_m": 282.1353355000001,
+        "cpu_throttling": 0,
+        "request_candidate_m": 404,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/calendar?yearMonth=YYYY-MM",
+        "step": "capacity_baseline.concert.calendar",
+        "capacity_step": "concert_rps_20",
+        "target_rps": 20,
+        "per_pod_rps": 20,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 21.7660669,
+        "p99_ms": 53.12000549999999,
+        "error_rate": 0,
+        "cpu_usage_m": 282.1353355000001,
+        "cpu_throttling": 0,
+        "request_candidate_m": 404,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/dates/{date}/performances",
+        "step": "capacity_baseline.concert.date_performances",
+        "capacity_step": "concert_rps_20",
+        "target_rps": 20,
+        "per_pod_rps": 20,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 21.86776309999998,
+        "p99_ms": 38.32969715999999,
+        "error_rate": 0,
+        "cpu_usage_m": 282.1353355000001,
+        "cpu_throttling": 0,
+        "request_candidate_m": 404,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /performances/{performanceId}/seat-map",
+        "step": "capacity_baseline.concert.seat_map",
+        "capacity_step": "concert_rps_20",
+        "target_rps": 20,
+        "per_pod_rps": 20,
+        "duration": "60s",
+        "slo_p95_ms": 150,
+        "p95_ms": 55.7255542,
+        "p99_ms": 85.59553199999996,
+        "error_rate": 0,
+        "cpu_usage_m": 282.1353355000001,
+        "cpu_throttling": 0,
+        "request_candidate_m": 404,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+        "step": "capacity_baseline.concert.recommended",
+        "capacity_step": "concert_rps_40",
+        "target_rps": 40,
+        "per_pod_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10001.9565704,
+        "p99_ms": 10003.82144638,
+        "error_rate": 0.9232907170650362,
+        "cpu_usage_m": 476.6229734055531,
+        "cpu_throttling": 0,
+        "request_candidate_m": 681,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}",
+        "step": "capacity_baseline.concert.detail",
+        "capacity_step": "concert_rps_40",
+        "target_rps": 40,
+        "per_pod_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 5866.8386362999745,
+        "p99_ms": 10001.80304725,
+        "error_rate": 0.07246376811594203,
+        "cpu_usage_m": 476.6229734055531,
+        "cpu_throttling": 0,
+        "request_candidate_m": 681,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/calendar?yearMonth=YYYY-MM",
+        "step": "capacity_baseline.concert.calendar",
+        "capacity_step": "concert_rps_40",
+        "target_rps": 40,
+        "per_pod_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 8028.469897949975,
+        "p99_ms": 10000.91786625,
+        "error_rate": 0.0859375,
+        "cpu_usage_m": 476.6229734055531,
+        "cpu_throttling": 0,
+        "request_candidate_m": 681,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/dates/{date}/performances",
+        "step": "capacity_baseline.concert.date_performances",
+        "capacity_step": "concert_rps_40",
+        "target_rps": 40,
+        "per_pod_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 9485.9839048,
+        "p99_ms": 10000.80825968,
+        "error_rate": 0.11965811965811966,
+        "cpu_usage_m": 476.6229734055531,
+        "cpu_throttling": 0,
+        "request_candidate_m": 681,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /performances/{performanceId}/seat-map",
+        "step": "capacity_baseline.concert.seat_map",
+        "capacity_step": "concert_rps_40",
+        "target_rps": 40,
+        "per_pod_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 150,
+        "p95_ms": 5125.7185155,
+        "p99_ms": 10001.248148339999,
+        "error_rate": 0.0970873786407767,
+        "cpu_usage_m": 476.6229734055531,
+        "cpu_throttling": 0,
+        "request_candidate_m": 681,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+        "step": "capacity_baseline.concert.recommended",
+        "capacity_step": "concert_rps_80",
+        "target_rps": 80,
+        "per_pod_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10001.4257284,
+        "p99_ms": 10002.60598129,
+        "error_rate": 0.9890855457227139,
+        "cpu_usage_m": 100.0120098008844,
+        "cpu_throttling": 0,
+        "request_candidate_m": 143,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}",
+        "step": "capacity_baseline.concert.detail",
+        "capacity_step": "concert_rps_80",
+        "target_rps": 80,
+        "per_pod_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10001.144982599999,
+        "p99_ms": 10001.58762212,
+        "error_rate": 0.2972972972972973,
+        "cpu_usage_m": 100.0120098008844,
+        "cpu_throttling": 0,
+        "request_candidate_m": 143,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/calendar?yearMonth=YYYY-MM",
+        "step": "capacity_baseline.concert.calendar",
+        "capacity_step": "concert_rps_80",
+        "target_rps": 80,
+        "per_pod_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10000.746021500001,
+        "p99_ms": 10001.36603175,
+        "error_rate": 0.5,
+        "cpu_usage_m": 100.0120098008844,
+        "cpu_throttling": 0,
+        "request_candidate_m": 143,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/dates/{date}/performances",
+        "step": "capacity_baseline.concert.date_performances",
+        "capacity_step": "concert_rps_80",
+        "target_rps": 80,
+        "per_pod_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 9761.4653904,
+        "p99_ms": 9952.617370080001,
+        "error_rate": 0.38461538461538464,
+        "cpu_usage_m": 100.0120098008844,
+        "cpu_throttling": 0,
+        "request_candidate_m": 143,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /performances/{performanceId}/seat-map",
+        "step": "capacity_baseline.concert.seat_map",
+        "capacity_step": "concert_rps_80",
+        "target_rps": 80,
+        "per_pod_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 150,
+        "p95_ms": 10001.16747135,
+        "p99_ms": 10001.36611987,
+        "error_rate": 0.375,
+        "cpu_usage_m": 100.0120098008844,
+        "cpu_throttling": 0,
+        "request_candidate_m": 143,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+        "step": "capacity_baseline.concert.recommended",
+        "capacity_step": "concert_rps_120",
+        "target_rps": 120,
+        "per_pod_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10001.149005,
+        "p99_ms": 10002.4997505,
+        "error_rate": 1,
+        "cpu_usage_m": 163.3287705268661,
+        "cpu_throttling": 0,
+        "request_candidate_m": 234,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}",
+        "step": "capacity_baseline.concert.detail",
+        "capacity_step": "concert_rps_120",
+        "target_rps": 120,
+        "per_pod_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 163.3287705268661,
+        "cpu_throttling": 0,
+        "request_candidate_m": 234,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/calendar?yearMonth=YYYY-MM",
+        "step": "capacity_baseline.concert.calendar",
+        "capacity_step": "concert_rps_120",
+        "target_rps": 120,
+        "per_pod_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 163.3287705268661,
+        "cpu_throttling": 0,
+        "request_candidate_m": 234,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/dates/{date}/performances",
+        "step": "capacity_baseline.concert.date_performances",
+        "capacity_step": "concert_rps_120",
+        "target_rps": 120,
+        "per_pod_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 163.3287705268661,
+        "cpu_throttling": 0,
+        "request_candidate_m": 234,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /performances/{performanceId}/seat-map",
+        "step": "capacity_baseline.concert.seat_map",
+        "capacity_step": "concert_rps_120",
+        "target_rps": 120,
+        "per_pod_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 150,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 163.3287705268661,
+        "cpu_throttling": 0,
+        "request_candidate_m": 234,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+        "step": "capacity_baseline.concert.recommended",
+        "capacity_step": "concert_rps_160",
+        "target_rps": 160,
+        "per_pod_rps": 160,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10052.79749075,
+        "p99_ms": 10991.74478762,
+        "error_rate": 0.995499419279907,
+        "cpu_usage_m": 170.05779804717105,
+        "cpu_throttling": 0,
+        "request_candidate_m": 243,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}",
+        "step": "capacity_baseline.concert.detail",
+        "capacity_step": "concert_rps_160",
+        "target_rps": 160,
+        "per_pod_rps": 160,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10054.657880499999,
+        "p99_ms": 10066.9748338,
+        "error_rate": 0.5806451612903226,
+        "cpu_usage_m": 170.05779804717105,
+        "cpu_throttling": 0,
+        "request_candidate_m": 243,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/calendar?yearMonth=YYYY-MM",
+        "step": "capacity_baseline.concert.calendar",
+        "capacity_step": "concert_rps_160",
+        "target_rps": 160,
+        "per_pod_rps": 160,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 10049.2149298,
+        "p99_ms": 10061.98618996,
+        "error_rate": 1,
+        "cpu_usage_m": 170.05779804717105,
+        "cpu_throttling": 0,
+        "request_candidate_m": 243,
+        "pass": false,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p95_ms",
+          "error_rate_threshold"
+        ]
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /concerts/{concertId}/dates/{date}/performances",
+        "step": "capacity_baseline.concert.date_performances",
+        "capacity_step": "concert_rps_160",
+        "target_rps": 160,
+        "per_pod_rps": 160,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 170.05779804717105,
+        "cpu_throttling": 0,
+        "request_candidate_m": 243,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      },
+      {
+        "service": "concert-service",
+        "api": "GET /performances/{performanceId}/seat-map",
+        "step": "capacity_baseline.concert.seat_map",
+        "capacity_step": "concert_rps_160",
+        "target_rps": 160,
+        "per_pod_rps": 160,
+        "duration": "60s",
+        "slo_p95_ms": 150,
+        "p95_ms": 0,
+        "p99_ms": 0,
+        "error_rate": 0,
+        "cpu_usage_m": 170.05779804717105,
+        "cpu_throttling": 0,
+        "request_candidate_m": 243,
+        "pass": true,
+        "status": "valid",
+        "decision_reasons": []
+      }
+    ]
+  }
+}

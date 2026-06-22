@@ -1,0 +1,27 @@
+# hpa current
+NAME              REFERENCE                    TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+concert-service   Deployment/concert-service   cpu: 2%/70%   1         4         4          7h19m
+# hpa describe scale events
+11:Metrics:                                               ( current / target )
+19:  AbleToScale     True    ScaleDownStabilized  recent recommendations were higher than current one, applying the highest recent recommendation
+20:  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+21:  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
+25:  Normal   SuccessfulRescale             42m                horizontal-pod-autoscaler  New size: 3; reason: All metrics below target
+26:  Normal   SuccessfulRescale             41m                horizontal-pod-autoscaler  New size: 2; reason: All metrics below target
+27:  Normal   SuccessfulRescale             41m (x2 over 65m)  horizontal-pod-autoscaler  New size: 1; reason: All metrics below target
+28:  Normal   SuccessfulRescale             24m (x2 over 54m)  horizontal-pod-autoscaler  New size: 2; reason: cpu resource utilization (percentage of request) above target
+29:  Normal   SuccessfulRescale             21m (x2 over 51m)  horizontal-pod-autoscaler  New size: 3; reason: cpu resource utilization (percentage of request) above target
+31:  Warning  FailedComputeMetricsReplicas  20m (x5 over 59m)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+32:  Normal   SuccessfulRescale             18m (x2 over 49m)  horizontal-pod-autoscaler  New size: 4; reason: cpu resource utilization (percentage of request) above target
+# pods
+NAME                               READY   STATUS    RESTARTS       AGE   IP             NODE              NOMINATED NODE   READINESS GATES
+concert-service-6898cfcc46-5pc5f   1/1     Running   1 (113s ago)   18m   10.244.1.10    desktop-worker3   <none>           <none>
+concert-service-6898cfcc46-jxjpm   1/1     Running   0              21m   10.244.3.178   desktop-worker2   <none>           <none>
+concert-service-6898cfcc46-n45sw   1/1     Running   1 (21m ago)    24m   10.244.1.9     desktop-worker3   <none>           <none>
+concert-service-6898cfcc46-vgn5j   1/1     Running   1 (21m ago)    29m   10.244.2.163   desktop-worker    <none>           <none>
+# top nodes
+NAME                    CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+desktop-control-plane   412m         4%       1958Mi          12%         
+desktop-worker          336m         3%       4316Mi          27%         
+desktop-worker2         241m         2%       3121Mi          19%         
+desktop-worker3         626m         6%       4062Mi          25%         

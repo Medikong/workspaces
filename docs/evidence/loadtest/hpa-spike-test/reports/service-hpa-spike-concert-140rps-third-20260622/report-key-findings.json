@@ -1,0 +1,103 @@
+{
+  "status": "FAIL",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621160921-fhfxw",
+  "scale_out_results": [
+    {
+      "service": "concert-service",
+      "namespace": "ticketing-concert",
+      "baseline_replicas": 1,
+      "max_desired_replicas": 4,
+      "hpa_decision_seconds": 57.818,
+      "scale_out_ready_seconds": 71.969
+    }
+  ],
+  "first_limit_candidate": {
+    "service": "concert-service",
+    "api": "GET /concerts/recommended?sort=latest&cursor={cursor}",
+    "step": "capacity_baseline.concert.recommended",
+    "stage": "concert_recommended_baseline_rps_80",
+    "stage_role": "baseline",
+    "warmup_excluded": false,
+    "target_rps": 80,
+    "duration": "60s",
+    "slo_p95_ms": 80,
+    "p95_ms": 10113.04187145,
+    "p99_ms": 10305.66430058,
+    "error_rate": 0.41947565543071164,
+    "checks_pass_rate": 0.5805243445692884,
+    "http_reqs_count": null,
+    "http_reqs_rate": null,
+    "rps": null,
+    "cpu_usage_m": 0,
+    "cpu_throttling": 0,
+    "status": "limit_candidate",
+    "decision_reasons": [
+      "slo_p95_ms",
+      "slo_p99_ms",
+      "error_rate_threshold",
+      "checks_rate_threshold"
+    ]
+  },
+  "recovery_observations": [
+    {
+      "service": "concert-service",
+      "step": "capacity_baseline.concert.recommended",
+      "stage": "concert_recommended_cooldown_rps_80",
+      "target_rps": 80,
+      "p95_ms": 24167.224128349997,
+      "p99_ms": 29887.333098670002,
+      "error_rate": 1,
+      "checks_pass_rate": 0.11834733893557423,
+      "recovered_within_thresholds": false,
+      "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    {
+      "service": "concert-service",
+      "step": "capacity_baseline.concert.detail",
+      "stage": "concert_detail_cooldown_rps_80",
+      "target_rps": 80,
+      "p95_ms": 11019.868066399998,
+      "p99_ms": 11993.903254899995,
+      "error_rate": 1,
+      "checks_pass_rate": 0,
+      "recovered_within_thresholds": false,
+      "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    {
+      "service": "concert-service",
+      "step": "capacity_baseline.concert.calendar",
+      "stage": "concert_calendar_cooldown_rps_80",
+      "target_rps": 80,
+      "p95_ms": 11404.12376199999,
+      "p99_ms": 14956.9244678,
+      "error_rate": 0.5407245982021247,
+      "checks_pass_rate": 0.45927540179787524,
+      "recovered_within_thresholds": false,
+      "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    {
+      "service": "concert-service",
+      "step": "capacity_baseline.concert.date_performances",
+      "stage": "concert_date_performances_cooldown_rps_80",
+      "target_rps": 80,
+      "p95_ms": 16416.316607399993,
+      "p99_ms": 26369.46403224,
+      "error_rate": 0.8696290855673889,
+      "checks_pass_rate": 0.1303709144326111,
+      "recovered_within_thresholds": false,
+      "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    {
+      "service": "concert-service",
+      "step": "capacity_baseline.concert.seat_map",
+      "stage": "concert_seat_map_cooldown_rps_80",
+      "target_rps": 80,
+      "p95_ms": 18559.032858099996,
+      "p99_ms": 24933.325231479997,
+      "error_rate": 0.9032679738562092,
+      "checks_pass_rate": 0.09694989106753812,
+      "recovered_within_thresholds": false,
+      "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+    }
+  ]
+}

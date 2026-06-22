@@ -1,0 +1,236 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-06-21T16:09:22Z"
+  generateName: read-api-loadtest-read-manual-20260621160921-
+  generation: 1
+  labels:
+    app.kubernetes.io/component: k6-runner
+    app.kubernetes.io/instance: read-api-loadtest
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: read-api-loadtest
+    app.kubernetes.io/part-of: medikong
+    batch.kubernetes.io/controller-uid: f068d4cd-7472-4b4e-8ad2-2c4aad7814f0
+    batch.kubernetes.io/job-name: read-api-loadtest-read-manual-20260621160921
+    controller-uid: f068d4cd-7472-4b4e-8ad2-2c4aad7814f0
+    helm.sh/chart: read-api-loadtest-0.1.0
+    job-name: read-api-loadtest-read-manual-20260621160921
+    medikong.io/environment: local
+    medikong.io/execution: gitops-manual
+    medikong.io/phase: loadtest
+    medikong.io/scenario: service-hpa-spike-load-test
+    medikong.io/test-type: loadtest
+  name: read-api-loadtest-read-manual-20260621160921-fhfxw
+  namespace: loadtest
+  ownerReferences:
+  - apiVersion: batch/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Job
+    name: read-api-loadtest-read-manual-20260621160921
+    uid: f068d4cd-7472-4b4e-8ad2-2c4aad7814f0
+  resourceVersion: "2632828"
+  uid: d376e122-e203-4a40-a701-132a75bddbe6
+spec:
+  containers:
+  - args:
+    - |
+      if [ "${LOADTEST_SCENARIO:-}" = "setup-capacity-baseline-dataset" ]; then
+        exec python3 /loadtest/scripts/setup_capacity_baseline_dataset.py
+      fi
+      if [ "${LOADTEST_COLLECTOR_GUARD_ENABLED:-false}" = "true" ]; then
+        python3 /loadtest/scripts/collector_guard.py
+      fi
+      if [ "${LOADTEST_REPORT_ARCHIVE_ENABLED:-false}" = "true" ]; then
+        export LOADTEST_REPORT_DIR="${LOADTEST_REPORT_ROOT%/}/${LOADTEST_RUN_ID}"
+        mkdir -p "${LOADTEST_REPORT_DIR}"
+      fi
+      set +e
+      k6 run --log-format=raw ${K6_OUTPUT:+--out "$K6_OUTPUT"} "/loadtest/scenarios/${LOADTEST_SCENARIO}.js"
+      exit_code="$?"
+      set -e
+      case "${exit_code}" in
+        0)
+          exit 0
+          ;;
+        99|201)
+          if [ "${LOADTEST_SCENARIO:-}" = "capacity-baseline-load-test" ]; then
+            exit 0
+          fi
+          printf '{"event":"loadtest_threshold_exit","timestamp":"%s","test_type":"loadtest","loadtest_run_id":"%s","scenario":"%s","exit_code":%s}\\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${LOADTEST_RUN_ID:-}" "${LOADTEST_SCENARIO:-}" "${exit_code}"
+          exit 0
+          ;;
+        *)
+          exit "${exit_code}"
+          ;;
+      esac
+    command:
+    - /bin/sh
+    - -ec
+    env:
+    - name: LOADTEST_RUN_ID
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: spec.nodeName
+    - name: LOADTEST_SCENARIO
+      value: service-hpa-spike-load-test
+    envFrom:
+    - configMapRef:
+        name: read-api-loadtest
+    - secretRef:
+        name: read-api-loadtest-credentials
+        optional: false
+    image: localhost:5001/read-api-loadtest:dev
+    imagePullPolicy: Always
+    name: runner
+    resources:
+      limits:
+        cpu: "2"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /loadtest/reports
+      name: loadtest-report-archive
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-vtx25
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: desktop-worker3
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Never
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 12345
+    fsGroupChangePolicy: OnRootMismatch
+  serviceAccount: read-api-loadtest-runner
+  serviceAccountName: read-api-loadtest-runner
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: loadtest-report-archive
+    persistentVolumeClaim:
+      claimName: read-api-loadtest-report-archive
+  - name: kube-api-access-vtx25
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-21T16:33:12Z"
+    observedGeneration: 1
+    status: "False"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-21T16:09:23Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-21T16:33:10Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-21T16:33:10Z"
+    observedGeneration: 1
+    reason: PodCompleted
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-21T16:09:22Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - allocatedResources:
+      cpu: 500m
+      memory: 1Gi
+    containerID: containerd://95f86794720606d5a8f1ceb188bf3b9161d898818b443d4b2419847f16b34293
+    image: localhost:5001/read-api-loadtest:dev
+    imageID: localhost:5001/read-api-loadtest@sha256:05e1ad89fd454d5cc1bd6a47fdaf670de7178ad4cd8fa318636b4456a6f9e7f2
+    lastState: {}
+    name: runner
+    ready: false
+    resources:
+      limits:
+        cpu: "2"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    restartCount: 0
+    started: false
+    state:
+      terminated:
+        containerID: containerd://95f86794720606d5a8f1ceb188bf3b9161d898818b443d4b2419847f16b34293
+        exitCode: 0
+        finishedAt: "2026-06-21T16:33:09Z"
+        reason: Completed
+        startedAt: "2026-06-21T16:09:23Z"
+    user:
+      linux:
+        gid: 12345
+        supplementalGroups:
+        - 12345
+        uid: 12345
+    volumeMounts:
+    - mountPath: /loadtest/reports
+      name: loadtest-report-archive
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-vtx25
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 172.18.0.8
+  hostIPs:
+  - ip: 172.18.0.8
+  observedGeneration: 1
+  phase: Succeeded
+  podIP: 10.244.1.8
+  podIPs:
+  - ip: 10.244.1.8
+  qosClass: Burstable
+  startTime: "2026-06-21T16:09:23Z"

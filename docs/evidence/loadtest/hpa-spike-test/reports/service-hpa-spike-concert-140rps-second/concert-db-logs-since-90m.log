@@ -1,0 +1,77 @@
+2026-06-21 14:37:11.036 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 14:41:41.166 UTC [67] LOG:  checkpoint complete: wrote 10728 buffers (65.5%); 0 WAL file(s) added, 0 removed, 18 recycled; write=270.004 s, sync=0.082 s, total=270.131 s; sync files=40, longest=0.054 s, average=0.003 s; distance=297509 kB, estimate=348920 kB
+2026-06-21 14:54:33.463 UTC [63204] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:10.368 UTC [62630] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:10.570 UTC [62644] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:11.284 UTC [62626] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:11.339 UTC [62618] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:11.502 UTC [62580] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:12.731 UTC [62638] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:13.067 UTC [62445] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:13.602 UTC [62633] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:14.381 UTC [62499] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:14.539 UTC [62595] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:15.684 UTC [62643] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:15.995 UTC [62185] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:16.127 UTC [62640] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:16.665 UTC [62642] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:20.456 UTC [62639] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.448 UTC [62785] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.469 UTC [62788] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.510 UTC [62774] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.537 UTC [62692] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.578 UTC [62784] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.756 UTC [63186] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:25.959 UTC [63211] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.076 UTC [63206] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.553 UTC [63185] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.576 UTC [63648] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.621 UTC [63212] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.659 UTC [63179] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.661 UTC [63178] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.672 UTC [63207] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.680 UTC [63645] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.692 UTC [63209] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.703 UTC [63213] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.706 UTC [63162] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.713 UTC [64142] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.724 UTC [63646] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.822 UTC [63647] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.916 UTC [62675] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.920 UTC [62691] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.922 UTC [62782] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.991 UTC [62786] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:26.993 UTC [62783] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.031 UTC [64118] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.040 UTC [64134] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.044 UTC [64151] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.198 UTC [62789] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.285 UTC [64101] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.322 UTC [62781] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.402 UTC [62787] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.420 UTC [62780] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.462 UTC [64125] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.484 UTC [64147] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.487 UTC [64120] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.491 UTC [64119] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.499 UTC [64126] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.504 UTC [64127] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.520 UTC [64148] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.529 UTC [64152] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.542 UTC [64153] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:27.811 UTC [64150] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:14:28.599 UTC [62779] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:05.043 UTC [64369] LOG:  could not receive data from client: Connection reset by peer
+2026-06-21 15:22:05.049 UTC [64360] LOG:  could not receive data from client: Connection reset by peer
+2026-06-21 15:22:05.072 UTC [64332] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:05.084 UTC [64358] LOG:  could not receive data from client: Connection reset by peer
+2026-06-21 15:22:05.097 UTC [64337] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:05.100 UTC [64349] LOG:  could not receive data from client: Connection reset by peer
+2026-06-21 15:22:05.129 UTC [64331] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:05.149 UTC [64305] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:05.152 UTC [64362] LOG:  could not receive data from client: Connection reset by peer
+2026-06-21 15:22:06.085 UTC [64334] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:06.133 UTC [64336] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:22:06.671 UTC [64335] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 15:23:36.692 UTC [64400] LOG:  could not send data to client: Broken pipe
+2026-06-21 15:23:36.708 UTC [64400] FATAL:  connection to client lost

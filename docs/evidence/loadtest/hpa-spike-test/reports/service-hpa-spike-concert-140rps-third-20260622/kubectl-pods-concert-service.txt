@@ -1,0 +1,5 @@
+NAME                               READY   STATUS    RESTARTS       AGE   IP             NODE              NOMINATED NODE   READINESS GATES
+concert-service-6898cfcc46-5pc5f   1/1     Running   1 (113s ago)   18m   10.244.1.10    desktop-worker3   <none>           <none>
+concert-service-6898cfcc46-jxjpm   1/1     Running   0              21m   10.244.3.178   desktop-worker2   <none>           <none>
+concert-service-6898cfcc46-n45sw   1/1     Running   1 (21m ago)    24m   10.244.1.9     desktop-worker3   <none>           <none>
+concert-service-6898cfcc46-vgn5j   1/1     Running   1 (21m ago)    29m   10.244.2.163   desktop-worker    <none>           <none>

@@ -7,7 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
     meta.helm.sh/release-name: read-api-loadtest
     meta.helm.sh/release-namespace: loadtest
-  creationTimestamp: "2026-06-21T10:20:40Z"
+  creationTimestamp: "2026-06-21T13:30:25Z"
   generation: 1
   labels:
     app.kubernetes.io/instance: read-api-loadtest
@@ -19,10 +19,10 @@ metadata:
     medikong.io/execution: gitops-manual
     medikong.io/scenario: service-hpa-spike-load-test
     medikong.io/test-type: loadtest
-  name: read-api-loadtest-read-manual-20260621102039
+  name: read-api-loadtest-read-manual-20260621133024
   namespace: loadtest
-  resourceVersion: "2576927"
-  uid: 70908be9-86f2-4aaf-b9ff-0484fddb57f7
+  resourceVersion: "2604238"
+  uid: b5fa4deb-98cd-4cb2-b899-00fc4a31f6c1
 spec:
   activeDeadlineSeconds: 1800
   backoffLimit: 0
@@ -33,7 +33,7 @@ spec:
   podReplacementPolicy: TerminatingOrFailed
   selector:
     matchLabels:
-      batch.kubernetes.io/controller-uid: 70908be9-86f2-4aaf-b9ff-0484fddb57f7
+      batch.kubernetes.io/controller-uid: b5fa4deb-98cd-4cb2-b899-00fc4a31f6c1
   suspend: false
   template:
     metadata:
@@ -43,11 +43,11 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: read-api-loadtest
         app.kubernetes.io/part-of: medikong
-        batch.kubernetes.io/controller-uid: 70908be9-86f2-4aaf-b9ff-0484fddb57f7
-        batch.kubernetes.io/job-name: read-api-loadtest-read-manual-20260621102039
-        controller-uid: 70908be9-86f2-4aaf-b9ff-0484fddb57f7
+        batch.kubernetes.io/controller-uid: b5fa4deb-98cd-4cb2-b899-00fc4a31f6c1
+        batch.kubernetes.io/job-name: read-api-loadtest-read-manual-20260621133024
+        controller-uid: b5fa4deb-98cd-4cb2-b899-00fc4a31f6c1
         helm.sh/chart: read-api-loadtest-0.1.0
-        job-name: read-api-loadtest-read-manual-20260621102039
+        job-name: read-api-loadtest-read-manual-20260621133024
         medikong.io/environment: local
         medikong.io/execution: gitops-manual
         medikong.io/phase: loadtest
@@ -145,22 +145,22 @@ spec:
           claimName: read-api-loadtest-report-archive
   ttlSecondsAfterFinished: 86400
 status:
-  completionTime: "2026-06-21T10:25:23Z"
+  completionTime: "2026-06-21T13:37:35Z"
   conditions:
-  - lastProbeTime: "2026-06-21T10:25:23Z"
-    lastTransitionTime: "2026-06-21T10:25:23Z"
+  - lastProbeTime: "2026-06-21T13:37:35Z"
+    lastTransitionTime: "2026-06-21T13:37:35Z"
     message: Reached expected number of succeeded pods
     reason: CompletionsReached
     status: "True"
     type: SuccessCriteriaMet
-  - lastProbeTime: "2026-06-21T10:25:23Z"
-    lastTransitionTime: "2026-06-21T10:25:23Z"
+  - lastProbeTime: "2026-06-21T13:37:35Z"
+    lastTransitionTime: "2026-06-21T13:37:35Z"
     message: Reached expected number of succeeded pods
     reason: CompletionsReached
     status: "True"
     type: Complete
   ready: 0
-  startTime: "2026-06-21T10:20:40Z"
+  startTime: "2026-06-21T13:30:25Z"
   succeeded: 1
   terminating: 0
   uncountedTerminatedPods: {}

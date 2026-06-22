@@ -1,0 +1,2020 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "name": "capacity_baseline.auth.login returned 2xx",
+          "path": "::capacity_baseline.auth.login returned 2xx",
+          "id": "3e478144cd25aca965fae291b2c9c4d9",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "path": "::capacity_baseline.auth.login returned json",
+          "id": "8b30832f9f1e9945e7ca1aca47c18cf9",
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.auth.login returned json"
+        },
+        {
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.concert.recommended returned 2xx",
+          "path": "::capacity_baseline.concert.recommended returned 2xx",
+          "id": "d787262ef5eaff6954a999d24613168f"
+        },
+        {
+          "name": "capacity_baseline.concert.recommended returned json",
+          "path": "::capacity_baseline.concert.recommended returned json",
+          "id": "efd90e068eae1fe4c4ccdaca18b0c6a3",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "name": "capacity_baseline.concert.detail returned 2xx",
+          "path": "::capacity_baseline.concert.detail returned 2xx",
+          "id": "20f468e9ddb43ac0b5c1a7a9b18fd016",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "name": "capacity_baseline.concert.detail returned json",
+          "path": "::capacity_baseline.concert.detail returned json",
+          "id": "e5cd1e48b16fa49d838601b8a6cd613a",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "path": "::capacity_baseline.concert.calendar returned 2xx",
+          "id": "255ba79eb22518d552b061e90bfee2e6",
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.concert.calendar returned 2xx"
+        },
+        {
+          "fails": 0,
+          "name": "capacity_baseline.concert.calendar returned json",
+          "path": "::capacity_baseline.concert.calendar returned json",
+          "id": "a259d1fcc77227865042c60da5f368c5",
+          "passes": 29
+        },
+        {
+          "name": "capacity_baseline.concert.date_performances returned 2xx",
+          "path": "::capacity_baseline.concert.date_performances returned 2xx",
+          "id": "92234030b5a049818b93be6df321746c",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "name": "capacity_baseline.concert.date_performances returned json",
+          "path": "::capacity_baseline.concert.date_performances returned json",
+          "id": "a697c37edcfbfd4657a2af69b35e3742",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "fails": 0,
+          "name": "capacity_baseline.concert.seat_map returned 2xx",
+          "path": "::capacity_baseline.concert.seat_map returned 2xx",
+          "id": "ebf68a3547f700f64c9268b4bd074edc",
+          "passes": 29
+        },
+        {
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.concert.seat_map returned json",
+          "path": "::capacity_baseline.concert.seat_map returned json",
+          "id": "07bc28b0a9d5b1e2d73e5871ac9e0ac8"
+        },
+        {
+          "id": "37bdeef2a3a6327243775bbcdf358dac",
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.reservation.create returned 2xx",
+          "path": "::capacity_baseline.reservation.create returned 2xx"
+        },
+        {
+          "passes": 29,
+          "fails": 0,
+          "name": "capacity_baseline.reservation.create returned json",
+          "path": "::capacity_baseline.reservation.create returned json",
+          "id": "f8b4f42627cf77ee887dc5b1a1ed9118"
+        },
+        {
+          "name": "capacity_baseline.payment.create returned 2xx",
+          "path": "::capacity_baseline.payment.create returned 2xx",
+          "id": "a63ee46f1c2bd82e9b41967a2b507b0d",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "fails": 0,
+          "name": "capacity_baseline.payment.create returned json",
+          "path": "::capacity_baseline.payment.create returned json",
+          "id": "3c868a09de6bc384c5aae61ac6154284",
+          "passes": 29
+        },
+        {
+          "fails": 0,
+          "name": "capacity_baseline.ticket.issue returned 2xx",
+          "path": "::capacity_baseline.ticket.issue returned 2xx",
+          "id": "0c69a4a52f829c65d8c834b0dc39f5c6",
+          "passes": 30
+        },
+        {
+          "name": "capacity_baseline.ticket.issue returned json",
+          "path": "::capacity_baseline.ticket.issue returned json",
+          "id": "82b4fd8b33a6bf1bd2065ecc1cf4d171",
+          "passes": 30,
+          "fails": 0
+        },
+        {
+          "name": "capacity_baseline.ticket.list returned 2xx",
+          "path": "::capacity_baseline.ticket.list returned 2xx",
+          "id": "2ac410300438701f5ec0488d69d2ffaa",
+          "passes": 30,
+          "fails": 0
+        },
+        {
+          "fails": 0,
+          "name": "capacity_baseline.ticket.list returned json",
+          "path": "::capacity_baseline.ticket.list returned json",
+          "id": "7615a80ce2be040225c01057799ef14a",
+          "passes": 30
+        },
+        {
+          "name": "capacity_baseline.notification.list returned 2xx",
+          "path": "::capacity_baseline.notification.list returned 2xx",
+          "id": "7070a8758aafeae1f7533e7ffc2156d8",
+          "passes": 29,
+          "fails": 0
+        },
+        {
+          "name": "capacity_baseline.notification.list returned json",
+          "path": "::capacity_baseline.notification.list returned json",
+          "id": "5fbe3dcde7b632a6956325f2ba0b9292",
+          "passes": 29,
+          "fails": 0
+        }
+      ]
+  },
+  "options": {
+    "summaryTimeUnit": "",
+    "noColor": false,
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "p(90)",
+      "p(95)",
+      "p(99)",
+      "max"
+    ]
+  },
+  "state": {
+    "isStdErrTTY": false,
+    "testRunDurationMs": 206050.948762,
+    "isStdOutTTY": false
+  },
+  "metrics": {
+    "loadtest_capacity_cpu_usage_m{capacity_step:auth_rps_1,measured_service:auth-service}": {
+      "contains": "default",
+      "values": {
+        "avg": 15.910746,
+        "min": 15.910746,
+        "med": 15.910746,
+        "p(90)": 15.910746,
+        "p(95)": 15.910746,
+        "p(99)": 15.910746,
+        "max": 15.910746
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_duration{capacity_step:payment_rps_2,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 13.761170545454545,
+        "min": 8.351792,
+        "med": 11.0077085,
+        "p(90)": 15.235116600000001,
+        "p(95)": 19.412693749999995,
+        "p(99)": 52.29469681999999,
+        "max": 60.978083
+      },
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:reservation_rps_2,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 44,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "http_req_duration{capacity_step:auth_rps_2,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 74.60062295,
+        "p(99)": 227.06840056999994,
+        "max": 267.564083,
+        "avg": 71.78742249999999,
+        "min": 51.570417,
+        "med": 63.517479,
+        "p(90)": 72.0770548
+      },
+      "thresholds": {
+        "p(95)<300": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:notification_rps_1,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "values": {
+        "avg": 8.26048214285714,
+        "min": 4.219084,
+        "med": 8.200708,
+        "p(90)": 13.2096414,
+        "p(95)": 13.5389667,
+        "p(99)": 13.80242694,
+        "max": 13.868292
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 377,
+        "rate": 1.829644572204593
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:payment_rps_1,measured_service:payment-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_api_success": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 321,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 44,
+        "fails": 0,
+        "rate": 1
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:notification_rps_1,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:payment_rps_2,measured_service:payment-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:notification_rps_2,measured_service:notification-service}": {
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(95)": 15.151417,
+        "p(99)": 15.151417,
+        "max": 15.151417,
+        "avg": 15.151417,
+        "min": 15.151417,
+        "med": 15.151417,
+        "p(90)": 15.151417
+      }
+    },
+    "checks{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 44
+      }
+    },
+    "loadtest_capacity_resource_observation_success": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 36,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:reservation_rps_2,measured_service:reservation-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:concert_rps_1,measured_service:concert-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "min": 4.440953,
+        "med": 4.440953,
+        "p(90)": 4.440953,
+        "p(95)": 4.440953,
+        "p(99)": 4.440953,
+        "max": 4.440953,
+        "avg": 4.440953
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:ticket_rps_2,measured_service:ticket-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "min": 0,
+        "max": 1,
+        "value": 0
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:notification_rps_1,measured_service:notification-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(95)": 15.0686361,
+        "p(99)": 15.13486082,
+        "max": 15.151417,
+        "avg": 14.323608,
+        "min": 13.495799,
+        "med": 14.323608,
+        "p(90)": 14.9858552
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 642,
+        "fails": 0
+      },
+      "type": "rate"
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:concert_rps_2,measured_service:concert-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 14
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.10175623607427056,
+        "min": 0.02675,
+        "med": 0.086958,
+        "p(90)": 0.15877460000000002,
+        "p(95)": 0.20225839999999998,
+        "p(99)": 0.29205992,
+        "max": 0.665542
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:payment_rps_2,measured_service:payment-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "max": 13.592641,
+        "avg": 12.19483275,
+        "min": 8.001408,
+        "med": 13.592641,
+        "p(90)": 13.592641,
+        "p(95)": 13.592641,
+        "p(99)": 13.592641
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:auth_rps_2,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 10.449575400000002,
+        "p(95)": 13.057975199999998,
+        "p(99)": 15.14469504,
+        "max": 15.666375,
+        "avg": 6.497952428571429,
+        "min": 3.659917,
+        "med": 5.063583
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 6.275917,
+        "med": 8.208042,
+        "p(90)": 10.412759,
+        "p(95)": 10.5710465,
+        "p(99)": 10.6976765,
+        "max": 10.729334,
+        "avg": 8.617256142857142
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 44,
+        "fails": 0,
+        "rate": 1
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:payment_rps_1,measured_service:payment-service}": {
+      "values": {
+        "avg": 8.001408,
+        "min": 8.001408,
+        "med": 8.001408,
+        "p(90)": 8.001408,
+        "p(95)": 8.001408,
+        "p(99)": 8.001408,
+        "max": 8.001408
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default"
+    },
+    "http_req_duration{capacity_step:auth_rps_1,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 51.770292,
+        "med": 58.478917,
+        "p(90)": 69.6551664,
+        "p(95)": 71.2019787,
+        "p(99)": 72.43942854,
+        "max": 72.748791,
+        "avg": 59.85507142857142
+      },
+      "thresholds": {
+        "p(95)<300": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "thresholds": {
+        "p(95)<100": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 10.3355414,
+        "p(95)": 10.9197287,
+        "p(99)": 11.387078540000001,
+        "max": 11.503916,
+        "avg": 7.969827428571428,
+        "min": 5.417959,
+        "med": 7.811375
+      }
+    },
+    "checks{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:concert_rps_1,measured_service:concert-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:notification_rps_2,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "values": {
+        "rate": 1,
+        "passes": 44,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_duration{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "contains": "time",
+      "values": {
+        "med": 4.2588545,
+        "p(90)": 5.9663589,
+        "p(95)": 6.3280042,
+        "p(99)": 7.4424475,
+        "max": 7.733875,
+        "avg": 4.631432,
+        "min": 3.651458
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_duration{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 36.70999180000001,
+        "p(95)": 55.719703899999985,
+        "p(99)": 70.92747358,
+        "max": 74.729416,
+        "avg": 18.397803857142858,
+        "min": 6.259167,
+        "med": 9.943292
+      },
+      "thresholds": {
+        "p(99)<300": {
+          "ok": true
+        },
+        "p(95)<80": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:ticket_rps_1,measured_service:ticket-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "med": 15.66298,
+        "p(90)": 15.66298,
+        "p(95)": 15.66298,
+        "p(99)": 15.66298,
+        "max": 15.66298,
+        "avg": 15.66298,
+        "min": 15.66298
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 9.83754736363636,
+        "min": 6.982916,
+        "med": 9.638458499999999,
+        "p(90)": 12.4107169,
+        "p(95)": 14.122969399999999,
+        "p(99)": 14.490571390000001,
+        "max": 14.5645
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "http_req_duration{capacity_step:payment_rps_1,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 33.235046499999996,
+        "p(99)": 37.7887765,
+        "max": 38.927209,
+        "avg": 16.600226285714285,
+        "min": 8.682333,
+        "med": 13.089292,
+        "p(90)": 27.542884000000004
+      },
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:ticket_rps_2,measured_service:ticket-service}": {
+      "values": {
+        "avg": 30.225625,
+        "min": 30.225625,
+        "med": 30.225625,
+        "p(90)": 30.225625,
+        "p(95)": 30.225625,
+        "p(99)": 30.225625,
+        "max": 30.225625
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default"
+    },
+    "http_req_failed{capacity_step:payment_rps_2,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "values": {
+        "rate": 1,
+        "passes": 44,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 1494198,
+        "rate": 7251.594855434903
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio": {
+      "contains": "default",
+      "values": {
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.17450799999999997,
+        "p(99)": 0.28332991999999985,
+        "max": 2.174,
+        "avg": 0.05658156763925729,
+        "min": 0.004375,
+        "med": 0.031083,
+        "p(90)": 0.123267
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:ticket_rps_1,measured_service:ticket-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:concert_rps_2,measured_service:concert-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "med": 4.431247,
+        "p(90)": 4.431247,
+        "p(95)": 4.431247,
+        "p(99)": 4.431247,
+        "max": 4.431247,
+        "avg": 4.431247,
+        "min": 4.431247
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 44
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 10,
+        "min": 10,
+        "max": 10
+      }
+    },
+    "http_req_duration{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "values": {
+        "p(90)": 9.6493789,
+        "p(95)": 10.1569652,
+        "p(99)": 66.93399002999999,
+        "max": 82.019541,
+        "avg": 11.836124954545454,
+        "min": 6.724459,
+        "med": 8.5571245
+      },
+      "thresholds": {
+        "p(99)<300": {
+          "ok": true
+        },
+        "p(95)<150": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "iteration_duration": {
+      "values": {
+        "max": 300.860667,
+        "avg": 33.42666262857144,
+        "min": 5.216708,
+        "med": 22.590459,
+        "p(90)": 67.9418496,
+        "p(95)": 79.30799569999999,
+        "p(99)": 136.54408249999994
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_duration{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 8.425273714285714,
+        "min": 6.691375,
+        "med": 8.662916,
+        "p(90)": 9.8623832,
+        "p(95)": 10.173170599999999,
+        "p(99)": 10.42180052,
+        "max": 10.483958
+      },
+      "thresholds": {
+        "p(95)<150": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 23
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "http_req_failed{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 23
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 46
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_blocked": {
+      "contains": "time",
+      "values": {
+        "p(95)": 0.29894999999999944,
+        "p(99)": 2.648005,
+        "max": 3.254959,
+        "avg": 0.08835726259946955,
+        "min": 0.000375,
+        "med": 0.00525,
+        "p(90)": 0.01887500000000001
+      },
+      "type": "trend"
+    },
+    "http_req_duration{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 10.49412007,
+        "max": 11.32075,
+        "avg": 5.499666727272727,
+        "min": 3.803,
+        "med": 5.135792,
+        "p(90)": 6.6472667,
+        "p(95)": 7.3498274
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:notification_rps_2,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "contains": "time",
+      "values": {
+        "p(95)": 9.920862499999998,
+        "p(99)": 85.16656817999997,
+        "max": 105.135792,
+        "avg": 10.012659136363636,
+        "min": 4.028584,
+        "med": 5.3034375,
+        "p(90)": 7.5013917
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_failed{capacity_step:reservation_rps_1,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "checks{capacity_step:payment_rps_1,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 14
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 0.446583,
+        "avg": 0.013352007957559685,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0.14784139999999937,
+        "p(99)": 0.28154192
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "checks{capacity_step:reservation_rps_1,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 1.796458,
+        "med": 9.108417,
+        "p(90)": 51.650367,
+        "p(95)": 65.26105819999998,
+        "p(99)": 86.91480131999994,
+        "max": 267.564083,
+        "avg": 17.313422904509284
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "http_req_failed{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.seat_map}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:auth_rps_1,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:reservation_rps_1,measured_service:reservation-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 4.665791571428571,
+        "min": 3.375375,
+        "med": 5.150667,
+        "p(90)": 5.4833998,
+        "p(95)": 5.5462624,
+        "p(99)": 5.59655248,
+        "max": 5.609125
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 377
+      }
+    },
+    "checks{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 46,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:reservation_rps_2,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 19.248208,
+        "avg": 14.462272818181818,
+        "min": 9.978625,
+        "med": 14.3705005,
+        "p(90)": 17.6056962,
+        "p(95)": 19.047059799999996,
+        "p(99)": 19.22137168
+      },
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.date_performances}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 7,
+        "rate": 0,
+        "passes": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "data_sent": {
+      "values": {
+        "count": 211318,
+        "rate": 1025.5618878226264
+      },
+      "type": "counter",
+      "contains": "data"
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 9.108417,
+        "p(90)": 51.650367,
+        "p(95)": 65.26105819999998,
+        "p(99)": 86.91480131999994,
+        "max": 267.564083,
+        "avg": 17.313422904509284,
+        "min": 1.796458
+      }
+    },
+    "http_req_failed{capacity_step:reservation_rps_2,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:payment_rps_1,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 7,
+        "rate": 0,
+        "passes": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.list}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 11.457626739130438,
+        "min": 5.018625,
+        "med": 7.305625,
+        "p(90)": 13.3119668,
+        "p(95)": 13.5162292,
+        "p(99)": 66.61123197999999,
+        "max": 81.584166
+      },
+      "thresholds": {
+        "p(95)<100": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 175,
+        "rate": 0.8493045096440419
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:auth_rps_1,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:auth_rps_2,measured_service:auth-service}": {
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(99)": 85.154756,
+        "max": 85.154756,
+        "avg": 67.8437535,
+        "min": 15.910746,
+        "med": 85.154756,
+        "p(90)": 85.154756,
+        "p(95)": 85.154756
+      }
+    },
+    "http_req_duration{capacity_step:ticket_rps_2,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 22.237541399999998,
+        "p(95)": 26.514520799999993,
+        "p(99)": 67.79952801999998,
+        "max": 79.312834,
+        "avg": 17.333827869565216,
+        "min": 9.081375,
+        "med": 13.940833
+      },
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:notification_rps_1,measured_service:notification-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 54.26000799999999,
+        "max": 56.470333,
+        "avg": 21.73425585714286,
+        "min": 10.636291,
+        "med": 17.070917,
+        "p(90)": 34.367083,
+        "p(95)": 45.41870799999999
+      },
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:auth_rps_2,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:notification_rps_1,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:payment_rps_2,measured_service:payment-service,step:capacity_baseline.payment.create}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 44,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:notification_rps_2,measured_service:notification-service,step:capacity_baseline.notification.list}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:auth_rps_1,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:reservation_rps_1,measured_service:reservation-service,step:capacity_baseline.reservation.create}": {
+      "thresholds": {
+        "p(95)<120": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 79.96873369999997,
+        "p(99)": 97.92691393999999,
+        "max": 102.416459,
+        "avg": 28.644148857142856,
+        "min": 11.51825,
+        "med": 15.454708,
+        "p(90)": 57.52100840000001
+      }
+    },
+    "loadtest_capacity_cpu_usage_m": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 19.40100166666668,
+        "min": 4.431247,
+        "med": 15.151417,
+        "p(90)": 30.225625,
+        "p(95)": 85.154756,
+        "p(99)": 85.154756,
+        "max": 85.154756
+      }
+    },
+    "checks{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.recommended}": {
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_duration{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "contains": "time",
+      "values": {
+        "p(99)": 13.38415811,
+        "max": 13.642292,
+        "avg": 9.236697,
+        "min": 6.91075,
+        "med": 9.0533335,
+        "p(90)": 12.215150300000001,
+        "p(95)": 12.40989345
+      },
+      "thresholds": {
+        "p(95)<80": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 2.797542,
+        "avg": 0.05513781962864722,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 2.082363
+      }
+    },
+    "checks{capacity_step:ticket_rps_1,measured_service:ticket-service,step:capacity_baseline.ticket.issue}": {
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:notification_rps_2,measured_service:notification-service}": {
+      "contains": "default",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "checks{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.detail}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 14,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:reservation_rps_2,measured_service:reservation-service}": {
+      "values": {
+        "min": 5.46508,
+        "med": 12.603778,
+        "p(90)": 19.742476,
+        "p(95)": 19.742476,
+        "p(99)": 19.742476,
+        "max": 19.742476,
+        "avg": 12.603778
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default"
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:reservation_rps_1,measured_service:reservation-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(90)": 6.3865873,
+        "p(95)": 6.43778215,
+        "p(99)": 6.478738030000001,
+        "max": 6.488977,
+        "avg": 5.9770285,
+        "min": 5.46508,
+        "med": 5.9770285
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks{capacity_step:auth_rps_2,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 44,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:concert_rps_1,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 7
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_failed{capacity_step:concert_rps_2,measured_service:concert-service,step:capacity_baseline.concert.calendar}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 22
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 267.377042,
+        "avg": 17.155085100795752,
+        "min": 1.662042,
+        "med": 9.005375,
+        "p(90)": 51.4893416,
+        "p(95)": 65.13187539999998,
+        "p(99)": 86.73977315999994
+      }
+    }
+  },
+  "setup_data": {
+    "concertId": "capacity-baseline-hyeg-v2-smoke-concert-0001",
+    "customerTokens": [
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDEiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwMUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiIzOGMyMTg0Yi1jZDE0LTQ2Y2UtOGY0OC0yODkwYjFjYWQyNjkifQ.QYstjcj7L64fwuwxfP5ql8ToFervhnEsXVk8FQmK7sw",
+        "userId": "920001"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDIiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwMkBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI3M2Y3YTc5MS0wYWJkLTQzZmItYjk2MC0zNmQ0MDQ5YzJlZWQifQ.yKj-WrO7sMi3PgJy0oVTLshMQ-rNYoXQsSo0B3BQOaE",
+        "userId": "920002"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDMiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwM0Bsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI3M2E1Yjc4MS0zZmFjLTQ4NDMtYTc2Yi0yYjJlYzFjMTZkNjAifQ.vDEfcxmrLPkrBbhU0kecXTD3LRMXhELTrYyp9QgfDvw",
+        "userId": "920003"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDQiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwNEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI1ZmVlMWFhZi0wYzkxLTRjNjEtOGI0NS0zZDcxMWYzYmIzMWEifQ.w0syLnBB2e58VVWwlvC0tF0Pro2e1irO9hlvVpk26Ls",
+        "userId": "920004"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDUiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwNUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI2OTY3ZDY3MC1mMzQ3LTQ1ZDctYjM2Yy0yMWQzMTdkNzVkZTcifQ.9FPBt7h6R1bFFlCcXddpAoJIAc2c_9tVj_ouBRAtSS4",
+        "userId": "920005"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDYiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwNkBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiIwNGQwNzM1Yy1lNTEyLTQ5ODItYjYyMS00NjA0MjhmZWRkMDQifQ.rLOqivIRmLko9pykfi9HlZSvCqqfcf2zZrQguebZxCY",
+        "userId": "920006"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDciLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwN0Bsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJiYTU0YTJjZi1mNmM3LTQ0YTQtOWI1ZS01OTcxMzI1MTFiZWYifQ.-5FnXWWYNSBo8ZGlKuLBWjDqpDA3RVbDA3LqguOl8Xc",
+        "userId": "920007"
+      },
+      {
+        "userId": "920008",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDgiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwOEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJlMzcyNjQ1NC1lYzQ2LTRkYjAtYTQ0OS0wYWZkZDEzMzZhMWUifQ.V2ZKHjKIyXpnLpFvkPjP7CuNgoVlac6pDcrLdNXY_og"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMDkiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAwOUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI2ZWI4MTQ4Zi0zMmU5LTRmM2EtYmVhMC05N2ZkOGRjMzM0YjIifQ.FB2L2S1IMDJLPC88sgbwrUHeOms9xNuKd0nOcaJIlgI",
+        "userId": "920009"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTAiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxMEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJmMzIyYmQ3MS1lNTdlLTRlYWMtOTIwMS04OWUzMDUwNGZmZTkifQ.Oq4tbSPLU5MSIgWFT3VVcOqSneDgudyp4bz0DSOzxNg",
+        "userId": "920010"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTEiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxMUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJkMGZiMWU1My0wNjVjLTQ5NTUtYjMxZS1lYTEzMGJjZjRmZGIifQ.pGUTpYxcDDFytebgl4scIAqufytPfqMvo_fv8e5oiNM",
+        "userId": "920011"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTIiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxMkBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiIyMmNjZTc4ZS1mMmQ1LTRjNjktODljMi0yNDQwMDJhNDcxNGQifQ.iE1u8E2A0Vcxv0GBaaHYouEgFVUKKG-DCriY44XRzQw",
+        "userId": "920012"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTMiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxM0Bsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiIxNDA0NTA0MC1hN2E4LTQxYjEtYTkzZS1lMzgwMmU0MzVkY2EifQ.Y-04WQsbLki6-NXgkhseTTKk7mHjfTzGv6igTMQJE5c",
+        "userId": "920013"
+      },
+      {
+        "userId": "920014",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTQiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxNEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJlZGNhMjAzZi0zNThiLTRjM2ItYmM4My1hOWRkNWEyN2Y1MjgifQ.lJJEYBm5s6UGWO1hIfg0HsdbMTRL9touvs4jeu2-zpI"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTUiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxNUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI5MDAyNGNlMC1hOGMyLTRmZjAtOTEzZS00ZmEzMjJmNjk4MDQifQ.K7Y3LA6YAZqX4V83Dlo_cik9tExzEKUMzT2JK6_c6bk",
+        "userId": "920015"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTYiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxNkBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiJlMDNjODIwYy1kNjM3LTRjMWQtOTBmMC0xZmU0NDRjNDJhZjYifQ.i9DuUxwGHjfuw0e8KPsmtIqmGMDvQ-Hp_HLjCeZD2fM",
+        "userId": "920016"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTciLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxN0Bsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxMywiZXhwIjoxNzgxOTc2NDEzLCJqdGkiOiI3OWM1MGVjOS1kOWJmLTQ5ZDEtYmM4MC0wNjNiMDc3MTk4ZjkifQ.7wFEFsQM17tHqJgAXtWOXosRPw1WnHzJUk_eScu86AQ",
+        "userId": "920017"
+      },
+      {
+        "userId": "920018",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTgiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxOEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxNCwiZXhwIjoxNzgxOTc2NDE0LCJqdGkiOiJiYTQ3YjlhNS05MTZmLTQwNWItOGYyZi04MmYyZjI0NTM2ODgifQ.SERwG1gRSyzhdmGBS4dtD8pGYY-aBgNA7LUHRGmjyBs"
+      },
+      {
+        "userId": "920019",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMTkiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAxOUBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxNCwiZXhwIjoxNzgxOTc2NDE0LCJqdGkiOiIyZjIzOWMyYi1lOTZkLTQ2NGQtYjU1ZC00MmE1YTZmY2YwMzAifQ.0fMw8t6ppDBOQ2TY8H3MuZDZnYY-YXA87ob6S2j-88k"
+      },
+      {
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLXNlcnZpY2UiLCJzdWIiOiI5MjAwMjAiLCJlbWFpbCI6ImNhcGFjaXR5LWN1c3RvbWVyLTAwMDAyMEBsb2FkdGVzdC5tZWRpa29uZy5sb2NhbCIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTk2OTIxNCwiZXhwIjoxNzgxOTc2NDE0LCJqdGkiOiIwYTk5YmZhYi03Y2EyLTQxMzgtODU1Mi1hNDFkOTI2ZTEzYmIifQ.fDf_Tq0xpqx1csiRqNlfAX86DfPas10P4gTWPqLdgF0",
+        "userId": "920020"
+      }
+    ],
+    "measurementStartedAtMs": 1781969214132,
+    "performanceId": "capacity-baseline-hyeg-v2-smoke-showtime-0001-0001"
+  }
+}

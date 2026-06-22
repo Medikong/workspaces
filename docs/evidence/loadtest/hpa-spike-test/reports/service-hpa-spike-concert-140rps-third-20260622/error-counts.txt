@@ -1,0 +1,7 @@
+# k6 failure/status counts
+5878
+# service log counts
+workspace/docs/evidence/loadtest/hpa-spike-test/reports/service-hpa-spike-concert-140rps-third-20260622/concert-service-all-pods-previous-logs-since-2h.log:352
+workspace/docs/evidence/loadtest/hpa-spike-test/reports/service-hpa-spike-concert-140rps-third-20260622/concert-service-all-pods-logs-since-2h.log:2276
+# db log counts
+595
