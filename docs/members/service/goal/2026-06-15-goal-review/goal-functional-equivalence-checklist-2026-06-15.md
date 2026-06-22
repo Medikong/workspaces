@@ -593,7 +593,7 @@ mTLS, 50/100 canary traffic ratio, outlier ejection 중심의 circuit breaker ru
 - [x] aws에서 자동화 테스트 `synthetic`를 정기 실행한다. `이번에 포함`, `증거 완료`, `최범휘`
   - [참고](../../../../../docs/evidence/observability/synthetic-automation/README.md)
 
-- [ ] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
+- [x] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
   - 부분 근거: [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/README.md)
   - 부분 근거: [CPU Request Baseline Loadtest](../../../../evidence/loadtest/capacity-baseline/README.md)
   - 결제 서비스: [Payment Service](../../../../trouble/2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md)

@@ -113,6 +113,8 @@ service_connection_budget = api_connection_budget + worker_connection_budget
 
 ## SLO 기준
 
+벤치마크 측정 결과 문서: [Half-year early-growth API 기준 성능 종합 보고서](../../../services/api-integration-test-benchmark/half-year-early-growth/service-baseline-summary.md)
+
 공통 threshold는 `http_req_failed < 1%`, `checks >= 99%`, `http_req_duration p95 < 150ms`, `p99 < 300ms`다. 서비스별 endpoint SLO는 scenario report의 `slo_p95_ms` 기준으로 다음과 같이 기록됐다.
 
 | service | endpoint | p95 SLO |
