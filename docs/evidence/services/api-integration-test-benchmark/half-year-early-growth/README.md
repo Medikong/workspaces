@@ -2,6 +2,10 @@
 
 작성일: 2026-06-20
 
+## 종합 보고서
+
+- [Half-year early-growth API 기준 성능 종합 보고서](./service-baseline-summary.md)
+
 ## 목적
 
 서비스별 API 통합테스트 벤치마크를 smoke가 아니라 실제 운영 초기 데이터 규모에 가깝게 실행하기 위한 기준치를 정의한다.

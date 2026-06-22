@@ -389,9 +389,10 @@ mTLS, 50/100 canary traffic ratio, outlier ejection 중심의 circuit breaker ru
 
 - [x] 각 서비스에 HPA 리소스를 구성한다.
 
-- [ ] HPA 목표 수치 CPU 70%, min 2, max 10을 운영 또는 검증 scenario로 만족한다. `이번에 포함, 실험후 결과 정리`, `최범휘`
+- [x] HPA 목표 수치 CPU 70%, min 2, max 10을 운영 또는 검증 scenario로 만족한다. `이번에 포함, 실험후 결과 정리`, `최범휘`
   - 세부 목표
     - scale-out 응답 시간을 측정한다.
+  - HPA 실혐 결과 : [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/reports/service-hpa-spike-final-report-2026-06-22.md)
 
 - [x] Readiness Probe와 Liveness Probe를 구성한다. `기능 동등 충족`
   - 목표 문구는 `/health/ready`, `/health`지만 현재 서비스 표준은 `/readyz`, `/healthz`다.
@@ -595,6 +596,11 @@ mTLS, 50/100 canary traffic ratio, outlier ejection 중심의 circuit breaker ru
 - [ ] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
   - 부분 근거: [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/README.md)
   - 부분 근거: [CPU Request Baseline Loadtest](../../../../evidence/loadtest/capacity-baseline/README.md)
+  - 결제 서비스: [Payment Service](../../../../trouble/2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md)
+  - 콘서트 서비스: [Concert Service](../../../../trouble/2026-06-20-concert-service-catalog-api-overfetch.md)
+  - FastAPI worker: [FastAPI Worker Execution Unit Mixed Bottleneck](../../../../trouble/2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md)
+  - DB Connection Pool: [DB Connection Pool Exhaustion](../../../../trouble/2026-06-21-hpa-scaleout-db-connection-budget.md)
+  
 
 ### 7.2 오토스케일링
 
