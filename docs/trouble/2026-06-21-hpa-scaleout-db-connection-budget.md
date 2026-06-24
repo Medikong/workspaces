@@ -305,4 +305,6 @@ HPA scale-out 자체는 유효했다. 문제는 HPA가 늘린 애플리케이션
 - connection을 많이 열어도 query latency, lock, I/O가 버틸 수 있는지 확인한다.
 - PgBouncer, cache, read replica, endpoint 동시성 제한 같은 DB 보호 장치가 필요한지 확인한다.
 
+추가 대안으로 DB bulkhead를 고려할 수 있다. DB-bound endpoint 앞단에 bounded concurrency limiter를 두고, semaphore 방식으로 SQLAlchemy pool checkout 전에 DB 진입 동시성을 제한한다. 이 방식은 DB connection을 더 늘리는 대신 요청을 짧게 대기시켜 connection budget 안에서 안정적인 처리량을 유지하기 위한 보호 장치다.
+
 앞으로 HPA max replicas, Uvicorn worker 수, SQLAlchemy pool size, max overflow, DB max connections는 따로 조정하지 않는다. 하나의 connection budget으로 계산하고, 그 예산 안에서만 scale-out을 허용한다.

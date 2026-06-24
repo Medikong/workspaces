@@ -23,7 +23,7 @@ flowchart TD
 - [02-service-architecture.md](02-service-architecture.md): `auth`, `concert`, `reservation`, `payment`, `ticket`, `notification`, `dashboard`의 책임과 동기/비동기 경계를 본다.
 - [03-reservation-payment-ticket-flow.md](03-reservation-payment-ticket-flow.md): 예약 생성부터 결제 승인, outbox, Kafka, 티켓 발급, 알림까지의 핵심 업무 처리를 본다.
 - [04-event-kafka-architecture.md](04-event-kafka-architecture.md): producer, topic, consumer, outbox, `processed_events`, 재시도/중복 처리 관점을 본다.
-- [05-kubernetes-gitops-architecture.md](05-kubernetes-gitops-architecture.md): Argo CD, Helm values, SealedSecret, Kong, Istio, 서비스 배포 리소스의 관계를 본다.
+- [05-kubernetes-gitops-architecture.md](05-kubernetes-gitops-architecture.md): 로컬 Kubernetes 런타임, Kong, 서비스/worker/DB/Kafka, HPA, 관측성, GitOps 관리 단위를 본다.
 - [06-observability-architecture.md](06-observability-architecture.md): 로그, 트레이스, 메트릭이 OpenTelemetry Collector, Loki, Tempo, Prometheus, Grafana로 이어지는 경로를 본다.
 
 ## 핵심 해석

@@ -295,4 +295,6 @@ service_connection_budget = api_connection_budget + worker_connection_budget
 
 auth-service는 CPU-bound login 비용을 별도 기준으로 관리해야 하고, concert-service는 DB-bound read path라 HPA만으로 확장되지 않는다. ticket/notification은 전체 목록 응답을 page 단위로 바꿔 payload와 직렬화 비용을 줄이는 것이 효과적이었다. payment-service는 query shape와 index를 맞추는 전형적인 DB I/O 개선이었다. reservation-service는 공통 실행 단위와 pool 조건을 정리한 뒤 현재 실험에서는 가장 안정적이었다.
 
+최종적으로 안정적인 RPS를 유지하려면 DB connection pool budget만 조정해서는 부족하다. 특히 concert `seat-map`/catalog처럼 반복 조회가 많고 DB connection을 오래 점유하는 read path는 Redis 기반 cache, singleflight, stale-while-revalidate 같은 read-side 완충을 추가해야 한다. pool은 DB를 터뜨리지 않기 위한 상한이고, Redis는 같은 요청이 DB까지 반복해서 내려가지 않게 막는 장치로 본다.
+
 공통적으로는 서비스별 baseline을 먼저 잡고, 그 다음 HPA와 journey를 보는 순서가 맞다. HPA scale-out은 필요한 조건이지만 충분조건은 아니다. 앞으로는 CPU, memory, network I/O를 각각 따로 결론내리지 않고, endpoint shape, FastAPI worker 수, DB connection budget, worker 실행 단위, payload 크기, HPA 반응을 한 세트로 기록한다.

@@ -1,0 +1,11 @@
+Service,대표 API,Method,p50Ms,p95Ms,p99Ms,Error rate
+auth-service,`/auth/login` ,POST,55.916,65.077,102.895,0%
+concert-service,`/concerts/recommended?sort=latest&limit=10`,GET,6.554,7.966,9.632,0%
+concert-service,`/concerts/{concertId}`,GET,7.380,9.687,11.683,0%
+concert-service,`/concerts/{concertId}/dates/{date}/performances`,GET,4.098,4.874,5.783,0%
+concert-service,`/performances/{performanceId}/seat-map`,GET,13.924,39.745,57.766,0%
+reservation-service,`/reservations`,POST,5.870,7.435,11.138,0%
+payment-service,`/payments`,POST,5.726,10.238,15.533,0%
+payment-service,`/payments/{paymentId}`,GET,3.646,4.369,5.175,0%
+ticket-service,`/tickets/{ticketId}`,GET,3.949,6.335,7.220,0%
+notification-service,`/notifications?limit=20`,GET,1.831,2.941,6.177,0%
