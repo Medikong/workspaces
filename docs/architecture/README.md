@@ -13,8 +13,11 @@ flowchart TD
     Service --> Event["04-event-kafka-architecture<br/>이벤트 처리"]
     Context --> GitOps["05-kubernetes-gitops-architecture<br/>배포 관점"]
     Context --> Observability["06-observability-architecture<br/>관측성 관점"]
+    Context --> Platform["07-kubernetes-platform-architecture<br/>플랫폼 골격"]
     Flow --> Event
     GitOps --> Observability
+    Platform --> GitOps
+    Platform --> Observability
 ```
 
 ## 문서 목록
@@ -25,12 +28,14 @@ flowchart TD
 - [04-event-kafka-architecture.md](04-event-kafka-architecture.md): producer, topic, consumer, outbox, `processed_events`, 재시도/중복 처리 관점을 본다.
 - [05-kubernetes-gitops-architecture.md](05-kubernetes-gitops-architecture.md): 로컬 Kubernetes 런타임, Kong, 서비스/worker/DB/Kafka, HPA, 관측성, GitOps 관리 단위를 본다.
 - [06-observability-architecture.md](06-observability-architecture.md): 로그, 트레이스, 메트릭이 OpenTelemetry Collector, Loki, Tempo, Prometheus, Grafana로 이어지는 경로를 본다.
+- [07-kubernetes-platform-architecture.md](07-kubernetes-platform-architecture.md): 서비스 재구성 전, Istio IngressGateway를 전제로 서비스 영역을 제외한 Kubernetes 플랫폼 골격을 본다.
 
 ## 핵심 해석
 
 - 이 초안은 `workspace`에 둔 공통 아키텍처 문서이며, 실제 서비스 코드는 `service`, 배포 선언은 `gitops`, 클러스터/인프라 구성은 `infra`가 책임진다.
 - `archive/` 경로는 과거 reference로만 보고, 실제 배포 상태 근거에는 사용하지 않았다.
 - 한 장짜리 큰 그림 대신 시스템, 서비스, 업무 처리, 이벤트, 배포, 관측성을 분리했다.
+- 서비스 재구성 전에는 `07-kubernetes-platform-architecture.md`를 기준으로 플랫폼 영역과 서비스 영역을 분리해서 본다.
 - 각 문서는 현재 코드와 GitOps 선언에서 확인한 구조를 우선 반영하고, 단정하기 어려운 부분은 `확인 필요`에 남겼다.
 
 ## 근거로 본 주요 경로
