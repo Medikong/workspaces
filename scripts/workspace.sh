@@ -8,7 +8,7 @@ MANIFEST_PATH="$WORKSPACE_DIR/repos.env"
 COMMAND="${1:-help}"
 
 print_help() {
-  print_header "Medikong workspace commands"
+  print_header "DropMong workspace commands"
   echo "사용법: ./scripts/workspace.sh <command>"
   echo
   echo "commands:"
@@ -34,7 +34,7 @@ load_manifest() {
 }
 
 list_repos() {
-  print_header "Medikong workspace repos"
+  print_header "DropMong workspace repos"
   echo "workspace: $WORKSPACE_NAME"
   echo "root: $WORKSPACE_ROOT_PATH"
   echo
