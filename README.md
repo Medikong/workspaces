@@ -1,8 +1,46 @@
-# DropMong workspace
+# DropMong
 
-DropMong은 정해진 시각에 한정 수량 상품을 공개하고, 짧은 시간에 몰리는 주문을 안정적으로 처리하는 드롭 커머스 프로젝트다.
+누군가는 발매일을 기다리고, 누군가는 오픈 시간을 알람으로 맞춰둡니다.
 
-이 repo는 구현 repo가 아니라 작업공간 진입점이다. 공통 문서, 온보딩, repo manifest, 작업 규칙, 운영 검증 기준을 관리한다. 실제 서비스 코드는 `services`, 배포 선언은 `gitops`, 인프라 구성은 `infra` repo를 기준으로 본다.
+좋아하는 브랜드의 새로운 컬렉션, 한정판 굿즈, 아티스트 협업 제품.
+사람들은 단순히 상품을 구매하는 것이 아니라, **같은 순간을 기다리고 함께 참여하는 경험**을 즐깁니다.
+
+DropMong은 이러한 기다림에서 시작되었습니다.
+
+우리는 쇼핑이 단순한 소비를 넘어, 오픈을 기다리는 설렘과 구매에 성공하는 성취감까지 하나의 경험이 될 수 있다고 믿습니다. 정해진 시간에 모두가 같은 출발선에서 만나고, 누구에게나 공정한 기회가 주어지는 드롭 커머스를 지향합니다.
+
+DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이 가장 즐거운 순간이 되는 공간**을 만들고 있습니다.
+
+## Brand Values
+
+### Limited
+
+쉽게 구할 수 없는 상품은 더 특별한 경험을 만듭니다.
+
+### Fair
+
+누구나 같은 시간, 같은 조건에서 참여할 수 있는 공정한 기회를 제공합니다.
+
+### Excitement
+
+오픈 카운트다운부터 구매 완료까지, 모든 순간이 하나의 이벤트가 됩니다.
+
+### Trust
+
+가장 많은 사람이 몰리는 순간에도 신뢰할 수 있는 구매 경험을 제공합니다.
+
+---
+
+## Workspace
+
+이 저장소는 DropMong 브랜드와 서비스를 함께 만들어가는 Workspace입니다.
+
+공통 문서와 설계, 개발 규칙을 관리하며, 실제 구현은 각 저장소에서 진행됩니다.
+
+- `workspaces` : 공통 문서, 온보딩, repo manifest
+- `services` : 서비스 구현
+- `gitops` : Kubernetes 배포 및 GitOps 관리
+- `infra` : 클라우드 및 인프라 구성
 
 ## 프로젝트 주제
 
@@ -19,131 +57,15 @@ DropMong은 정해진 시각에 한정 수량 상품을 공개하고, 짧은 시
 
 ## 예상 아키텍처
 
-서비스 경계는 새 구현에서 확정한다. 현재 README의 다이어그램은 DropMong을 Kubernetes 위에 올릴 때의 예상 골격을 보여준다.
+서비스 경계는 새 구현에서 확정한다. 현재 README의 다이어그램은 DropMong을 Kubernetes 위에 올릴 때의 클라우드 네이티브 예상 골격을 보여준다. AWS 같은 퍼블릭 클라우드 프로비저닝은 이 그림의 범위에서 제외한다.
 
-```mermaid
-flowchart TB
-    user["사용자 / 운영자"]
-    github["GitHub Actions<br/>test · image build · scan"]
-    registry["Container Registry<br/>service images"]
-    argocd["Argo CD<br/>GitOps sync"]
-
-    subgraph cluster["Kubernetes Cluster"]
-        manifests["Helm releases<br/>Kubernetes manifests"]
-        ingress["Istio Ingress Gateway"]
-        traffic["VirtualService / DestinationRule<br/>routing · canary · retry"]
-
-        subgraph app["Application Services (candidate)"]
-            auth["auth-service"]
-            catalog["catalog-service"]
-            order["order-service"]
-            payment["payment-service"]
-            notification["notification-service"]
-        end
-
-        subgraph data["Data & Messaging"]
-            postgres["PostgreSQL<br/>service databases"]
-            mongodb["MongoDB<br/>notification store"]
-            kafka["Kafka<br/>domain events"]
-        end
-
-        subgraph observability["Observability"]
-            otel["OpenTelemetry Collector"]
-            prometheus["Prometheus"]
-            loki["Loki"]
-            tempo["Tempo"]
-            grafana["Grafana"]
-            alertmanager["Alertmanager"]
-        end
-    end
-
-    user --> ingress
-    ingress --> traffic
-    traffic --> auth
-    traffic --> catalog
-    traffic --> order
-    traffic --> payment
-    traffic --> notification
-
-    order --> postgres
-    payment --> postgres
-    catalog --> postgres
-    notification --> mongodb
-
-    order --> kafka
-    payment --> kafka
-    kafka --> order
-    kafka --> notification
-
-    auth --> otel
-    catalog --> otel
-    order --> otel
-    payment --> otel
-    notification --> otel
-    otel --> prometheus
-    otel --> loki
-    otel --> tempo
-    prometheus --> grafana
-    loki --> grafana
-    tempo --> grafana
-    prometheus --> alertmanager
-
-    github --> registry
-    registry --> argocd
-    argocd --> manifests
-    manifests --> ingress
-    manifests --> traffic
-    manifests --> auth
-```
+![DropMong 클라우드 네이티브 예상 아키텍처](assets/dropmong-expected-architecture.png)
 
 ## 주문 처리 시퀀스
 
 외부 요청은 Istio Ingress Gateway를 통과한다. 서비스 경계는 새 구현에서 확정하되, 현재 문서 기준의 초기 후보는 `auth`, `catalog`, `order`, `payment`, `notification`이다.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor user as 사용자
-    participant ingress as Istio Ingress Gateway
-    box Kubernetes Services
-        participant auth as auth-service
-        participant catalog as catalog-service
-        participant order as order-service
-        participant payment as payment-service
-        participant notification as notification-service
-    end
-    participant kafka as Kafka
-
-    user->>ingress: POST /auth/login
-    ingress->>auth: 로그인 요청
-    auth-->>ingress: access token
-    ingress-->>user: 로그인 완료
-
-    user->>ingress: GET /drops/opening
-    ingress->>catalog: 오픈 예정/진행 중 드롭 조회
-    catalog-->>ingress: 드롭, 상품, 재고 표시 정보
-    ingress-->>user: 구매 가능 정보
-
-    user->>ingress: POST /orders
-    ingress->>order: 주문 생성과 재고 예약
-    order-->>ingress: 주문 생성 결과
-    order-)kafka: order.created
-    ingress-->>user: 주문 접수
-
-    user->>ingress: POST /payments
-    ingress->>payment: 결제 승인 요청
-    payment-->>ingress: 결제 처리 결과
-    payment-)kafka: payment.approved 또는 payment.failed
-    ingress-->>user: 결제 결과
-
-    kafka-)order: 결제 결과에 따른 주문 확정/취소
-    kafka-)notification: 주문·결제 상태 알림 저장
-
-    user->>ingress: GET /orders/{orderId}
-    ingress->>order: 주문 상태 조회
-    order-->>ingress: 주문 상태
-    ingress-->>user: 주문 확인
-```
+원본 시퀀스 다이어그램은 [docs/architecture/expected-architecture/order-processing-sequence.mmd](docs/architecture/expected-architecture/order-processing-sequence.mmd)에 보관한다.
 
 ## 목표
 

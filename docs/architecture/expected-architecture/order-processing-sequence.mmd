@@ -1,0 +1,42 @@
+sequenceDiagram
+    autonumber
+    actor user as 사용자
+    participant ingress as Istio Ingress Gateway
+    box Kubernetes Services
+        participant auth as auth-service
+        participant catalog as catalog-service
+        participant order as order-service
+        participant payment as payment-service
+        participant notification as notification-service
+    end
+    participant kafka as Kafka
+
+    user->>ingress: POST /auth/login
+    ingress->>auth: 로그인 요청
+    auth-->>ingress: access token
+    ingress-->>user: 로그인 완료
+
+    user->>ingress: GET /drops/opening
+    ingress->>catalog: 오픈 예정/진행 중 드롭 조회
+    catalog-->>ingress: 드롭, 상품, 재고 표시 정보
+    ingress-->>user: 구매 가능 정보
+
+    user->>ingress: POST /orders
+    ingress->>order: 주문 생성과 재고 예약
+    order-->>ingress: 주문 생성 결과
+    order-)kafka: order.created
+    ingress-->>user: 주문 접수
+
+    user->>ingress: POST /payments
+    ingress->>payment: 결제 승인 요청
+    payment-->>ingress: 결제 처리 결과
+    payment-)kafka: payment.approved 또는 payment.failed
+    ingress-->>user: 결제 결과
+
+    kafka-)order: 결제 결과에 따른 주문 확정/취소
+    kafka-)notification: 주문·결제 상태 알림 저장
+
+    user->>ingress: GET /orders/{orderId}
+    ingress->>order: 주문 상태 조회
+    order-->>ingress: 주문 상태
+    ingress-->>user: 주문 확인

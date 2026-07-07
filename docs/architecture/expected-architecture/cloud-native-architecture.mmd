@@ -1,0 +1,72 @@
+flowchart TB
+    user["사용자 / 운영자"]
+    github["GitHub Actions<br/>test · image build · scan"]
+    registry["Container Registry<br/>service images"]
+    argocd["Argo CD<br/>GitOps sync"]
+
+    subgraph cluster["Kubernetes Cluster"]
+        manifests["Helm releases<br/>Kubernetes manifests"]
+        ingress["Istio Ingress Gateway"]
+        traffic["VirtualService / DestinationRule<br/>routing · canary · retry"]
+
+        subgraph app["Application Services (candidate)"]
+            auth["auth-service"]
+            catalog["catalog-service"]
+            order["order-service"]
+            payment["payment-service"]
+            notification["notification-service"]
+        end
+
+        subgraph data["Data & Messaging"]
+            postgres["PostgreSQL<br/>service databases"]
+            mongodb["MongoDB<br/>notification store"]
+            kafka["Kafka<br/>domain events"]
+        end
+
+        subgraph observability["Observability"]
+            otel["OpenTelemetry Collector"]
+            prometheus["Prometheus"]
+            loki["Loki"]
+            tempo["Tempo"]
+            grafana["Grafana"]
+            alertmanager["Alertmanager"]
+        end
+    end
+
+    user --> ingress
+    ingress --> traffic
+    traffic --> auth
+    traffic --> catalog
+    traffic --> order
+    traffic --> payment
+    traffic --> notification
+
+    order --> postgres
+    payment --> postgres
+    catalog --> postgres
+    notification --> mongodb
+
+    order --> kafka
+    payment --> kafka
+    kafka --> order
+    kafka --> notification
+
+    auth --> otel
+    catalog --> otel
+    order --> otel
+    payment --> otel
+    notification --> otel
+    otel --> prometheus
+    otel --> loki
+    otel --> tempo
+    prometheus --> grafana
+    loki --> grafana
+    tempo --> grafana
+    prometheus --> alertmanager
+
+    github --> registry
+    registry --> argocd
+    argocd --> manifests
+    manifests --> ingress
+    manifests --> traffic
+    manifests --> auth
