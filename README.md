@@ -11,6 +11,8 @@ DropMong은 이러한 기다림에서 시작되었습니다.
 
 DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이 가장 즐거운 순간이 되는 공간**을 만들고 있습니다.
 
+![DropMong](assets/dropmong-userflow-overview.png)
+
 ## Brand Values
 
 ### Limited
@@ -30,6 +32,11 @@ DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이
 가장 많은 사람이 몰리는 순간에도 신뢰할 수 있는 구매 경험을 제공합니다.
 
 ---
+
+## 서비스 구성도
+
+![DropMong 서비스 구성도](assets/dropmong-service-overview.png)
+
 
 ## Workspace
 
@@ -60,6 +67,10 @@ DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이
 서비스 경계는 새 구현에서 확정한다. 현재 README의 다이어그램은 DropMong을 Kubernetes 위에 올릴 때의 클라우드 네이티브 예상 골격을 보여준다. AWS 같은 퍼블릭 클라우드 프로비저닝은 이 그림의 범위에서 제외한다.
 
 ![DropMong 클라우드 네이티브 예상 아키텍처](assets/dropmong-expected-architecture.png)
+
+## 관측성 아키텍처
+
+![DropMong 관측성 아키텍처](assets/dropmong-observability-overview.png)
 
 ## 주문 처리 시퀀스
 
