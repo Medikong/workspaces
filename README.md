@@ -33,22 +33,6 @@ DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이
 
 ---
 
-## 서비스 구성도
-
-![DropMong 서비스 구성도](assets/dropmong-service-overview.png)
-
-
-## Workspace
-
-이 저장소는 DropMong 브랜드와 서비스를 함께 만들어가는 Workspace입니다.
-
-공통 문서와 설계, 개발 규칙을 관리하며, 실제 구현은 각 저장소에서 진행됩니다.
-
-- `workspaces` : 공통 문서, 온보딩, repo manifest
-- `services` : 서비스 구현
-- `gitops` : Kubernetes 배포 및 GitOps 관리
-- `infra` : 클라우드 및 인프라 구성
-
 ## 프로젝트 주제
 
 ```text
@@ -62,21 +46,42 @@ DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이
 - Kubernetes, Istio, Helm, Argo CD로 배포와 트래픽 정책을 검증한다.
 - Prometheus, Grafana, Loki, Tempo, Alertmanager로 장애 원인과 병목을 추적한다.
 
-## 예상 아키텍처
+---
 
-서비스 경계는 새 구현에서 확정한다. 현재 README의 다이어그램은 DropMong을 Kubernetes 위에 올릴 때의 클라우드 네이티브 예상 골격을 보여준다. AWS 같은 퍼블릭 클라우드 프로비저닝은 이 그림의 범위에서 제외한다.
+## 서비스 구성도
 
-![DropMong 클라우드 네이티브 예상 아키텍처](assets/dropmong-expected-architecture.png)
+![DropMong 서비스 구성도](assets/dropmong-service-overview.png)
 
 ## 관측성 아키텍처
 
 ![DropMong 관측성 아키텍처](assets/dropmong-observability-overview.png)
 
-## 주문 처리 시퀀스
+## 마스코트 캐릭터 시트
 
-외부 요청은 Istio Ingress Gateway를 통과한다. 서비스 경계는 새 구현에서 확정하되, 현재 문서 기준의 초기 후보는 `auth`, `catalog`, `order`, `payment`, `notification`이다.
+![DropMong 마스코트 캐릭터 시트](assets/dropmong-mascot-character-sheet.png)
 
-원본 시퀀스 다이어그램은 [docs/architecture/expected-architecture/order-processing-sequence.mmd](docs/architecture/expected-architecture/order-processing-sequence.mmd)에 보관한다.
+## UI & UX 컴포넌트 시트
+
+![DropMong UI & UX 컴포넌트 시트](assets/dropmong-ui-ux-component-sheet.png)
+
+
+
+## Workspace
+
+이 저장소는 DropMong 브랜드와 서비스를 함께 만들어가는 Workspace입니다.
+
+공통 문서와 설계, 개발 규칙을 관리하며, 실제 구현은 각 저장소에서 진행됩니다.
+
+- `workspaces` : 공통 문서, 온보딩, repo manifest
+- `services` : 서비스 구현
+- `gitops` : Kubernetes 배포 및 GitOps 관리
+- `infra` : 클라우드 및 인프라 구성
+
+## 예상 아키텍처
+
+서비스 경계는 새 구현에서 확정한다. 현재 README의 다이어그램은 DropMong을 Kubernetes 위에 올릴 때의 클라우드 네이티브 예상 골격을 보여준다. AWS 같은 퍼블릭 클라우드 프로비저닝은 이 그림의 범위에서 제외한다.
+
+![DropMong 클라우드 네이티브 예상 아키텍처](assets/dropmong-expected-architecture.png)
 
 ## 목표
 
