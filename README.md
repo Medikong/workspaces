@@ -11,25 +11,11 @@ DropMong은 이러한 기다림에서 시작되었습니다.
 
 DropMong은 한정 상품을 판매하는 쇼핑몰이 아니라, **기다림이 가장 즐거운 순간이 되는 공간**을 만들고 있습니다.
 
+
+![DropMong Brand](assets/dropmong-brand.png)
+
+
 ![DropMong](assets/dropmong-userflow-overview.png)
-
-## Brand Values
-
-### Limited
-
-쉽게 구할 수 없는 상품은 더 특별한 경험을 만듭니다.
-
-### Fair
-
-누구나 같은 시간, 같은 조건에서 참여할 수 있는 공정한 기회를 제공합니다.
-
-### Excitement
-
-오픈 카운트다운부터 구매 완료까지, 모든 순간이 하나의 이벤트가 됩니다.
-
-### Trust
-
-가장 많은 사람이 몰리는 순간에도 신뢰할 수 있는 구매 경험을 제공합니다.
 
 ---
 
