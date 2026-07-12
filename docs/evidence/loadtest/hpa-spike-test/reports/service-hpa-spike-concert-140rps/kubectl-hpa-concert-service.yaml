@@ -1,0 +1,58 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    meta.helm.sh/release-name: concert-local-docker-desktop
+    meta.helm.sh/release-namespace: ticketing-concert
+  creationTimestamp: "2026-06-21T09:15:16Z"
+  labels:
+    app.kubernetes.io/instance: concert-local-docker-desktop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: concert-service
+    app.kubernetes.io/part-of: medikong
+  name: concert-service
+  namespace: ticketing-concert
+  resourceVersion: "2596032"
+  uid: e02b99e6-da12-472d-b9da-2e6d56b8daec
+spec:
+  maxReplicas: 4
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: concert-service
+status:
+  conditions:
+  - lastTransitionTime: "2026-06-21T09:15:31Z"
+    message: recommended size matches current size
+    reason: ReadyForNewScale
+    status: "True"
+    type: AbleToScale
+  - lastTransitionTime: "2026-06-21T12:16:50Z"
+    message: the HPA was able to successfully calculate a replica count from cpu resource
+      utilization (percentage of request)
+    reason: ValidMetricFound
+    status: "True"
+    type: ScalingActive
+  - lastTransitionTime: "2026-06-21T10:41:04Z"
+    message: the desired count is within the acceptable range
+    reason: DesiredWithinRange
+    status: "False"
+    type: ScalingLimited
+  currentMetrics:
+  - resource:
+      current:
+        averageUtilization: 1
+        averageValue: 10m
+      name: cpu
+    type: Resource
+  currentReplicas: 1
+  desiredReplicas: 1
+  lastScaleTime: "2026-06-21T12:48:16Z"

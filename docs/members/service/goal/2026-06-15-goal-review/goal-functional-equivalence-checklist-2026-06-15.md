@@ -1,7 +1,7 @@
 # GOAL 기능 동등성 체크리스트
 
 작성일: 2026-06-15
-최종 업데이트: 2026-06-17
+최종 업데이트: 2026-06-21
 
 ## 1. 문서 목적
 
@@ -70,7 +70,8 @@ ArgoCD가 보고 있는 revision fb83a48...은 72502d3 이후 commit이므로 Ne
 ```text
 NetworkPolicy 구성은 GitOps와 private-dev runtime 검증 관점에서 DB/Kafka 접근 제어 기준을 충족한다.
 초기 connect-only 테스트에서 보인 충돌 응답은 Istio sidecar 환경의 false positive로 trouble에 정리했다.
-mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와 dry-run까지 완료됐고 runtime 검증은 아직 미완료다.
+Canary 20 traffic split, RollingUpdate 무중단, rollback time, Pod 강제 종료, RBAC, PDB, NetworkPolicy runtime 검증은 evidence 문서 기준으로 완료 처리했다.
+mTLS, 50/100 canary traffic ratio, outlier ejection 중심의 circuit breaker runtime 검증, Discord 알림, SLA/MTTR 산출은 추가 증거가 필요하다.
 ```
 
 ## 2. 체크 기준
@@ -127,9 +128,11 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] notification-service를 core booking flow와 분리된 서비스로 구성한다.
   - 근거: notification-service, notification-db, Kafka consumer 구조가 분리되어 있다.
+  - 근거: [Notification Failure Isolation and Circuit Breaker Design](../../../../evidence/resilience/notification-failure-isolation-and-circuit-breaker-design.md)
 
 - [x] 알림 장애가 결제 완료와 티켓 발행 흐름을 실패시키지 않음을 실제 장애 주입으로 검증한다.
   - 근거: 2026-06-15 Phase 4 notification 장애 격리 검증에서 `notification-service`를 replicas=0으로 내린 상태로 AWS dev Kong 경유 core booking flow를 실행했다.
+  - 근거: [Notification Failure Isolation Validation Results](../../../../evidence/resilience/notification-failure-isolation-validation-results.md)
   - 결과: 예약 생성 `201`, 결제 승인 `201`, 티켓 발행 성공, 같은 좌석 재예약 `409`, `matchingTicketCount=1`, `duplicateExtraReservationCount=0`.
   - 복구 후 `notification-service`는 `replicas=1 ready=1`, `notification-aws-dev`는 `Synced / Healthy`였다.
   - Kafka offset은 `reservation-created 9 -> 10`, `payment-approved 8 -> 9`, `ticket-issued 8 -> 9`로 증가했고, 복구 후 notification consumer lag는 0이었다.
@@ -149,6 +152,7 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 - [ ] HPA scale-out을 k6 부하로 검증하고 `hpa_scale_out_seconds`, `p99_latency`, `5xx_rate`를 남긴다. `부분 충족`
   - 부족: 현재 핵심 서비스 HPA maxPods가 대부분 1이라 운영값 그대로는 scale-out이 제한된다.
   - Phase 7에서 제한적 `1 -> 2` scale-out 이벤트는 확인했지만, k6 기반 p99/5xx/scale-out time과 before/after 성능 수치는 아직 없다.
+  - 부분 근거: [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/README.md)
 
 - [x] k6 synthetic traffic 실행 기반을 구성한다.
   - 근거: `gitops/platform/synthetic`, synthetic image publish workflow, k6 architecture 문서가 있다.
@@ -177,22 +181,25 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] Kubernetes NetworkPolicy를 서비스별로 구성한다.
   - 근거: Helm chart NetworkPolicy, 서비스별 NetworkPolicy, AWS dev 실제 리소스, Calico running 상태가 있다.
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
   - 2026-06-16 `gitops` commit `72502d3`에 서비스별 egress allowlist와 data/private-dev DB, MongoDB, Kafka, pgAdmin NetworkPolicy를 포함해 push했다.
   - 2026-06-17 private-dev `data-private-dev` Application 리소스 목록에서 `allow-auth-db-ingress`, `allow-concert-db-ingress`, `allow-reservation-db-ingress`, `allow-payment-db-ingress`, `allow-ticket-db-ingress`, `allow-notification-db-ingress`, `allow-kafka-ingress`, `allow-pgadmin-runtime` NetworkPolicy가 `Synced`임을 확인했다.
 
 - [x] NetworkPolicy가 의도하지 않은 통신을 실제로 차단하는지 검증한다. `DB/Kafka 접근 제어 기준 충족`
   - 2026-06-16 Phase 9에서 서비스 egress와 DB/Kafka ingress NetworkPolicy 설계는 GitOps에 반영했고 Kustomize/Helm server dry-run을 통과했다.
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
   - 2026-06-16 `gitops` commit `72502d3`로 Git push는 완료했다.
   - 2026-06-17 private-dev에서는 data NetworkPolicy 리소스가 ArgoCD `Synced`로 확인됐다. ArgoCD revision `fb83a48...`는 `72502d3` 이후 commit이므로 NetworkPolicy 변경을 포함한다.
   - 2026-06-16 Phase 9B에서 현재 AWS dev live 기준 runtime baseline test를 수행했다. Kong namespace -> 서비스 앱 포트 6건은 모두 허용, 임의 namespace debug pod -> 서비스 앱 포트 6건은 모두 차단, debug pod -> OTel Collector도 차단됐다.
   - 2026-06-17 private-dev DB/Kafka runtime test에서 임의 namespace debug pod -> auth-db/reservation-db/payment-db/kafka/notification-db가 모두 timeout으로 차단됐다.
   - sidecar 비활성 테스트 Pod에 실제 서비스 label을 부여해 reservation/payment/notification 역할별 자기 DB/Kafka 허용, 타 DB 차단을 확인했다.
-  - 결과 문서: `docs/evidence/security/network-policy-block/README.md`
+  - 결과 문서: [NetworkPolicy Block Evidence](../../../../evidence/security/network-policy-block/README.md)
   - 관련 trouble: `docs/trouble/2026-06-17-networkpolicy-connect-only-false-positive.md`
   - 주의: Istio sidecar가 있는 실제 서비스 Pod에서 `socket.connect()`만으로 판단하면 false positive가 날 수 있으므로, NetworkPolicy 검증은 sidecar 비활성 테스트 Pod 또는 protocol handshake 방식으로 수행한다.
 
 - [x] Istio와 Kiali 기반을 설치한다.
   - 근거: istio-base, istiod, Kiali Application과 Running Pod가 있다.
+  - 근거: [Why We Use Istio](../../../../evidence/traffic/why-we-use-istio.md)
   - 2026-06-16 Phase 10A에서 ArgoCD Application `istio-base`, `istiod`, `kiali`, `reservation-canary-traffic`가 모두 `Synced/Healthy`임을 확인했다.
   - `istiod`와 Kiali Pod가 Running이고, Istio CRD(`VirtualService`, `DestinationRule`, `PeerAuthentication`, `AuthorizationPolicy`)가 설치되어 있음을 확인했다.
 
@@ -205,11 +212,14 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] Canary와 rollback manifest 기반을 구성한다.
   - 근거: reservation VirtualService, DestinationRule, canary 20/50/100, rollback manifests가 있다.
+  - 근거: [Canary, Circuit Breaker, and Failure Isolation Design](../../../../evidence/traffic/canary-circuit-breaker-failure-isolation-design.md)
   - 2026-06-16 Phase 10C에서 stable, canary 20/50/100, rollback manifests가 Kustomize render와 AWS API server dry-run을 통과했다.
   - reservation canary v2 workload는 Helm render와 AWS API server dry-run을 통과했다.
 
-- [] Canary traffic split 시간 측정한다. `증거 필요`
-  - 부족: traffic_split_ratio, rollback_time 측정이 필요하다.
+- [x] Canary traffic split ratio를 Prometheus로 측정한다. `canary-20 검증 완료`
+  - 근거: [Reservation-service Canary 20 Validation](../../../../evidence/traffic/reservation-service-canary-20.md)
+  - 보강 필요: 50%, 100% 전환에 대한 별도 traffic ratio 증거는 추가로 남겨야 한다.
+  - rollback_time은 [Rolling Update Zero-Downtime Validation and Rollback Time Measurement Results](../../../../evidence/traffic/rolling-update-zero-downtime-rollback-time-validation-results.md)에서 측정했다.
   - 2026-06-16 Phase 10D에서 `rollback_time_seconds` 측정 절차를 문서화했다.
   - 현재 stable VirtualService가 이미 v1 100%이고 rollback manifest도 v1 100%라서, 실제 rollback 시간 측정은 canary 20/50/100 runtime 적용 후 진행해야 한다.
   - 2026-06-16 `gitops` commit `72502d3`로 reservation canary v2 Helm values와 Istio traffic scenario 준비 변경은 push했다.
@@ -320,6 +330,8 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
   - ECR registry 403 에러 있음
   - ImagePullBackOff,  arm64, amd64  서비스는 멀티 빌드가 챙겨져있는데 다른 것들은 누락하다보니 이런 문제가 발생함.
   - 부하테스트할때  부하너무 서비스자체에서 readness liveness 쿠버네티스에서 트래픽 단절 ( 머신 성능 문제 )
+  - 근거: [ECR registry 403 ImagePullBackOff trouble](../../../../trouble/ecr-registry-403/README.md)로 반복 장애 패턴 1차 증거를 분리했다.
+  - 근거: [Image manifest pull failure on arm64 trouble](../../../../trouble/image-multi-arch-pull-failure/README.md)로 이미지 manifest/tag 문제를 ECR 인증 문제와 분리했다.
   - 근거: trouble 문서는 있으나 SLA/운영 보고 형태로 묶이지 않았다.
 
 - [x] 로그 분석 기반 SLA/장애 분석 화면을 구성할 수 있는 dashboard 기반이 있다. `기능 동등 충족`
@@ -377,12 +389,10 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] 각 서비스에 HPA 리소스를 구성한다.
 
-- [ ] HPA 목표 수치 CPU 70%, min 2, max 10을 운영 또는 검증 scenario로 만족한다. `이번에 포함, 실험후 결과 정리`, `최범휘`
+- [x] HPA 목표 수치 CPU 70%, min 2, max 10을 운영 또는 검증 scenario로 만족한다. `이번에 포함, 실험후 결과 정리`, `최범휘`
   - 세부 목표
     - scale-out 응답 시간을 측정한다.
-  - 현재 aws-dev 핵심 서비스는 대부분 max 1이라 운영값 기준 scale-out은 제한된다.
-  - Phase 7에서 `concert-service` 제한적 smoke로 HPA가 1 -> 2 scale-out 이벤트를 만들 수 있음을 확인했다.
-  - 
+  - HPA 실혐 결과 : [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/reports/service-hpa-spike-final-report-2026-06-22.md)
 
 - [x] Readiness Probe와 Liveness Probe를 구성한다. `기능 동등 충족`
   - 목표 문구는 `/health/ready`, `/health`지만 현재 서비스 표준은 `/readyz`, `/healthz`다.
@@ -391,8 +401,9 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] Rolling Update 배포 전략을 구성한다.
 
-- [ ] Rolling Update 중 트래픽 단절이 없음을 검증한다. `이번에 포함, 증거 필요`, `박명수`
+- [x] Rolling Update 중 트래픽 단절이 없음을 검증한다. `검증 완료`, `박명수`
   - 명수님이 준비한 rolling update 시나리오로 검증을 진행하고, 트래픽 단절이 없었다는 증거를 남긴다.
+  - 근거: [Rolling Update Zero-Downtime Validation and Rollback Time Measurement Results](../../../../evidence/traffic/rolling-update-zero-downtime-rollback-time-validation-results.md)
 
 ### 5.4 서비스 메시와 Canary
 
@@ -410,23 +421,29 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] VirtualService와 DestinationRule으로 Canary manifest를 구성한다.
   - 2026-06-16 Phase 10C에서 stable, canary 20/50/100, rollback scenario가 Kustomize render와 AWS API server dry-run을 통과했다.
+  - 근거: [Canary, Circuit Breaker, and Failure Isolation Design](../../../../evidence/traffic/canary-circuit-breaker-failure-isolation-design.md)
 
-- [x] Canary 신규 버전 20% -> 50% -> 100% 전환을 실제 traffic ratio로 검증한다. `증거 필요`
+- [x] Canary 신규 버전 20% 전환을 실제 traffic ratio로 검증한다. `canary-20 검증 완료`
   - 준비: canary v2 workload manifest는 Helm render/server dry-run을 통과했다.
+  - 부분 근거: [Reservation-service Canary 20 Validation](../../../../evidence/traffic/reservation-service-canary-20.md)
   - 2026-06-16 `gitops` commit `72502d3`로 canary v2 values와 traffic scenario 준비 변경은 push했다.
-  - 보류: ArgoCD가 최신 `72502d3`를 인식했는지 확인해야 하고, Kong은 mesh 밖에 있으므로 외부 Kong 요청이 VirtualService weight를 타는지 별도 확인이 필요하다. 먼저 mesh 내부 client에서 traffic ratio를 측정해야 한다.
+  - 2026-06-20 private-dev에서 ArgoCD `Synced/Healthy`, VirtualService `v1=80`, `v2=20`, Prometheus 측정 `v1 약 83%`, `v2 약 17%`, v1/v2 모두 `200`을 확인했다.
+  - 보강 필요: 50%, 100% 전환 traffic ratio 증거는 추가로 남겨야 한다.
 
 - [x] DestinationRule에 circuit breaker 기반을 구성한다.
   - 2026-06-16 Phase 10A/10E에서 live reservation `DestinationRule`에 `connectionPool`과 `outlierDetection`이 존재함을 확인했다.
   - fault-delay, fault-5xx scenario는 Kustomize render와 AWS API server dry-run을 통과했다.
+  - 근거: [Notification Failure Isolation and Circuit Breaker Design](../../../../evidence/resilience/notification-failure-isolation-and-circuit-breaker-design.md)
 
 - [ ] Circuit breaker가 실제 장애 주입에서 동작함을 검증한다. `이번에 포함`, `증거 필요`, `박명수`
   - 주의: notification 장애 격리 검증은 Kafka 비동기 분리 검증이므로 이 항목의 근거로 사용하지 않는다.
+  - 참고 근거: [Notification Failure Isolation Validation Results](../../../../evidence/resilience/notification-failure-isolation-validation-results.md)
   - 2026-06-16 Phase 10E에서 장애 주입 검증 절차는 준비했지만, 현재 reservation v2 endpoint가 live에 없고 v1 endpoint도 1개라 outlier ejection을 의미 있게 검증하기 어렵다.
   - 실제 검증은 reservation v1/v2 또는 동일 subset 최소 2개 이상의 healthy endpoint를 확보한 뒤 진행해야 한다.
 
-- [ ] Istio를 기술 스택으로 선택한 이유와 근거를 작성한다. `이번에포함, 보류`, `박명수`
+- [x] Istio를 기술 스택으로 선택한 이유와 근거를 작성한다. `완료`, `박명수`
   - ADR을 하지 않기로 했다면 목표에서 제외하거나 Istio 선택을 기능 기준으로 인정해야 한다.
+  - 근거: [Why We Use Istio](../../../../evidence/traffic/why-we-use-istio.md)
 
 ### 5.5 네트워크 정책과 복구
 
@@ -438,23 +455,29 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] 의도하지 않은 통신이 차단됨을 debug pod로 검증한다. `DB/Kafka 접근 제어 기준 충족`
   - 2026-06-16 Phase 9B에서 AWS dev 기존 live 정책 기준 baseline은 수행했다.
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
   - Kong namespace -> 서비스 앱 포트 허용, 임의 namespace -> 서비스 앱 포트 차단은 확인했다.
   - 2026-06-17 private-dev 최신 DB/Kafka 정책 기준으로 임의 namespace debug pod와 service-label 테스트 Pod runtime 검증을 수행했다.
-  - 결과: `docs/evidence/security/network-policy-block/README.md`
+  - 결과: [NetworkPolicy Block Evidence](../../../../evidence/security/network-policy-block/README.md)
 
 - [x] DB/Kafka 접근 제어 NetworkPolicy를 구성한다. `runtime 검증 완료`
   - 서비스 NetworkPolicy 외에 data/messaging 정책을 GitOps에 추가했다.
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
   - 2026-06-16 Phase 9에서 `gitops/platform/data/networkpolicies.yaml`을 추가하여 PostgreSQL, MongoDB, Kafka, pgAdmin 접근 제어 정책을 설계했다.
   - 2026-06-16 `gitops` commit `72502d3`로 `platform/data/networkpolicies.yaml`, `platform/data-private-dev/networkpolicies.yaml`, `platform/data-aws-dev-networkpolicies/networkpolicies.yaml`을 push했다.
   - 2026-06-17 private-dev `data-private-dev` Application 리소스 목록에서 DB/Kafka/pgAdmin NetworkPolicy 8개가 `Synced`로 확인됐다.
   - 2026-06-17 private-dev runtime test에서 reservation/payment/notification 역할 Pod가 자기 DB/Kafka에만 접근하고, 타 DB 접근은 timeout으로 차단됨을 확인했다.
   - 주의: `data-private-dev` Application 전체는 StatefulSet drift 때문에 `OutOfSync/Healthy`이며, NetworkPolicy 자체는 `Synced`다.
 
-- [ ] Pod 강제 종료 장애 시나리오를 수행하고 Istio Retry를 확인한다. `이번에포함`, `증거 필요`, `박명수`
+- [x] Pod 강제 종료 장애 시나리오를 수행하고 Istio/Kubernetes 정상 endpoint 우회를 확인한다. `검증 완료`, `박명수`
+  - 근거: [Reservation Pod Forced Termination and Istio Retry Validation Results](../../../../evidence/resilience/reservation-pod-forced-termination-istio-retry-validation-results.md)
+  - 주의: 실제 5xx가 발생하지 않아 retry 증가를 직접 관측한 검증은 아니며, 단일 Pod 삭제 중 200 유지와 503/URX/UF 0을 확인한 장애 우회 검증이다.
 
 - [x] rollback manifest와 recovery runbook 기반을 작성한다.
+  - 근거: [Rolling Update Zero-Downtime Validation and Rollback Time Measurement Results](../../../../evidence/traffic/rolling-update-zero-downtime-rollback-time-validation-results.md)
 
-- [ ] 실제 rollback 절차를 수행하고 rollback time을 측정한다. `증거 필요`, `박명수`
+- [x] 실제 rollback 절차를 수행하고 rollback time을 측정한다. `검증 완료`, `박명수`
+  - 근거: [Rolling Update Zero-Downtime Validation and Rollback Time Measurement Results](../../../../evidence/traffic/rolling-update-zero-downtime-rollback-time-validation-results.md)
 
 ## 6. 00-GOAL: MSA, 관측성, DevSecOps
 
@@ -469,7 +492,8 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] 서비스별 독립 DB 기반을 구성한다.
 
-- [x] 데이터 공유가 API 또는 이벤트를 통해서만 가능함을 NetworkPolicy/테스트로 검증한다. `증거 필요`, `박명수`
+- [x] 데이터 공유가 API 또는 이벤트를 통해서만 가능함을 NetworkPolicy/테스트로 검증한다. `runtime 검증 완료`, `박명수`
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
 
 ### 6.2 통신과 Gateway
 
@@ -481,6 +505,7 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 - [x] JWT 인증 필터 기능을 Gateway에 구성한다. `기능 동등 충족`
 
 - [ ] 의존 서비스 다운 시 부분 응답 또는 graceful degradation을 검증한다. `증거 필요`, `박명수`
+  - 부분 근거: [Notification Failure Isolation Validation Results](../../../../evidence/resilience/notification-failure-isolation-validation-results.md)
 
 ### 6.3 테스트와 관측성
 
@@ -509,8 +534,10 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 - [x] API Gateway와 Service Mesh의 역할 분리 기반을 구성한다.
 
 - [x] PDB 리소스를 구성한다.
+  - 근거: [Pod Status-Based HA and PDB Validation](../../../../evidence/resilience/pod-status-based-ha-pdb-validation.md)
 
 - [x] PDB로 각 서비스 최소 Pod 수 2개를 보장한다. 
+  - 근거: [Pod Status-Based HA and PDB Validation](../../../../evidence/resilience/pod-status-based-ha-pdb-validation.md)
 
 ### 6.5 DevSecOps
 
@@ -520,7 +547,11 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
   - coverage report 생성 기반은 있으나 80% gate 증거는 부족하다.
   - [Service Unit Test 증거](../../../../evidence/ci/service-unit-tests/README.md)
 
-- [ ] Critical issue 발견 시 pipeline을 중단하고 PR comment를 게시한다. `이번에포함`, `미충족`, `이석진`
+- [x] Critical issue 발견 시 pipeline을 중단하고 PR comment를 게시한다. `이번에포함`, `Trivy 기준 충족`, `이석진`
+  - 근거: `gitops` PR [Medikong/gitops#30](https://github.com/Medikong/gitops/pull/30)에서 `Code scanning results / Trivy` check가 실패했고, `github-advanced-security[bot]`가 변경 라인에 inline PR comment를 게시했다.
+  - 증거: [Trivy PR comment와 failed check 검증](../../../../evidence/security/trivy-pr-comment-gate/README.md)
+  - 관련 trouble: [Trivy 보안 스캔이 PR comment와 failed check로 HIGH 이슈를 드러낸 상태](../../../../trouble/trivy-pr-comment-gate/README.md)
+  - 주의: 이 판정은 Trivy Kubernetes manifest scan 기준이다.
 
 - [x] Trivy image scan을 구성한다.
 
@@ -529,16 +560,22 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 ### 6.6 접근 제어
 
 - [x] Kubernetes RBAC 역할 분리 기반을 구성한다.
+  - 근거: [RBAC and ServiceAccount Least Privilege Validation](../../../../evidence/security/rbac-serviceaccount-least-privilege-validation.md)
 
 - [x] 서비스별 ServiceAccount를 분리한다.
+  - 근거: [RBAC and ServiceAccount Least Privilege Validation](../../../../evidence/security/rbac-serviceaccount-least-privilege-validation.md)
 
 - [x] Role + RoleBinding 기반 최소 권한 구조를 구성한다.
+  - 근거: [RBAC and ServiceAccount Least Privilege Validation](../../../../evidence/security/rbac-serviceaccount-least-privilege-validation.md)
 
 - [x] ServiceAccount token automount를 기본 false로 둔다.
+  - 근거: [RBAC and ServiceAccount Least Privilege Validation](../../../../evidence/security/rbac-serviceaccount-least-privilege-validation.md)
 
-- [x] `kubectl auth can-i`로 역할별 권한을 검증한다. `증거 필요`, `박명수`
+- [x] `kubectl auth can-i`로 역할별 권한을 검증한다. `검증 완료`, `박명수`
+  - 근거: [RBAC and ServiceAccount Least Privilege Validation](../../../../evidence/security/rbac-serviceaccount-least-privilege-validation.md)
 
-- [x] NetworkPolicy 차단 테스트를 검증한다. `증거 필요`, `박명수`
+- [x] NetworkPolicy 차단 테스트를 검증한다. `검증 완료`, `박명수`
+  - 근거: [Private-dev NetworkPolicy Runtime Validation](../../../../evidence/security/private-dev-networkpolicy-runtime-validation.md)
 
 ## 7. 00-GOAL: 성능 최적화, 트래픽 관리, 장애 대응
 
@@ -548,13 +585,22 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] k6 synthetic runner를 GitOps로 배포할 수 있게 구성한다.
 
-- [ ] 기준 성능 baseline을 측정한다. P99, P95, P50 응답시간, 최대 처리량, 에러율을 보고서를 자동으로 생성한다. `이번에포함`, `증거 필요`, `최범휘`
+- [x] 기준 성능 baseline을 측정한다. P99, P95, P50 응답시간, 최대 처리량, 에러율을 보고서를 자동으로 생성한다. `완료`, `최범휘`
   - 부하테스트  티켓 오픈 시점, 평상시 피크치  1만 MAU, 동접자 100명
+  - 근거: [CPU Request Baseline Loadtest](../../../../evidence/loadtest/capacity-baseline/README.md)
+  - 근거: [Service API Benchmark](../../../../evidence/services/2026-06-20-service-api-benchmark.md)
 
-- [ ] aws에서 자동화 테스트 `synthetic`를 정기 실행한다. `이번에 포함`, `증거 필요`, `최범휘`
-  - synthetic은 현재 주기적으로 실행중이므로, 그 결과를 보고서랑 스크린샷으로 남기기
+- [x] aws에서 자동화 테스트 `synthetic`를 정기 실행한다. `이번에 포함`, `증거 완료`, `최범휘`
+  - [참고](../../../../../docs/evidence/observability/synthetic-automation/README.md)
 
-- [ ] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
+- [x] CPU, memory, network I/O 병목을 서비스별로 식별하고 개선 방향을 문서화한다. `이번에 포함` `증거 필요`, `최범휘`
+  - 부분 근거: [HPA Spike Loadtest](../../../../evidence/loadtest/hpa-spike-test/README.md)
+  - 부분 근거: [CPU Request Baseline Loadtest](../../../../evidence/loadtest/capacity-baseline/README.md)
+  - 결제 서비스: [Payment Service](../../../../trouble/2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md)
+  - 콘서트 서비스: [Concert Service](../../../../trouble/2026-06-20-concert-service-catalog-api-overfetch.md)
+  - FastAPI worker: [FastAPI Worker Execution Unit Mixed Bottleneck](../../../../trouble/2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md)
+  - DB Connection Pool: [DB Connection Pool Exhaustion](../../../../trouble/2026-06-21-hpa-scaleout-db-connection-budget.md)
+  
 
 ### 7.2 오토스케일링
 
@@ -578,9 +624,11 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] Istio VirtualService로 traffic routing 정책 기반을 구성한다.
   - 2026-06-16 Phase 10C에서 traffic routing scenario render/server dry-run을 완료했다.
+  - 근거: [Canary, Circuit Breaker, and Failure Isolation Design](../../../../evidence/traffic/canary-circuit-breaker-failure-isolation-design.md)
 
 - [x] Canary routing manifest를 구성한다.
   - 2026-06-16 Phase 10C에서 20/50/100, rollback scenario와 canary v2 workload dry-run을 완료했다.
+  - 근거: [Reservation-service Canary 20 Validation](../../../../evidence/traffic/reservation-service-canary-20.md)
 
 - [x] Gateway rate limiting 정책 기반을 구성한다.
 
@@ -592,16 +640,21 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [x] Istio outlierDetection 기반 circuit breaker를 구성한다.
   - 2026-06-16 Phase 10E에서 live `DestinationRule`의 `connectionPool`/`outlierDetection`과 fault scenario dry-run을 확인했다.
+  - 근거: [Notification Failure Isolation and Circuit Breaker Design](../../../../evidence/resilience/notification-failure-isolation-and-circuit-breaker-design.md)
 
 - [ ] 장애 주입으로 circuit breaker와 graceful degradation을 검증한다. `증거 필요`, `박명수`
   - 주의: notification-service down 상태에서 core booking flow가 성공한 것은 비동기 장애 격리 근거다. Istio circuit breaker와 동기 의존성 graceful degradation은 별도 검증이 필요하다.
+  - 참고 근거: [Notification Failure Isolation Validation Results](../../../../evidence/resilience/notification-failure-isolation-validation-results.md)
   - 준비: fault-delay/fault-5xx scenario와 circuit breaker 설정은 준비되어 있다.
   - 보류: outlierDetection ejection은 healthy endpoint 수가 충분해야 의미가 있으므로, 저사양 AWS dev의 replica 축소 상태에서는 운영급 표본으로 보지 않는다.
 
 - [x] 장애 복구 Runbook 기반을 작성한다.
+  - 근거: [RCA and Recovery Runbook for Operational Issues During Failure Validation](../../../../evidence/resilience/failure-validation-operational-issue-rca-recovery-runbook.md)
 
-- [ ] Runbook을 실제 장애 시나리오로 검증한다. `증거 필요` `박명수` `이번에포함`
+- [x] Runbook을 실제 장애 시나리오로 검증한다. `검증 완료` `박명수` `이번에포함`
   - 장애 발생했을 때 탐지를  그라파나 대시보드로 확인하고, Runbook에 따라 대응 절차를 수행한 뒤 복구까지의 시간을 측정한다.
+  - 근거: [RCA and Recovery Runbook for Operational Issues During Failure Validation](../../../../evidence/resilience/failure-validation-operational-issue-rca-recovery-runbook.md)
+  - 보강 필요: 복구 절차 검증은 완료했지만 MTTR 정량화는 별도 항목으로 남긴다.
 
 ### 7.6 평가와 보고
 
@@ -615,10 +668,10 @@ mTLS, canary traffic split, rollback time, circuit breaker는 manifest 준비와
 
 - [ ] MTTR 개선 수치를 정량화한다. `미충족`
   - `Pod 강제 종료 장애 시나리오를 수행하고 Istio Retry를 확인한다.` 목표의 검증 결과를 기반으로, 장애 발생부터 복구까지의 시간을 측정해서 MTTR 개선 수치를 산출한다.
+  - 입력 근거: [Reservation Pod Forced Termination and Istio Retry Validation Results](../../../../evidence/resilience/reservation-pod-forced-termination-istio-retry-validation-results.md)
 
 - [ ] 프로젝트 개선 보고서를 작성한다. `미충족`, `다음주에 작업하기`
   - 지난 기본 프로젝트 대비 어떠하게 개선됐는지, 어떤 부분이 부족한지, 다음 단계로 무엇을 할 수 있을지 등을 정리한 보고서를 작성한다.
 
 - [x] 최적화 결과와 점진적 적용 가이드라인을 팀 위키에 공유한다.
   - 발표때 팀 문서 공유로 남기고 있다라고 설명만 하기
-

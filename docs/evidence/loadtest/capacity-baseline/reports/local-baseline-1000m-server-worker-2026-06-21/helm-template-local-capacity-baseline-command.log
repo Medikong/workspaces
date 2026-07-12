@@ -1,0 +1,233 @@
+task: [helm:template:env] set -eu
+env='local-capacity-baseline'
+if [ -z "${env}" ]; then
+  printf '%s\n' 'ENV is required, for example: task helm:template:env ENV=aws-dev' >&2
+  exit 2
+fi
+if [ ! -f "values/env/${env}.yaml" ]; then
+  printf 'Unknown environment values file: %s\n' "values/env/${env}.yaml" >&2
+  exit 2
+fi
+for service_file in values/services/*.yaml; do
+  service="${service_file##*/}"
+  service="${service##*\\}"
+  service="${service%.yaml}"
+  task helm:template:one SERVICE="${service}" ENV="${env}"
+done
+
+task: [helm:template:one] set -eu
+service='auth'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='concert'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='dashboard'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='frontend'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='notification'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='payment'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='reservation'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+
+task: [helm:template:one] set -eu
+service='ticket'
+env='local-capacity-baseline'
+if [ -z "${service}" ] || [ -z "${env}" ]; then
+  printf '%s\n' 'SERVICE and ENV are required, for example: task helm:template:one SERVICE=concert ENV=aws-dev' >&2
+  exit 2
+fi
+service_file="values/services/${service}.yaml"
+env_file="values/env/${env}.yaml"
+if [ ! -f "${service_file}" ]; then
+  printf 'Unknown service values file: %s\n' "${service_file}" >&2
+  exit 2
+fi
+if [ ! -f "${env_file}" ]; then
+  printf 'Unknown environment values file: %s\n' "${env_file}" >&2
+  exit 2
+fi
+extra_values=""
+if [ -f "values/overrides/${env}/${service}.yaml" ]; then
+  extra_values="-f values/overrides/${env}/${service}.yaml"
+fi
+helm template "${service}-${env}" charts/medikong-service \
+  -f values/base.yaml \
+  -f "${service_file}" \
+  -f "${env_file}" \
+  ${extra_values} >/dev/null
+

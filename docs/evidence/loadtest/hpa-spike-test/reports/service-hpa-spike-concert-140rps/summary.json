@@ -1,0 +1,18 @@
+{
+  "job": "read-api-loadtest-read-manual-20260621121910",
+  "pod": "read-api-loadtest-read-manual-20260621121910-8crjb",
+  "k6Status": "FAIL threshold exit 99",
+  "wrapperStatus": "Job Complete",
+  "reportType": "service_hpa_spike",
+  "baselineReplicas": 2,
+  "maxDesiredReplicas": 4,
+  "hpaDecisionSeconds": 215.764,
+  "scaleOutReadySeconds": 227.82,
+  "firstLimitStage": "concert_detail_baseline_rps_80",
+  "firstLimitStep": "capacity_baseline.concert.detail",
+  "firstLimitP95Ms": 182.41833139999974,
+  "stageCount": 25,
+  "overloadWorstP95Ms": 2731.6046656999965,
+  "overloadWorstP99Ms": 5001.305344959999,
+  "overloadMaxErrorRate": 0.022556390977443608
+}

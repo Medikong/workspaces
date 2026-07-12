@@ -1,0 +1,1533 @@
+## pre-run kubectl jobs
+NAME                                           STATUS     COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                 SELECTOR
+read-api-loadtest-read-manual-20260621082125   Complete   1/1           16m        53m   runner       localhost:5001/read-api-loadtest:dev   batch.kubernetes.io/controller-uid=16b7f121-8a7e-47ed-9535-6ddcd79f189a
+
+## pre-run hpa all
+No resources found
+
+## task output
+task: [dev:registry] set -eu
+registry='localhost:5001'
+container='medikong-registry'
+case "${registry}" in
+  localhost:*|127.0.0.1:*) ;;
+  *)
+    printf 'DEV_REGISTRY=%s is not a local Docker Desktop registry; skipping local registry bootstrap.\n' "${registry}"
+    exit 0
+    ;;
+esac
+if ! command -v docker >/dev/null 2>&1; then
+  printf '%s\n' 'docker command is required for task dev:registry.' >&2
+  exit 2
+fi
+host_port="${registry##*:}"
+if [ "${host_port}" = "${registry}" ]; then
+  host_port=5000
+fi
+if docker inspect "${container}" >/dev/null 2>&1; then
+  running_container="$(docker ps --filter "name=^/${container}$" --filter status=running -q)"
+  if [ -z "${running_container}" ]; then
+    docker start "${container}" >/dev/null
+  fi
+else
+  docker run -d --restart=always -p "127.0.0.1:${host_port}:5000" --name "${container}" registry:2 >/dev/null
+fi
+nodes="$(docker ps --filter ancestor=kindest/node -q)"
+if [ -z "${nodes}" ]; then
+  printf '%s\n' 'No kindest/node containers found. Registry is running, but no node mirror was configured.'
+  exit 0
+fi
+for node in ${nodes}; do
+  network="$(docker inspect --format '{{range $name, $_ := .NetworkSettings.Networks}}{{println $name}}{{end}}' "${node}" | head -n 1)"
+  if [ -z "${network}" ]; then
+    printf 'Could not resolve Docker network for node container %s.\n' "${node}" >&2
+    exit 2
+  fi
+  docker network connect "${network}" "${container}" 2>/dev/null || true
+  docker exec "${node}" sh -c "mkdir -p '/etc/containerd/certs.d/${registry}' && printf '%s\n' 'server = \"http://${registry}\"' '' '[host.\"http://${container}:5000\"]' '  capabilities = [\"pull\", \"resolve\"]' > '/etc/containerd/certs.d/${registry}/hosts.toml' && systemctl restart containerd"
+done
+
+No kindest/node containers found. Registry is running, but no node mirror was configured.
+task: [dev:registry:check] set -eu
+registry='localhost:5001'
+case "${registry}" in
+  localhost:*|127.0.0.1:*) ;;
+  *)
+    printf 'DEV_REGISTRY=%s is not a local Docker Desktop registry; skipping local registry check.\n' "${registry}"
+    exit 0
+    ;;
+esac
+for attempt in 1 2 3 4 5; do
+  if curl -fsS "http://${registry}/v2/" >/dev/null; then
+    break
+  fi
+  if [ "${attempt}" = "5" ]; then
+    printf 'Docker Desktop dev registry is not reachable: http://%s/v2/\n' "${registry}" >&2
+    exit 2
+  fi
+  sleep 1
+done
+nodes="$(docker ps --filter ancestor=kindest/node -q)"
+if [ -z "${nodes}" ]; then
+  printf '%s\n' 'Registry API is reachable; no kindest/node containers were found to check.'
+  exit 0
+fi
+for node in ${nodes}; do
+  docker exec "${node}" test -f "/etc/containerd/certs.d/${registry}/hosts.toml"
+done
+
+Registry API is reachable; no kindest/node containers were found to check.
+task: [dev:loadtest] task --taskfile platform/monitoring/Taskfile.yml up
+task: [up] task render
+task: [render] task repo
+task: [repo] helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update >/dev/null
+task: [repo] helm repo update prometheus-community >/dev/null
+task: [render] kubectl kustomize ../../platform/monitoring >/dev/null
+task: [render] helm template kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --include-crds -f ../../platform/monitoring/values/kube-prometheus-stack-private-dev.yaml >/dev/null
+task: [render] helm template kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --include-crds -f ../../platform/monitoring/values/kube-prometheus-stack-local.yaml >/dev/null
+task: [up] kubectl delete configmap medikong-service-metrics-dashboards medikong-app-dashboards medikong-infra-dashboards --namespace monitoring --ignore-not-found
+task: [up] kubectl apply -k ../../platform/monitoring
+namespace/monitoring unchanged
+configmap/medikong-db-dashboards unchanged
+configmap/medikong-load-dashboards unchanged
+configmap/medikong-logs-dashboards unchanged
+configmap/medikong-ops-dashboards unchanged
+podmonitor.monitoring.coreos.com/istiod unchanged
+podmonitor.monitoring.coreos.com/ticketing-envoy-sidecars unchanged
+prometheusrule.monitoring.coreos.com/service-slo-alerts unchanged
+prometheusrule.monitoring.coreos.com/system-kubernetes-alerts unchanged
+servicemonitor.monitoring.coreos.com/kong-gateway unchanged
+ingress.networking.k8s.io/grafana unchanged
+task: [up] helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --create-namespace -f ../../platform/monitoring/values/kube-prometheus-stack-local.yaml --wait --timeout=600s
+Release "kube-prometheus-stack" has been upgraded. Happy Helming!
+NAME: kube-prometheus-stack
+LAST DEPLOYED: Sun Jun 21 18:15:01 2026
+NAMESPACE: monitoring
+STATUS: deployed
+REVISION: 15
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+kube-prometheus-stack has been installed. Check its status by running:
+  kubectl --namespace monitoring get pods -l "release=kube-prometheus-stack"
+
+Get Grafana 'admin' user password by running:
+
+  kubectl --namespace monitoring get secrets kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+Access Grafana local instance:
+
+  export POD_NAME=$(kubectl --namespace monitoring get pod -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=kube-prometheus-stack" -oname)
+  kubectl --namespace monitoring port-forward $POD_NAME 3000
+
+Get your grafana admin user password by running:
+
+  kubectl get secret --namespace monitoring -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode ; echo
+
+
+Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+task: [metrics-server:up] task render
+task: [render] task repo
+task: [repo] helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ --force-update >/dev/null
+task: [repo] helm repo update metrics-server >/dev/null
+task: [render] helm template metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/aws-dev.yaml >/dev/null
+task: [render] helm template metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/local.yaml >/dev/null
+task: [metrics-server:up] helm upgrade --install metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/local.yaml --wait --timeout=300s
+Release "metrics-server" has been upgraded. Happy Helming!
+NAME: metrics-server
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: kube-system
+STATUS: deployed
+REVISION: 15
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+***********************************************************************
+* Metrics Server                                                      *
+***********************************************************************
+  Chart version: 3.13.1
+  App version:   0.8.1
+  Image tag:     registry.k8s.io/metrics-server/metrics-server:v0.8.1
+***********************************************************************
+task: [metrics-server:up] kubectl wait --for=condition=Available apiservice/v1beta1.metrics.k8s.io --timeout=180s
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io condition met
+task: [dev:loadtest] set -eu
+preset="${PRESET:-${LOADTEST_PRESET:-${LOADTEST_SCENARIO_PRESET:-}}}"
+scenario="${SCENARIO:-${LOADTEST_SCENARIO:-}}"
+if [ -z "${scenario}" ] && [ -n "${preset}" ]; then
+  scenario="reservation-journey-load-test"
+fi
+scenario="${scenario:-capacity-baseline-load-test}"
+if [ "${scenario}" = "capacity-baseline-load-test" ]; then
+  preset="${preset:-local-smoke}"
+  scenario_values_file="${LOADTEST_SCENARIO_VALUES_FILE:-}"
+  if [ -z "${scenario_values_file}" ] && [ -n "${preset}" ]; then
+    scenario_base="${scenario%-load-test}"
+    for candidate in \
+      "platform/loadtest/values/presets/${scenario}/${preset}.yaml" \
+      "platform/loadtest/values/presets/${scenario_base}/${preset}.yaml" \
+      "platform/loadtest/values/presets/${preset}.yaml"; do
+      if [ -f "${candidate}" ]; then
+        scenario_values_file="${candidate}"
+        break
+      fi
+    done
+  fi
+  if [ -z "${scenario_values_file}" ] && [ -f "platform/loadtest/values/scenarios/${scenario}.yaml" ]; then
+    scenario_values_file="platform/loadtest/values/scenarios/${scenario}.yaml"
+  fi
+  capacity_cpu_request="${LOADTEST_CAPACITY_BASELINE_CPU_REQUEST:-}"
+  capacity_auth_token_ttl_seconds="${LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS:-}"
+  if [ -z "${capacity_cpu_request}" ] && [ -n "${scenario_values_file}" ]; then
+    if command -v ruby >/dev/null 2>&1; then
+      capacity_cpu_request="$(ruby -ryaml -e 'value = YAML.load_file(ARGV[0]).dig("scenarios", "capacityBaseline", "fixedConditions", "cpuRequest"); puts value if value' "${scenario_values_file}")"
+    fi
+  fi
+  if [ -z "${capacity_auth_token_ttl_seconds}" ] && [ -n "${scenario_values_file}" ]; then
+    if command -v ruby >/dev/null 2>&1; then
+      capacity_auth_token_ttl_seconds="$(ruby -ryaml -e 'value = YAML.load_file(ARGV[0]).dig("scenarios", "capacityBaseline", "fixedConditions", "authTokenTtlSeconds"); puts value if value' "${scenario_values_file}")"
+    fi
+  fi
+  capacity_cpu_request="${capacity_cpu_request:-500m}"
+  capacity_auth_token_ttl_seconds="${capacity_auth_token_ttl_seconds:-7200}"
+  printf 'Capacity baseline service CPU request=%s auth token ttl=%ss values=%s\n' "${capacity_cpu_request}" "${capacity_auth_token_ttl_seconds}" "${scenario_values_file:-default}"
+  task dev:services \
+    LOCAL_DOCKER_DESKTOP_ENV=local-capacity-baseline \
+    DEV_ROLLOUT_ID="capacity-baseline-$(date -u +%Y%m%dT%H%M%SZ)" \
+    LOADTEST_CAPACITY_BASELINE_CPU_REQUEST="${capacity_cpu_request}" \
+    LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS="${capacity_auth_token_ttl_seconds}"
+  warmup_seconds="${LOADTEST_CAPACITY_BASELINE_PROMETHEUS_WARMUP_SECONDS:-90}"
+  printf 'Waiting %ss for Prometheus scrape warmup before capacity baseline run.\n' "${warmup_seconds}"
+  sleep "${warmup_seconds}"
+else
+  if { [ "${scenario}" = "reservation-journey-load-test" ] && { [ "${preset}" = "local-hpa-spike-3m" ] || [ "${preset}" = "local-hpa-spike-smoke-1m" ] || [ "${preset}" = "local-hpa-spike-scaleout-6m" ]; }; } || [ "${scenario}" = "service-hpa-spike-load-test" ]; then
+    printf 'Redeploying local dev services with HPA enabled for preset=%s.\n' "${preset}"
+    task dev:services \
+      LOCAL_DOCKER_DESKTOP_ENV=local-hpa-spike \
+      DEV_ROLLOUT_ID="local-hpa-spike-$(date -u +%Y%m%dT%H%M%SZ)"
+    if [ "${preset}" = "local-hpa-spike-smoke-1m" ]; then
+      warmup_seconds="${LOADTEST_LOCAL_HPA_SPIKE_WARMUP_SECONDS:-15}"
+    else
+      warmup_seconds="${LOADTEST_LOCAL_HPA_SPIKE_WARMUP_SECONDS:-60}"
+    fi
+    printf 'Waiting %ss for metrics-server/HPA warmup before local HPA spike run.\n' "${warmup_seconds}"
+    sleep "${warmup_seconds}"
+  fi
+fi
+
+Redeploying local dev services with HPA enabled for preset=auth-30rps.
+task: [dev:services] set -eu
+image_registry='localhost:5001'
+image_namespace=''
+rollout_id='local-hpa-spike-20260621T091515Z'
+if [ -z "${rollout_id}" ]; then
+  rollout_id="$(date -u +%Y%m%dT%H%M%SZ)"
+fi
+if [ -n "${image_namespace}" ]; then
+  image_registry="${image_registry%/}/${image_namespace#/}"
+fi
+extra_helm_args=""
+if [ "local-hpa-spike" = "local-capacity-baseline" ]; then
+  capacity_cpu_request=''
+  capacity_cpu_request="${capacity_cpu_request:-${LOADTEST_CAPACITY_BASELINE_CPU_REQUEST:-500m}}"
+  capacity_auth_token_ttl_seconds=''
+  capacity_auth_token_ttl_seconds="${capacity_auth_token_ttl_seconds:-${LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS:-7200}}"
+  extra_helm_args="${extra_helm_args} --set hpa.enabled=false"
+  extra_helm_args="${extra_helm_args} --set-string container.resources.requests.cpu=${capacity_cpu_request}"
+  extra_helm_args="${extra_helm_args} --set container.resources.limits.cpu=null"
+  extra_helm_args="${extra_helm_args} --set nodeSelector=null"
+  extra_helm_args="${extra_helm_args} --set deployment.podAnnotations.sidecar\\.istio\\.io/proxyCPULimit=null"
+fi
+if [ "local-hpa-spike" = "local-hpa-spike" ]; then
+  extra_helm_args="${extra_helm_args} --set nodeSelector=null"
+fi
+yaml_section_field() {
+  awk -v section="$2" -v wanted="$3" '
+    $1 == section ":" { in_section = 1; next }
+    in_section && /^[^[:space:]]/ { in_section = 0 }
+    in_section {
+      line = $0
+      sub(/^[[:space:]]+/, "", line)
+      key = line
+      sub(/:.*/, "", key)
+      if (key == wanted) {
+        sub(/^[^:]*:[[:space:]]*/, "", line)
+        gsub(/^"|"$/, "", line)
+        print line
+        exit
+      }
+    }
+  ' "$1"
+}
+pids=""
+for service in auth concert notification payment reservation ticket; do
+  service_file="values/services/${service}.yaml"
+  if [ ! -f "${service_file}" ]; then
+    printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+    exit 2
+  fi
+  service="$(basename "${service_file}" .yaml)"
+  namespace="$(yaml_section_field "${service_file}" app namespace)"
+  release="${service}-local-docker-desktop"
+  service_helm_args="${extra_helm_args}"
+  override_file="values/overrides/local-hpa-spike/${service}.yaml"
+  override_args=""
+  if [ -f "${override_file}" ]; then
+    override_args="-f ${override_file}"
+  fi
+  if [ "local-hpa-spike" = "local-capacity-baseline" ] && [ "${service}" = "auth" ]; then
+    service_helm_args="${service_helm_args} --set-string container.env[1].value=${capacity_auth_token_ttl_seconds}"
+  fi
+  (
+    helm upgrade --install "${release}" charts/medikong-service \
+      --namespace "${namespace}" \
+      --create-namespace \
+      -f values/base.yaml \
+      -f "${service_file}" \
+      -f values/env/local-hpa-spike.yaml \
+      ${override_args} \
+      --set-string image.registry="${image_registry}" \
+      --set-string image.tag="dev" \
+      --set-string image.pullPolicy=Always \
+      --set-string 'deployment.podAnnotations.medikong\.io/dev-rollout-id='"${rollout_id}" \
+      ${service_helm_args}
+  ) &
+  pids="${pids} $!"
+done
+failed=0
+for pid in ${pids}; do
+  if ! wait "${pid}"; then
+    failed=1
+  fi
+done
+if [ "${failed}" -ne 0 ]; then
+  exit 1
+fi
+if [ "local-hpa-spike" = "local-capacity-baseline" ]; then
+  for service in auth concert notification payment reservation ticket; do
+    service_file="values/services/${service}.yaml"
+    if [ ! -f "${service_file}" ]; then
+      printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+      exit 2
+    fi
+    app_name="$(yaml_section_field "${service_file}" app name)"
+    namespace="$(yaml_section_field "${service_file}" app namespace)"
+    kubectl scale "deployment/${app_name}" -n "${namespace}" --replicas=1
+  done
+fi
+pids=""
+rollout_failures="$(mktemp)"
+diagnose_rollout_failure() {
+  namespace="$1"
+  app_name="$2"
+  printf '\n===== Rollout diagnostics: %s/%s =====\n' "${namespace}" "${app_name}" >&2
+  kubectl get deployment "${app_name}" -n "${namespace}" -o wide >&2 || true
+  kubectl describe deployment "${app_name}" -n "${namespace}" >&2 || true
+  kubectl get rs,pods,hpa -n "${namespace}" -l "app=${app_name}" -o wide >&2 || true
+  kubectl describe pods -n "${namespace}" -l "app=${app_name}" >&2 || true
+  kubectl top pods -n "${namespace}" -l "app=${app_name}" >&2 || true
+  kubectl get events -n "${namespace}" --sort-by=.lastTimestamp >&2 | tail -n 40 >&2 || true
+  for pod in $(kubectl get pods -n "${namespace}" -l "app=${app_name}" -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null || true); do
+    printf '\n----- Recent logs: %s/%s -----\n' "${namespace}" "${pod}" >&2
+    kubectl logs -n "${namespace}" "${pod}" --all-containers --tail=80 --prefix=true >&2 || true
+  done
+}
+for service in auth concert notification payment reservation ticket; do
+  service_file="values/services/${service}.yaml"
+  if [ ! -f "${service_file}" ]; then
+    printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+    exit 2
+  fi
+  app_name="$(yaml_section_field "${service_file}" app name)"
+  namespace="$(yaml_section_field "${service_file}" app namespace)"
+  (
+    if ! kubectl rollout status "deployment/${app_name}" -n "${namespace}" --timeout=180s; then
+      printf '%s %s\n' "${namespace}" "${app_name}" >> "${rollout_failures}"
+      exit 1
+    fi
+  ) &
+  pids="${pids} $!"
+done
+failed=0
+for pid in ${pids}; do
+  if ! wait "${pid}"; then
+    failed=1
+  fi
+done
+if [ "${failed}" -ne 0 ]; then
+  if [ -s "${rollout_failures}" ]; then
+    sort -u "${rollout_failures}" | while read -r namespace app_name; do
+      diagnose_rollout_failure "${namespace}" "${app_name}"
+    done
+  fi
+  rm -f "${rollout_failures}"
+  exit 1
+fi
+rm -f "${rollout_failures}"
+
+Release "concert-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: concert-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-concert
+STATUS: deployed
+REVISION: 18
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "auth-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: auth-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-auth
+STATUS: deployed
+REVISION: 16
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "ticket-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: ticket-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-ticket
+STATUS: deployed
+REVISION: 16
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "notification-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: notification-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-notification
+STATUS: deployed
+REVISION: 16
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "payment-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: payment-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-payment
+STATUS: deployed
+REVISION: 16
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "reservation-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: reservation-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 18:15:15 2026
+NAMESPACE: ticketing-reservation
+STATUS: deployed
+REVISION: 16
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Waiting for deployment "auth-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notification-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "ticket-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment spec update to be observed...
+Waiting for deployment spec update to be observed...
+Waiting for deployment "concert-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "ticket-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "payment-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "reservation-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "payment-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "reservation-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "auth-service" rollout to finish: 1 old replicas are pending termination...
+deployment "auth-service" successfully rolled out
+Waiting for deployment "notification-service" rollout to finish: 1 old replicas are pending termination...
+deployment "notification-service" successfully rolled out
+Waiting for deployment "ticket-service" rollout to finish: 1 old replicas are pending termination...
+deployment "ticket-service" successfully rolled out
+Waiting for deployment "concert-service" rollout to finish: 1 old replicas are pending termination...
+deployment "concert-service" successfully rolled out
+Waiting for deployment "reservation-service" rollout to finish: 1 old replicas are pending termination...
+deployment "reservation-service" successfully rolled out
+Waiting for deployment "payment-service" rollout to finish: 1 old replicas are pending termination...
+deployment "payment-service" successfully rolled out
+Waiting 60s for metrics-server/HPA warmup before local HPA spike run.
+task: [loadtest:ensure-no-active-loadtest] set -eu
+active_jobs="$(kubectl -n loadtest get jobs \
+  -l 'app.kubernetes.io/name=read-api-loadtest,medikong.io/scenario!=setup-read-dataset' \
+  -o jsonpath='{range .items[?(@.status.active)]}{.metadata.name}{"\n"}{end}')"
+if [ -n "${active_jobs}" ]; then
+  printf 'Active loadtest Job already exists:\n%s\n' "${active_jobs}" >&2
+  printf 'Wait until it finishes, or delete the Job manually before starting another run.\n' >&2
+  exit 1
+fi
+
+task: [loadtest:run-local] set -eu
+preset="${PRESET:-${LOADTEST_PRESET:-${LOADTEST_SCENARIO_PRESET:-auth-30rps}}}"
+scenario="${SCENARIO:-${LOADTEST_SCENARIO:-service-hpa-spike-load-test}}"
+if [ -z "${scenario}" ] && [ -n "${preset}" ]; then
+  scenario="reservation-journey-load-test"
+fi
+scenario="${scenario:-read-api-baseline}"
+scenario_values_file="${LOADTEST_SCENARIO_VALUES_FILE:-}"
+if [ -z "${scenario_values_file}" ] && [ -n "${preset}" ]; then
+  scenario_base="${scenario%-load-test}"
+  for candidate in \
+    "values/presets/${scenario}/${preset}.yaml" \
+    "values/presets/${scenario_base}/${preset}.yaml" \
+    "values/presets/${preset}.yaml"; do
+    if [ -f "${candidate}" ]; then
+      scenario_values_file="${candidate}"
+      break
+    fi
+  done
+  if [ -z "${scenario_values_file}" ]; then
+    printf 'Unknown preset=%s for scenario=%s.\n' "${preset}" "${scenario}" >&2
+    exit 2
+  fi
+fi
+scenario_values_file="${scenario_values_file:-values/scenarios/${scenario}.yaml}"
+if [ ! -f "${scenario_values_file}" ]; then
+  printf 'Unknown or missing scenario values file: %s\n' "${scenario_values_file}" >&2
+  printf 'Set SCENARIO=<name>, PRESET=<preset-name>, or LOADTEST_SCENARIO_VALUES_FILE=<path>.\n' >&2
+  exit 2
+fi
+export SCENARIO="${scenario}"
+export LOADTEST_SCENARIO_VALUES_FILE="${scenario_values_file}"
+disable_kong_rate_limit="${LOADTEST_DISABLE_KONG_RATE_LIMIT:-}"
+if [ -z "${disable_kong_rate_limit}" ]; then
+  case "${scenario}" in
+    reservation-journey-load-test|reservation-create-load-test|reservation-seat-contention-load-test|ticket-service-read-load-test|capacity-baseline-load-test|service-hpa-spike-load-test)
+      disable_kong_rate_limit="true"
+      ;;
+  esac
+fi
+disable_kong_rate_limit="${disable_kong_rate_limit:-false}"
+printf 'Running loadtest scenario=%s values=%s disable_kong_rate_limit=%s\n' \
+  "${scenario}" "${LOADTEST_SCENARIO_VALUES_FILE}" "${disable_kong_rate_limit}"
+if [ "${disable_kong_rate_limit}" = "true" ]; then
+  task kong-rate-limit:disable
+  trap 'task kong-rate-limit:restore' EXIT
+fi
+task secret-local
+task deploy
+case "${scenario}" in
+  auth-login-load-test|ticket-service-read-load-test)
+    ;;
+  *)
+  task setup-dataset
+    ;;
+esac
+task run
+
+Running loadtest scenario=service-hpa-spike-load-test values=values/presets/service-hpa-spike/auth-30rps.yaml disable_kong_rate_limit=true
+task: [kong-rate-limit:disable] set -eu
+minute="1000000"
+for plugin in ticketing-rate-limit-concerts ticketing-rate-limit-reservations ticketing-rate-limit-payments ticketing-rate-limit-tickets ticketing-rate-limit-notifications; do
+  printf 'Raising Kong rate limit plugin=%s minute=%s\n' "${plugin}" "${minute}"
+  kubectl patch kongclusterplugin "${plugin}" \
+    --type=merge \
+    -p "{\"config\":{\"minute\":${minute},\"policy\":\"local\"}}"
+done
+
+Raising Kong rate limit plugin=ticketing-rate-limit-concerts minute=1000000
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-concerts patched
+Raising Kong rate limit plugin=ticketing-rate-limit-reservations minute=1000000
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-reservations patched
+Raising Kong rate limit plugin=ticketing-rate-limit-payments minute=1000000
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-payments patched
+Raising Kong rate limit plugin=ticketing-rate-limit-tickets minute=1000000
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-tickets patched
+Raising Kong rate limit plugin=ticketing-rate-limit-notifications minute=1000000
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-notifications patched
+task: [secret-local] set -eu
+kubectl create namespace loadtest --dry-run=client -o yaml | kubectl apply -f -
+kubectl label namespace loadtest app.kubernetes.io/managed-by=Helm --overwrite
+kubectl annotate namespace loadtest \
+  meta.helm.sh/release-name=read-api-loadtest \
+  meta.helm.sh/release-namespace=loadtest \
+  --overwrite
+kubectl -n loadtest create secret generic read-api-loadtest-credentials \
+  --from-literal=LOADTEST_PROVIDER_EMAIL="${LOADTEST_PROVIDER_EMAIL:-provider@example.com}" \
+  --from-literal=LOADTEST_PROVIDER_PASSWORD="${LOADTEST_PROVIDER_PASSWORD:-provider1234}" \
+  --from-literal=LOADTEST_ADMIN_EMAIL="${LOADTEST_ADMIN_EMAIL:-admin@example.com}" \
+  --from-literal=LOADTEST_ADMIN_PASSWORD="${LOADTEST_ADMIN_PASSWORD:-admin1234}" \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+namespace/loadtest unchanged
+namespace/loadtest not labeled
+namespace/loadtest annotated
+secret/read-api-loadtest-credentials unchanged
+task: [image-build] set -eu
+image_ref="$(task image-ref --silent)"
+docker build -f runner/Dockerfile -t "${image_ref}" .
+
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 392B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/grafana/k6:1.0.0
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 80.36kB done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/grafana/k6:1.0.0@sha256:f21270290d702cbf0a7d6ba5d7ed100b63bcb233b558b885ed787547b3488279
+#5 resolve docker.io/grafana/k6:1.0.0@sha256:f21270290d702cbf0a7d6ba5d7ed100b63bcb233b558b885ed787547b3488279 0.0s done
+#5 DONE 0.0s
+
+#6 [2/7] RUN apk add --no-cache python3 py3-psycopg2 py3-pip   && python3 -m pip install --no-cache-dir --break-system-packages pymongo
+#6 CACHED
+
+#7 [3/7] WORKDIR /loadtest
+#7 CACHED
+
+#8 [4/7] COPY scenarios ./scenarios
+#8 DONE 0.0s
+
+#9 [5/7] COPY flows ./flows
+#9 DONE 0.0s
+
+#10 [6/7] COPY lib ./lib
+#10 DONE 0.0s
+
+#11 [7/7] COPY scripts ./scripts
+#11 DONE 0.0s
+
+#12 exporting to image
+#12 exporting layers 0.1s done
+#12 exporting manifest sha256:b42ce509e85ee316467da6c42dffd1edbd7cd40c86efe6481af7023e19d96ba0
+#12 exporting manifest sha256:b42ce509e85ee316467da6c42dffd1edbd7cd40c86efe6481af7023e19d96ba0 done
+#12 exporting config sha256:3d31a36aa0b367591ef66c227bfbb8feda7c454d56d24c7904cd0b02b86c80fa done
+#12 exporting attestation manifest sha256:91bceb87c74481f2010097bd3bb3723cc1aef0cc8577f4ec54122006b2b8c72e 0.0s done
+#12 exporting manifest list sha256:69c06347402cbb75f8c3e27ea89566bfac3cd4991acaa5c2682eb9bbc2fb4775 done
+#12 naming to localhost:5001/read-api-loadtest:dev done
+#12 unpacking to localhost:5001/read-api-loadtest:dev 0.1s done
+#12 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/5l6jrenabqdhv4hbyt5mdbp57
+task: [image-push] set -eu
+image_ref="$(task image-ref --silent)"
+docker push "${image_ref}"
+
+The push refers to repository [localhost:5001/read-api-loadtest]
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+0eaa2d9028e9: Waiting
+6e771e15690e: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+0eaa2d9028e9: Waiting
+6e771e15690e: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+0eaa2d9028e9: Waiting
+6e771e15690e: Waiting
+0eaa2d9028e9: Waiting
+6e771e15690e: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+0eaa2d9028e9: Waiting
+6e771e15690e: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+6e771e15690e: Waiting
+47a4a4f461c5: Waiting
+28053ea92159: Waiting
+5ad0146e1c6a: Waiting
+25ceb7271cc9: Waiting
+4f4fb700ef54: Waiting
+7b1826ec28cc: Waiting
+349034f4b637: Waiting
+a5889170d684: Waiting
+237198c75c31: Waiting
+0eaa2d9028e9: Waiting
+47a4a4f461c5: Pushed
+28053ea92159: Pushed
+5ad0146e1c6a: Pushed
+25ceb7271cc9: Layer already exists
+4f4fb700ef54: Layer already exists
+7b1826ec28cc: Pushed
+349034f4b637: Layer already exists
+a5889170d684: Layer already exists
+237198c75c31: Pushed
+0eaa2d9028e9: Layer already exists
+6e771e15690e: Layer already exists
+dev: digest: sha256:69c06347402cbb75f8c3e27ea89566bfac3cd4991acaa5c2682eb9bbc2fb4775 size: 856
+task: [render] set -eu
+values_file="${LOADTEST_VALUES_FILE:-values/local.yaml}"
+scenario_values_file="${LOADTEST_SCENARIO_VALUES_FILE:-}"
+preset="${PRESET:-${LOADTEST_PRESET:-${LOADTEST_SCENARIO_PRESET:-auth-30rps}}}"
+scenario="${LOADTEST_SCENARIO:-${SCENARIO:-service-hpa-spike-load-test}}"
+if [ -z "${scenario}" ] && [ -n "${preset}" ]; then
+  scenario="reservation-journey-load-test"
+fi
+if [ -z "${scenario_values_file}" ] && [ -n "${preset}" ]; then
+  scenario_base="${scenario%-load-test}"
+  for candidate in \
+    "values/presets/${scenario}/${preset}.yaml" \
+    "values/presets/${scenario_base}/${preset}.yaml" \
+    "values/presets/${preset}.yaml"; do
+    if [ -f "${candidate}" ]; then
+      scenario_values_file="${candidate}"
+      break
+    fi
+  done
+  if [ -z "${scenario_values_file}" ]; then
+    printf 'Unknown preset=%s for scenario=%s.\n' "${preset}" "${scenario}" >&2
+    exit 2
+  fi
+fi
+if [ -z "${scenario_values_file}" ] && [ -n "${scenario}" ] && [ -f "values/scenarios/${scenario}.yaml" ]; then
+  scenario_values_file="values/scenarios/${scenario}.yaml"
+fi
+values_args="-f ${values_file}"
+if [ -n "${scenario_values_file}" ]; then
+  values_args="${values_args} -f ${scenario_values_file}"
+fi
+capacity_service_steps="${LOADTEST_CAPACITY_BASELINE_SERVICE_STEPS:-}"
+if [ -n "${capacity_service_steps}" ]; then
+  values_args="${values_args} --set-json scenarios.capacityBaseline.serviceSteps=${capacity_service_steps}"
+fi
+image_args=""
+if [ "${LOADTEST_IMAGE_OVERRIDE:-}" = "true" ] || [ "${values_file}" = "values/local.yaml" ]; then
+  image_ref="$(task image-ref --silent)"
+  image_registry="${image_ref%/*}"
+  image_name_tag="${image_ref##*/}"
+  image_repository="${image_name_tag%:*}"
+  image_tag="${image_name_tag##*:}"
+  image_args="--set-string image.registry=${image_registry} --set-string image.repository=${image_repository} --set-string image.tag=${image_tag}"
+fi
+helm template read-api-loadtest . \
+  ${values_args} \
+  --namespace loadtest \
+  ${image_args}
+
+---
+# Source: read-api-loadtest/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "loadtest"
+  labels:
+    app.kubernetes.io/part-of: medikong
+    medikong.io/platform: loadtest
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "read-api-loadtest-runner"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "service-hpa-spike-load-test"
+---
+# Source: read-api-loadtest/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "read-api-loadtest"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "service-hpa-spike-load-test"
+data:
+  LOADTEST_TEST_TYPE: "loadtest"
+  LOADTEST_SCENARIO: "service-hpa-spike-load-test"
+  LOADTEST_ENVIRONMENT: "local"
+  LOADTEST_TARGET: "local"
+  LOADTEST_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_LOCAL_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_AWS_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_REVISION: "dev"
+  LOADTEST_IMAGE: "localhost:5001/read-api-loadtest:dev"
+  LOADTEST_IMAGE_TAG: "dev"
+  LOADTEST_RELEASE: "read-api-loadtest"
+  LOADTEST_NAMESPACE: "loadtest"
+  LOADTEST_REPORT_ARCHIVE_ENABLED: "true"
+  LOADTEST_REPORT_ROOT: "/loadtest/reports"
+  LOADTEST_COLLECTOR_GUARD_ENABLED: "false"
+  LOADTEST_COLLECTOR_GUARD_NAMESPACE: "observability"
+  LOADTEST_COLLECTOR_GUARD_LABEL_SELECTOR: "app.kubernetes.io/name=opentelemetry-collector"
+  LOADTEST_COLLECTOR_GUARD_TIMEOUT_SECONDS: "60"
+  LOADTEST_COLLECTOR_GUARD_POLL_INTERVAL_SECONDS: "5"
+  LOADTEST_MANUAL_DATASET_RUN_ID: ""
+  LOADTEST_MANUAL_READ_RUN_ID: ""
+  LOADTEST_TRAFFIC_MODEL_PRESET: "auth-30rps"
+  LOADTEST_TRAFFIC_MODEL_MAU: ""
+  LOADTEST_TRAFFIC_MODEL_STICKINESS: ""
+  LOADTEST_TRAFFIC_MODEL_PEAK_PARTICIPATION_RATE: ""
+  LOADTEST_TRAFFIC_MODEL_PEAK_WINDOW_MINUTES: ""
+  LOADTEST_TRAFFIC_MODEL_JOURNEYS_PER_USER: ""
+  LOADTEST_TRAFFIC_MODEL_SAFETY_FACTOR: ""
+  LOADTEST_TRAFFIC_MODEL_TARGET_TICKETS_PER_CUSTOMER: ""
+  LOADTEST_TRAFFIC_MODEL_CALCULATED_JOURNEY_RATE: ""
+  LOADTEST_TRAFFIC_MODEL_EXPECTED_JOURNEYS: ""
+  LOADTEST_SCALE_OUT_REPORT_ENABLED: "true"
+  LOADTEST_SCALE_OUT_REPORT_POLL_EVERY_ITERATIONS: "5"
+  LOADTEST_SCALE_OUT_REPORT_TARGETS: "[{\"namespace\":\"ticketing-auth\",\"service\":\"auth-service\"}]"
+  LOADTEST_DATASET_REQUEST_PREFIX: "loadtest-dataset"
+  LOADTEST_DATASET_TIMEOUT_SECONDS: "15"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "3000"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "5000"
+  LOADTEST_DATASET_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_READ_API_REQUEST_PREFIX: "loadtest-read"
+  LOADTEST_READ_API_TIMEOUT_SECONDS: "10"
+  LOADTEST_READ_API_VUS: "1"
+  LOADTEST_READ_API_DURATION: "30s"
+  LOADTEST_READ_API_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_READ_API_GRACEFUL_STOP: "30s"
+  LOADTEST_READ_API_THINK_TIME_SECONDS: "2"
+  LOADTEST_READ_API_CONCERT_LIMIT: "50"
+  LOADTEST_READ_API_PERFORMANCE_LIMIT: "50"
+  LOADTEST_READ_API_SEAT_LIMIT: "200"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_READ_API_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_AUTH_LOGIN_REQUEST_PREFIX: "loadtest-auth-login"
+  LOADTEST_AUTH_LOGIN_TIMEOUT_SECONDS: "10"
+  LOADTEST_AUTH_LOGIN_SETUP_TIMEOUT: "10m"
+  LOADTEST_AUTH_LOGIN_EXECUTOR: "ramping-vus"
+  LOADTEST_AUTH_LOGIN_VUS: "1"
+  LOADTEST_AUTH_LOGIN_RATE: "1"
+  LOADTEST_AUTH_LOGIN_TIME_UNIT: "1s"
+  LOADTEST_AUTH_LOGIN_PRE_ALLOCATED_VUS: "5"
+  LOADTEST_AUTH_LOGIN_MAX_VUS: "10"
+  LOADTEST_AUTH_LOGIN_DURATION: "30s"
+  LOADTEST_AUTH_LOGIN_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_AUTH_LOGIN_GRACEFUL_STOP: "30s"
+  LOADTEST_AUTH_LOGIN_THINK_TIME_SECONDS: "0"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_TICKET_SERVICE_READ_REQUEST_PREFIX: "loadtest-ticket-read"
+  LOADTEST_TICKET_SERVICE_READ_TIMEOUT_SECONDS: "10"
+  LOADTEST_TICKET_SERVICE_READ_SETUP_TIMEOUT: "10m"
+  LOADTEST_TICKET_SERVICE_READ_EXECUTOR: "constant-arrival-rate"
+  LOADTEST_TICKET_SERVICE_READ_VUS: "5"
+  LOADTEST_TICKET_SERVICE_READ_RATE: "1"
+  LOADTEST_TICKET_SERVICE_READ_TIME_UNIT: "1s"
+  LOADTEST_TICKET_SERVICE_READ_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_TICKET_SERVICE_READ_MAX_VUS: "20"
+  LOADTEST_TICKET_SERVICE_READ_DURATION: "2m"
+  LOADTEST_TICKET_SERVICE_READ_STAGES: "[]"
+  LOADTEST_TICKET_SERVICE_READ_GRACEFUL_STOP: "30s"
+  LOADTEST_TICKET_SERVICE_READ_THINK_TIME_SECONDS: "0"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_LIMIT: "20"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_PAGINATION_PAGES: "3"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_MAX_PAGES: "5"
+  LOADTEST_TICKET_SERVICE_READ_TICKETS_PER_CUSTOMER: "60"
+  LOADTEST_TICKET_SERVICE_READ_WAIT_TARGET_TICKET_POSITION: "41"
+  LOADTEST_TICKET_SERVICE_READ_ACTIVE_CUSTOMER_COUNT: "20"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_REQUEST_PREFIX: "loadtest-reservation"
+  LOADTEST_RESERVATION_JOURNEY_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_JOURNEY_EXECUTOR: "ramping-vus"
+  LOADTEST_RESERVATION_JOURNEY_VUS: "1"
+  LOADTEST_RESERVATION_JOURNEY_RATE: "1"
+  LOADTEST_RESERVATION_JOURNEY_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_JOURNEY_PRE_ALLOCATED_VUS: "5"
+  LOADTEST_RESERVATION_JOURNEY_MAX_VUS: "10"
+  LOADTEST_RESERVATION_JOURNEY_DURATION: "30s"
+  LOADTEST_RESERVATION_JOURNEY_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_RESERVATION_JOURNEY_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_JOURNEY_THINK_TIME_SECONDS: "2"
+  LOADTEST_RESERVATION_JOURNEY_POLL_SECONDS: "45"
+  LOADTEST_RESERVATION_JOURNEY_POLL_INTERVAL_SECONDS: "2"
+  LOADTEST_RESERVATION_JOURNEY_TICKET_LIST_LIMIT: "20"
+  LOADTEST_RESERVATION_JOURNEY_TICKET_LIST_MAX_PAGES: "5"
+  LOADTEST_RESERVATION_JOURNEY_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_JOURNEY_PAYMENT_AMOUNT: "50000"
+  LOADTEST_RESERVATION_JOURNEY_MAX_SEAT_ATTEMPTS: "3"
+  LOADTEST_RESERVATION_JOURNEY_CONCERT_LIMIT: "50"
+  LOADTEST_RESERVATION_JOURNEY_PERFORMANCE_LIMIT: "50"
+  LOADTEST_RESERVATION_JOURNEY_SEAT_LIMIT: "200"
+  LOADTEST_RESERVATION_JOURNEY_CALENDAR_YEAR_MONTH: 
+  LOADTEST_RESERVATION_JOURNEY_PERFORMANCE_DATE: 
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "750"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1500"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_CONFLICT_RATE: "0.05"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_TICKET_ISSUED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_REQUEST_PREFIX: "loadtest-reservation-create"
+  LOADTEST_RESERVATION_CREATE_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_CREATE_SETUP_TIMEOUT: "10m"
+  LOADTEST_RESERVATION_CREATE_EXECUTOR: "ramping-vus"
+  LOADTEST_RESERVATION_CREATE_VUS: "5"
+  LOADTEST_RESERVATION_CREATE_RATE: "1"
+  LOADTEST_RESERVATION_CREATE_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_CREATE_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_RESERVATION_CREATE_MAX_VUS: "20"
+  LOADTEST_RESERVATION_CREATE_DURATION: "2m"
+  LOADTEST_RESERVATION_CREATE_STAGES: "[{\"duration\":\"1m\",\"target\":1},{\"duration\":\"1m\",\"target\":3},{\"duration\":\"1m\",\"target\":5}]"
+  LOADTEST_RESERVATION_CREATE_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_CREATE_THINK_TIME_SECONDS: "0"
+  LOADTEST_RESERVATION_CREATE_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_CREATE_MAX_SEAT_ATTEMPTS: "3"
+  LOADTEST_RESERVATION_CREATE_CONCERT_LIMIT: "50"
+  LOADTEST_RESERVATION_CREATE_PERFORMANCE_LIMIT: "50"
+  LOADTEST_RESERVATION_CREATE_SEAT_LIMIT: "200"
+  LOADTEST_RESERVATION_CREATE_SEAT_CANDIDATE_COUNT: "200"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HANDLED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_CREATED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_INFRA_FAILURE_RATE: "0.01"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_REQUEST_PREFIX: "loadtest-reservation-contention"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SETUP_TIMEOUT: "10m"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_EXECUTOR: "ramping-arrival-rate"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_VUS: "5"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_RATE: "1"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_MAX_VUS: "20"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_DURATION: "2m"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_STAGES: "[{\"duration\":\"30s\",\"target\":1},{\"duration\":\"30s\",\"target\":3},{\"duration\":\"1m\",\"target\":5}]"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THINK_TIME_SECONDS: "0"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_MAX_SEAT_ATTEMPTS: "1"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_CONCERT_LIMIT: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_PERFORMANCE_LIMIT: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SEAT_LIMIT: "50"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SEAT_CANDIDATE_COUNT: "5"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.05"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "750"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1500"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_CHECKS_RATE: "0.95"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HANDLED_RATE: "0.95"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_CREATED_RATE: "0.0001"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_INFRA_FAILURE_RATE: "0.01"
+  LOADTEST_CAPACITY_BASELINE_REQUEST_PREFIX: "loadtest-capacity-baseline"
+  LOADTEST_CAPACITY_BASELINE_TIMEOUT_SECONDS: "10"
+  LOADTEST_CAPACITY_BASELINE_SETUP_TIMEOUT: "5m"
+  LOADTEST_CAPACITY_BASELINE_VUS: "5"
+  LOADTEST_CAPACITY_BASELINE_RATE: "1"
+  LOADTEST_CAPACITY_BASELINE_TIME_UNIT: "1s"
+  LOADTEST_CAPACITY_BASELINE_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_CAPACITY_BASELINE_MAX_VUS: "20"
+  LOADTEST_CAPACITY_BASELINE_DURATION: "1m"
+  LOADTEST_CAPACITY_BASELINE_SERVICE_STEPS: "[\"auth\",\"concert\",\"reservation\",\"payment\",\"ticket\",\"notification\"]"
+  LOADTEST_CAPACITY_BASELINE_STAGES: "[{\"duration\":\"20s\",\"target\":1},{\"duration\":\"20s\",\"target\":2}]"
+  LOADTEST_CAPACITY_BASELINE_SERVICE_STAGES: "{}"
+  LOADTEST_CAPACITY_BASELINE_GRACEFUL_STOP: "10s"
+  LOADTEST_CAPACITY_BASELINE_THINK_TIME_SECONDS: "0"
+  LOADTEST_CAPACITY_BASELINE_ACTIVE_CUSTOMER_COUNT: "20"
+  LOADTEST_CAPACITY_BASELINE_CONCERT_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_PERFORMANCE_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_SEAT_LIMIT: "100"
+  LOADTEST_CAPACITY_BASELINE_CALENDAR_YEAR_MONTH: "2026-07"
+  LOADTEST_CAPACITY_BASELINE_PERFORMANCE_DATE: "2026-07-01"
+  LOADTEST_CAPACITY_BASELINE_TICKET_LIST_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_AMOUNT: "50000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_HISTORY_COUNT: "261000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_PAID_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_CANCELED_COUNT: "45500"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_POOL_COUNT: "184000"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_HISTORY_COUNT: "184000"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_APPROVED_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKET_ISSUE_POOL_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKET_HISTORY_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKETS_PER_CUSTOMER: "20"
+  LOADTEST_CAPACITY_BASELINE_NOTIFICATION_COUNT: "354000"
+  LOADTEST_CAPACITY_BASELINE_NOTIFICATIONS_PER_CUSTOMER: "20"
+  LOADTEST_CAPACITY_BASELINE_TARGET_UTILIZATION: "0.70"
+  LOADTEST_CAPACITY_BASELINE_SEED_METHOD: "deterministic_bulk_insert"
+  LOADTEST_CAPACITY_BASELINE_FIXED_CONDITIONS: "{\"authTokenTtlSeconds\":\"7200\",\"cpuLimit\":\"none\",\"cpuRequest\":\"500m\",\"hpa\":\"disabled\",\"replicas\":\"1\"}"
+  LOADTEST_CAPACITY_BASELINE_SCHEMA_REVISIONS: "{\"auth-service\":\"model-v1\",\"concert-service\":\"model-v1\",\"notification-service\":\"model-v1\",\"payment-service\":\"model-v1\",\"reservation-service\":\"model-v1\",\"ticket-service\":\"model-v1\"}"
+  LOADTEST_CAPACITY_BASELINE_SEED_ROW_COUNTS: "{\"admin_count\":1,\"concert_count\":270,\"customer_count\":100000,\"notification_count\":354000,\"payment_count\":184000,\"payment_event_count\":184000,\"payment_pool_count\":184000,\"performance_count\":810,\"provider_count\":1,\"reservation_history_count\":261000,\"seat_count\":567000,\"seat_grade_count\":3240,\"ticket_count\":170000,\"ticket_issue_pool_count\":170000}"
+  LOADTEST_CAPACITY_BASELINE_ENDPOINT_SLO_P95_MS: "{\"capacity_baseline.auth.login\":300,\"capacity_baseline.concert.calendar\":80,\"capacity_baseline.concert.date_performances\":80,\"capacity_baseline.concert.detail\":80,\"capacity_baseline.concert.recommended\":80,\"capacity_baseline.concert.seat_map\":150,\"capacity_baseline.notification.list\":80,\"capacity_baseline.payment.create\":120,\"capacity_baseline.reservation.create\":120,\"capacity_baseline.ticket.issue\":120,\"capacity_baseline.ticket.list\":100}"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_OBSERVATION_ENABLED: "false"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_OBSERVATION_SOURCE: "prometheus"
+  LOADTEST_CAPACITY_BASELINE_PROMETHEUS_URL: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_QUERY_WINDOW: "1m"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_POLL_EVERY_ITERATIONS: "10"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_TARGETS: "[{\"namespace\":\"ticketing-auth\",\"podRegex\":\"auth-service-.*\",\"podSelector\":\"app.kubernetes.io/name=auth-service\",\"service\":\"auth-service\"},{\"namespace\":\"ticketing-concert\",\"podRegex\":\"concert-service-.*\",\"podSelector\":\"app.kubernetes.io/name=concert-service\",\"service\":\"concert-service\"},{\"namespace\":\"ticketing-reservation\",\"podRegex\":\"reservation-service-.*\",\"podSelector\":\"app.kubernetes.io/name=reservation-service\",\"service\":\"reservation-service\"},{\"namespace\":\"ticketing-payment\",\"podRegex\":\"payment-service-.*\",\"podSelector\":\"app.kubernetes.io/name=payment-service\",\"service\":\"payment-service\"},{\"namespace\":\"ticketing-ticket\",\"podRegex\":\"ticket-service-.*\",\"podSelector\":\"app.kubernetes.io/name=ticket-service\",\"service\":\"ticket-service\"},{\"namespace\":\"ticketing-notification\",\"podRegex\":\"notification-service-.*\",\"podSelector\":\"app.kubernetes.io/name=notification-service\",\"service\":\"notification-service\"}]"
+  LOADTEST_CAPACITY_BASELINE_AUTH_DATABASE_URL: "postgresql+psycopg://user:password@auth-db.ticketing-auth.svc.cluster.local:5432/auth_db"
+  LOADTEST_CAPACITY_BASELINE_CONCERT_DATABASE_URL: "postgresql+psycopg://user:password@concert-db.ticketing-concert.svc.cluster.local:5432/concert_db"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_DATABASE_URL: "postgresql+psycopg://user:password@reservation-db.ticketing-reservation.svc.cluster.local:5432/reservation_db"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_DATABASE_URL: "postgresql+psycopg://user:password@payment-db.ticketing-payment.svc.cluster.local:5432/payment_db"
+  LOADTEST_CAPACITY_BASELINE_TICKET_DATABASE_URL: "postgresql+psycopg://user:password@ticket-db.ticketing-ticket.svc.cluster.local:5432/ticket_db"
+  LOADTEST_CAPACITY_BASELINE_MONGODB_URL: "mongodb://notification-db.ticketing-notification.svc.cluster.local:27017"
+  LOADTEST_CAPACITY_BASELINE_MONGODB_DB_NAME: "notification_db"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "100"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "300"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_SERVICE_HPA_SPIKE_REQUEST_PREFIX: "loadtest-service-hpa-spike-auth"
+  LOADTEST_SERVICE_HPA_SPIKE_TIMEOUT_SECONDS: "10"
+  LOADTEST_SERVICE_HPA_SPIKE_SETUP_TIMEOUT: "5m"
+  LOADTEST_SERVICE_HPA_SPIKE_VUS: "5"
+  LOADTEST_SERVICE_HPA_SPIKE_RATE: "1"
+  LOADTEST_SERVICE_HPA_SPIKE_TIME_UNIT: "1s"
+  LOADTEST_SERVICE_HPA_SPIKE_PRE_ALLOCATED_VUS: "100"
+  LOADTEST_SERVICE_HPA_SPIKE_MAX_VUS: "300"
+  LOADTEST_SERVICE_HPA_SPIKE_DURATION: "5m"
+  LOADTEST_SERVICE_HPA_SPIKE_SERVICE_STEPS: "[\"auth\"]"
+  LOADTEST_SERVICE_HPA_SPIKE_STAGES: "[{\"duration\":\"30s\",\"stageRole\":\"warmup\",\"target\":5},{\"duration\":\"60s\",\"stageRole\":\"baseline\",\"target\":15},{\"duration\":\"60s\",\"stageRole\":\"spike\",\"target\":25},{\"duration\":\"60s\",\"stageRole\":\"overload\",\"target\":30},{\"duration\":\"60s\",\"stageRole\":\"cooldown\",\"target\":15}]"
+  LOADTEST_SERVICE_HPA_SPIKE_SERVICE_STAGES: "{}"
+  LOADTEST_SERVICE_HPA_SPIKE_GRACEFUL_STOP: "15s"
+  LOADTEST_SERVICE_HPA_SPIKE_THINK_TIME_SECONDS: "0"
+  LOADTEST_SERVICE_HPA_SPIKE_ACTIVE_CUSTOMER_COUNT: "200"
+  LOADTEST_SERVICE_HPA_SPIKE_CONCERT_LIMIT: "20"
+  LOADTEST_SERVICE_HPA_SPIKE_PERFORMANCE_LIMIT: "20"
+  LOADTEST_SERVICE_HPA_SPIKE_SEAT_LIMIT: "200"
+  LOADTEST_SERVICE_HPA_SPIKE_CALENDAR_YEAR_MONTH: "2026-07"
+  LOADTEST_SERVICE_HPA_SPIKE_PERFORMANCE_DATE: "2026-07-01"
+  LOADTEST_SERVICE_HPA_SPIKE_TICKET_LIST_LIMIT: "20"
+  LOADTEST_SERVICE_HPA_SPIKE_PAYMENT_AMOUNT: "50000"
+  LOADTEST_SERVICE_HPA_SPIKE_TICKET_ISSUE_POOL_COUNT: "170000"
+  LOADTEST_SERVICE_HPA_SPIKE_TARGET_UTILIZATION: "0.70"
+  LOADTEST_SERVICE_HPA_SPIKE_SEED_METHOD: "deterministic_bulk_insert"
+  LOADTEST_SERVICE_HPA_SPIKE_FIXED_CONDITIONS: "{\"cooldownInterpretation\":\"recovery_observation_only\",\"hpa\":\"enabled\",\"maxReplicas\":\"4\",\"minReplicas\":\"1\",\"targetCPUUtilization\":\"70\"}"
+  LOADTEST_SERVICE_HPA_SPIKE_SCHEMA_REVISIONS: "{\"auth-service\":\"model-v1\",\"concert-service\":\"model-v1\",\"notification-service\":\"model-v1\",\"payment-service\":\"model-v1\",\"reservation-service\":\"model-v1\",\"ticket-service\":\"model-v1\"}"
+  LOADTEST_SERVICE_HPA_SPIKE_SEED_ROW_COUNTS: "{\"admin_count\":1,\"concert_count\":270,\"customer_count\":100000,\"notification_count\":354000,\"payment_count\":184000,\"payment_event_count\":184000,\"payment_pool_count\":184000,\"performance_count\":810,\"provider_count\":1,\"reservation_history_count\":261000,\"seat_count\":567000,\"seat_grade_count\":3240,\"ticket_count\":170000,\"ticket_issue_pool_count\":170000}"
+  LOADTEST_SERVICE_HPA_SPIKE_ENDPOINT_SLO_P95_MS: "{\"capacity_baseline.auth.login\":300,\"capacity_baseline.concert.calendar\":80,\"capacity_baseline.concert.date_performances\":80,\"capacity_baseline.concert.detail\":80,\"capacity_baseline.concert.recommended\":80,\"capacity_baseline.concert.seat_map\":150,\"capacity_baseline.notification.list\":80,\"capacity_baseline.payment.create\":120,\"capacity_baseline.reservation.create\":120,\"capacity_baseline.ticket.issue\":120,\"capacity_baseline.ticket.list\":100}"
+  LOADTEST_SERVICE_HPA_SPIKE_RESOURCE_OBSERVATION_ENABLED: "true"
+  LOADTEST_SERVICE_HPA_SPIKE_RESOURCE_OBSERVATION_SOURCE: "metrics-api"
+  LOADTEST_SERVICE_HPA_SPIKE_PROMETHEUS_URL: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+  LOADTEST_SERVICE_HPA_SPIKE_RESOURCE_QUERY_WINDOW: "1m"
+  LOADTEST_SERVICE_HPA_SPIKE_RESOURCE_POLL_EVERY_ITERATIONS: "5"
+  LOADTEST_SERVICE_HPA_SPIKE_RESOURCE_TARGETS: "[{\"namespace\":\"ticketing-auth\",\"podRegex\":\"auth-service-.*\",\"podSelector\":\"app.kubernetes.io/name=auth-service\",\"service\":\"auth-service\"},{\"namespace\":\"ticketing-concert\",\"podRegex\":\"concert-service-.*\",\"podSelector\":\"app.kubernetes.io/name=concert-service\",\"service\":\"concert-service\"},{\"namespace\":\"ticketing-reservation\",\"podRegex\":\"reservation-service-.*\",\"podSelector\":\"app.kubernetes.io/name=reservation-service\",\"service\":\"reservation-service\"},{\"namespace\":\"ticketing-payment\",\"podRegex\":\"payment-service-.*\",\"podSelector\":\"app.kubernetes.io/name=payment-service\",\"service\":\"payment-service\"},{\"namespace\":\"ticketing-ticket\",\"podRegex\":\"ticket-service-.*\",\"podSelector\":\"app.kubernetes.io/name=ticket-service\",\"service\":\"ticket-service\"},{\"namespace\":\"ticketing-notification\",\"podRegex\":\"notification-service-.*\",\"podSelector\":\"app.kubernetes.io/name=notification-service\",\"service\":\"notification-service\"}]"
+  LOADTEST_SERVICE_HPA_SPIKE_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_SERVICE_HPA_SPIKE_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "150"
+  LOADTEST_SERVICE_HPA_SPIKE_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "300"
+  LOADTEST_SERVICE_HPA_SPIKE_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_CUSTOMER_POOL_SIZE: "100000"
+  LOADTEST_CUSTOMER_POOL_EMAIL_PREFIX: "capacity-customer"
+  LOADTEST_CUSTOMER_POOL_EMAIL_DOMAIN: "loadtest.medikong.local"
+  LOADTEST_CUSTOMER_POOL_PASSWORD: "loadtest1234"
+  LOADTEST_CUSTOMER_POOL_REVISION: "capacity-baseline-half-year-early-growth-v2"
+  LOADTEST_CUSTOMER_POOL_DISPLAY_NAME_PREFIX: "Loadtest Customer"
+  LOADTEST_CUSTOMER_POOL_PAD_WIDTH: "6"
+  LOADTEST_DATASET_PROFILE: "capacity-baseline"
+  LOADTEST_DATASET_REVISION: "capacity-baseline-half-year-early-growth-v2"
+  LOADTEST_DATASET_TITLE_PREFIX: "Medikong Loadtest"
+  LOADTEST_DATASET_VENUE_PREFIX: "Loadtest Hall"
+  LOADTEST_DATASET_CONCERTS: "270"
+  LOADTEST_DATASET_PERFORMANCES_PER_CONCERT: "3"
+  LOADTEST_DATASET_SEAT_SECTIONS: "1"
+  LOADTEST_DATASET_SEAT_ROWS: "20"
+  LOADTEST_DATASET_SEATS_PER_ROW: "35"
+  LOADTEST_DATASET_LOOKAHEAD_DAYS: "14"
+  LOADTEST_DATASET_STARTS_AT_SPACING_MINUTES: "180"
+  LOADTEST_DATASET_DISCOVERY_LIMIT: "200"
+  LOADTEST_DATASET_CREATE_PAUSE_SECONDS: "0.5"
+  LOADTEST_K6_EXTRA_ARGS: "[]"
+  K6_OUTPUT: ""
+---
+# Source: read-api-loadtest/templates/report-archive-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "read-api-loadtest-report-archive"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "service-hpa-spike-load-test"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "2Gi"
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "read-api-loadtest-scale-out-reader"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "service-hpa-spike-load-test"
+rules:
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: "read-api-loadtest-scale-out-reader"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "service-hpa-spike-load-test"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "read-api-loadtest-scale-out-reader"
+subjects:
+  - kind: ServiceAccount
+    name: "read-api-loadtest-runner"
+    namespace: "loadtest"
+task: [deploy] set -eu
+values_file="${LOADTEST_VALUES_FILE:-values/local.yaml}"
+scenario_values_file="${LOADTEST_SCENARIO_VALUES_FILE:-}"
+preset="${PRESET:-${LOADTEST_PRESET:-${LOADTEST_SCENARIO_PRESET:-auth-30rps}}}"
+scenario="${LOADTEST_SCENARIO:-${SCENARIO:-service-hpa-spike-load-test}}"
+if [ -z "${scenario}" ] && [ -n "${preset}" ]; then
+  scenario="reservation-journey-load-test"
+fi
+if [ -z "${scenario_values_file}" ] && [ -n "${preset}" ]; then
+  scenario_base="${scenario%-load-test}"
+  for candidate in \
+    "values/presets/${scenario}/${preset}.yaml" \
+    "values/presets/${scenario_base}/${preset}.yaml" \
+    "values/presets/${preset}.yaml"; do
+    if [ -f "${candidate}" ]; then
+      scenario_values_file="${candidate}"
+      break
+    fi
+  done
+  if [ -z "${scenario_values_file}" ]; then
+    printf 'Unknown preset=%s for scenario=%s.\n' "${preset}" "${scenario}" >&2
+    exit 2
+  fi
+fi
+if [ -z "${scenario_values_file}" ] && [ -n "${scenario}" ] && [ -f "values/scenarios/${scenario}.yaml" ]; then
+  scenario_values_file="values/scenarios/${scenario}.yaml"
+fi
+values_args="-f ${values_file}"
+if [ -n "${scenario_values_file}" ]; then
+  values_args="${values_args} -f ${scenario_values_file}"
+fi
+capacity_service_steps="${LOADTEST_CAPACITY_BASELINE_SERVICE_STEPS:-}"
+if [ -n "${capacity_service_steps}" ]; then
+  values_args="${values_args} --set-json scenarios.capacityBaseline.serviceSteps=${capacity_service_steps}"
+fi
+image_args=""
+if [ "${LOADTEST_IMAGE_OVERRIDE:-}" = "true" ] || [ "${values_file}" = "values/local.yaml" ]; then
+  image_ref="$(task image-ref --silent)"
+  image_registry="${image_ref%/*}"
+  image_name_tag="${image_ref##*/}"
+  image_repository="${image_name_tag%:*}"
+  image_tag="${image_name_tag##*:}"
+  image_args="--set-string image.registry=${image_registry} --set-string image.repository=${image_repository} --set-string image.tag=${image_tag}"
+fi
+helm upgrade --install read-api-loadtest . \
+  --namespace loadtest \
+  --create-namespace \
+  ${values_args} \
+  ${image_args}
+
+Release "read-api-loadtest" has been upgraded. Happy Helming!
+NAME: read-api-loadtest
+LAST DEPLOYED: Sun Jun 21 18:16:38 2026
+NAMESPACE: loadtest
+STATUS: deployed
+REVISION: 169
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+task: [ensure-no-active-loadtest] set -eu
+active_jobs="$(kubectl -n loadtest get jobs \
+  -l 'app.kubernetes.io/name=read-api-loadtest,medikong.io/scenario!=setup-read-dataset' \
+  -o jsonpath='{range .items[?(@.status.active)]}{.metadata.name}{"\n"}{end}')"
+if [ -n "${active_jobs}" ]; then
+  printf 'Active loadtest Job already exists:\n%s\n' "${active_jobs}" >&2
+  printf 'Wait until it finishes, or delete the Job manually before starting another run.\n' >&2
+  exit 1
+fi
+
+task: [setup-dataset] set -eu
+run_id="manual-$(date -u +%Y%m%d%H%M%S)"
+job_name="read-api-loadtest-dataset-${run_id}"
+helm upgrade read-api-loadtest . \
+  --namespace loadtest \
+  --reuse-values \
+  --set manualRuns.dataset.enabled=true \
+  --set-string manualRuns.dataset.runId="${run_id}" \
+  --set manualRuns.read.enabled=false \
+  --set-string manualRuns.read.runId=""
+deadline=$(( $(date +%s) + 1800 ))
+while true; do
+  complete="$(kubectl -n loadtest get job "${job_name}" -o jsonpath='{.status.succeeded}' 2>/dev/null || true)"
+  failed="$(kubectl -n loadtest get job "${job_name}" -o jsonpath='{.status.failed}' 2>/dev/null || true)"
+  if [ "${failed:-0}" -ge 1 ]; then
+    kubectl -n loadtest logs "job/${job_name}" --tail=120 || true
+    kubectl -n loadtest describe job "${job_name}" || true
+    kubectl -n loadtest describe pods -l "job-name=${job_name}" || true
+    exit 1
+  fi
+  if [ "${complete:-0}" -ge 1 ]; then
+    printf 'Dataset setup Job completed job=%s\n' "${job_name}"
+    exit 0
+  fi
+  if [ "$(date +%s)" -ge "${deadline}" ]; then
+    kubectl -n loadtest logs "job/${job_name}" --tail=120 || true
+    kubectl -n loadtest describe job "${job_name}" || true
+    kubectl -n loadtest describe pods -l "job-name=${job_name}" || true
+    printf 'Timed out waiting for job/%s.\n' "${job_name}" >&2
+    exit 1
+  fi
+  sleep 3
+done
+
+Release "read-api-loadtest" has been upgraded. Happy Helming!
+NAME: read-api-loadtest
+LAST DEPLOYED: Sun Jun 21 18:16:38 2026
+NAMESPACE: loadtest
+STATUS: deployed
+REVISION: 170
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+{"event": "loadtest_experiment_conditions", "timestamp": "2026-06-21T09:16:40.389375+00:00", "test_type": "loadtest", "loadtest_run_id": "read-api-loadtest-dataset-manual-20260621091638-bm7kd", "scenario": "setup-capacity-baseline-dataset", "phase": "capacity_baseline_dataset_setup", "dataset_revision": "capacity-baseline-half-year-early-growth-v2", "seed_method": "deterministic_bulk_insert"}
+Name:                        read-api-loadtest-dataset-manual-20260621091638
+Namespace:                   loadtest
+Selector:                    batch.kubernetes.io/controller-uid=18aed4ac-0339-40fa-bfa9-d56a423852ec
+Labels:                      app.kubernetes.io/instance=read-api-loadtest
+                             app.kubernetes.io/managed-by=Helm
+                             app.kubernetes.io/name=read-api-loadtest
+                             app.kubernetes.io/part-of=medikong
+                             helm.sh/chart=read-api-loadtest-0.1.0
+                             medikong.io/environment=local
+                             medikong.io/execution=gitops-manual
+                             medikong.io/scenario=setup-capacity-baseline-dataset
+                             medikong.io/test-type=loadtest
+Annotations:                 argocd.argoproj.io/hook: Sync
+                             argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+                             argocd.argoproj.io/sync-wave: 0
+                             meta.helm.sh/release-name: read-api-loadtest
+                             meta.helm.sh/release-namespace: loadtest
+Parallelism:                 1
+Completions:                 1
+Completion Mode:             NonIndexed
+Suspend:                     false
+Backoff Limit:               0
+TTL Seconds After Finished:  86400
+Start Time:                  Sun, 21 Jun 2026 18:16:39 +0900
+Active Deadline Seconds:     7200s
+Pods Statuses:               0 Active (0 Ready) / 0 Succeeded / 1 Failed
+Pod Template:
+  Labels:           app.kubernetes.io/component=k6-runner
+                    app.kubernetes.io/instance=read-api-loadtest
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/name=read-api-loadtest
+                    app.kubernetes.io/part-of=medikong
+                    batch.kubernetes.io/controller-uid=18aed4ac-0339-40fa-bfa9-d56a423852ec
+                    batch.kubernetes.io/job-name=read-api-loadtest-dataset-manual-20260621091638
+                    controller-uid=18aed4ac-0339-40fa-bfa9-d56a423852ec
+                    helm.sh/chart=read-api-loadtest-0.1.0
+                    job-name=read-api-loadtest-dataset-manual-20260621091638
+                    medikong.io/environment=local
+                    medikong.io/execution=gitops-manual
+                    medikong.io/phase=dataset-setup
+                    medikong.io/scenario=setup-capacity-baseline-dataset
+                    medikong.io/test-type=loadtest
+  Service Account:  read-api-loadtest-runner
+  Containers:
+   runner:
+    Image:      localhost:5001/read-api-loadtest:dev
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      if [ "${LOADTEST_SCENARIO:-}" = "setup-capacity-baseline-dataset" ]; then
+        exec python3 /loadtest/scripts/setup_capacity_baseline_dataset.py
+      fi
+      if [ "${LOADTEST_COLLECTOR_GUARD_ENABLED:-false}" = "true" ]; then
+        python3 /loadtest/scripts/collector_guard.py
+      fi
+      if [ "${LOADTEST_REPORT_ARCHIVE_ENABLED:-false}" = "true" ]; then
+        export LOADTEST_REPORT_DIR="${LOADTEST_REPORT_ROOT%/}/${LOADTEST_RUN_ID}"
+        mkdir -p "${LOADTEST_REPORT_DIR}"
+      fi
+      set +e
+      k6 run --log-format=raw ${K6_OUTPUT:+--out "$K6_OUTPUT"} "/loadtest/scenarios/${LOADTEST_SCENARIO}.js"
+      exit_code="$?"
+      set -e
+      case "${exit_code}" in
+        0)
+          exit 0
+          ;;
+        99|201)
+          if [ "${LOADTEST_SCENARIO:-}" = "capacity-baseline-load-test" ]; then
+            exit 0
+          fi
+          printf '{"event":"loadtest_threshold_exit","timestamp":"%s","test_type":"loadtest","loadtest_run_id":"%s","scenario":"%s","exit_code":%s}\\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${LOADTEST_RUN_ID:-}" "${LOADTEST_SCENARIO:-}" "${exit_code}"
+          exit 0
+          ;;
+        *)
+          exit "${exit_code}"
+          ;;
+      esac
+      
+    Limits:
+      cpu:     1
+      memory:  512Mi
+    Requests:
+      cpu:     100m
+      memory:  128Mi
+    Environment Variables from:
+      read-api-loadtest              ConfigMap  Optional: false
+      read-api-loadtest-credentials  Secret     Optional: false
+    Environment:
+      LOADTEST_RUN_ID:     (v1:metadata.name)
+      NODE_NAME:           (v1:spec.nodeName)
+      LOADTEST_SCENARIO:  setup-capacity-baseline-dataset
+    Mounts:
+      /loadtest/reports from loadtest-report-archive (rw)
+  Volumes:
+   loadtest-report-archive:
+    Type:          PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:     read-api-loadtest-report-archive
+    ReadOnly:      false
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type     Reason                Age   From            Message
+  ----     ------                ----  ----            -------
+  Normal   SuccessfulCreate      25s   job-controller  Created pod: read-api-loadtest-dataset-manual-20260621091638-bm7kd
+  Warning  BackoffLimitExceeded  1s    job-controller  Job has reached the specified backoff limit
+Name:             read-api-loadtest-dataset-manual-20260621091638-bm7kd
+Namespace:        loadtest
+Priority:         0
+Service Account:  read-api-loadtest-runner
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Sun, 21 Jun 2026 18:16:39 +0900
+Labels:           app.kubernetes.io/component=k6-runner
+                  app.kubernetes.io/instance=read-api-loadtest
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=read-api-loadtest
+                  app.kubernetes.io/part-of=medikong
+                  batch.kubernetes.io/controller-uid=18aed4ac-0339-40fa-bfa9-d56a423852ec
+                  batch.kubernetes.io/job-name=read-api-loadtest-dataset-manual-20260621091638
+                  controller-uid=18aed4ac-0339-40fa-bfa9-d56a423852ec
+                  helm.sh/chart=read-api-loadtest-0.1.0
+                  job-name=read-api-loadtest-dataset-manual-20260621091638
+                  medikong.io/environment=local
+                  medikong.io/execution=gitops-manual
+                  medikong.io/phase=dataset-setup
+                  medikong.io/scenario=setup-capacity-baseline-dataset
+                  medikong.io/test-type=loadtest
+Annotations:      <none>
+Status:           Failed
+IP:               10.244.1.156
+IPs:
+  IP:           10.244.1.156
+Controlled By:  Job/read-api-loadtest-dataset-manual-20260621091638
+Containers:
+  runner:
+    Container ID:  containerd://43c8625b560c32242e6e0a165e653064a69d1019e11d5fb27f9e2f15e4e66c74
+    Image:         localhost:5001/read-api-loadtest:dev
+    Image ID:      localhost:5001/read-api-loadtest@sha256:69c06347402cbb75f8c3e27ea89566bfac3cd4991acaa5c2682eb9bbc2fb4775
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      if [ "${LOADTEST_SCENARIO:-}" = "setup-capacity-baseline-dataset" ]; then
+        exec python3 /loadtest/scripts/setup_capacity_baseline_dataset.py
+      fi
+      if [ "${LOADTEST_COLLECTOR_GUARD_ENABLED:-false}" = "true" ]; then
+        python3 /loadtest/scripts/collector_guard.py
+      fi
+      if [ "${LOADTEST_REPORT_ARCHIVE_ENABLED:-false}" = "true" ]; then
+        export LOADTEST_REPORT_DIR="${LOADTEST_REPORT_ROOT%/}/${LOADTEST_RUN_ID}"
+        mkdir -p "${LOADTEST_REPORT_DIR}"
+      fi
+      set +e
+      k6 run --log-format=raw ${K6_OUTPUT:+--out "$K6_OUTPUT"} "/loadtest/scenarios/${LOADTEST_SCENARIO}.js"
+      exit_code="$?"
+      set -e
+      case "${exit_code}" in
+        0)
+          exit 0
+          ;;
+        99|201)
+          if [ "${LOADTEST_SCENARIO:-}" = "capacity-baseline-load-test" ]; then
+            exit 0
+          fi
+          printf '{"event":"loadtest_threshold_exit","timestamp":"%s","test_type":"loadtest","loadtest_run_id":"%s","scenario":"%s","exit_code":%s}\\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${LOADTEST_RUN_ID:-}" "${LOADTEST_SCENARIO:-}" "${exit_code}"
+          exit 0
+          ;;
+        *)
+          exit "${exit_code}"
+          ;;
+      esac
+      
+    State:          Terminated
+      Reason:       OOMKilled
+      Exit Code:    137
+      Started:      Sun, 21 Jun 2026 18:16:39 +0900
+      Finished:     Sun, 21 Jun 2026 18:17:01 +0900
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     1
+      memory:  512Mi
+    Requests:
+      cpu:     100m
+      memory:  128Mi
+    Environment Variables from:
+      read-api-loadtest              ConfigMap  Optional: false
+      read-api-loadtest-credentials  Secret     Optional: false
+    Environment:
+      LOADTEST_RUN_ID:    read-api-loadtest-dataset-manual-20260621091638-bm7kd (v1:metadata.name)
+      NODE_NAME:           (v1:spec.nodeName)
+      LOADTEST_SCENARIO:  setup-capacity-baseline-dataset
+    Mounts:
+      /loadtest/reports from loadtest-report-archive (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-69vx8 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  loadtest-report-archive:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  read-api-loadtest-report-archive
+    ReadOnly:   false
+  kube-api-access-69vx8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  25s   default-scheduler  Successfully assigned loadtest/read-api-loadtest-dataset-manual-20260621091638-bm7kd to desktop-worker3
+  Normal  Pulling    25s   kubelet            Pulling image "localhost:5001/read-api-loadtest:dev"
+  Normal  Pulled     25s   kubelet            Successfully pulled image "localhost:5001/read-api-loadtest:dev" in 95ms (95ms including waiting). Image size: 60884553 bytes.
+  Normal  Created    25s   kubelet            Created container: runner
+  Normal  Started    25s   kubelet            Started container runner
+task: Failed to run task "setup-dataset": exit status 1
+task: [kong-rate-limit:restore] set -eu
+minute="120"
+for plugin in ticketing-rate-limit-concerts ticketing-rate-limit-reservations ticketing-rate-limit-payments ticketing-rate-limit-tickets ticketing-rate-limit-notifications; do
+  printf 'Restoring Kong rate limit plugin=%s minute=%s\n' "${plugin}" "${minute}"
+  kubectl patch kongclusterplugin "${plugin}" \
+    --type=merge \
+    -p "{\"config\":{\"minute\":${minute},\"policy\":\"local\"}}"
+done
+
+Restoring Kong rate limit plugin=ticketing-rate-limit-concerts minute=120
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-concerts patched
+Restoring Kong rate limit plugin=ticketing-rate-limit-reservations minute=120
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-reservations patched
+Restoring Kong rate limit plugin=ticketing-rate-limit-payments minute=120
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-payments patched
+Restoring Kong rate limit plugin=ticketing-rate-limit-tickets minute=120
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-tickets patched
+Restoring Kong rate limit plugin=ticketing-rate-limit-notifications minute=120
+kongclusterplugin.configuration.konghq.com/ticketing-rate-limit-notifications patched
+task: Failed to run task "dev:loadtest": task: Failed to run task "loadtest:run-local": exit status 201
+
+## post-run hpa all
+NAMESPACE                NAME                   REFERENCE                         TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+ticketing-auth           auth-service           Deployment/auth-service           cpu: 0%/70%   1         4         1          108s
+ticketing-concert        concert-service        Deployment/concert-service        cpu: 0%/70%   1         4         1          108s
+ticketing-notification   notification-service   Deployment/notification-service   cpu: 0%/70%   1         4         1          108s
+ticketing-payment        payment-service        Deployment/payment-service        cpu: 0%/70%   1         4         1          108s
+ticketing-reservation    reservation-service    Deployment/reservation-service    cpu: 0%/70%   1         4         1          108s
+ticketing-ticket         ticket-service         Deployment/ticket-service         cpu: 0%/70%   1         4         1          108s
+
+## post-run auth hpa,pods
+NAME                                               REFERENCE                 TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/auth-service   Deployment/auth-service   cpu: 0%/70%   1         4         1          108s
+
+NAME                                READY   STATUS    RESTARTS   AGE    IP            NODE              NOMINATED NODE   READINESS GATES
+pod/auth-db-0                       1/1     Running   0          7h7m   10.244.3.63   desktop-worker2   <none>           <none>
+pod/auth-service-6c4c8ffb5d-vbf7l   1/1     Running   0          108s   10.244.3.97   desktop-worker2   <none>           <none>

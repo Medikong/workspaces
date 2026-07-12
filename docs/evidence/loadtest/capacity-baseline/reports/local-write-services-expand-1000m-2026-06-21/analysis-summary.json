@@ -1,0 +1,621 @@
+{
+  "status": "FAIL",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621082125-tq74h",
+  "scenario": "capacity-baseline-load-test",
+  "traffic_model_preset": "local-write-services-expand-1000m",
+  "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+  "fixed_conditions": {
+    "authTokenTtlSeconds": "7200",
+    "cpuLimit": "none",
+    "cpuRequest": "1000m",
+    "hpa": "disabled",
+    "replicas": "1"
+  },
+  "warmup_exclusion": {
+    "reservation-service": {
+      "target_rps": 80,
+      "candidate_calculation": "excluded"
+    },
+    "payment-service": {
+      "target_rps": 40,
+      "candidate_calculation": "excluded"
+    },
+    "ticket-service": {
+      "target_rps": 40,
+      "candidate_calculation": "excluded"
+    }
+  },
+  "services": [
+    {
+      "service": "reservation-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        },
+        {
+          "duration": "60s",
+          "target": 200
+        },
+        {
+          "duration": "60s",
+          "target": 240
+        }
+      ],
+      "max_valid_rps": 240,
+      "cpu_usage_m_at_max_valid_rps": 1384.5611263859385,
+      "request_candidate_m": 1978,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "reservation_rps_240",
+      "warmup_target_rps": 80,
+      "failure_start_step": null,
+      "failure_reasons": null,
+      "previous_max_valid_rps": 120,
+      "previous_cpu_usage_m_at_max_valid_rps": 512.2,
+      "previous_request_candidate_m": 732,
+      "max_valid_rps_delta": 120,
+      "request_candidate_m_delta": 1246
+    },
+    {
+      "service": "payment-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        },
+        {
+          "duration": "60s",
+          "target": 240
+        },
+        {
+          "duration": "60s",
+          "target": 320
+        }
+      ],
+      "max_valid_rps": 240,
+      "cpu_usage_m_at_max_valid_rps": 1137.4254019783543,
+      "request_candidate_m": 1625,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "payment_rps_240",
+      "warmup_target_rps": 40,
+      "failure_start_step": "payment_rps_320",
+      "failure_reasons": [
+        "slo_p95_ms",
+        "error_rate_threshold"
+      ],
+      "previous_max_valid_rps": 40,
+      "previous_cpu_usage_m_at_max_valid_rps": 145.2,
+      "previous_request_candidate_m": 208,
+      "max_valid_rps_delta": 200,
+      "request_candidate_m_delta": 1417
+    },
+    {
+      "service": "ticket-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 60
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 100
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        }
+      ],
+      "max_valid_rps": 100,
+      "cpu_usage_m_at_max_valid_rps": 1005.8335166657315,
+      "request_candidate_m": 1437,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "ticket_rps_100",
+      "warmup_target_rps": 40,
+      "failure_start_step": "ticket_rps_120",
+      "failure_reasons": [
+        "slo_p95_ms"
+      ],
+      "previous_max_valid_rps": 60,
+      "previous_cpu_usage_m_at_max_valid_rps": 467.9,
+      "previous_request_candidate_m": 669,
+      "max_valid_rps_delta": 40,
+      "request_candidate_m_delta": 768
+    }
+  ],
+  "step_results": [
+    {
+      "service": "reservation-service",
+      "api": "POST /reservations",
+      "step": "capacity_baseline.reservation.create",
+      "capacity_step": "reservation_rps_80",
+      "target_rps": 80,
+      "per_pod_rps": 80,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 13.436908599999999,
+      "p99_ms": 40.051868359999965,
+      "error_rate": 0,
+      "cpu_usage_m": 182.90564043541605,
+      "cpu_throttling": 0,
+      "request_candidate_m": 262,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": true
+    },
+    {
+      "service": "reservation-service",
+      "api": "POST /reservations",
+      "step": "capacity_baseline.reservation.create",
+      "capacity_step": "reservation_rps_120",
+      "target_rps": 120,
+      "per_pod_rps": 120,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 20.913046299999998,
+      "p99_ms": 40.049511989999985,
+      "error_rate": 0,
+      "cpu_usage_m": 536.2997409191084,
+      "cpu_throttling": 0,
+      "request_candidate_m": 767,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "reservation-service",
+      "api": "POST /reservations",
+      "step": "capacity_baseline.reservation.create",
+      "capacity_step": "reservation_rps_160",
+      "target_rps": 160,
+      "per_pod_rps": 160,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 37.2865628,
+      "p99_ms": 110.39938981999995,
+      "error_rate": 0,
+      "cpu_usage_m": 791.7849279374846,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1132,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "reservation-service",
+      "api": "POST /reservations",
+      "step": "capacity_baseline.reservation.create",
+      "capacity_step": "reservation_rps_200",
+      "target_rps": 200,
+      "per_pod_rps": 200,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 43.23470804999994,
+      "p99_ms": 158.16936648999985,
+      "error_rate": 0,
+      "cpu_usage_m": 1060.832492336558,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1516,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "reservation-service",
+      "api": "POST /reservations",
+      "step": "capacity_baseline.reservation.create",
+      "capacity_step": "reservation_rps_240",
+      "target_rps": 240,
+      "per_pod_rps": 240,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 63.66190209999999,
+      "p99_ms": 108.91745374999999,
+      "error_rate": 0,
+      "cpu_usage_m": 1384.5611263859385,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1978,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_40",
+      "target_rps": 40,
+      "per_pod_rps": 40,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 8.174358299999994,
+      "p99_ms": 18.28566718,
+      "error_rate": 0,
+      "cpu_usage_m": 60.213739549999694,
+      "cpu_throttling": 0,
+      "request_candidate_m": 87,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": true
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_80",
+      "target_rps": 80,
+      "per_pod_rps": 80,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 7.206095499999999,
+      "p99_ms": 18.620529819999994,
+      "error_rate": 0,
+      "cpu_usage_m": 207.65332499444605,
+      "cpu_throttling": 0,
+      "request_candidate_m": 297,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_120",
+      "target_rps": 120,
+      "per_pod_rps": 120,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 16.295064599999996,
+      "p99_ms": 34.52057198999999,
+      "error_rate": 0,
+      "cpu_usage_m": 444.3700509641662,
+      "cpu_throttling": 0,
+      "request_candidate_m": 635,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_160",
+      "target_rps": 160,
+      "per_pod_rps": 160,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 34.1052628,
+      "p99_ms": 101.84802833999989,
+      "error_rate": 0,
+      "cpu_usage_m": 774.3436633583434,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1107,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_240",
+      "target_rps": 240,
+      "per_pod_rps": 240,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 96.60616309999999,
+      "p99_ms": 498.04583834,
+      "error_rate": 0,
+      "cpu_usage_m": 1137.4254019783543,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1625,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "payment-service",
+      "api": "POST /payments",
+      "step": "capacity_baseline.payment.create",
+      "capacity_step": "payment_rps_320",
+      "target_rps": 320,
+      "per_pod_rps": 320,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 4120.928252499999,
+      "p99_ms": 10000.7525255,
+      "error_rate": 0.12886109531931023,
+      "cpu_usage_m": 1611.4360159687194,
+      "cpu_throttling": 0,
+      "request_candidate_m": 2303,
+      "pass": false,
+      "status": "limit_candidate",
+      "decision_reasons": [
+        "slo_p95_ms",
+        "error_rate_threshold"
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "POST /tickets/issue",
+      "step": "capacity_baseline.ticket.issue",
+      "capacity_step": "ticket_rps_40",
+      "target_rps": 40,
+      "per_pod_rps": 40,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 23.720820799999988,
+      "p99_ms": 57.4976385,
+      "error_rate": 0,
+      "cpu_usage_m": 199.4524470333335,
+      "cpu_throttling": 0,
+      "request_candidate_m": 285,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": true
+    },
+    {
+      "service": "ticket-service",
+      "api": "GET /tickets/me",
+      "step": "capacity_baseline.ticket.list",
+      "capacity_step": "ticket_rps_40",
+      "target_rps": 40,
+      "per_pod_rps": 40,
+      "duration": "60s",
+      "slo_p95_ms": 100,
+      "p95_ms": 20.835166899999972,
+      "p99_ms": 59.50241866,
+      "error_rate": 0,
+      "cpu_usage_m": 199.4524470333335,
+      "cpu_throttling": 0,
+      "request_candidate_m": 285,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": true
+    },
+    {
+      "service": "ticket-service",
+      "api": "POST /tickets/issue",
+      "step": "capacity_baseline.ticket.issue",
+      "capacity_step": "ticket_rps_60",
+      "target_rps": 60,
+      "per_pod_rps": 60,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 21.237566399999995,
+      "p99_ms": 57.81601231999999,
+      "error_rate": 0,
+      "cpu_usage_m": 488.6432779150042,
+      "cpu_throttling": 0,
+      "request_candidate_m": 699,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "GET /tickets/me",
+      "step": "capacity_baseline.ticket.list",
+      "capacity_step": "ticket_rps_60",
+      "target_rps": 60,
+      "per_pod_rps": 60,
+      "duration": "60s",
+      "slo_p95_ms": 100,
+      "p95_ms": 20.325396099999995,
+      "p99_ms": 60.02282416,
+      "error_rate": 0,
+      "cpu_usage_m": 488.6432779150042,
+      "cpu_throttling": 0,
+      "request_candidate_m": 699,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "POST /tickets/issue",
+      "step": "capacity_baseline.ticket.issue",
+      "capacity_step": "ticket_rps_80",
+      "target_rps": 80,
+      "per_pod_rps": 80,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 42.449144099999835,
+      "p99_ms": 97.32010132999999,
+      "error_rate": 0,
+      "cpu_usage_m": 721.2301701488182,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1031,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "GET /tickets/me",
+      "step": "capacity_baseline.ticket.list",
+      "capacity_step": "ticket_rps_80",
+      "target_rps": 80,
+      "per_pod_rps": 80,
+      "duration": "60s",
+      "slo_p95_ms": 100,
+      "p95_ms": 40.4834604,
+      "p99_ms": 99.20839042,
+      "error_rate": 0,
+      "cpu_usage_m": 721.2301701488182,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1031,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "POST /tickets/issue",
+      "step": "capacity_baseline.ticket.issue",
+      "capacity_step": "ticket_rps_100",
+      "target_rps": 100,
+      "per_pod_rps": 100,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 55.267299399999985,
+      "p99_ms": 148.01925731999992,
+      "error_rate": 0,
+      "cpu_usage_m": 1005.8335166657315,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1437,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "GET /tickets/me",
+      "step": "capacity_baseline.ticket.list",
+      "capacity_step": "ticket_rps_100",
+      "target_rps": 100,
+      "per_pod_rps": 100,
+      "duration": "60s",
+      "slo_p95_ms": 100,
+      "p95_ms": 60.01335839999997,
+      "p99_ms": 128.54991383999987,
+      "error_rate": 0,
+      "cpu_usage_m": 1005.8335166657315,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1437,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "POST /tickets/issue",
+      "step": "capacity_baseline.ticket.issue",
+      "capacity_step": "ticket_rps_120",
+      "target_rps": 120,
+      "per_pod_rps": 120,
+      "duration": "60s",
+      "slo_p95_ms": 120,
+      "p95_ms": 103.43379999999988,
+      "p99_ms": 196.82835407999997,
+      "error_rate": 0,
+      "cpu_usage_m": 1337.1509071492778,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1911,
+      "pass": true,
+      "status": "valid",
+      "decision_reasons": [
+
+      ],
+      "warmup_excluded": false
+    },
+    {
+      "service": "ticket-service",
+      "api": "GET /tickets/me",
+      "step": "capacity_baseline.ticket.list",
+      "capacity_step": "ticket_rps_120",
+      "target_rps": 120,
+      "per_pod_rps": 120,
+      "duration": "60s",
+      "slo_p95_ms": 100,
+      "p95_ms": 117.81203604999995,
+      "p99_ms": 196.25383324999999,
+      "error_rate": 0,
+      "cpu_usage_m": 1337.1509071492778,
+      "cpu_throttling": 0,
+      "request_candidate_m": 1911,
+      "pass": false,
+      "status": "limit_candidate",
+      "decision_reasons": [
+        "slo_p95_ms"
+      ],
+      "warmup_excluded": false
+    }
+  ]
+}

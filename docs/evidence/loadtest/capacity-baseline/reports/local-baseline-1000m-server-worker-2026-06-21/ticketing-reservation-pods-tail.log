@@ -1,0 +1,85 @@
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data/pgdata ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data/pgdata -l logfile start
+
+waiting for server to start....2026-06-21 02:09:59.630 UTC [53] LOG:  starting PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-06-21 02:09:59.631 UTC [53] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-06-21 02:09:59.634 UTC [56] LOG:  database system was shut down at 2026-06-21 02:09:59 UTC
+2026-06-21 02:09:59.638 UTC [53] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down....2026-06-21 02:09:59.794 UTC [53] LOG:  received fast shutdown request
+2026-06-21 02:09:59.795 UTC [53] LOG:  aborting any active transactions
+2026-06-21 02:09:59.796 UTC [53] LOG:  background worker "logical replication launcher" (PID 59) exited with exit code 1
+2026-06-21 02:09:59.797 UTC [54] LOG:  shutting down
+2026-06-21 02:09:59.798 UTC [54] LOG:  checkpoint starting: shutdown immediate
+2026-06-21 02:09:59.835 UTC [54] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.027 s, total=0.038 s; sync files=301, longest=0.012 s, average=0.001 s; distance=4240 kB, estimate=4240 kB
+2026-06-21 02:09:59.839 UTC [53] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+2026-06-21 02:09:59.909 UTC [1] LOG:  starting PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-06-21 02:09:59.909 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-06-21 02:09:59.909 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-06-21 02:09:59.911 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-06-21 02:09:59.913 UTC [69] LOG:  database system was shut down at 2026-06-21 02:09:59 UTC
+2026-06-21 02:09:59.916 UTC [1] LOG:  database system is ready to accept connections
+2026-06-21 02:15:00.013 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 02:15:08.613 UTC [67] LOG:  checkpoint complete: wrote 88 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=8.589 s, sync=0.006 s, total=8.601 s; sync files=60, longest=0.002 s, average=0.001 s; distance=465 kB, estimate=465 kB
+2026-06-21 02:25:00.714 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 02:27:08.009 UTC [67] LOG:  checkpoint complete: wrote 9885 buffers (60.3%); 0 WAL file(s) added, 5 removed, 16 recycled; write=126.735 s, sync=0.478 s, total=127.295 s; sync files=33, longest=0.270 s, average=0.015 s; distance=346126 kB, estimate=346126 kB
+2026-06-21 02:30:00.396 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 02:34:30.031 UTC [67] LOG:  checkpoint complete: wrote 13316 buffers (81.3%); 0 WAL file(s) added, 0 removed, 31 recycled; write=269.605 s, sync=0.005 s, total=269.636 s; sync files=30, longest=0.002 s, average=0.001 s; distance=497288 kB, estimate=497288 kB
+2026-06-21 02:40:00.169 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 02:41:13.609 UTC [2558] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:41:13.609 UTC [2559] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:41:13.611 UTC [2557] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:41:13.611 UTC [2534] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:41:13.614 UTC [1319] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:43:33.576 UTC [67] LOG:  checkpoint complete: wrote 2110 buffers (12.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=213.395 s, sync=0.004 s, total=213.407 s; sync files=14, longest=0.003 s, average=0.001 s; distance=9713 kB, estimate=448530 kB
+2026-06-21 02:45:00.664 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 02:49:30.064 UTC [67] LOG:  checkpoint complete: wrote 4673 buffers (28.5%); 0 WAL file(s) added, 0 removed, 1 recycled; write=269.392 s, sync=0.003 s, total=269.401 s; sync files=12, longest=0.002 s, average=0.001 s; distance=20039 kB, estimate=405681 kB
+2026-06-21 03:50:01.965 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 03:54:31.121 UTC [67] LOG:  checkpoint complete: wrote 14026 buffers (85.6%); 0 WAL file(s) added, 0 removed, 31 recycled; write=269.123 s, sync=0.004 s, total=269.156 s; sync files=36, longest=0.001 s, average=0.001 s; distance=503946 kB, estimate=503946 kB
+2026-06-21 04:00:01.245 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 04:02:07.819 UTC [67] LOG:  checkpoint complete: wrote 1254 buffers (7.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=126.566 s, sync=0.005 s, total=126.575 s; sync files=19, longest=0.003 s, average=0.001 s; distance=5519 kB, estimate=454104 kB
+2026-06-21 04:05:01.909 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 04:09:31.021 UTC [67] LOG:  checkpoint complete: wrote 4144 buffers (25.3%); 0 WAL file(s) added, 0 removed, 2 recycled; write=269.105 s, sync=0.003 s, total=269.113 s; sync files=17, longest=0.001 s, average=0.001 s; distance=23919 kB, estimate=411085 kB
+2026-06-21 05:05:01.176 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 05:09:31.067 UTC [67] LOG:  checkpoint complete: wrote 13703 buffers (83.6%); 0 WAL file(s) added, 0 removed, 31 recycled; write=269.857 s, sync=0.003 s, total=269.891 s; sync files=37, longest=0.002 s, average=0.001 s; distance=506716 kB, estimate=506716 kB
+2026-06-21 06:07:36.847 UTC [20774] LOG:  could not send data to client: Broken pipe
+2026-06-21 06:07:36.854 UTC [20774] FATAL:  connection to client lost
+2026-06-21 06:20:02.391 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 06:24:32.116 UTC [67] LOG:  checkpoint complete: wrote 13005 buffers (79.4%); 0 WAL file(s) added, 0 removed, 30 recycled; write=269.696 s, sync=0.004 s, total=269.725 s; sync files=36, longest=0.001 s, average=0.001 s; distance=496363 kB, estimate=505681 kB
+2026-06-21 07:00:02.820 UTC [67] LOG:  checkpoint starting: time
+2026-06-21 07:04:32.089 UTC [67] LOG:  checkpoint complete: wrote 3459 buffers (21.1%); 0 WAL file(s) added, 0 removed, 1 recycled; write=269.258 s, sync=0.004 s, total=269.269 s; sync files=20, longest=0.002 s, average=0.001 s; distance=16880 kB, estimate=456801 kB

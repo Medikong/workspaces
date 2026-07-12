@@ -1,0 +1,236 @@
+Name:             notification-db-0
+Namespace:        ticketing-notification
+Priority:         0
+Service Account:  default
+Node:             desktop-worker2/172.18.0.6
+Start Time:       Sun, 21 Jun 2026 11:09:54 +0900
+Labels:           app.kubernetes.io/name=notification-db
+                  app.kubernetes.io/part-of=medikong
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=notification-db-765b8c5489
+                  statefulset.kubernetes.io/pod-name=notification-db-0
+Annotations:      <none>
+Status:           Running
+IP:               10.244.3.62
+IPs:
+  IP:           10.244.3.62
+Controlled By:  StatefulSet/notification-db
+Containers:
+  mongo:
+    Container ID:   containerd://f94be5449ae26890f23e878f0140303cb739a5a4ff08f0cd002d52f7d18df3e4
+    Image:          mongo:7
+    Image ID:       docker.io/library/mongo@sha256:4b5bf3c2bb7516164f6dcb44acce4fdcb428abfe5771a1128304a0f34ab9ff7c
+    Port:           27017/TCP (mongo)
+    Host Port:      0/TCP (mongo)
+    State:          Running
+      Started:      Sun, 21 Jun 2026 11:09:55 +0900
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        250m
+      memory:     512Mi
+    Readiness:    tcp-socket :mongo delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /data/db from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-494dv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-notification-db-0
+    ReadOnly:   false
+  kube-api-access-494dv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             notification-service-7f664c897d-p99p2
+Namespace:        ticketing-notification
+Priority:         0
+Service Account:  notification-service
+Node:             desktop-worker/172.18.0.7
+Start Time:       Sun, 21 Jun 2026 15:16:15 +0900
+Labels:           app=notification-service
+                  app.kubernetes.io/instance=notification-local-docker-desktop
+                  app.kubernetes.io/name=notification-service
+                  medikong.io/environment=local-capacity-baseline
+                  pod-template-hash=7f664c897d
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=notification
+                  ticketing.io/tier=api
+Annotations:      medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.2.79
+IPs:
+  IP:           10.244.2.79
+Controlled By:  ReplicaSet/notification-service-7f664c897d
+Containers:
+  notification-service:
+    Container ID:   containerd://7bbf05c6405fd9b09893cd10108e062638c814811dc747a3a565c181adaf7b6d
+    Image:          localhost:5001/notification-service:dev
+    Image ID:       localhost:5001/notification-service@sha256:ef294ba61504da2a907619f998efda424b1870abb89ae9ad1d0599b8c1931b09
+    Port:           8084/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Sun, 21 Jun 2026 15:16:16 +0900
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      cpu:      1
+      memory:   128Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-capacity-baseline
+      SQLALCHEMY_POOL_SIZE:               35
+      SQLALCHEMY_MAX_OVERFLOW:            20
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      MONGODB_URL:                        mongodb://notification-db:27017
+      MONGODB_DB_NAME:                    notification_db
+      KAFKA_BOOTSTRAP_SERVERS:            kafka.ticketing-messaging.svc.cluster.local:9092
+      KAFKA_GROUP_ID:                     notification-service
+      RESERVATION_CREATED_TOPIC:          reservation-created
+      RESERVATION_EXPIRED_TOPIC:          reservation-expired
+      PAYMENT_APPROVED_TOPIC:             payment-approved
+      PAYMENT_FAILED_TOPIC:               payment-failed
+      TICKET_ISSUED_TOPIC:                ticket-issued
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                       <none>
+
+
+Name:             notification-service-background-957bd7768-vm7fs
+Namespace:        ticketing-notification
+Priority:         0
+Service Account:  notification-service
+Node:             desktop-worker2/172.18.0.6
+Start Time:       Sun, 21 Jun 2026 15:16:16 +0900
+Labels:           app=notification-service-background
+                  app.kubernetes.io/instance=notification-local-docker-desktop
+                  app.kubernetes.io/name=notification-service-background
+                  medikong.io/environment=local-capacity-baseline
+                  medikong.io/workload=background
+                  pod-template-hash=957bd7768
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=notification
+                  ticketing.io/tier=api
+Annotations:      medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.3.89
+IPs:
+  IP:           10.244.3.89
+Controlled By:  ReplicaSet/notification-service-background-957bd7768
+Containers:
+  background:
+    Container ID:  containerd://b45ac557ba001644c75b6a6ef53ba20f26efe30de93362298de5c4682ee76923
+    Image:         localhost:5001/notification-service:dev
+    Image ID:      localhost:5001/notification-service@sha256:ef294ba61504da2a907619f998efda424b1870abb89ae9ad1d0599b8c1931b09
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      python
+    Args:
+      cmd/worker/main.py
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Sun, 21 Jun 2026 16:15:59 +0900
+      Finished:     Sun, 21 Jun 2026 16:16:31 +0900
+    Ready:          False
+    Restart Count:  15
+    Limits:
+      memory:  512Mi
+    Requests:
+      cpu:     1
+      memory:  128Mi
+    Environment:
+      SERVICE_VERSION:                  dev
+      SERVICE_ENVIRONMENT:              local-capacity-baseline
+      SQLALCHEMY_POOL_SIZE:             35
+      SQLALCHEMY_MAX_OVERFLOW:          20
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:  15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:  1800
+      OTEL_TRACES_EXPORTER:             otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:      http://opentelemetry-collector.observability.svc.cluster.local:4317
+      MONGODB_URL:                      mongodb://notification-db:27017
+      MONGODB_DB_NAME:                  notification_db
+      KAFKA_BOOTSTRAP_SERVERS:          kafka.ticketing-messaging.svc.cluster.local:9092
+      KAFKA_GROUP_ID:                   notification-service
+      RESERVATION_CREATED_TOPIC:        reservation-created
+      RESERVATION_EXPIRED_TOPIC:        reservation-expired
+      PAYMENT_APPROVED_TOPIC:           payment-approved
+      PAYMENT_FAILED_TOPIC:             payment-failed
+      TICKET_ISSUED_TOPIC:              ticket-issued
+    Mounts:                             <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason   Age                   From     Message
+  ----     ------   ----                  ----     -------
+  Normal   Created  57m (x6 over 63m)     kubelet  Created container: background
+  Normal   Started  57m (x6 over 63m)     kubelet  Started container background
+  Normal   Pulled   57m                   kubelet  Successfully pulled image "localhost:5001/notification-service:dev" in 26ms (26ms including waiting). Image size: 81577014 bytes.
+  Normal   Pulled   54m                   kubelet  Successfully pulled image "localhost:5001/notification-service:dev" in 29ms (29ms including waiting). Image size: 81577014 bytes.
+  Normal   Pulled   42m (x2 over 59m)     kubelet  Successfully pulled image "localhost:5001/notification-service:dev" in 22ms (22ms including waiting). Image size: 81577014 bytes.
+  Normal   Pulling  3m34s (x16 over 63m)  kubelet  Pulling image "localhost:5001/notification-service:dev"
+  Warning  BackOff  2m4s (x243 over 62m)  kubelet  Back-off restarting failed container background in pod notification-service-background-957bd7768-vm7fs_ticketing-notification(9719de57-a6d8-4d33-a3be-852f85c14632)

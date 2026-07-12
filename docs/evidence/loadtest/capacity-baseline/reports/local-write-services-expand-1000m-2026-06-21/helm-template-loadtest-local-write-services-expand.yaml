@@ -1,0 +1,381 @@
+---
+# Source: read-api-loadtest/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "loadtest"
+  labels:
+    app.kubernetes.io/part-of: medikong
+    medikong.io/platform: loadtest
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "read-api-loadtest-runner"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "capacity-baseline-load-test"
+---
+# Source: read-api-loadtest/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "read-api-loadtest"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "capacity-baseline-load-test"
+data:
+  LOADTEST_TEST_TYPE: "loadtest"
+  LOADTEST_SCENARIO: "capacity-baseline-load-test"
+  LOADTEST_ENVIRONMENT: "local"
+  LOADTEST_TARGET: "local"
+  LOADTEST_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_LOCAL_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_AWS_BASE_URL: "http://kong-kong-proxy.kong.svc.cluster.local"
+  LOADTEST_REVISION: "dev"
+  LOADTEST_IMAGE: "localhost:5001/read-api-loadtest:dev"
+  LOADTEST_IMAGE_TAG: "dev"
+  LOADTEST_RELEASE: "read-api-loadtest"
+  LOADTEST_NAMESPACE: "loadtest"
+  LOADTEST_REPORT_ARCHIVE_ENABLED: "true"
+  LOADTEST_REPORT_ROOT: "/loadtest/reports"
+  LOADTEST_COLLECTOR_GUARD_ENABLED: "false"
+  LOADTEST_COLLECTOR_GUARD_NAMESPACE: "observability"
+  LOADTEST_COLLECTOR_GUARD_LABEL_SELECTOR: "app.kubernetes.io/name=opentelemetry-collector"
+  LOADTEST_COLLECTOR_GUARD_TIMEOUT_SECONDS: "60"
+  LOADTEST_COLLECTOR_GUARD_POLL_INTERVAL_SECONDS: "5"
+  LOADTEST_MANUAL_DATASET_RUN_ID: ""
+  LOADTEST_MANUAL_READ_RUN_ID: ""
+  LOADTEST_TRAFFIC_MODEL_PRESET: "local-write-services-expand-1000m"
+  LOADTEST_TRAFFIC_MODEL_MAU: ""
+  LOADTEST_TRAFFIC_MODEL_STICKINESS: ""
+  LOADTEST_TRAFFIC_MODEL_PEAK_PARTICIPATION_RATE: ""
+  LOADTEST_TRAFFIC_MODEL_PEAK_WINDOW_MINUTES: ""
+  LOADTEST_TRAFFIC_MODEL_JOURNEYS_PER_USER: ""
+  LOADTEST_TRAFFIC_MODEL_SAFETY_FACTOR: ""
+  LOADTEST_TRAFFIC_MODEL_TARGET_TICKETS_PER_CUSTOMER: ""
+  LOADTEST_TRAFFIC_MODEL_CALCULATED_JOURNEY_RATE: ""
+  LOADTEST_TRAFFIC_MODEL_EXPECTED_JOURNEYS: ""
+  LOADTEST_SCALE_OUT_REPORT_ENABLED: "false"
+  LOADTEST_SCALE_OUT_REPORT_POLL_EVERY_ITERATIONS: "10"
+  LOADTEST_SCALE_OUT_REPORT_TARGETS: "[]"
+  LOADTEST_DATASET_REQUEST_PREFIX: "loadtest-dataset"
+  LOADTEST_DATASET_TIMEOUT_SECONDS: "15"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "3000"
+  LOADTEST_DATASET_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "5000"
+  LOADTEST_DATASET_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_READ_API_REQUEST_PREFIX: "loadtest-read"
+  LOADTEST_READ_API_TIMEOUT_SECONDS: "10"
+  LOADTEST_READ_API_VUS: "1"
+  LOADTEST_READ_API_DURATION: "30s"
+  LOADTEST_READ_API_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_READ_API_GRACEFUL_STOP: "30s"
+  LOADTEST_READ_API_THINK_TIME_SECONDS: "2"
+  LOADTEST_READ_API_CONCERT_LIMIT: "50"
+  LOADTEST_READ_API_PERFORMANCE_LIMIT: "50"
+  LOADTEST_READ_API_SEAT_LIMIT: "200"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_READ_API_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_READ_API_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_AUTH_LOGIN_REQUEST_PREFIX: "loadtest-auth-login"
+  LOADTEST_AUTH_LOGIN_TIMEOUT_SECONDS: "10"
+  LOADTEST_AUTH_LOGIN_SETUP_TIMEOUT: "10m"
+  LOADTEST_AUTH_LOGIN_EXECUTOR: "ramping-vus"
+  LOADTEST_AUTH_LOGIN_VUS: "1"
+  LOADTEST_AUTH_LOGIN_RATE: "1"
+  LOADTEST_AUTH_LOGIN_TIME_UNIT: "1s"
+  LOADTEST_AUTH_LOGIN_PRE_ALLOCATED_VUS: "5"
+  LOADTEST_AUTH_LOGIN_MAX_VUS: "10"
+  LOADTEST_AUTH_LOGIN_DURATION: "30s"
+  LOADTEST_AUTH_LOGIN_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_AUTH_LOGIN_GRACEFUL_STOP: "30s"
+  LOADTEST_AUTH_LOGIN_THINK_TIME_SECONDS: "0"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_AUTH_LOGIN_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_TICKET_SERVICE_READ_REQUEST_PREFIX: "loadtest-ticket-read"
+  LOADTEST_TICKET_SERVICE_READ_TIMEOUT_SECONDS: "10"
+  LOADTEST_TICKET_SERVICE_READ_SETUP_TIMEOUT: "10m"
+  LOADTEST_TICKET_SERVICE_READ_EXECUTOR: "constant-arrival-rate"
+  LOADTEST_TICKET_SERVICE_READ_VUS: "5"
+  LOADTEST_TICKET_SERVICE_READ_RATE: "1"
+  LOADTEST_TICKET_SERVICE_READ_TIME_UNIT: "1s"
+  LOADTEST_TICKET_SERVICE_READ_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_TICKET_SERVICE_READ_MAX_VUS: "20"
+  LOADTEST_TICKET_SERVICE_READ_DURATION: "2m"
+  LOADTEST_TICKET_SERVICE_READ_STAGES: "[]"
+  LOADTEST_TICKET_SERVICE_READ_GRACEFUL_STOP: "30s"
+  LOADTEST_TICKET_SERVICE_READ_THINK_TIME_SECONDS: "0"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_LIMIT: "20"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_PAGINATION_PAGES: "3"
+  LOADTEST_TICKET_SERVICE_READ_TICKET_LIST_MAX_PAGES: "5"
+  LOADTEST_TICKET_SERVICE_READ_TICKETS_PER_CUSTOMER: "60"
+  LOADTEST_TICKET_SERVICE_READ_WAIT_TARGET_TICKET_POSITION: "41"
+  LOADTEST_TICKET_SERVICE_READ_ACTIVE_CUSTOMER_COUNT: "20"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_TICKET_SERVICE_READ_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_REQUEST_PREFIX: "loadtest-reservation"
+  LOADTEST_RESERVATION_JOURNEY_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_JOURNEY_EXECUTOR: "ramping-vus"
+  LOADTEST_RESERVATION_JOURNEY_VUS: "1"
+  LOADTEST_RESERVATION_JOURNEY_RATE: "1"
+  LOADTEST_RESERVATION_JOURNEY_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_JOURNEY_PRE_ALLOCATED_VUS: "5"
+  LOADTEST_RESERVATION_JOURNEY_MAX_VUS: "10"
+  LOADTEST_RESERVATION_JOURNEY_DURATION: "30s"
+  LOADTEST_RESERVATION_JOURNEY_STAGES: "[{\"duration\":\"30s\",\"target\":1}]"
+  LOADTEST_RESERVATION_JOURNEY_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_JOURNEY_THINK_TIME_SECONDS: "2"
+  LOADTEST_RESERVATION_JOURNEY_POLL_SECONDS: "45"
+  LOADTEST_RESERVATION_JOURNEY_POLL_INTERVAL_SECONDS: "2"
+  LOADTEST_RESERVATION_JOURNEY_TICKET_LIST_LIMIT: "20"
+  LOADTEST_RESERVATION_JOURNEY_TICKET_LIST_MAX_PAGES: "5"
+  LOADTEST_RESERVATION_JOURNEY_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_JOURNEY_PAYMENT_AMOUNT: "50000"
+  LOADTEST_RESERVATION_JOURNEY_MAX_SEAT_ATTEMPTS: "3"
+  LOADTEST_RESERVATION_JOURNEY_CONCERT_LIMIT: "50"
+  LOADTEST_RESERVATION_JOURNEY_PERFORMANCE_LIMIT: "50"
+  LOADTEST_RESERVATION_JOURNEY_SEAT_LIMIT: "200"
+  LOADTEST_RESERVATION_JOURNEY_CALENDAR_YEAR_MONTH: 
+  LOADTEST_RESERVATION_JOURNEY_PERFORMANCE_DATE: 
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "750"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1500"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_SUCCESS_RATE: "0.99"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_CONFLICT_RATE: "0.05"
+  LOADTEST_RESERVATION_JOURNEY_THRESHOLD_TICKET_ISSUED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_REQUEST_PREFIX: "loadtest-reservation-create"
+  LOADTEST_RESERVATION_CREATE_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_CREATE_SETUP_TIMEOUT: "10m"
+  LOADTEST_RESERVATION_CREATE_EXECUTOR: "ramping-vus"
+  LOADTEST_RESERVATION_CREATE_VUS: "5"
+  LOADTEST_RESERVATION_CREATE_RATE: "1"
+  LOADTEST_RESERVATION_CREATE_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_CREATE_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_RESERVATION_CREATE_MAX_VUS: "20"
+  LOADTEST_RESERVATION_CREATE_DURATION: "2m"
+  LOADTEST_RESERVATION_CREATE_STAGES: "[{\"duration\":\"1m\",\"target\":1},{\"duration\":\"1m\",\"target\":3},{\"duration\":\"1m\",\"target\":5}]"
+  LOADTEST_RESERVATION_CREATE_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_CREATE_THINK_TIME_SECONDS: "0"
+  LOADTEST_RESERVATION_CREATE_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_CREATE_MAX_SEAT_ATTEMPTS: "3"
+  LOADTEST_RESERVATION_CREATE_CONCERT_LIMIT: "50"
+  LOADTEST_RESERVATION_CREATE_PERFORMANCE_LIMIT: "50"
+  LOADTEST_RESERVATION_CREATE_SEAT_LIMIT: "200"
+  LOADTEST_RESERVATION_CREATE_SEAT_CANDIDATE_COUNT: "200"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "500"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1000"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_HANDLED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_CREATED_RATE: "0.99"
+  LOADTEST_RESERVATION_CREATE_THRESHOLD_INFRA_FAILURE_RATE: "0.01"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_REQUEST_PREFIX: "loadtest-reservation-contention"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_TIMEOUT_SECONDS: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SETUP_TIMEOUT: "10m"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_EXECUTOR: "ramping-arrival-rate"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_VUS: "5"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_RATE: "1"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_TIME_UNIT: "1s"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_PRE_ALLOCATED_VUS: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_MAX_VUS: "20"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_DURATION: "2m"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_STAGES: "[{\"duration\":\"30s\",\"target\":1},{\"duration\":\"30s\",\"target\":3},{\"duration\":\"1m\",\"target\":5}]"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_GRACEFUL_STOP: "30s"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THINK_TIME_SECONDS: "0"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_ACTIVE_CUSTOMER_COUNT: "100"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_MAX_SEAT_ATTEMPTS: "1"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_CONCERT_LIMIT: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_PERFORMANCE_LIMIT: "10"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SEAT_LIMIT: "50"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_SEAT_CANDIDATE_COUNT: "5"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.05"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "750"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "1500"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_CHECKS_RATE: "0.95"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_HANDLED_RATE: "0.95"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_CREATED_RATE: "0.0001"
+  LOADTEST_RESERVATION_SEAT_CONTENTION_THRESHOLD_INFRA_FAILURE_RATE: "0.01"
+  LOADTEST_CAPACITY_BASELINE_REQUEST_PREFIX: "loadtest-capacity-baseline"
+  LOADTEST_CAPACITY_BASELINE_TIMEOUT_SECONDS: "10"
+  LOADTEST_CAPACITY_BASELINE_SETUP_TIMEOUT: "10m"
+  LOADTEST_CAPACITY_BASELINE_VUS: "5"
+  LOADTEST_CAPACITY_BASELINE_RATE: "1"
+  LOADTEST_CAPACITY_BASELINE_TIME_UNIT: "1s"
+  LOADTEST_CAPACITY_BASELINE_PRE_ALLOCATED_VUS: "400"
+  LOADTEST_CAPACITY_BASELINE_MAX_VUS: "1000"
+  LOADTEST_CAPACITY_BASELINE_DURATION: "1m"
+  LOADTEST_CAPACITY_BASELINE_SERVICE_STEPS: "[\"reservation\",\"payment\",\"ticket\"]"
+  LOADTEST_CAPACITY_BASELINE_STAGES: "[{\"duration\":\"60s\",\"target\":10},{\"duration\":\"60s\",\"target\":20},{\"duration\":\"60s\",\"target\":40},{\"duration\":\"60s\",\"target\":80},{\"duration\":\"60s\",\"target\":160}]"
+  LOADTEST_CAPACITY_BASELINE_SERVICE_STAGES: "{\"payment\":[{\"duration\":\"60s\",\"target\":40},{\"duration\":\"60s\",\"target\":80},{\"duration\":\"60s\",\"target\":120},{\"duration\":\"60s\",\"target\":160},{\"duration\":\"60s\",\"target\":240},{\"duration\":\"60s\",\"target\":320}],\"reservation\":[{\"duration\":\"60s\",\"target\":80},{\"duration\":\"60s\",\"target\":120},{\"duration\":\"60s\",\"target\":160},{\"duration\":\"60s\",\"target\":200},{\"duration\":\"60s\",\"target\":240}],\"ticket\":[{\"duration\":\"60s\",\"target\":40},{\"duration\":\"60s\",\"target\":60},{\"duration\":\"60s\",\"target\":80},{\"duration\":\"60s\",\"target\":100},{\"duration\":\"60s\",\"target\":120}]}"
+  LOADTEST_CAPACITY_BASELINE_GRACEFUL_STOP: "15s"
+  LOADTEST_CAPACITY_BASELINE_THINK_TIME_SECONDS: "0"
+  LOADTEST_CAPACITY_BASELINE_ACTIVE_CUSTOMER_COUNT: "200"
+  LOADTEST_CAPACITY_BASELINE_CONCERT_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_PERFORMANCE_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_SEAT_LIMIT: "200"
+  LOADTEST_CAPACITY_BASELINE_CALENDAR_YEAR_MONTH: "2026-07"
+  LOADTEST_CAPACITY_BASELINE_PERFORMANCE_DATE: "2026-07-01"
+  LOADTEST_CAPACITY_BASELINE_TICKET_LIST_LIMIT: "20"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_AMOUNT: "50000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_HISTORY_COUNT: "261000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_PAID_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_CANCELED_COUNT: "45500"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_POOL_COUNT: "184000"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_HISTORY_COUNT: "184000"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_APPROVED_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKET_ISSUE_POOL_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKET_HISTORY_COUNT: "170000"
+  LOADTEST_CAPACITY_BASELINE_TICKETS_PER_CUSTOMER: "30"
+  LOADTEST_CAPACITY_BASELINE_NOTIFICATION_COUNT: "354000"
+  LOADTEST_CAPACITY_BASELINE_NOTIFICATIONS_PER_CUSTOMER: "30"
+  LOADTEST_CAPACITY_BASELINE_TARGET_UTILIZATION: "0.70"
+  LOADTEST_CAPACITY_BASELINE_SEED_METHOD: "deterministic_bulk_insert"
+  LOADTEST_CAPACITY_BASELINE_FIXED_CONDITIONS: "{\"authTokenTtlSeconds\":\"7200\",\"cpuLimit\":\"none\",\"cpuRequest\":\"1000m\",\"hpa\":\"disabled\",\"replicas\":\"1\"}"
+  LOADTEST_CAPACITY_BASELINE_SCHEMA_REVISIONS: "{\"auth-service\":\"model-v1\",\"concert-service\":\"model-v1\",\"notification-service\":\"model-v1\",\"payment-service\":\"model-v1\",\"reservation-service\":\"model-v1\",\"ticket-service\":\"model-v1\"}"
+  LOADTEST_CAPACITY_BASELINE_SEED_ROW_COUNTS: "{\"admin_count\":1,\"concert_count\":270,\"customer_count\":100000,\"notification_count\":354000,\"payment_count\":184000,\"payment_event_count\":184000,\"payment_pool_count\":184000,\"performance_count\":810,\"provider_count\":1,\"reservation_history_count\":261000,\"seat_count\":567000,\"seat_grade_count\":3240,\"ticket_count\":170000,\"ticket_issue_pool_count\":170000}"
+  LOADTEST_CAPACITY_BASELINE_ENDPOINT_SLO_P95_MS: "{\"capacity_baseline.auth.login\":300,\"capacity_baseline.concert.calendar\":80,\"capacity_baseline.concert.date_performances\":80,\"capacity_baseline.concert.detail\":80,\"capacity_baseline.concert.recommended\":80,\"capacity_baseline.concert.seat_map\":150,\"capacity_baseline.notification.list\":80,\"capacity_baseline.payment.create\":120,\"capacity_baseline.reservation.create\":120,\"capacity_baseline.ticket.issue\":120,\"capacity_baseline.ticket.list\":100}"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_OBSERVATION_ENABLED: "true"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_OBSERVATION_SOURCE: "metrics-api"
+  LOADTEST_CAPACITY_BASELINE_PROMETHEUS_URL: "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_QUERY_WINDOW: "1m"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_POLL_EVERY_ITERATIONS: "5"
+  LOADTEST_CAPACITY_BASELINE_RESOURCE_TARGETS: "[{\"namespace\":\"ticketing-auth\",\"podRegex\":\"auth-service-.*\",\"podSelector\":\"app.kubernetes.io/name=auth-service\",\"service\":\"auth-service\"},{\"namespace\":\"ticketing-concert\",\"podRegex\":\"concert-service-.*\",\"podSelector\":\"app.kubernetes.io/name=concert-service\",\"service\":\"concert-service\"},{\"namespace\":\"ticketing-reservation\",\"podRegex\":\"reservation-service-.*\",\"podSelector\":\"app.kubernetes.io/name=reservation-service\",\"service\":\"reservation-service\"},{\"namespace\":\"ticketing-payment\",\"podRegex\":\"payment-service-.*\",\"podSelector\":\"app.kubernetes.io/name=payment-service\",\"service\":\"payment-service\"},{\"namespace\":\"ticketing-ticket\",\"podRegex\":\"ticket-service-.*\",\"podSelector\":\"app.kubernetes.io/name=ticket-service\",\"service\":\"ticket-service\"},{\"namespace\":\"ticketing-notification\",\"podRegex\":\"notification-service-.*\",\"podSelector\":\"app.kubernetes.io/name=notification-service\",\"service\":\"notification-service\"}]"
+  LOADTEST_CAPACITY_BASELINE_AUTH_DATABASE_URL: "postgresql+psycopg://user:password@auth-db.ticketing-auth.svc.cluster.local:5432/auth_db"
+  LOADTEST_CAPACITY_BASELINE_CONCERT_DATABASE_URL: "postgresql+psycopg://user:password@concert-db.ticketing-concert.svc.cluster.local:5432/concert_db"
+  LOADTEST_CAPACITY_BASELINE_RESERVATION_DATABASE_URL: "postgresql+psycopg://user:password@reservation-db.ticketing-reservation.svc.cluster.local:5432/reservation_db"
+  LOADTEST_CAPACITY_BASELINE_PAYMENT_DATABASE_URL: "postgresql+psycopg://user:password@payment-db.ticketing-payment.svc.cluster.local:5432/payment_db"
+  LOADTEST_CAPACITY_BASELINE_TICKET_DATABASE_URL: "postgresql+psycopg://user:password@ticket-db.ticketing-ticket.svc.cluster.local:5432/ticket_db"
+  LOADTEST_CAPACITY_BASELINE_MONGODB_URL: "mongodb://notification-db.ticketing-notification.svc.cluster.local:27017"
+  LOADTEST_CAPACITY_BASELINE_MONGODB_DB_NAME: "notification_db"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_FAILED_RATE: "0.01"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_DURATION_P95_MS: "150"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_HTTP_REQ_DURATION_P99_MS: "300"
+  LOADTEST_CAPACITY_BASELINE_THRESHOLD_CHECKS_RATE: "0.99"
+  LOADTEST_CUSTOMER_POOL_SIZE: "100000"
+  LOADTEST_CUSTOMER_POOL_EMAIL_PREFIX: "capacity-customer"
+  LOADTEST_CUSTOMER_POOL_EMAIL_DOMAIN: "loadtest.medikong.local"
+  LOADTEST_CUSTOMER_POOL_PASSWORD: "loadtest1234"
+  LOADTEST_CUSTOMER_POOL_REVISION: "capacity-baseline-half-year-early-growth-v2"
+  LOADTEST_CUSTOMER_POOL_DISPLAY_NAME_PREFIX: "Loadtest Customer"
+  LOADTEST_CUSTOMER_POOL_PAD_WIDTH: "6"
+  LOADTEST_DATASET_PROFILE: "capacity-baseline"
+  LOADTEST_DATASET_REVISION: "capacity-baseline-half-year-early-growth-v2"
+  LOADTEST_DATASET_TITLE_PREFIX: "Medikong Loadtest"
+  LOADTEST_DATASET_VENUE_PREFIX: "Loadtest Hall"
+  LOADTEST_DATASET_CONCERTS: "270"
+  LOADTEST_DATASET_PERFORMANCES_PER_CONCERT: "3"
+  LOADTEST_DATASET_SEAT_SECTIONS: "1"
+  LOADTEST_DATASET_SEAT_ROWS: "20"
+  LOADTEST_DATASET_SEATS_PER_ROW: "35"
+  LOADTEST_DATASET_LOOKAHEAD_DAYS: "14"
+  LOADTEST_DATASET_STARTS_AT_SPACING_MINUTES: "180"
+  LOADTEST_DATASET_DISCOVERY_LIMIT: "200"
+  LOADTEST_DATASET_CREATE_PAUSE_SECONDS: "0.5"
+  LOADTEST_K6_EXTRA_ARGS: "[]"
+  K6_OUTPUT: ""
+---
+# Source: read-api-loadtest/templates/report-archive-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "read-api-loadtest-report-archive"
+  namespace: "loadtest"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "capacity-baseline-load-test"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "2Gi"
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "read-api-loadtest-scale-out-reader"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "capacity-baseline-load-test"
+rules:
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+---
+# Source: read-api-loadtest/templates/serviceaccount.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: "read-api-loadtest-scale-out-reader"
+  labels:
+    app.kubernetes.io/name: "read-api-loadtest"
+    app.kubernetes.io/instance: "read-api-loadtest"
+    app.kubernetes.io/part-of: medikong
+    app.kubernetes.io/managed-by: "Helm"
+    helm.sh/chart: "read-api-loadtest-0.1.0"
+    medikong.io/environment: "local"
+    medikong.io/test-type: "loadtest"
+    medikong.io/scenario: "capacity-baseline-load-test"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "read-api-loadtest-scale-out-reader"
+subjects:
+  - kind: ServiceAccount
+    name: "read-api-loadtest-runner"
+    namespace: "loadtest"

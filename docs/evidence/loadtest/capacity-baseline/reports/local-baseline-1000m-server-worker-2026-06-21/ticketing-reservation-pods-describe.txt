@@ -1,0 +1,243 @@
+Name:             reservation-db-0
+Namespace:        ticketing-reservation
+Priority:         0
+Service Account:  default
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Sun, 21 Jun 2026 11:09:58 +0900
+Labels:           app.kubernetes.io/name=reservation-db
+                  app.kubernetes.io/part-of=medikong
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=reservation-db-5fd486dfd6
+                  statefulset.kubernetes.io/pod-name=reservation-db-0
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.86
+IPs:
+  IP:           10.244.1.86
+Controlled By:  StatefulSet/reservation-db
+Containers:
+  postgres:
+    Container ID:  containerd://07c9632ab833765095fa88bab64d4743ee18e9157507f1ad159163dfe37b8571
+    Image:         postgres:15
+    Image ID:      docker.io/library/postgres@sha256:67dc02dae6e27fa8b4333df9bfdf15265b33ce04186cd7e65c0b8fe67ee37b97
+    Port:          5432/TCP (postgres)
+    Host Port:     0/TCP (postgres)
+    Args:
+      -c
+      shared_buffers=128MB
+      -c
+      effective_cache_size=512MB
+      -c
+      work_mem=8MB
+      -c
+      maintenance_work_mem=128MB
+      -c
+      max_connections=200
+    State:          Running
+      Started:      Sun, 21 Jun 2026 11:09:58 +0900
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+      memory:   512Mi
+    Readiness:  exec [pg_isready -U user -d reservation_db] delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:
+      POSTGRES_USER:      user
+      POSTGRES_PASSWORD:  password
+      POSTGRES_DB:        reservation_db
+      PGDATA:             /var/lib/postgresql/data/pgdata
+    Mounts:
+      /var/lib/postgresql/data from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-rl9g7 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-reservation-db-0
+    ReadOnly:   false
+  kube-api-access-rl9g7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             reservation-service-77b6f5799c-998z9
+Namespace:        ticketing-reservation
+Priority:         0
+Service Account:  reservation-service
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Sun, 21 Jun 2026 15:16:16 +0900
+Labels:           app=reservation-service
+                  app.kubernetes.io/instance=reservation-local-docker-desktop
+                  app.kubernetes.io/name=reservation-service
+                  medikong.io/environment=local-capacity-baseline
+                  pod-template-hash=77b6f5799c
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=reservation
+                  ticketing.io/tier=api
+                  version=v1
+Annotations:      medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.1.140
+IPs:
+  IP:           10.244.1.140
+Controlled By:  ReplicaSet/reservation-service-77b6f5799c
+Containers:
+  reservation-service:
+    Container ID:   containerd://2ea1ff11203d53dc2a1913a969676ccce33d1315508cfd6c897f723b0de81c65
+    Image:          localhost:5001/reservation-service:dev
+    Image ID:       localhost:5001/reservation-service@sha256:01f9d7f6c6643e93fdba74aabe3eab7c2a4ba19e7d750027562b74b02988213d
+    Port:           8083/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Sun, 21 Jun 2026 15:16:17 +0900
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      cpu:      1
+      memory:   128Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-capacity-baseline
+      SQLALCHEMY_POOL_SIZE:               35
+      SQLALCHEMY_MAX_OVERFLOW:            20
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@reservation-db:5432/reservation_db
+      KAFKA_BOOTSTRAP_SERVERS:            kafka.ticketing-messaging.svc.cluster.local:9092
+      RESERVATION_CREATED_TOPIC:          reservation-created
+      RESERVATION_EXPIRED_TOPIC:          reservation-expired
+      TICKET_ISSUED_TOPIC:                ticket-issued
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                       <none>
+
+
+Name:             reservation-service-background-64b57b6789-x9mhf
+Namespace:        ticketing-reservation
+Priority:         0
+Service Account:  reservation-service
+Node:             desktop-worker/172.18.0.7
+Start Time:       Sun, 21 Jun 2026 15:16:16 +0900
+Labels:           app=reservation-service-background
+                  app.kubernetes.io/instance=reservation-local-docker-desktop
+                  app.kubernetes.io/name=reservation-service-background
+                  medikong.io/environment=local-capacity-baseline
+                  medikong.io/workload=background
+                  pod-template-hash=64b57b6789
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=reservation
+                  ticketing.io/tier=api
+                  version=v1
+Annotations:      medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.2.80
+IPs:
+  IP:           10.244.2.80
+Controlled By:  ReplicaSet/reservation-service-background-64b57b6789
+Containers:
+  background:
+    Container ID:  containerd://0314b6708605fe499151275430aadc79878bebc7fa801bbf5b10c88d237321eb
+    Image:         localhost:5001/reservation-service:dev
+    Image ID:      localhost:5001/reservation-service@sha256:01f9d7f6c6643e93fdba74aabe3eab7c2a4ba19e7d750027562b74b02988213d
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      python
+    Args:
+      cmd/worker/main.py
+    State:          Running
+      Started:      Sun, 21 Jun 2026 16:00:03 +0900
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Sun, 21 Jun 2026 15:38:10 +0900
+      Finished:     Sun, 21 Jun 2026 16:00:02 +0900
+    Ready:          True
+    Restart Count:  2
+    Limits:
+      memory:  512Mi
+    Requests:
+      cpu:     1
+      memory:  128Mi
+    Environment:
+      SERVICE_VERSION:                  dev
+      SERVICE_ENVIRONMENT:              local-capacity-baseline
+      SQLALCHEMY_POOL_SIZE:             35
+      SQLALCHEMY_MAX_OVERFLOW:          20
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:  15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:  1800
+      OTEL_TRACES_EXPORTER:             otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:      http://opentelemetry-collector.observability.svc.cluster.local:4317
+      DATABASE_URL:                     postgresql+psycopg://user:password@reservation-db:5432/reservation_db
+      KAFKA_BOOTSTRAP_SERVERS:          kafka.ticketing-messaging.svc.cluster.local:9092
+      RESERVATION_CREATED_TOPIC:        reservation-created
+      RESERVATION_EXPIRED_TOPIC:        reservation-expired
+      TICKET_ISSUED_TOPIC:              ticket-issued
+    Mounts:                             <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason   Age                From     Message
+  ----    ------   ----               ----     -------
+  Normal  Pulled   41m                kubelet  Successfully pulled image "localhost:5001/reservation-service:dev" in 30ms (30ms including waiting). Image size: 85587237 bytes.
+  Normal  Pulling  19m (x3 over 63m)  kubelet  Pulling image "localhost:5001/reservation-service:dev"
+  Normal  Created  19m (x3 over 63m)  kubelet  Created container: background
+  Normal  Started  19m (x3 over 63m)  kubelet  Started container background
+  Normal  Pulled   19m                kubelet  Successfully pulled image "localhost:5001/reservation-service:dev" in 31ms (31ms including waiting). Image size: 85587237 bytes.

@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "4"
+    meta.helm.sh/release-name: ticket-local-docker-desktop
+    meta.helm.sh/release-namespace: ticketing-ticket
+  creationTimestamp: "2026-06-21T06:07:20Z"
+  generation: 4
+  labels:
+    app.kubernetes.io/instance: ticket-local-docker-desktop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ticket-service-background
+    app.kubernetes.io/part-of: medikong
+    medikong.io/environment: local-capacity-baseline
+    medikong.io/workload: background
+    ticketing.io/service: ticket
+    ticketing.io/tier: api
+  name: ticket-service-background
+  namespace: ticketing-ticket
+  resourceVersion: "2557285"
+  uid: fe7a698a-b6aa-4f6a-9020-e25087f6cce1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ticket-service-background
+      medikong.io/workload: background
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        medikong.io/dev-rollout-id: capacity-baseline-20260621T081819Z
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 5m
+        sidecar.istio.io/proxyMemory: 32Mi
+        sidecar.istio.io/proxyMemoryLimit: 128Mi
+      labels:
+        app: ticket-service-background
+        app.kubernetes.io/instance: ticket-local-docker-desktop
+        app.kubernetes.io/name: ticket-service-background
+        medikong.io/environment: local-capacity-baseline
+        medikong.io/workload: background
+        sidecar.istio.io/inject: "true"
+        ticketing.io/service: ticket
+        ticketing.io/tier: api
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - args:
+        - cmd/worker/main.py
+        command:
+        - python
+        env:
+        - name: SERVICE_VERSION
+          value: dev
+        - name: SERVICE_ENVIRONMENT
+          value: local-capacity-baseline
+        - name: SQLALCHEMY_POOL_SIZE
+          value: "35"
+        - name: SQLALCHEMY_MAX_OVERFLOW
+          value: "20"
+        - name: SQLALCHEMY_POOL_TIMEOUT_SECONDS
+          value: "15"
+        - name: SQLALCHEMY_POOL_RECYCLE_SECONDS
+          value: "1800"
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://opentelemetry-collector.observability.svc.cluster.local:4317
+        - name: DATABASE_URL
+          value: postgresql+psycopg://user:password@ticket-db:5432/ticket_db
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: kafka.ticketing-messaging.svc.cluster.local:9092
+        - name: KAFKA_GROUP_ID
+          value: ticket-service
+        - name: PAYMENT_APPROVED_TOPIC
+          value: payment-approved
+        - name: TICKET_ISSUED_TOPIC
+          value: ticket-issued
+        - name: AWS_REGION
+          value: ap-northeast-2
+        - name: S3_BUCKET
+          value: ticketing-tickets
+        - name: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+        image: localhost:5001/ticket-service:dev
+        imagePullPolicy: Always
+        name: background
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: "1"
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: ticket-service
+      serviceAccountName: ticket-service
+      terminationGracePeriodSeconds: 30
+status:
+  conditions:
+  - lastTransitionTime: "2026-06-21T06:07:21Z"
+    lastUpdateTime: "2026-06-21T06:07:21Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-06-21T06:07:20Z"
+    lastUpdateTime: "2026-06-21T08:18:24Z"
+    message: ReplicaSet "ticket-service-background-759fd5c77d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 4
+  replicas: 1
+  unavailableReplicas: 1
+  updatedReplicas: 1

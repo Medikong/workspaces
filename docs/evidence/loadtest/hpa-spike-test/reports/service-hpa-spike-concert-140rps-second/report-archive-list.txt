@@ -1,0 +1,5 @@
+archive_dir=/loadtest/reports/read-api-loadtest-read-manual-20260621143331-7wpl8
+file_count=0
+total 8
+drwxr-xr-x    2 12345    12345         4096 Jun 21 14:33 .
+drwxrwxrwx   26 root     root          4096 Jun 21 14:33 ..

@@ -1,0 +1,87 @@
+Name:                   concert-service
+Namespace:              ticketing-concert
+CreationTimestamp:      Sun, 21 Jun 2026 00:17:09 +0900
+Labels:                 app.kubernetes.io/instance=concert-local-docker-desktop
+                        app.kubernetes.io/managed-by=Helm
+                        app.kubernetes.io/name=concert-service
+                        app.kubernetes.io/part-of=medikong
+                        medikong.io/environment=local-hpa-spike
+                        ticketing.io/service=concert
+                        ticketing.io/tier=api
+Annotations:            deployment.kubernetes.io/revision: 28
+                        meta.helm.sh/release-name: concert-local-docker-desktop
+                        meta.helm.sh/release-namespace: ticketing-concert
+Selector:               app=concert-service
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  0 max unavailable, 1 max surge
+Pod Template:
+  Labels:           app=concert-service
+                    app.kubernetes.io/instance=concert-local-docker-desktop
+                    app.kubernetes.io/name=concert-service
+                    medikong.io/environment=local-hpa-spike
+                    sidecar.istio.io/inject=true
+                    ticketing.io/service=concert
+                    ticketing.io/tier=api
+  Annotations:      medikong.io/dev-rollout-id: local-hpa-spike-20260621T121600Z
+                    sidecar.istio.io/inject: true
+                    sidecar.istio.io/proxyCPU: 25m
+                    sidecar.istio.io/proxyCPULimit: 200m
+                    sidecar.istio.io/proxyMemory: 64Mi
+                    sidecar.istio.io/proxyMemoryLimit: 256Mi
+  Service Account:  concert-service
+  Containers:
+   concert-service:
+    Image:      localhost:5001/concert-service:dev
+    Port:       8082/TCP (http)
+    Host Port:  0/TCP (http)
+    Requests:
+      cpu:      1
+      memory:   256Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-hpa-spike
+      SQLALCHEMY_POOL_SIZE:               35
+      SQLALCHEMY_MAX_OVERFLOW:            10
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+  Volumes:                                <none>
+  Node-Selectors:                         <none>
+  Tolerations:                            <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  concert-service-6cff57cd48 (0/0 replicas created), concert-service-689cc4789c (0/0 replicas created), concert-service-668fbb457d (0/0 replicas created), concert-service-6b95fff895 (0/0 replicas created), concert-service-5cb8474c67 (0/0 replicas created), concert-service-9b955fbdf (0/0 replicas created), concert-service-77fdf6f8d (0/0 replicas created), concert-service-6c8c577576 (0/0 replicas created), concert-service-b847c4878 (0/0 replicas created), concert-service-7b6b74c856 (0/0 replicas created)
+NewReplicaSet:   concert-service-58d8dfbbff (1/1 replicas created)
+Events:
+  Type    Reason             Age                  From                   Message
+  ----    ------             ----                 ----                   -------
+  Normal  ScalingReplicaSet  82m                  deployment-controller  Scaled up replica set concert-service-7b6b74c856 from 0 to 1
+  Normal  ScalingReplicaSet  82m                  deployment-controller  Scaled down replica set concert-service-b847c4878 from 1 to 0
+  Normal  ScalingReplicaSet  77m                  deployment-controller  Scaled up replica set concert-service-7b6b74c856 from 1 to 2
+  Normal  ScalingReplicaSet  33m                  deployment-controller  Scaled up replica set concert-service-58d8dfbbff from 0 to 1
+  Normal  ScalingReplicaSet  33m                  deployment-controller  Scaled down replica set concert-service-7b6b74c856 from 2 to 1
+  Normal  ScalingReplicaSet  33m                  deployment-controller  Scaled up replica set concert-service-58d8dfbbff from 1 to 2
+  Normal  ScalingReplicaSet  32m                  deployment-controller  Scaled down replica set concert-service-7b6b74c856 from 1 to 0
+  Normal  ScalingReplicaSet  26m                  deployment-controller  Scaled up replica set concert-service-58d8dfbbff from 2 to 4
+  Normal  ScalingReplicaSet  12m                  deployment-controller  Scaled down replica set concert-service-58d8dfbbff from 4 to 3
+  Normal  ScalingReplicaSet  8m21s                deployment-controller  Scaled up replica set concert-service-58d8dfbbff from 2 to 3
+  Normal  ScalingReplicaSet  2m19s (x2 over 11m)  deployment-controller  Scaled down replica set concert-service-58d8dfbbff from 3 to 2
+  Normal  ScalingReplicaSet  64s                  deployment-controller  Scaled down replica set concert-service-58d8dfbbff from 2 to 1

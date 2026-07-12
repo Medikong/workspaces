@@ -1,0 +1,18 @@
+apiVersion: configuration.konghq.com/v1
+config:
+  minute: 120
+  policy: local
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"configuration.konghq.com/v1","config":{"minute":120,"policy":"local"},"kind":"KongClusterPlugin","metadata":{"annotations":{"kubernetes.io/ingress.class":"kong"},"labels":{"app.kubernetes.io/part-of":"medikong"},"name":"ticketing-rate-limit-concerts"},"plugin":"rate-limiting"}
+    kubernetes.io/ingress.class: kong
+  creationTimestamp: "2026-06-20T15:16:47Z"
+  generation: 51
+  labels:
+    app.kubernetes.io/part-of: medikong
+  name: ticketing-rate-limit-concerts
+  resourceVersion: "2632839"
+  uid: 5048032d-0fa4-41c4-a840-257eb1dfc602
+plugin: rate-limiting

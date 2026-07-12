@@ -1,0 +1,544 @@
+{
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "p(90)",
+      "p(95)",
+      "p(99)",
+      "max"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "testRunDurationMs": 180134.241125,
+    "isStdOutTTY": false,
+    "isStdErrTTY": false
+  },
+  "metrics": {
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 46.08783212227889,
+        "min": 0.988,
+        "med": 50.642854,
+        "p(90)": 57.9138457,
+        "p(95)": 66.30121874999999,
+        "p(99)": 126.10804846999993,
+        "max": 388.226583
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 4318
+      }
+    },
+    "vus_max": {
+      "values": {
+        "value": 400,
+        "min": 400,
+        "max": 400
+      },
+      "type": "gauge",
+      "contains": "default"
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 2,
+        "min": 0,
+        "max": 6
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3598,
+        "rate": 19.9739926042337
+      }
+    },
+    "http_req_failed{capacity_step:auth_rps_40,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 2100
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:auth_rps_30,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "contains": "time",
+      "values": {
+        "p(90)": 60.131508200000006,
+        "p(95)": 69.8639256,
+        "p(99)": 117.39557449999994,
+        "max": 241.453251,
+        "avg": 55.058719841534604,
+        "min": 48.291375,
+        "med": 51.548416
+      },
+      "thresholds": {
+        "p(95)<100": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_blocked": {
+      "values": {
+        "max": 26.051042,
+        "avg": 0.10514769175544174,
+        "min": 0.000334,
+        "med": 0.00525,
+        "p(90)": 0.2710080000000001,
+        "p(95)": 0.34458129999999987,
+        "p(99)": 2.1503153599999996
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "checks{capacity_step:auth_rps_40,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 4200,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:auth_rps_10,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(99)": 313.828238,
+        "max": 313.828238,
+        "avg": 164.76065499999999,
+        "min": 3.607105,
+        "med": 198.303959,
+        "p(90)": 313.828238,
+        "p(95)": 313.828238
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0.023583,
+        "med": 0.076875,
+        "p(90)": 0.11879980000000001,
+        "p(95)": 0.14375629999999998,
+        "p(99)": 0.2567754999999998,
+        "max": 4.489625,
+        "avg": 0.08718341153311694
+      }
+    },
+    "loadtest_capacity_api_success": {
+      "values": {
+        "rate": 1,
+        "passes": 3598,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:auth_rps_40,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 1597.1234816261922,
+        "min": 1097.058241,
+        "med": 1615.847559,
+        "p(90)": 1913.134251,
+        "p(95)": 1913.134251,
+        "p(99)": 1913.134251,
+        "max": 1913.134251
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{capacity_step:auth_rps_40,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 59.2959875,
+        "p(95)": 67.64854824999999,
+        "p(99)": 133.31055842,
+        "max": 256.139958,
+        "avg": 54.35696414523816,
+        "min": 47.84,
+        "med": 50.8976875
+      },
+      "thresholds": {
+        "p(95)<100": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 7196,
+        "fails": 0
+      }
+    },
+    "loadtest_capacity_cpu_usage_m{capacity_step:auth_rps_30,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "med": 711.6547535,
+        "p(90)": 1097.058241,
+        "p(95)": 1097.058241,
+        "p(99)": 1097.058241,
+        "max": 1097.058241,
+        "avg": 710.2156991041655,
+        "min": 313.828238
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{capacity_step:auth_rps_30,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 1199
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 1.7681431399999996,
+        "max": 2.795167,
+        "avg": 0.03679798703103289
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 1635143,
+        "rate": 9077.358029145222
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 4632335,
+        "rate": 25716.015850565014
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      }
+    },
+    "loadtest_capacity_resource_observation_success": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 1,
+        "passes": 720
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:auth_rps_40,measured_service:auth-service}": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "default"
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:auth_rps_10,measured_service:auth-service}": {
+      "contains": "default",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 4318,
+        "rate": 23.97101169123989
+      }
+    },
+    "http_req_duration{capacity_step:auth_rps_10,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "values": {
+        "min": 49.573667,
+        "med": 52.711583,
+        "p(90)": 65.3144,
+        "p(95)": 78.55247139999996,
+        "p(99)": 228.75767749999997,
+        "max": 389.508792,
+        "avg": 60.51041121404686
+      },
+      "thresholds": {
+        "p(95)<100": {
+          "ok": true
+        },
+        "p(99)<300": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 61.77095,
+        "p(95)": 71.87785805,
+        "p(99)": 147.12691802999998,
+        "max": 391.746417,
+        "avg": 56.49125828098946,
+        "min": 48.430625,
+        "med": 52.47723
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.11338744999999999,
+        "p(99)": 0.22874817,
+        "max": 49.193584,
+        "avg": 0.06444349305233932,
+        "min": 0.007709,
+        "med": 0.0321665,
+        "p(90)": 0.0882045
+      }
+    },
+    "checks{capacity_step:auth_rps_30,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 2398,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "loadtest_capacity_cpu_usage_m": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "avg": 1182.1239852333251,
+        "min": 3.607105,
+        "med": 1482.084788,
+        "p(90)": 1696.562646,
+        "p(95)": 1913.134251,
+        "p(99)": 1913.134251,
+        "max": 1913.134251
+      }
+    },
+    "checks{capacity_step:auth_rps_10,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 598,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.99": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 389.508792,
+        "avg": 46.23945902686436,
+        "min": 1.288333,
+        "med": 50.7571665,
+        "p(90)": 58.0430544,
+        "p(95)": 66.532642,
+        "p(99)": 126.39232610999994
+      }
+    },
+    "http_req_failed{capacity_step:auth_rps_10,measured_service:auth-service,step:capacity_baseline.auth.login}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 299
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "p(90)": 0.17432960000000006,
+        "p(95)": 0.23042245,
+        "p(99)": 0.33677588999999997,
+        "max": 25.956083,
+        "avg": 0.04668167137563683,
+        "min": 0
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 50.7571665,
+        "p(90)": 58.0430544,
+        "p(95)": 66.532642,
+        "p(99)": 126.39232610999994,
+        "max": 389.508792,
+        "avg": 46.23945902686436,
+        "min": 1.288333
+      }
+    },
+    "loadtest_capacity_cpu_throttling_ratio{capacity_step:auth_rps_30,measured_service:auth-service}": {
+      "type": "trend",
+      "contains": "default",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "avg>=0": {
+          "ok": true
+        }
+      }
+    }
+  },
+  "setup_data": {
+    "concertId": "capacity-baseline-v1-concert-0001",
+    "customerTokens": [],
+    "measurementStartedAtMs": 1781961444438,
+    "performanceId": "capacity-baseline-v1-showtime-0001-0001"
+  },
+  "root_group": {
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "id": "3e478144cd25aca965fae291b2c9c4d9",
+          "passes": 3598,
+          "fails": 0,
+          "name": "capacity_baseline.auth.login returned 2xx",
+          "path": "::capacity_baseline.auth.login returned 2xx"
+        },
+        {
+          "name": "capacity_baseline.auth.login returned json",
+          "path": "::capacity_baseline.auth.login returned json",
+          "id": "8b30832f9f1e9945e7ca1aca47c18cf9",
+          "passes": 3598,
+          "fails": 0
+        }
+      ],
+    "name": "",
+    "path": ""
+  }
+}

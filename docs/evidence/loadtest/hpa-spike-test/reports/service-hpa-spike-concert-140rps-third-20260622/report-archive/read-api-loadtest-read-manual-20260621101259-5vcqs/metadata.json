@@ -1,0 +1,11 @@
+{
+  "run_id": "read-api-loadtest-read-manual-20260621101259-5vcqs",
+  "scenario": "service-hpa-spike-load-test",
+  "environment": "local",
+  "base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "vus": 5,
+  "duration": "5m",
+  "git_sha": "unknown",
+  "started_at": "2026-06-21T10:17:41.133Z",
+  "finished_at": "2026-06-21T10:17:41.136Z"
+}

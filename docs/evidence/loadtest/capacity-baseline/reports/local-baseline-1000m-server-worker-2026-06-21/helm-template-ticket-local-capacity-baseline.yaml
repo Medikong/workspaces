@@ -1,0 +1,564 @@
+---
+# Source: medikong-service/templates/networkpolicy.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "allow-ticket-service-ingress"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+spec:
+  podSelector:
+    matchLabels:
+      app: "ticket-service"
+  policyTypes:
+
+    - Ingress
+    - Egress
+  ingress:
+
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: kong
+      ports:
+      - port: 8085
+        protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "monitoring"
+      ports:
+        - protocol: TCP
+          port: "http"
+  egress:
+
+    - ports:
+      - port: 53
+        protocol: UDP
+      - port: 53
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: kube-system
+        podSelector:
+          matchLabels:
+            k8s-app: kube-dns
+    - ports:
+      - port: 5432
+        protocol: TCP
+      to:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: ticket-db
+    - ports:
+      - port: 9092
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: ticketing-messaging
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: kafka
+    - ports:
+      - port: 4317
+        protocol: TCP
+      - port: 4318
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: observability
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: opentelemetry-collector
+    - ports:
+      - port: 15012
+        protocol: TCP
+      - port: 15010
+        protocol: TCP
+      - port: 443
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: istio-system
+        podSelector:
+          matchLabels:
+            app: istiod
+---
+# Source: medikong-service/templates/workers.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "allow-ticket-service-background-egress"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service-background"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+spec:
+  podSelector:
+    matchLabels:
+      app: "ticket-service-background"
+      medikong.io/workload: "background"
+  policyTypes:
+    - Egress
+  egress:
+
+    - ports:
+      - port: 53
+        protocol: UDP
+      - port: 53
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: kube-system
+        podSelector:
+          matchLabels:
+            k8s-app: kube-dns
+    - ports:
+      - port: 5432
+        protocol: TCP
+      to:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: ticket-db
+    - ports:
+      - port: 9092
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: ticketing-messaging
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: kafka
+    - ports:
+      - port: 4317
+        protocol: TCP
+      - port: 4318
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: observability
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: opentelemetry-collector
+    - ports:
+      - port: 15012
+        protocol: TCP
+      - port: 15010
+        protocol: TCP
+      - port: 443
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: istio-system
+        podSelector:
+          matchLabels:
+            app: istiod
+---
+# Source: medikong-service/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+automountServiceAccountToken: false
+---
+# Source: medikong-service/templates/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+rules:
+  []
+---
+# Source: medikong-service/templates/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+subjects:
+  - kind: ServiceAccount
+    name: "ticket-service"
+    namespace: "ticketing-ticket"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: "ticket-service"
+---
+# Source: medikong-service/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+
+    ticketing.io/service: ticket
+    ticketing.io/tier: api
+spec:
+  type: "ClusterIP"
+  selector:
+    app: "ticket-service"
+  ports:
+    - name: http
+      port: 8085
+      targetPort: http
+      protocol: TCP
+---
+# Source: medikong-service/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/managed-by: "Helm"
+    app.kubernetes.io/part-of: medikong
+    medikong.io/environment: "local-capacity-baseline"
+
+    ticketing.io/service: ticket
+    ticketing.io/tier: api
+spec:
+  selector:
+    matchLabels:
+      app: "ticket-service"
+  strategy:
+
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: "ticket-service"
+        app.kubernetes.io/name: "ticket-service"
+        app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+        medikong.io/environment: "local-capacity-baseline"
+
+        ticketing.io/service: ticket
+        ticketing.io/tier: api
+
+        sidecar.istio.io/inject: "true"
+      annotations:
+
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 5m
+        sidecar.istio.io/proxyCPULimit: 100m
+        sidecar.istio.io/proxyMemory: 32Mi
+        sidecar.istio.io/proxyMemoryLimit: 128Mi
+    spec:
+      serviceAccountName: "ticket-service"
+      automountServiceAccountToken: false
+      containers:
+        - name: "ticket-service"
+          image: "localhost:5001/ticket-service:dev"
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 8085
+              protocol: TCP
+          env:
+
+            - name: SERVICE_VERSION
+              value: dev
+            - name: SERVICE_ENVIRONMENT
+              value: local-capacity-baseline
+            - name: SQLALCHEMY_POOL_SIZE
+              value: "35"
+            - name: SQLALCHEMY_MAX_OVERFLOW
+              value: "20"
+            - name: SQLALCHEMY_POOL_TIMEOUT_SECONDS
+              value: "15"
+            - name: SQLALCHEMY_POOL_RECYCLE_SECONDS
+              value: "1800"
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.observability.svc.cluster.local:4317
+            - name: OTEL_PYTHON_FASTAPI_EXCLUDED_URLS
+              value: /health,/healthz,/readyz,/metrics
+            - name: PYROSCOPE_ENABLED
+              value: "true"
+            - name: PYROSCOPE_SERVER_ADDRESS
+              value: http://pyroscope.observability.svc.cluster.local:4040
+            - name: PYROSCOPE_SAMPLE_RATE
+              value: "25"
+            - name: PYROSCOPE_SPAN_PROFILES_ENABLED
+              value: "true"
+            - name: PYROSCOPE_ONCPU
+              value: "true"
+            - name: PYROSCOPE_GIL_ONLY
+              value: "true"
+            - name: DATABASE_URL
+              value: postgresql+psycopg://user:password@ticket-db:5432/ticket_db
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka.ticketing-messaging.svc.cluster.local:9092
+            - name: KAFKA_GROUP_ID
+              value: ticket-service
+            - name: PAYMENT_APPROVED_TOPIC
+              value: payment-approved
+            - name: TICKET_ISSUED_TOPIC
+              value: ticket-issued
+            - name: AWS_REGION
+              value: ap-northeast-2
+            - name: S3_BUCKET
+              value: ticketing-tickets
+            - name: AWS_ACCESS_KEY_ID
+              value: ""
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ""
+            - name: UVICORN_WORKERS
+              value: "2"
+          readinessProbe:
+
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 1000m
+              memory: 128Mi
+          securityContext:
+
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+---
+# Source: medikong-service/templates/workers.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ticket-service-background"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service-background"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/managed-by: "Helm"
+    app.kubernetes.io/part-of: medikong
+    medikong.io/environment: "local-capacity-baseline"
+    medikong.io/workload: "background"
+
+    ticketing.io/service: ticket
+    ticketing.io/tier: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "ticket-service-background"
+      medikong.io/workload: "background"
+  strategy:
+
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: "ticket-service-background"
+        app.kubernetes.io/name: "ticket-service-background"
+        app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+        medikong.io/environment: "local-capacity-baseline"
+        medikong.io/workload: "background"
+
+        ticketing.io/service: ticket
+        ticketing.io/tier: api
+
+        sidecar.istio.io/inject: "true"
+      annotations:
+
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 5m
+        sidecar.istio.io/proxyCPULimit: 100m
+        sidecar.istio.io/proxyMemory: 32Mi
+        sidecar.istio.io/proxyMemoryLimit: 128Mi
+    spec:
+      serviceAccountName: "ticket-service"
+      automountServiceAccountToken: false
+      containers:
+        - name: "background"
+          image: "localhost:5001/ticket-service:dev"
+          imagePullPolicy: "Always"
+          command:
+
+            - python
+          args:
+
+            - cmd/worker/main.py
+          env:
+
+            - name: SERVICE_VERSION
+              value: dev
+            - name: SERVICE_ENVIRONMENT
+              value: local-capacity-baseline
+            - name: SQLALCHEMY_POOL_SIZE
+              value: "35"
+            - name: SQLALCHEMY_MAX_OVERFLOW
+              value: "20"
+            - name: SQLALCHEMY_POOL_TIMEOUT_SECONDS
+              value: "15"
+            - name: SQLALCHEMY_POOL_RECYCLE_SECONDS
+              value: "1800"
+            - name: OTEL_TRACES_EXPORTER
+              value: otlp
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.observability.svc.cluster.local:4317
+            - name: DATABASE_URL
+              value: postgresql+psycopg://user:password@ticket-db:5432/ticket_db
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka.ticketing-messaging.svc.cluster.local:9092
+            - name: KAFKA_GROUP_ID
+              value: ticket-service
+            - name: PAYMENT_APPROVED_TOPIC
+              value: payment-approved
+            - name: TICKET_ISSUED_TOPIC
+              value: ticket-issued
+            - name: AWS_REGION
+              value: ap-northeast-2
+            - name: S3_BUCKET
+              value: ticketing-tickets
+            - name: AWS_ACCESS_KEY_ID
+              value: ""
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ""
+          resources:
+
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 1000m
+              memory: 128Mi
+          securityContext:
+
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+---
+# Source: medikong-service/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "ticket-customer-api"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+  annotations:
+
+    konghq.com/plugins: ticketing-jwt,ticketing-identity-headers,ticketing-role-customer,ticketing-rate-limit-tickets,ticketing-correlation-id,ticketing-prometheus
+spec:
+  ingressClassName: "kong"
+  rules:
+    -
+      http:
+        paths:
+          - path: "/tickets"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "ticket-service"
+                port:
+                  number: 8085
+---
+# Source: medikong-service/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "ticket-debug-api"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+  annotations:
+
+    konghq.com/plugins: ticketing-correlation-id,ticketing-prometheus
+spec:
+  ingressClassName: "kong"
+  rules:
+    -
+      http:
+        paths:
+          - path: "/__debug/ticket/status"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "ticket-service"
+                port:
+                  number: 8085
+---
+# Source: medikong-service/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: "ticket-service"
+  namespace: "ticketing-ticket"
+  labels:
+    app.kubernetes.io/name: "ticket-service"
+    app.kubernetes.io/instance: "ticket-local-capacity-baseline"
+    app.kubernetes.io/part-of: medikong
+
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "ticket-service"
+  namespaceSelector:
+    matchNames:
+      - "ticketing-ticket"
+  endpoints:
+    - port: "http"
+      path: "/metrics"
+      interval: "30s"

@@ -1,0 +1,4 @@
+NAME                                        READY   STATUS    RESTARTS      AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+ticket-db-0                                 1/1     Running   0             4h11m   10.244.2.57    desktop-worker    <none>           <none>
+ticket-service-6dd586d94b-kvfqw             1/1     Running   0             5m5s    10.244.1.141   desktop-worker3   <none>           <none>
+ticket-service-background-dc5b6dc9b-dc2wh   1/1     Running   2 (39s ago)   5m4s    10.244.3.90    desktop-worker2   <none>           <none>

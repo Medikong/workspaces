@@ -1,0 +1,5 @@
+NAME                    CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+desktop-control-plane   412m         4%       1958Mi          12%         
+desktop-worker          336m         3%       4316Mi          27%         
+desktop-worker2         241m         2%       3121Mi          19%         
+desktop-worker3         626m         6%       4062Mi          25%         

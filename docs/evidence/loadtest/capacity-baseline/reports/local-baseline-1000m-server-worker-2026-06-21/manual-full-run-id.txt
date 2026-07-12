@@ -1,0 +1,2 @@
+manual_full_run_id=manual-20260621062618-full
+manual_full_job=read-api-loadtest-read-manual-20260621062618-full

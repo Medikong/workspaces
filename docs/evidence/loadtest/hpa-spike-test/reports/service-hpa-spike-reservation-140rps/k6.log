@@ -1,0 +1,860 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: /loadtest/scenarios/service-hpa-spike-load-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1000 max VUs, 4m45s max duration (incl. graceful stop):
+              * capacity-baseline-reservation: Up to 140.00 iterations/s for 4m30s over 5 stages (maxVUs: 400-1000, exec: measureReservation, gracefulStop: 15s)
+
+{"event":"loadtest_experiment_conditions","timestamp":"2026-06-21T10:13:01.542Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621101259-5vcqs","phase":"service_hpa_spike","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":400,"max_vus":1000,"duration":"5m","service_steps":["reservation-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":80,"stageRole":"baseline"},{"duration":"60s","target":120,"stageRole":"spike"},{"duration":"60s","target":140,"stageRole":"overload"},{"duration":"60s","target":80,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"reservation-140rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"}
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+Run                             [ 100% ] setup()
+capacity-baseline-reservation   [   0% ]
+
+running (0m10.4s), 0000/0400 VUs, 0 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   0% ] 0000/0400 VUs  0m00.8s/4m30s  000.58 iters/s
+
+running (0m11.4s), 0000/0400 VUs, 1 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   1% ] 0000/0400 VUs  0m01.8s/4m30s  001.39 iters/s
+
+running (0m12.4s), 0000/0400 VUs, 2 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   1% ] 0000/0400 VUs  0m02.8s/4m30s  001.82 iters/s
+
+running (0m13.4s), 0000/0400 VUs, 4 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   1% ] 0000/0400 VUs  0m03.8s/4m30s  002.45 iters/s
+
+running (0m14.4s), 0000/0400 VUs, 7 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   2% ] 0000/0400 VUs  0m04.8s/4m30s  003.16 iters/s
+
+running (0m15.4s), 0000/0400 VUs, 11 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   2% ] 0000/0400 VUs  0m05.8s/4m30s  003.91 iters/s
+
+running (0m16.4s), 0000/0400 VUs, 15 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   3% ] 0000/0400 VUs  0m06.8s/4m30s  004.55 iters/s
+
+running (0m17.4s), 0000/0400 VUs, 20 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   3% ] 0000/0400 VUs  0m07.8s/4m30s  005.23 iters/s
+
+running (0m18.4s), 0000/0400 VUs, 25 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   3% ] 0000/0400 VUs  0m08.8s/4m30s  005.83 iters/s
+
+running (0m19.4s), 0000/0400 VUs, 32 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   4% ] 0000/0400 VUs  0m09.8s/4m30s  006.58 iters/s
+
+running (0m20.4s), 0001/0400 VUs, 38 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   4% ] 0001/0400 VUs  0m10.8s/4m30s  007.26 iters/s
+
+running (0m21.4s), 0000/0400 VUs, 46 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   4% ] 0000/0400 VUs  0m11.8s/4m30s  007.87 iters/s
+
+running (0m22.4s), 0000/0400 VUs, 54 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   5% ] 0000/0400 VUs  0m12.8s/4m30s  008.52 iters/s
+
+running (0m23.4s), 0000/0400 VUs, 63 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   5% ] 0000/0400 VUs  0m13.8s/4m30s  009.20 iters/s
+
+running (0m24.4s), 0000/0400 VUs, 73 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   5% ] 0000/0400 VUs  0m14.8s/4m30s  009.90 iters/s
+
+running (0m25.4s), 0000/0400 VUs, 83 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   6% ] 0000/0400 VUs  0m15.8s/4m30s  010.55 iters/s
+
+running (0m26.4s), 0000/0400 VUs, 94 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   6% ] 0000/0400 VUs  0m16.8s/4m30s  011.22 iters/s
+
+running (0m27.4s), 0000/0400 VUs, 105 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   7% ] 0000/0400 VUs  0m17.8s/4m30s  011.86 iters/s
+
+running (0m28.4s), 0001/0400 VUs, 117 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   7% ] 0001/0400 VUs  0m18.8s/4m30s  012.57 iters/s
+
+running (0m29.4s), 0000/0400 VUs, 130 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   7% ] 0000/0400 VUs  0m19.8s/4m30s  013.19 iters/s
+
+running (0m30.4s), 0000/0400 VUs, 144 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   8% ] 0000/0400 VUs  0m20.8s/4m30s  013.88 iters/s
+
+running (0m31.4s), 0000/0400 VUs, 158 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   8% ] 0000/0400 VUs  0m21.8s/4m30s  014.54 iters/s
+
+running (0m32.4s), 0000/0400 VUs, 173 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   8% ] 0000/0400 VUs  0m22.8s/4m30s  015.21 iters/s
+
+running (0m33.4s), 0001/0400 VUs, 188 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   9% ] 0001/0400 VUs  0m23.8s/4m30s  015.90 iters/s
+
+running (0m34.4s), 0000/0400 VUs, 205 complete and 0 interrupted iterations
+capacity-baseline-reservation   [   9% ] 0000/0400 VUs  0m24.8s/4m30s  016.55 iters/s
+
+running (0m35.4s), 0001/0400 VUs, 221 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  10% ] 0001/0400 VUs  0m25.8s/4m30s  017.22 iters/s
+
+running (0m36.4s), 0000/0400 VUs, 239 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  10% ] 0000/0400 VUs  0m26.8s/4m30s  017.87 iters/s
+
+running (0m37.4s), 0001/0400 VUs, 257 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  10% ] 0001/0400 VUs  0m27.8s/4m30s  018.57 iters/s
+
+running (0m38.4s), 0000/0400 VUs, 276 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  11% ] 0000/0400 VUs  0m28.8s/4m30s  019.20 iters/s
+
+running (0m39.4s), 0000/0400 VUs, 296 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  11% ] 0000/0400 VUs  0m29.8s/4m30s  019.88 iters/s
+
+running (0m40.4s), 0000/0400 VUs, 316 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  11% ] 0000/0400 VUs  0m30.8s/4m30s  020.81 iters/s
+
+running (0m41.4s), 0001/0400 VUs, 337 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  12% ] 0001/0400 VUs  0m31.8s/4m30s  021.84 iters/s
+
+running (0m42.4s), 0000/0400 VUs, 360 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  12% ] 0000/0400 VUs  0m32.8s/4m30s  022.83 iters/s
+
+running (0m43.4s), 0000/0400 VUs, 383 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  13% ] 0000/0400 VUs  0m33.8s/4m30s  023.81 iters/s
+
+running (0m44.4s), 0001/0400 VUs, 407 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  13% ] 0001/0400 VUs  0m34.8s/4m30s  024.84 iters/s
+
+running (0m45.4s), 0000/0400 VUs, 433 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  13% ] 0000/0400 VUs  0m35.8s/4m30s  025.83 iters/s
+
+running (0m46.4s), 0000/0400 VUs, 459 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  14% ] 0000/0400 VUs  0m36.8s/4m30s  026.81 iters/s
+
+running (0m47.4s), 0000/0400 VUs, 486 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  14% ] 0000/0400 VUs  0m37.8s/4m30s  027.80 iters/s
+
+running (0m48.4s), 0000/0400 VUs, 515 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  14% ] 0000/0400 VUs  0m38.8s/4m30s  028.83 iters/s
+
+running (0m49.4s), 0000/0400 VUs, 544 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  15% ] 0000/0400 VUs  0m39.8s/4m30s  029.82 iters/s
+
+running (0m50.4s), 0001/0400 VUs, 574 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  15% ] 0001/0400 VUs  0m40.8s/4m30s  030.84 iters/s
+
+running (0m51.4s), 0001/0400 VUs, 605 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  15% ] 0001/0400 VUs  0m41.8s/4m30s  031.83 iters/s
+
+running (0m52.4s), 0000/0400 VUs, 638 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  16% ] 0000/0400 VUs  0m42.8s/4m30s  032.82 iters/s
+
+running (0m53.4s), 0000/0400 VUs, 671 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  16% ] 0000/0400 VUs  0m43.8s/4m30s  033.81 iters/s
+
+running (0m54.4s), 0001/0400 VUs, 705 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  17% ] 0001/0400 VUs  0m44.8s/4m30s  034.83 iters/s
+
+running (0m55.4s), 0001/0400 VUs, 740 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  17% ] 0001/0400 VUs  0m45.8s/4m30s  035.82 iters/s
+
+running (0m56.4s), 0000/0400 VUs, 777 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  17% ] 0000/0400 VUs  0m46.8s/4m30s  036.81 iters/s
+
+running (0m57.4s), 0001/0400 VUs, 814 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  18% ] 0001/0400 VUs  0m47.8s/4m30s  037.83 iters/s
+
+running (0m58.4s), 0000/0400 VUs, 853 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  18% ] 0000/0400 VUs  0m48.8s/4m30s  038.82 iters/s
+
+running (0m59.4s), 0000/0400 VUs, 892 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  18% ] 0000/0400 VUs  0m49.8s/4m30s  039.81 iters/s
+
+running (1m00.4s), 0001/0400 VUs, 932 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  19% ] 0001/0400 VUs  0m50.8s/4m30s  040.83 iters/s
+
+running (1m01.4s), 0000/0400 VUs, 974 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  19% ] 0000/0400 VUs  0m51.8s/4m30s  041.82 iters/s
+
+running (1m02.4s), 0000/0400 VUs, 1016 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  20% ] 0000/0400 VUs  0m52.8s/4m30s  042.81 iters/s
+
+running (1m03.4s), 0001/0400 VUs, 1059 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  20% ] 0001/0400 VUs  0m53.8s/4m30s  043.83 iters/s
+
+running (1m04.4s), 0000/0400 VUs, 1104 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  20% ] 0000/0400 VUs  0m54.8s/4m30s  044.82 iters/s
+
+running (1m05.4s), 0000/0400 VUs, 1149 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  21% ] 0000/0400 VUs  0m55.8s/4m30s  045.81 iters/s
+
+running (1m06.4s), 0001/0400 VUs, 1195 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  21% ] 0001/0400 VUs  0m56.8s/4m30s  046.83 iters/s
+
+running (1m07.4s), 0000/0400 VUs, 1243 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  21% ] 0000/0400 VUs  0m57.8s/4m30s  047.82 iters/s
+
+running (1m08.4s), 0000/0400 VUs, 1291 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  22% ] 0000/0400 VUs  0m58.8s/4m30s  048.82 iters/s
+
+running (1m09.4s), 0001/0400 VUs, 1340 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  22% ] 0001/0400 VUs  0m59.8s/4m30s  049.83 iters/s
+
+running (1m10.4s), 0001/0400 VUs, 1390 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  23% ] 0001/0400 VUs  1m00.8s/4m30s  050.82 iters/s
+
+running (1m11.4s), 0000/0400 VUs, 1442 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  23% ] 0000/0400 VUs  1m01.8s/4m30s  051.82 iters/s
+
+running (1m12.4s), 0001/0400 VUs, 1494 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  23% ] 0001/0400 VUs  1m02.8s/4m30s  052.83 iters/s
+
+running (1m13.4s), 0001/0400 VUs, 1547 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  24% ] 0001/0400 VUs  1m03.8s/4m30s  053.82 iters/s
+
+running (1m14.4s), 0000/0400 VUs, 1602 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  24% ] 0000/0400 VUs  1m04.8s/4m30s  054.82 iters/s
+
+running (1m15.4s), 0000/0400 VUs, 1657 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  24% ] 0000/0400 VUs  1m05.8s/4m30s  055.81 iters/s
+
+running (1m16.4s), 0001/0400 VUs, 1713 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  25% ] 0001/0400 VUs  1m06.8s/4m30s  056.82 iters/s
+
+running (1m17.4s), 0001/0400 VUs, 1770 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  25% ] 0001/0400 VUs  1m07.8s/4m30s  057.82 iters/s
+
+running (1m18.4s), 0002/0400 VUs, 1828 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  25% ] 0002/0400 VUs  1m08.8s/4m30s  058.83 iters/s
+
+running (1m19.4s), 0001/0400 VUs, 1888 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  26% ] 0001/0400 VUs  1m09.8s/4m30s  059.82 iters/s
+
+running (1m20.4s), 0000/0400 VUs, 1949 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  26% ] 0000/0400 VUs  1m10.8s/4m30s  060.82 iters/s
+
+running (1m21.4s), 0000/0400 VUs, 2010 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  27% ] 0000/0400 VUs  1m11.8s/4m30s  061.81 iters/s
+
+running (1m22.4s), 0001/0400 VUs, 2072 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  27% ] 0001/0400 VUs  1m12.8s/4m30s  062.83 iters/s
+
+running (1m23.4s), 0001/0400 VUs, 2135 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  27% ] 0001/0400 VUs  1m13.8s/4m30s  063.82 iters/s
+
+running (1m24.4s), 0000/0400 VUs, 2200 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  28% ] 0000/0400 VUs  1m14.8s/4m30s  064.82 iters/s
+
+running (1m25.4s), 0001/0400 VUs, 2265 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  28% ] 0001/0400 VUs  1m15.8s/4m30s  065.83 iters/s
+
+running (1m26.4s), 0001/0400 VUs, 2331 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  28% ] 0001/0400 VUs  1m16.8s/4m30s  066.82 iters/s
+
+running (1m27.4s), 0000/0400 VUs, 2399 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  29% ] 0000/0400 VUs  1m17.8s/4m30s  067.82 iters/s
+
+running (1m28.4s), 0001/0400 VUs, 2467 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  29% ] 0001/0400 VUs  1m18.8s/4m30s  068.83 iters/s
+
+running (1m29.4s), 0001/0400 VUs, 2536 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  30% ] 0001/0400 VUs  1m19.8s/4m30s  069.82 iters/s
+
+running (1m30.5s), 0006/0400 VUs, 2606 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  30% ] 0006/0400 VUs  1m20.9s/4m30s  070.89 iters/s
+
+running (1m31.4s), 0001/0400 VUs, 2678 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  30% ] 0001/0400 VUs  1m21.8s/4m30s  071.83 iters/s
+
+running (1m32.4s), 0001/0400 VUs, 2750 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  31% ] 0001/0400 VUs  1m22.8s/4m30s  072.82 iters/s
+
+running (1m33.4s), 0001/0400 VUs, 2823 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  31% ] 0001/0400 VUs  1m23.8s/4m30s  073.82 iters/s
+
+running (1m34.4s), 0001/0400 VUs, 2898 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  31% ] 0001/0400 VUs  1m24.8s/4m30s  074.83 iters/s
+
+running (1m35.4s), 0001/0400 VUs, 2973 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  32% ] 0001/0400 VUs  1m25.8s/4m30s  075.82 iters/s
+
+running (1m36.4s), 0000/0400 VUs, 3050 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  32% ] 0000/0400 VUs  1m26.8s/4m30s  076.82 iters/s
+
+running (1m37.4s), 0002/0400 VUs, 3126 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  33% ] 0002/0400 VUs  1m27.8s/4m30s  077.83 iters/s
+
+running (1m38.4s), 0001/0400 VUs, 3205 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  33% ] 0001/0400 VUs  1m28.8s/4m30s  078.82 iters/s
+
+running (1m39.4s), 0000/0400 VUs, 3285 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  33% ] 0000/0400 VUs  1m29.8s/4m30s  079.82 iters/s
+
+running (1m40.4s), 0000/0400 VUs, 3365 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  34% ] 0000/0400 VUs  1m30.8s/4m30s  080.54 iters/s
+
+running (1m41.4s), 0001/0400 VUs, 3445 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  34% ] 0001/0400 VUs  1m31.8s/4m30s  081.21 iters/s
+
+running (1m42.4s), 0001/0400 VUs, 3527 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  34% ] 0001/0400 VUs  1m32.8s/4m30s  081.88 iters/s
+
+running (1m43.4s), 0001/0400 VUs, 3609 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  35% ] 0001/0400 VUs  1m33.8s/4m30s  082.55 iters/s
+
+running (1m44.4s), 0001/0400 VUs, 3692 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  35% ] 0001/0400 VUs  1m34.8s/4m30s  083.21 iters/s
+
+running (1m45.4s), 0002/0400 VUs, 3775 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  35% ] 0002/0400 VUs  1m35.8s/4m30s  083.88 iters/s
+
+running (1m46.4s), 0001/0400 VUs, 3860 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  36% ] 0001/0400 VUs  1m36.8s/4m30s  084.55 iters/s
+
+running (1m47.4s), 0001/0400 VUs, 3945 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  36% ] 0001/0400 VUs  1m37.8s/4m30s  085.22 iters/s
+
+running (1m48.4s), 0001/0400 VUs, 4030 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  37% ] 0001/0400 VUs  1m38.8s/4m30s  085.88 iters/s
+
+running (1m49.4s), 0000/0400 VUs, 4117 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  37% ] 0000/0400 VUs  1m39.8s/4m30s  086.54 iters/s
+
+running (1m50.4s), 0001/0400 VUs, 4203 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  37% ] 0001/0400 VUs  1m40.8s/4m30s  087.21 iters/s
+
+running (1m51.4s), 0001/0400 VUs, 4291 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  38% ] 0001/0400 VUs  1m41.8s/4m30s  087.88 iters/s
+
+running (1m52.4s), 0001/0400 VUs, 4379 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  38% ] 0001/0400 VUs  1m42.8s/4m30s  088.55 iters/s
+
+running (1m53.4s), 0001/0400 VUs, 4468 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  38% ] 0001/0400 VUs  1m43.8s/4m30s  089.22 iters/s
+
+running (1m54.4s), 0000/0400 VUs, 4558 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  39% ] 0000/0400 VUs  1m44.8s/4m30s  089.88 iters/s
+
+running (1m55.4s), 0001/0400 VUs, 4648 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  39% ] 0001/0400 VUs  1m45.8s/4m30s  090.55 iters/s
+
+running (1m56.4s), 0001/0400 VUs, 4739 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  40% ] 0001/0400 VUs  1m46.8s/4m30s  091.22 iters/s
+
+running (1m57.4s), 0001/0400 VUs, 4830 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  40% ] 0001/0400 VUs  1m47.8s/4m30s  091.88 iters/s
+
+running (1m58.4s), 0000/0400 VUs, 4923 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  40% ] 0000/0400 VUs  1m48.8s/4m30s  092.55 iters/s
+
+running (1m59.4s), 0001/0400 VUs, 5015 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  41% ] 0001/0400 VUs  1m49.8s/4m30s  093.21 iters/s
+
+running (2m00.4s), 0001/0400 VUs, 5109 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  41% ] 0001/0400 VUs  1m50.8s/4m30s  093.88 iters/s
+
+running (2m01.4s), 0002/0400 VUs, 5202 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  41% ] 0002/0400 VUs  1m51.8s/4m30s  094.55 iters/s
+
+running (2m02.4s), 0001/0400 VUs, 5298 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  42% ] 0001/0400 VUs  1m52.8s/4m30s  095.22 iters/s
+
+running (2m03.4s), 0000/0400 VUs, 5394 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  42% ] 0000/0400 VUs  1m53.8s/4m30s  095.88 iters/s
+
+running (2m04.4s), 0001/0400 VUs, 5490 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  43% ] 0001/0400 VUs  1m54.8s/4m30s  096.55 iters/s
+
+running (2m05.4s), 0000/0400 VUs, 5587 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  43% ] 0000/0400 VUs  1m55.8s/4m30s  097.21 iters/s
+
+running (2m06.4s), 0001/0400 VUs, 5684 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  43% ] 0001/0400 VUs  1m56.8s/4m30s  097.88 iters/s
+
+running (2m07.4s), 0001/0400 VUs, 5782 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  44% ] 0001/0400 VUs  1m57.8s/4m30s  098.55 iters/s
+
+running (2m08.4s), 0001/0400 VUs, 5881 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  44% ] 0001/0400 VUs  1m58.8s/4m30s  099.21 iters/s
+
+running (2m09.4s), 0002/0400 VUs, 5980 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  44% ] 0002/0400 VUs  1m59.8s/4m30s  099.88 iters/s
+
+running (2m10.4s), 0001/0400 VUs, 6081 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  45% ] 0001/0400 VUs  2m00.8s/4m30s  100.55 iters/s
+
+running (2m11.4s), 0001/0400 VUs, 6182 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  45% ] 0001/0400 VUs  2m01.8s/4m30s  101.22 iters/s
+
+running (2m12.4s), 0001/0400 VUs, 6283 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  45% ] 0001/0400 VUs  2m02.8s/4m30s  101.88 iters/s
+
+running (2m13.4s), 0001/0400 VUs, 6385 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  46% ] 0001/0400 VUs  2m03.8s/4m30s  102.54 iters/s
+
+running (2m14.4s), 0000/0400 VUs, 6489 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  46% ] 0000/0400 VUs  2m04.8s/4m30s  103.21 iters/s
+
+running (2m15.4s), 0001/0400 VUs, 6592 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  47% ] 0001/0400 VUs  2m05.8s/4m30s  103.88 iters/s
+
+running (2m16.4s), 0001/0400 VUs, 6696 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  47% ] 0001/0400 VUs  2m06.8s/4m30s  104.55 iters/s
+
+running (2m17.4s), 0001/0400 VUs, 6801 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  47% ] 0001/0400 VUs  2m07.8s/4m30s  105.21 iters/s
+
+running (2m18.4s), 0001/0400 VUs, 6907 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  48% ] 0001/0400 VUs  2m08.8s/4m30s  105.88 iters/s
+
+running (2m19.4s), 0001/0400 VUs, 7013 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  48% ] 0001/0400 VUs  2m09.8s/4m30s  106.55 iters/s
+
+running (2m20.4s), 0002/0400 VUs, 7119 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  48% ] 0002/0400 VUs  2m10.8s/4m30s  107.22 iters/s
+
+running (2m21.4s), 0001/0400 VUs, 7227 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  49% ] 0001/0400 VUs  2m11.8s/4m30s  107.88 iters/s
+
+running (2m22.4s), 0001/0400 VUs, 7335 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  49% ] 0001/0400 VUs  2m12.8s/4m30s  108.54 iters/s
+
+running (2m23.4s), 0001/0400 VUs, 7444 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  50% ] 0001/0400 VUs  2m13.8s/4m30s  109.21 iters/s
+
+running (2m24.4s), 0001/0400 VUs, 7554 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  50% ] 0001/0400 VUs  2m14.8s/4m30s  109.88 iters/s
+
+running (2m25.4s), 0001/0400 VUs, 7664 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  50% ] 0001/0400 VUs  2m15.8s/4m30s  110.55 iters/s
+
+running (2m26.4s), 0001/0400 VUs, 7775 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  51% ] 0001/0400 VUs  2m16.8s/4m30s  111.21 iters/s
+
+running (2m27.4s), 0000/0400 VUs, 7887 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  51% ] 0000/0400 VUs  2m17.8s/4m30s  111.88 iters/s
+
+running (2m28.4s), 0001/0400 VUs, 7999 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  51% ] 0001/0400 VUs  2m18.8s/4m30s  112.55 iters/s
+
+running (2m29.4s), 0001/0400 VUs, 8112 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  52% ] 0001/0400 VUs  2m19.8s/4m30s  113.22 iters/s
+
+running (2m30.4s), 0001/0400 VUs, 8225 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  52% ] 0001/0400 VUs  2m20.8s/4m30s  113.88 iters/s
+
+running (2m31.4s), 0002/0400 VUs, 8338 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  53% ] 0002/0400 VUs  2m21.8s/4m30s  114.55 iters/s
+
+running (2m32.4s), 0001/0400 VUs, 8454 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  53% ] 0001/0400 VUs  2m22.8s/4m30s  115.21 iters/s
+
+running (2m33.4s), 0001/0400 VUs, 8570 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  53% ] 0001/0400 VUs  2m23.8s/4m30s  115.88 iters/s
+
+running (2m34.4s), 0002/0400 VUs, 8685 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  54% ] 0002/0400 VUs  2m24.8s/4m30s  116.55 iters/s
+
+running (2m35.4s), 0001/0400 VUs, 8803 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  54% ] 0001/0400 VUs  2m25.8s/4m30s  117.21 iters/s
+
+running (2m36.4s), 0001/0400 VUs, 8920 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  54% ] 0001/0400 VUs  2m26.8s/4m30s  117.88 iters/s
+
+running (2m37.4s), 0001/0400 VUs, 9039 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  55% ] 0001/0400 VUs  2m27.8s/4m30s  118.55 iters/s
+
+running (2m38.4s), 0001/0400 VUs, 9158 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  55% ] 0001/0400 VUs  2m28.8s/4m30s  119.22 iters/s
+
+running (2m39.4s), 0001/0400 VUs, 9277 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  55% ] 0001/0400 VUs  2m29.8s/4m30s  119.88 iters/s
+
+running (2m40.4s), 0001/0400 VUs, 9397 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  56% ] 0001/0400 VUs  2m30.8s/4m30s  120.27 iters/s
+
+running (2m41.4s), 0001/0400 VUs, 9518 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  56% ] 0001/0400 VUs  2m31.8s/4m30s  120.61 iters/s
+
+running (2m42.4s), 0001/0400 VUs, 9638 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  57% ] 0001/0400 VUs  2m32.8s/4m30s  120.94 iters/s
+
+running (2m43.4s), 0002/0400 VUs, 9759 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  57% ] 0002/0400 VUs  2m33.8s/4m30s  121.28 iters/s
+
+running (2m44.4s), 0001/0400 VUs, 9881 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  57% ] 0001/0400 VUs  2m34.8s/4m30s  121.61 iters/s
+
+running (2m45.4s), 0001/0400 VUs, 10003 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  58% ] 0001/0400 VUs  2m35.8s/4m30s  121.94 iters/s
+
+running (2m46.4s), 0001/0400 VUs, 10125 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  58% ] 0001/0400 VUs  2m36.8s/4m30s  122.27 iters/s
+
+running (2m47.4s), 0002/0400 VUs, 10246 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  58% ] 0002/0400 VUs  2m37.8s/4m30s  122.61 iters/s
+
+running (2m48.4s), 0001/0400 VUs, 10370 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  59% ] 0001/0400 VUs  2m38.8s/4m30s  122.94 iters/s
+
+running (2m49.4s), 0001/0400 VUs, 10493 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  59% ] 0001/0400 VUs  2m39.8s/4m30s  123.27 iters/s
+
+running (2m50.4s), 0000/0400 VUs, 10617 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  60% ] 0000/0400 VUs  2m40.8s/4m30s  123.61 iters/s
+
+running (2m51.4s), 0001/0400 VUs, 10740 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  60% ] 0001/0400 VUs  2m41.8s/4m30s  123.94 iters/s
+
+running (2m52.4s), 0002/0400 VUs, 10864 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  60% ] 0002/0400 VUs  2m42.8s/4m30s  124.28 iters/s
+
+running (2m53.4s), 0003/0400 VUs, 10987 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  61% ] 0003/0400 VUs  2m43.8s/4m30s  124.61 iters/s
+
+running (2m54.4s), 0000/0400 VUs, 11114 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  61% ] 0000/0400 VUs  2m44.8s/4m30s  124.94 iters/s
+
+running (2m55.4s), 0001/0400 VUs, 11239 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  61% ] 0001/0400 VUs  2m45.8s/4m30s  125.27 iters/s
+
+running (2m56.4s), 0001/0400 VUs, 11364 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  62% ] 0001/0400 VUs  2m46.8s/4m30s  125.61 iters/s
+
+running (2m57.4s), 0001/0400 VUs, 11490 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  62% ] 0001/0400 VUs  2m47.8s/4m30s  125.94 iters/s
+
+running (2m58.4s), 0001/0400 VUs, 11616 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  63% ] 0001/0400 VUs  2m48.8s/4m30s  126.27 iters/s
+
+running (2m59.4s), 0000/0400 VUs, 11743 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  63% ] 0000/0400 VUs  2m49.8s/4m30s  126.61 iters/s
+
+running (3m00.4s), 0001/0400 VUs, 11869 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  63% ] 0001/0400 VUs  2m50.8s/4m30s  126.94 iters/s
+
+running (3m01.4s), 0001/0400 VUs, 11996 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  64% ] 0001/0400 VUs  2m51.8s/4m30s  127.27 iters/s
+
+running (3m02.4s), 0001/0400 VUs, 12124 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  64% ] 0001/0400 VUs  2m52.8s/4m30s  127.61 iters/s
+
+running (3m03.4s), 0000/0400 VUs, 12252 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  64% ] 0000/0400 VUs  2m53.8s/4m30s  127.94 iters/s
+
+running (3m04.4s), 0001/0400 VUs, 12380 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  65% ] 0001/0400 VUs  2m54.8s/4m30s  128.27 iters/s
+
+running (3m05.4s), 0001/0400 VUs, 12508 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  65% ] 0001/0400 VUs  2m55.8s/4m30s  128.61 iters/s
+
+running (3m06.4s), 0001/0400 VUs, 12637 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  65% ] 0001/0400 VUs  2m56.8s/4m30s  128.94 iters/s
+
+running (3m07.4s), 0001/0400 VUs, 12766 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  66% ] 0001/0400 VUs  2m57.8s/4m30s  129.27 iters/s
+
+running (3m08.4s), 0002/0400 VUs, 12895 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  66% ] 0002/0400 VUs  2m58.8s/4m30s  129.61 iters/s
+
+running (3m09.4s), 0001/0400 VUs, 13025 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  67% ] 0001/0400 VUs  2m59.8s/4m30s  129.94 iters/s
+
+running (3m10.4s), 0001/0400 VUs, 13155 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  67% ] 0001/0400 VUs  3m00.8s/4m30s  130.27 iters/s
+
+running (3m11.4s), 0002/0400 VUs, 13285 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  67% ] 0002/0400 VUs  3m01.8s/4m30s  130.61 iters/s
+
+running (3m12.4s), 0001/0400 VUs, 13417 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  68% ] 0001/0400 VUs  3m02.8s/4m30s  130.94 iters/s
+
+running (3m13.4s), 0001/0400 VUs, 13548 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  68% ] 0001/0400 VUs  3m03.8s/4m30s  131.27 iters/s
+
+running (3m14.4s), 0001/0400 VUs, 13679 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  68% ] 0001/0400 VUs  3m04.8s/4m30s  131.61 iters/s
+
+running (3m15.4s), 0002/0400 VUs, 13810 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  69% ] 0002/0400 VUs  3m05.8s/4m30s  131.94 iters/s
+
+running (3m16.4s), 0006/0400 VUs, 13938 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  69% ] 0006/0400 VUs  3m06.8s/4m30s  132.27 iters/s
+
+running (3m17.4s), 0001/0400 VUs, 14075 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  70% ] 0001/0400 VUs  3m07.8s/4m30s  132.61 iters/s
+
+running (3m18.4s), 0001/0400 VUs, 14208 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  70% ] 0001/0400 VUs  3m08.8s/4m30s  132.94 iters/s
+
+running (3m19.4s), 0001/0400 VUs, 14341 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  70% ] 0001/0400 VUs  3m09.8s/4m30s  133.27 iters/s
+
+running (3m20.4s), 0003/0400 VUs, 14473 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  71% ] 0003/0400 VUs  3m10.8s/4m30s  133.61 iters/s
+
+running (3m21.4s), 0001/0400 VUs, 14609 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  71% ] 0001/0400 VUs  3m11.8s/4m30s  133.94 iters/s
+
+running (3m22.4s), 0000/0400 VUs, 14743 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  71% ] 0000/0400 VUs  3m12.8s/4m30s  134.27 iters/s
+
+running (3m23.4s), 0001/0400 VUs, 14877 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  72% ] 0001/0400 VUs  3m13.8s/4m30s  134.61 iters/s
+
+running (3m24.4s), 0001/0400 VUs, 15012 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  72% ] 0001/0400 VUs  3m14.8s/4m30s  134.94 iters/s
+
+running (3m25.4s), 0001/0400 VUs, 15147 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  73% ] 0001/0400 VUs  3m15.8s/4m30s  135.27 iters/s
+
+running (3m26.4s), 0001/0400 VUs, 15282 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  73% ] 0001/0400 VUs  3m16.8s/4m30s  135.61 iters/s
+
+running (3m27.4s), 0001/0400 VUs, 15418 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  73% ] 0001/0400 VUs  3m17.8s/4m30s  135.94 iters/s
+
+running (3m28.4s), 0002/0400 VUs, 15554 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  74% ] 0002/0400 VUs  3m18.8s/4m30s  136.28 iters/s
+
+running (3m29.4s), 0002/0400 VUs, 15690 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  74% ] 0002/0400 VUs  3m19.8s/4m30s  136.61 iters/s
+
+running (3m30.4s), 0001/0400 VUs, 15828 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  74% ] 0001/0400 VUs  3m20.8s/4m30s  136.94 iters/s
+
+running (3m31.4s), 0002/0400 VUs, 15964 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  75% ] 0002/0400 VUs  3m21.8s/4m30s  137.27 iters/s
+
+running (3m32.4s), 0001/0400 VUs, 16102 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  75% ] 0001/0400 VUs  3m22.8s/4m30s  137.61 iters/s
+
+running (3m33.4s), 0001/0400 VUs, 16240 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  75% ] 0001/0400 VUs  3m23.8s/4m30s  137.94 iters/s
+
+running (3m34.4s), 0001/0400 VUs, 16378 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  76% ] 0001/0400 VUs  3m24.8s/4m30s  138.27 iters/s
+
+running (3m35.4s), 0001/0400 VUs, 16516 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  76% ] 0001/0400 VUs  3m25.8s/4m30s  138.61 iters/s
+
+running (3m36.4s), 0001/0400 VUs, 16655 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  77% ] 0001/0400 VUs  3m26.8s/4m30s  138.94 iters/s
+
+running (3m37.4s), 0001/0400 VUs, 16794 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  77% ] 0001/0400 VUs  3m27.8s/4m30s  139.27 iters/s
+
+running (3m38.4s), 0002/0400 VUs, 16933 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  77% ] 0002/0400 VUs  3m28.8s/4m30s  139.61 iters/s
+
+running (3m39.4s), 0001/0400 VUs, 17073 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  78% ] 0001/0400 VUs  3m29.8s/4m30s  139.94 iters/s
+
+running (3m40.4s), 0001/0400 VUs, 17213 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  78% ] 0001/0400 VUs  3m30.8s/4m30s  139.18 iters/s
+
+running (3m41.4s), 0001/0400 VUs, 17352 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  78% ] 0001/0400 VUs  3m31.8s/4m30s  138.18 iters/s
+
+running (3m42.4s), 0001/0400 VUs, 17489 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  79% ] 0001/0400 VUs  3m32.8s/4m30s  137.18 iters/s
+
+running (3m43.4s), 0001/0400 VUs, 17626 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  79% ] 0001/0400 VUs  3m33.8s/4m30s  136.18 iters/s
+
+running (3m44.4s), 0002/0400 VUs, 17761 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  80% ] 0002/0400 VUs  3m34.8s/4m30s  135.18 iters/s
+
+running (3m45.4s), 0002/0400 VUs, 17896 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  80% ] 0002/0400 VUs  3m35.8s/4m30s  134.18 iters/s
+
+running (3m46.4s), 0001/0400 VUs, 18030 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  80% ] 0001/0400 VUs  3m36.8s/4m30s  133.18 iters/s
+
+running (3m47.4s), 0003/0400 VUs, 18161 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  81% ] 0003/0400 VUs  3m37.8s/4m30s  132.18 iters/s
+
+running (3m48.4s), 0001/0400 VUs, 18294 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  81% ] 0001/0400 VUs  3m38.8s/4m30s  131.18 iters/s
+
+running (3m49.4s), 0003/0400 VUs, 18423 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  81% ] 0003/0400 VUs  3m39.8s/4m30s  130.18 iters/s
+
+running (3m50.4s), 0001/0400 VUs, 18555 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  82% ] 0001/0400 VUs  3m40.8s/4m30s  129.18 iters/s
+
+running (3m51.4s), 0001/0400 VUs, 18684 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  82% ] 0001/0400 VUs  3m41.8s/4m30s  128.18 iters/s
+
+running (3m52.4s), 0001/0400 VUs, 18811 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  83% ] 0001/0400 VUs  3m42.8s/4m30s  127.18 iters/s
+
+running (3m53.4s), 0001/0400 VUs, 18938 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  83% ] 0001/0400 VUs  3m43.8s/4m30s  126.18 iters/s
+
+running (3m54.4s), 0001/0400 VUs, 19064 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  83% ] 0001/0400 VUs  3m44.8s/4m30s  125.18 iters/s
+
+running (3m55.4s), 0001/0400 VUs, 19188 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  84% ] 0001/0400 VUs  3m45.8s/4m30s  124.18 iters/s
+
+running (3m56.4s), 0001/0400 VUs, 19312 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  84% ] 0001/0400 VUs  3m46.8s/4m30s  123.18 iters/s
+
+running (3m57.4s), 0001/0400 VUs, 19435 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  84% ] 0001/0400 VUs  3m47.8s/4m30s  122.18 iters/s
+
+running (3m58.4s), 0001/0400 VUs, 19556 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  85% ] 0001/0400 VUs  3m48.8s/4m30s  121.18 iters/s
+
+running (3m59.4s), 0002/0400 VUs, 19676 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  85% ] 0002/0400 VUs  3m49.8s/4m30s  120.18 iters/s
+
+running (4m00.4s), 0001/0400 VUs, 19797 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  85% ] 0001/0400 VUs  3m50.8s/4m30s  119.18 iters/s
+
+running (4m01.4s), 0001/0400 VUs, 19915 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  86% ] 0001/0400 VUs  3m51.8s/4m30s  118.18 iters/s
+
+running (4m02.4s), 0001/0400 VUs, 20033 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  86% ] 0001/0400 VUs  3m52.8s/4m30s  117.18 iters/s
+
+running (4m03.4s), 0001/0400 VUs, 20150 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  87% ] 0001/0400 VUs  3m53.8s/4m30s  116.18 iters/s
+
+running (4m04.4s), 0001/0400 VUs, 20265 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  87% ] 0001/0400 VUs  3m54.8s/4m30s  115.17 iters/s
+
+running (4m05.4s), 0001/0400 VUs, 20380 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  87% ] 0001/0400 VUs  3m55.8s/4m30s  114.18 iters/s
+
+running (4m06.4s), 0001/0400 VUs, 20494 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  88% ] 0001/0400 VUs  3m56.8s/4m30s  113.18 iters/s
+
+running (4m07.4s), 0001/0400 VUs, 20606 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  88% ] 0001/0400 VUs  3m57.8s/4m30s  112.18 iters/s
+
+running (4m08.4s), 0001/0400 VUs, 20718 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  88% ] 0001/0400 VUs  3m58.8s/4m30s  111.18 iters/s
+
+running (4m09.4s), 0001/0400 VUs, 20829 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  89% ] 0001/0400 VUs  3m59.8s/4m30s  110.18 iters/s
+
+running (4m10.4s), 0001/0400 VUs, 20939 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  89% ] 0001/0400 VUs  4m00.8s/4m30s  109.17 iters/s
+
+running (4m11.4s), 0001/0400 VUs, 21047 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  90% ] 0001/0400 VUs  4m01.8s/4m30s  108.18 iters/s
+
+running (4m12.4s), 0001/0400 VUs, 21155 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  90% ] 0001/0400 VUs  4m02.8s/4m30s  107.18 iters/s
+
+running (4m13.4s), 0000/0400 VUs, 21262 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  90% ] 0000/0400 VUs  4m03.8s/4m30s  106.18 iters/s
+
+running (4m14.4s), 0001/0400 VUs, 21367 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  91% ] 0001/0400 VUs  4m04.8s/4m30s  105.18 iters/s
+
+running (4m15.4s), 0001/0400 VUs, 21472 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  91% ] 0001/0400 VUs  4m05.8s/4m30s  104.18 iters/s
+
+running (4m16.4s), 0002/0400 VUs, 21575 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  91% ] 0002/0400 VUs  4m06.8s/4m30s  103.17 iters/s
+
+running (4m17.4s), 0001/0400 VUs, 21678 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  92% ] 0001/0400 VUs  4m07.8s/4m30s  102.18 iters/s
+
+running (4m18.4s), 0001/0400 VUs, 21780 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  92% ] 0001/0400 VUs  4m08.8s/4m30s  101.18 iters/s
+
+running (4m19.4s), 0001/0400 VUs, 21880 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  93% ] 0001/0400 VUs  4m09.8s/4m30s  100.18 iters/s
+
+running (4m20.4s), 0001/0400 VUs, 21980 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  93% ] 0001/0400 VUs  4m10.8s/4m30s  099.18 iters/s
+
+running (4m21.4s), 0001/0400 VUs, 22079 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  93% ] 0001/0400 VUs  4m11.8s/4m30s  098.18 iters/s
+
+running (4m22.4s), 0001/0400 VUs, 22177 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  94% ] 0001/0400 VUs  4m12.8s/4m30s  097.18 iters/s
+
+running (4m23.4s), 0000/0400 VUs, 22274 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  94% ] 0000/0400 VUs  4m13.8s/4m30s  096.18 iters/s
+
+running (4m24.4s), 0001/0400 VUs, 22369 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  94% ] 0001/0400 VUs  4m14.8s/4m30s  095.18 iters/s
+
+running (4m25.4s), 0002/0400 VUs, 22463 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  95% ] 0002/0400 VUs  4m15.8s/4m30s  094.18 iters/s
+
+running (4m26.4s), 0000/0400 VUs, 22558 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  95% ] 0000/0400 VUs  4m16.8s/4m30s  093.18 iters/s
+
+running (4m27.4s), 0001/0400 VUs, 22650 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  95% ] 0001/0400 VUs  4m17.8s/4m30s  092.18 iters/s
+
+running (4m28.4s), 0001/0400 VUs, 22742 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  96% ] 0001/0400 VUs  4m18.8s/4m30s  091.18 iters/s
+
+running (4m29.4s), 0000/0400 VUs, 22833 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  96% ] 0000/0400 VUs  4m19.8s/4m30s  090.18 iters/s
+
+running (4m30.4s), 0001/0400 VUs, 22922 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  97% ] 0001/0400 VUs  4m20.8s/4m30s  089.18 iters/s
+
+running (4m31.4s), 0001/0400 VUs, 23011 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  97% ] 0001/0400 VUs  4m21.8s/4m30s  088.18 iters/s
+
+running (4m32.4s), 0000/0400 VUs, 23099 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  97% ] 0000/0400 VUs  4m22.8s/4m30s  087.18 iters/s
+
+running (4m33.4s), 0001/0400 VUs, 23185 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  98% ] 0001/0400 VUs  4m23.8s/4m30s  086.18 iters/s
+
+running (4m34.4s), 0001/0400 VUs, 23271 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  98% ] 0001/0400 VUs  4m24.8s/4m30s  085.18 iters/s
+
+running (4m35.4s), 0001/0400 VUs, 23355 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  98% ] 0001/0400 VUs  4m25.8s/4m30s  084.18 iters/s
+
+running (4m36.4s), 0000/0400 VUs, 23440 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  99% ] 0000/0400 VUs  4m26.8s/4m30s  083.18 iters/s
+
+running (4m37.4s), 0001/0400 VUs, 23522 complete and 0 interrupted iterations
+capacity-baseline-reservation   [  99% ] 0001/0400 VUs  4m27.8s/4m30s  082.18 iters/s
+
+running (4m38.4s), 0001/0400 VUs, 23604 complete and 0 interrupted iterations
+capacity-baseline-reservation   [ 100% ] 0001/0400 VUs  4m28.8s/4m30s  081.17 iters/s
+
+running (4m39.4s), 0001/0400 VUs, 23684 complete and 0 interrupted iterations
+capacity-baseline-reservation   [ 100% ] 0001/0400 VUs  4m29.8s/4m30s  080.18 iters/s
+{"event":"loadtest_run_report","timestamp":"2026-06-21T10:17:41.135Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621101259-5vcqs","scenario":"service-hpa-spike-load-test","report_phase":"service_step_complete","measured_service":"reservation-service","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","status":"PASS","execution_conditions":{"loadtest_run_id":"read-api-loadtest-read-manual-20260621101259-5vcqs","phase":"summary","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":400,"max_vus":1000,"duration":"5m","service_steps":["reservation-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":80,"stageRole":"baseline"},{"duration":"60s","target":120,"stageRole":"spike"},{"duration":"60s","target":140,"stageRole":"overload"},{"duration":"60s","target":80,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"reservation-140rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"},"scenario_report":{"report_type":"service_hpa_spike","scenario":"service-hpa-spike-load-test","traffic_model_preset":"reservation-140rps","dataset_revision":"capacity-baseline-half-year-early-growth-v2","seed_method":"deterministic_bulk_insert","service_steps":["reservation-service"],"default_stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":80,"stageRole":"baseline"},{"duration":"60s","target":120,"stageRole":"spike"},{"duration":"60s","target":140,"stageRole":"overload"},{"duration":"60s","target":80,"stageRole":"cooldown"}],"service_stages":{},"stage_contract":{"order":["warmup","baseline","spike","overload","cooldown"],"warmup":"excluded_from_decision","cooldown":"recovery_observation_only_not_scale_down_confirmation"},"resource_observation_source":"metrics-api","scale_out_results":[{"service":"reservation-service","namespace":"ticketing-reservation","baseline_replicas":1,"max_desired_replicas":2,"hpa_decision_seconds":217.723,"scale_out_ready_seconds":229.87}],"service_hpa_results":[{"service":"reservation-service","namespace":"ticketing-reservation","baseline_replicas":1,"max_desired_replicas":2,"hpa_decision_seconds":217.723,"scale_out_ready_seconds":229.87}],"stage_results":[{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":120,"p95_ms":17.624745299999997,"p99_ms":30.720290839999993,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_baseline_rps_80","stage_role":"baseline","warmup_excluded":false,"target_rps":80,"duration":"60s","slo_p95_ms":120,"p95_ms":10.320666899999996,"p99_ms":23.678721659999997,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_spike_rps_120","stage_role":"spike","warmup_excluded":false,"target_rps":120,"duration":"60s","slo_p95_ms":120,"p95_ms":12.680439249999994,"p99_ms":26.038320329999983,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_overload_rps_140","stage_role":"overload","warmup_excluded":false,"target_rps":140,"duration":"60s","slo_p95_ms":120,"p95_ms":20.271512799999996,"p99_ms":33.139022499999996,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_cooldown_rps_80","stage_role":"cooldown","warmup_excluded":false,"target_rps":80,"duration":"60s","slo_p95_ms":120,"p95_ms":13.756917,"p99_ms":27.571625,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]}],"first_limit_candidate":null,"recovery_observations":[{"service":"reservation-service","step":"capacity_baseline.reservation.create","stage":"reservation_cooldown_rps_80","target_rps":80,"p95_ms":13.756917,"p99_ms":27.571625,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"}]}}
+{"event":"loadtest_run_report","timestamp":"2026-06-21T10:17:41.136Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621101259-5vcqs","scenario":"service-hpa-spike-load-test","report_phase":"final","measured_service":null,"environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","status":"PASS","execution_conditions":{"loadtest_run_id":"read-api-loadtest-read-manual-20260621101259-5vcqs","phase":"summary","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":400,"max_vus":1000,"duration":"5m","service_steps":["reservation-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":80,"stageRole":"baseline"},{"duration":"60s","target":120,"stageRole":"spike"},{"duration":"60s","target":140,"stageRole":"overload"},{"duration":"60s","target":80,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"reservation-140rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"},"scenario_report":{"report_type":"service_hpa_spike","scenario":"service-hpa-spike-load-test","traffic_model_preset":"reservation-140rps","dataset_revision":"capacity-baseline-half-year-early-growth-v2","seed_method":"deterministic_bulk_insert","service_steps":["reservation-service"],"default_stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":80,"stageRole":"baseline"},{"duration":"60s","target":120,"stageRole":"spike"},{"duration":"60s","target":140,"stageRole":"overload"},{"duration":"60s","target":80,"stageRole":"cooldown"}],"service_stages":{},"stage_contract":{"order":["warmup","baseline","spike","overload","cooldown"],"warmup":"excluded_from_decision","cooldown":"recovery_observation_only_not_scale_down_confirmation"},"resource_observation_source":"metrics-api","scale_out_results":[{"service":"reservation-service","namespace":"ticketing-reservation","baseline_replicas":1,"max_desired_replicas":2,"hpa_decision_seconds":217.723,"scale_out_ready_seconds":229.87}],"service_hpa_results":[{"service":"reservation-service","namespace":"ticketing-reservation","baseline_replicas":1,"max_desired_replicas":2,"hpa_decision_seconds":217.723,"scale_out_ready_seconds":229.87}],"stage_results":[{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":120,"p95_ms":17.624745299999997,"p99_ms":30.720290839999993,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_baseline_rps_80","stage_role":"baseline","warmup_excluded":false,"target_rps":80,"duration":"60s","slo_p95_ms":120,"p95_ms":10.320666899999996,"p99_ms":23.678721659999997,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_spike_rps_120","stage_role":"spike","warmup_excluded":false,"target_rps":120,"duration":"60s","slo_p95_ms":120,"p95_ms":12.680439249999994,"p99_ms":26.038320329999983,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_overload_rps_140","stage_role":"overload","warmup_excluded":false,"target_rps":140,"duration":"60s","slo_p95_ms":120,"p95_ms":20.271512799999996,"p99_ms":33.139022499999996,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"reservation-service","api":"POST /reservations","step":"capacity_baseline.reservation.create","stage":"reservation_cooldown_rps_80","stage_role":"cooldown","warmup_excluded":false,"target_rps":80,"duration":"60s","slo_p95_ms":120,"p95_ms":13.756917,"p99_ms":27.571625,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]}],"first_limit_candidate":null,"recovery_observations":[{"service":"reservation-service","step":"capacity_baseline.reservation.create","stage":"reservation_cooldown_rps_80","target_rps":80,"p95_ms":13.756917,"p99_ms":27.571625,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"}]}}
+
+running (4m39.6s), 0000/0400 VUs, 23698 complete and 0 interrupted iterations
+capacity-baseline-reservation ✓ [ 100% ] 0000/0400 VUs  4m30s  080.02 iters/s

@@ -1,0 +1,1654 @@
+{
+  "candidateTraceIds": [
+    "36688b93cf9c569a123884d0a5d9cab1",
+    "a8d9c8692be2055143f3dda0e669a360",
+    "193aa04c63287439ab1e9acba36fb19d",
+    "ad86fc1511a0cce41d0c0d11b8f718c4",
+    "e8fe7e77c44dbf85d6a35088018155b6",
+    "7a6022f554af4534ef1e3e356894277b",
+    "d0bb3bdff9b5b81115d3305c04eb45c0",
+    "c160a23ae8307a2a832348ed574ca2a7",
+    "cce8283fc789faf638796ebebce59108",
+    "319b9cf3389b7ea9dc650ffbb80db4fd",
+    "c03561421583ad34052d43c2835ff954",
+    "21e99cd81953d84ac65c587b6f83d3d6",
+    "d918a7068d1eb65ad0a298bcdee894d7",
+    "1b24cca537a289c51d1584c0df3cea30",
+    "c1a05b61309b0e3b8049c79df9f6701f",
+    "29b8cd7b0b338cfd9835157cf92055a0"
+  ],
+  "traceSummaries": [
+    {
+      "trace_id": "36688b93cf9c569a123884d0a5d9cab1",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3948.288252,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "d78ea31e0836fad1",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35150",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100296-capacity-baseline-concert-calendar-12130",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2356.605043,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.703583,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.2895,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.047875,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.029833,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.024083,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "a8d9c8692be2055143f3dda0e669a360",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3878.325085,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "0dc48329de0a10be",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35310",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100934-capacity-baseline-concert-calendar-12203",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2317.716293,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.440667,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.101958,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.085584,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.085333,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.044125,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "193aa04c63287439ab1e9acba36fb19d",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3821.718169,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "1d5393a3c14e9f85",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35332",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100971-capacity-baseline-concert-calendar-12189",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2217.487126,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.191459,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.059042,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.048625,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.041958,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.040583,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "ad86fc1511a0cce41d0c0d11b8f718c4",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3426.186085,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "abe1abfd2c48fe61",
+            "http.scheme": "http",
+            "http.host": "10.244.3.142:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "59834",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100718-capacity-baseline-concert-calendar-12181",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 1683.049751,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.229583,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.05475,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.052417,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.049375,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.024959,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "e8fe7e77c44dbf85d6a35088018155b6",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3418.276835,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "b2b1eda46b87a51a",
+            "http.scheme": "http",
+            "http.host": "10.244.3.142:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "59858",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100909-capacity-baseline-concert-calendar-12199",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 1632.226625,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.133083,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.090416,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.038708,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.0335,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.027041,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "7a6022f554af4534ef1e3e356894277b",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3415.66721,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "56f01539872bb2a9",
+            "http.scheme": "http",
+            "http.host": "10.244.3.142:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "59820",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100432-capacity-baseline-concert-calendar-12169",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 1330.094209,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 2.481083,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.189542,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.101917,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.0905,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.024291,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "d0bb3bdff9b5b81115d3305c04eb45c0",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3421.59871,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "5f32f910d76a5bcf",
+            "http.scheme": "http",
+            "http.host": "10.244.3.142:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "59844",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100793-capacity-baseline-concert-calendar-12187",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 1586.2685,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 9.134083,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.096,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.04775,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.045291,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.031917,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "c160a23ae8307a2a832348ed574ca2a7",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3928.78246,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "0da09534af4decc2",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "45888",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045101713-capacity-baseline-concert-calendar-12303",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2255.763126,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.095459,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.081583,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.077417,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.057458,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.04825,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "cce8283fc789faf638796ebebce59108",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3867.589293,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "af472dd32e27c153",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35188",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100386-capacity-baseline-concert-calendar-12148",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2249.051001,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.093833,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.071208,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.052417,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.045792,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.034708,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "319b9cf3389b7ea9dc650ffbb80db4fd",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3302.939794,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "8b5908297874e44d",
+            "http.scheme": "http",
+            "http.host": "10.244.3.142:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "59914",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045101059-capacity-baseline-concert-calendar-12230",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 1285.993834,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.093708,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.073208,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.064458,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.059875,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.021209,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "c03561421583ad34052d43c2835ff954",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3886.86971,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "6dc413f11e3716fa",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35124",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100082-capacity-baseline-concert-calendar-12114",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2121.761667,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.197792,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.072542,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.028875,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.026416,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.026,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "21e99cd81953d84ac65c587b6f83d3d6",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3865.553294,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "16729f10fa592dcb",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35172",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100366-capacity-baseline-concert-calendar-12143",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2216.808751,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 12.450083,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.103916,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.036208,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.027917,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.027416,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "d918a7068d1eb65ad0a298bcdee894d7",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3851.054127,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "12ea8c5c59012f96",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35190",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100403-capacity-baseline-concert-calendar-12155",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2143.850168,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.065625,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.058,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.045708,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.032708,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.029334,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "1b24cca537a289c51d1584c0df3cea30",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3860.858627,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "ab6a95747cdfd84a",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35208",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100411-capacity-baseline-concert-calendar-12156",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2205.658501,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.084917,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.053958,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.033542,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.032709,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.028792,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "c1a05b61309b0e3b8049c79df9f6701f",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3851.317335,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "d5c8d2c3136f3d6e",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35206",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100415-capacity-baseline-concert-calendar-12157",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2127.268085,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.110458,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.058541,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.034875,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.034833,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.034291,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    },
+    {
+      "trace_id": "29b8cd7b0b338cfd9835157cf92055a0",
+      "found": true,
+      "span_count": 7,
+      "top_spans": [
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar",
+          "duration_ms": 3846.651044,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "pyroscope.profile.id": "6ed5a53f83df9c9f",
+            "http.scheme": "http",
+            "http.host": "10.244.1.220:8082",
+            "net.host.port": "8082",
+            "http.flavor": "1.1",
+            "http.target": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar",
+            "http.server_name": "kong-kong-proxy.kong.svc.cluster.local",
+            "http.user_agent": "Grafana k6/1.0.0",
+            "net.peer.ip": "10.244.2.43",
+            "net.peer.port": "35222",
+            "request_id": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100426-capacity-baseline-concert-calendar-12167",
+            "http.route": "/concerts/{id}/calendar",
+            "error.type": "OperationalError",
+            "error.kind": "system_failure",
+            "http.method": "GET",
+            "http.url": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "connect",
+          "duration_ms": 2112.055293,
+          "status": {
+            "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "code.function.name": "has_concert",
+            "code.location": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27",
+            "net.peer.name": "concert-db",
+            "net.peer.port": "5432",
+            "db.name": "concert_db",
+            "db.user": "user",
+            "db.system": "postgresql"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_create",
+          "duration_ms": 0.10075,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:25"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.049833,
+          "status": {
+            "code": "STATUS_CODE_ERROR"
+          },
+          "attrs": {
+            "asgi.event.type": "http.response.start",
+            "http.status_code": "500"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "concert.dependency.db.session_close",
+          "duration_ms": 0.034541,
+          "status": {},
+          "attrs": {
+            "code.function.name": "get_db",
+            "code.location": "app.database.get_db /app/app/database.py:30"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.028625,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        },
+        {
+          "service": "concert-service",
+          "name": "GET /concerts/{id}/calendar http send",
+          "duration_ms": 0.028375,
+          "status": {},
+          "attrs": {
+            "asgi.event.type": "http.response.body"
+          }
+        }
+      ]
+    }
+  ]
+}

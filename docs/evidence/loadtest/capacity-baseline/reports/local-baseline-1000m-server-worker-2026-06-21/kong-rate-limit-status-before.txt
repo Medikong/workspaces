@@ -1,0 +1,11 @@
+task: [kong-rate-limit:status] set -eu
+for plugin in ticketing-rate-limit-concerts ticketing-rate-limit-reservations ticketing-rate-limit-payments ticketing-rate-limit-tickets ticketing-rate-limit-notifications; do
+  kubectl get kongclusterplugin "${plugin}" \
+    -o jsonpath='{.metadata.name}{" minute="}{.config.minute}{" policy="}{.config.policy}{"\n"}'
+done
+
+ticketing-rate-limit-concerts minute=120 policy=local
+ticketing-rate-limit-reservations minute=120 policy=local
+ticketing-rate-limit-payments minute=120 policy=local
+ticketing-rate-limit-tickets minute=120 policy=local
+ticketing-rate-limit-notifications minute=120 policy=local

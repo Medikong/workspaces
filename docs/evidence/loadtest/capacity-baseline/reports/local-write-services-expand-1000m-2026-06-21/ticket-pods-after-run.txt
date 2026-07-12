@@ -1,0 +1,8 @@
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS       IMAGES                              SELECTOR
+deployment.apps/ticket-service              1/1     1            1           17h    ticket-service   localhost:5001/ticket-service:dev   app=ticket-service
+deployment.apps/ticket-service-background   0/1     1            0           155m   background       localhost:5001/ticket-service:dev   app=ticket-service-background,medikong.io/workload=background
+
+NAME                                             READY   STATUS             RESTARTS        AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/ticket-db-0                                  1/1     Running            0               6h32m   10.244.2.57    desktop-worker    <none>           <none>
+pod/ticket-service-7744fb8d48-5d6w8              1/1     Running            0               24m     10.244.3.94    desktop-worker2   <none>           <none>
+pod/ticket-service-background-759fd5c77d-m2p29   0/1     CrashLoopBackOff   6 (3m23s ago)   24m     10.244.1.147   desktop-worker3   <none>           <none>

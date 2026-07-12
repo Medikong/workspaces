@@ -1,0 +1,37 @@
+/Users/danghamo/Documents/gituhb/medikong/gitops/charts/medikong-service/values.yaml:43:  apiEnv: []
+/Users/danghamo/Documents/gituhb/medikong/gitops/charts/medikong-service/values.yaml:65:workers: []
+/Users/danghamo/Documents/gituhb/medikong/service/services/auth-service/README.md:83:uv run python cmd/server/main.py
+/Users/danghamo/Documents/gituhb/medikong/service/services/auth-service/app/config.py:9:    uvicorn_workers = int(os.getenv("UVICORN_WORKERS", "2"))
+/Users/danghamo/Documents/gituhb/medikong/service/services/auth-service/Dockerfile:42:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/charts/medikong-service/templates/deployment.yaml:118:{{- $containerEnv := concat $observabilityEnv .Values.container.env (default (list) .Values.container.apiEnv) }}
+/Users/danghamo/Documents/gituhb/medikong/gitops/charts/medikong-service/templates/deployment-canary.yaml:113:{{- $containerEnv := concat $observabilityEnv .Values.container.env (default (list) .Values.container.apiEnv) }}
+/Users/danghamo/Documents/gituhb/medikong/service/services/concert-service/Dockerfile:42:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/auth.yaml:35:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/auth.yaml:36:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/service/services/payment-service/Dockerfile:44:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/reservation.yaml:51:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/reservation.yaml:52:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/reservation.yaml:55:workers:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/reservation.yaml:59:    args: ["cmd/worker/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/service/services/concert-service/app/config.py:10:    uvicorn_workers: int = 2
+/Users/danghamo/Documents/gituhb/medikong/service/services/payment-service/app/config.py:9:    uvicorn_workers = int(os.getenv("UVICORN_WORKERS", "2"))
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/notification.yaml:44:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/notification.yaml:45:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/notification.yaml:48:workers:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/notification.yaml:52:    args: ["cmd/worker/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/payment.yaml:34:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/payment.yaml:35:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/payment.yaml:38:workers:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/payment.yaml:42:    args: ["cmd/worker/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/service/services/reservation-service/Dockerfile:44:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/ticket.yaml:44:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/ticket.yaml:45:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/ticket.yaml:48:workers:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/ticket.yaml:52:    args: ["cmd/worker/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/concert.yaml:28:  apiEnv:
+/Users/danghamo/Documents/gituhb/medikong/gitops/values/services/concert.yaml:29:    - name: UVICORN_WORKERS
+/Users/danghamo/Documents/gituhb/medikong/service/services/reservation-service/app/config.py:10:    uvicorn_workers: int = 2
+/Users/danghamo/Documents/gituhb/medikong/service/services/ticket-service/Dockerfile:44:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/service/services/notification-service/Dockerfile:44:CMD ["python", "cmd/server/main.py"]
+/Users/danghamo/Documents/gituhb/medikong/service/services/ticket-service/app/config.py:10:    uvicorn_workers = int(os.getenv("UVICORN_WORKERS", "2"))
+/Users/danghamo/Documents/gituhb/medikong/service/services/notification-service/app/config.py:16:    uvicorn_workers = int(os.getenv("UVICORN_WORKERS", "2"))

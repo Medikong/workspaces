@@ -1,0 +1,3 @@
+NAME                           READY   STATUS    RESTARTS   AGE     IP            NODE              NOMINATED NODE   READINESS GATES
+auth-db-0                      1/1     Running   0          4h11m   10.244.3.63   desktop-worker2   <none>           <none>
+auth-service-d94965ddb-hzbt9   1/1     Running   0          5m8s    10.244.2.78   desktop-worker    <none>           <none>

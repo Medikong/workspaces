@@ -1,0 +1,40 @@
+[
+  {
+    "capacity_step": "auth_rps_30",
+    "target_rps": 30,
+    "measured_avg_rps": 15.0,
+    "requests": 899,
+    "p50_ms": 54.389958,
+    "p95_ms": 264.14058309999996,
+    "p99_ms": 491.9898166599978,
+    "avg_ms": 81.30978193993333,
+    "min_ms": 49.083417,
+    "max_ms": 934.827876,
+    "error_rate": 0,
+    "checks_rate": 1,
+    "cpu_usage_m_avg": 646.1278000222242,
+    "cpu_usage_m_min": 4.559234,
+    "cpu_usage_m_max": 1093.258635,
+    "cpu_throttling_avg": 0,
+    "request_candidate_m": 924
+  },
+  {
+    "capacity_step": "auth_rps_40",
+    "target_rps": 40,
+    "measured_avg_rps": 35.0,
+    "requests": 2100,
+    "p50_ms": 53.414417,
+    "p95_ms": 115.1593128499999,
+    "p99_ms": 224.43357607999997,
+    "avg_ms": 62.360584513809556,
+    "min_ms": 48.272042,
+    "max_ms": 333.526041,
+    "error_rate": 0,
+    "checks_rate": 1,
+    "cpu_usage_m_avg": 1736.3535317309552,
+    "cpu_usage_m_min": 1093.258635,
+    "cpu_usage_m_max": 2035.324039,
+    "cpu_throttling_avg": 0,
+    "request_candidate_m": 2481
+  }
+]

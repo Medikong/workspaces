@@ -1,0 +1,120 @@
+
+running (03m31.4s), 0000/0400 VUs, 3603 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   2% ] 0000/0400 VUs  0m05.0s/5m0s  001.73 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m10.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m25.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m40.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m55.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m10.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m25.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m40.0s     
+capacity-baseline-notification • [   0% ] waiting        41m55.0s     
+
+running (03m32.4s), 0000/0400 VUs, 3604 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   2% ] 0000/0400 VUs  0m06.0s/5m0s  001.91 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m09.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m24.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m39.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m54.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m09.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m24.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m39.0s     
+capacity-baseline-notification • [   0% ] waiting        41m54.0s     
+
+running (03m33.4s), 0000/0400 VUs, 3607 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   2% ] 0000/0400 VUs  0m07.0s/5m0s  002.38 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m08.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m23.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m38.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m53.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m08.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m23.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m38.0s     
+capacity-baseline-notification • [   0% ] waiting        41m53.0s     
+
+running (03m34.4s), 0000/0400 VUs, 3609 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   3% ] 0000/0400 VUs  0m08.0s/5m0s  002.65 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m07.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m22.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m37.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m52.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m07.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m22.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m37.0s     
+capacity-baseline-notification • [   0% ] waiting        41m52.0s     
+
+running (03m35.4s), 0000/0400 VUs, 3612 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   3% ] 0000/0400 VUs  0m09.0s/5m0s  003.00 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m06.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m21.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m36.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m51.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m06.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m21.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m36.0s     
+capacity-baseline-notification • [   0% ] waiting        41m51.0s     
+
+running (03m36.4s), 0000/0400 VUs, 3615 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   3% ] 0000/0400 VUs  0m10.0s/5m0s  003.32 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m05.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m20.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m35.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m50.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m05.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m20.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m35.0s     
+capacity-baseline-notification • [   0% ] waiting        41m50.0s     
+
+running (03m37.4s), 0001/0400 VUs, 3618 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   4% ] 0001/0400 VUs  0m11.0s/5m0s  003.70 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m04.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m19.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m34.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m49.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m04.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m19.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m34.0s     
+capacity-baseline-notification • [   0% ] waiting        41m49.0s     
+
+running (03m38.4s), 0000/0400 VUs, 3622 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   4% ] 0000/0400 VUs  0m12.0s/5m0s  003.96 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m03.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m18.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m33.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m48.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m03.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m18.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m33.0s     
+capacity-baseline-notification • [   0% ] waiting        41m48.0s     
+
+running (03m39.4s), 0000/0400 VUs, 3626 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   4% ] 0000/0400 VUs  0m13.0s/5m0s  004.28 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m02.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m17.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m32.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m47.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m02.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m17.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m32.0s     
+capacity-baseline-notification • [   0% ] waiting        41m47.0s     
+
+running (03m40.4s), 0000/0400 VUs, 3631 complete and 0 interrupted iterations
+capacity-baseline-auth         ✓ [ 100% ] 0000/0400 VUs  3m0s          39.99 iters/s
+capacity-baseline-concert-r...   [   5% ] 0000/0400 VUs  0m14.0s/5m0s  004.65 iters/s
+capacity-baseline-concert-d... • [   0% ] waiting        5m01.0s      
+capacity-baseline-concert-c... • [   0% ] waiting        10m16.0s     
+capacity-baseline-concert-d... • [   0% ] waiting        15m31.0s     
+capacity-baseline-concert-s... • [   0% ] waiting        20m46.0s     
+capacity-baseline-reservation  • [   0% ] waiting        26m01.0s     
+capacity-baseline-payment      • [   0% ] waiting        31m16.0s     
+capacity-baseline-ticket       • [   0% ] waiting        36m31.0s     
+capacity-baseline-notification • [   0% ] waiting        41m46.0s     

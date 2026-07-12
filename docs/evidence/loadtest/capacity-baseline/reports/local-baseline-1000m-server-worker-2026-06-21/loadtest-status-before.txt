@@ -1,0 +1,5 @@
+NAME                                                     STATUS     COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                 SELECTOR
+job.batch/read-api-loadtest-read-manual-20260621050421   Complete   1/1           9m15s      69m   runner       localhost:5001/read-api-loadtest:dev   batch.kubernetes.io/controller-uid=3211d9cd-381b-4ee9-9638-83e114f4f14d
+
+NAME                                                     READY   STATUS      RESTARTS   AGE   IP             NODE              NOMINATED NODE   READINESS GATES
+pod/read-api-loadtest-read-manual-20260621050421-zx6zm   0/1     Completed   0          69m   10.244.1.118   desktop-worker3   <none>           <none>

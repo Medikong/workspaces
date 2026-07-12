@@ -1,0 +1,403 @@
+{
+  "event": "loadtest_run_report",
+  "timestamp": "2026-06-21T10:40:36.385Z",
+  "test_type": "loadtest",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621103553-7s2j9",
+  "scenario": "service-hpa-spike-load-test",
+  "report_phase": "final",
+  "measured_service": null,
+  "environment": "local",
+  "target": "local",
+  "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "status": "FAIL",
+  "execution_conditions": {
+    "loadtest_run_id": "read-api-loadtest-read-manual-20260621103553-7s2j9",
+    "phase": "summary",
+    "scenario": "service-hpa-spike-load-test",
+    "environment": "local",
+    "target": "local",
+    "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+    "revision": "dev",
+    "image": "localhost:5001/read-api-loadtest:dev",
+    "image_tag": "dev",
+    "release": "read-api-loadtest",
+    "namespace": "loadtest",
+    "k6_command": "k6",
+    "k6_command_args": [
+      "run",
+      "--log-format=raw",
+      "/loadtest/scenarios/service-hpa-spike-load-test.js"
+    ],
+    "k6_extra_args": [],
+    "k6_output": "",
+    "k6_scenario_file": "/loadtest/scenarios/service-hpa-spike-load-test.js",
+    "executor": "ramping-arrival-rate",
+    "vus": 5,
+    "rate": 1,
+    "time_unit": "1s",
+    "pre_allocated_vus": 600,
+    "max_vus": 1200,
+    "duration": "5m",
+    "service_steps": [
+      "notification-service"
+    ],
+    "stages": [
+      {
+        "duration": "30s",
+        "target": 40,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 240,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 320,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 400,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 240,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "graceful_stop": "15s",
+    "think_time_seconds": 0,
+    "ticket_list_limit": 20,
+    "active_customer_count": 200,
+    "payment_amount": 50000,
+    "concert_limit": 20,
+    "performance_limit": 20,
+    "seat_limit": 200,
+    "threshold_http_req_failed_rate": 0.01,
+    "threshold_http_req_duration_p95_ms": 150,
+    "threshold_http_req_duration_p99_ms": 300,
+    "threshold_checks_rate": 0.99,
+    "capacity_baseline_target_utilization": 0.7,
+    "capacity_baseline_seed_method": "deterministic_bulk_insert",
+    "capacity_baseline_fixed_conditions": {
+      "cooldownInterpretation": "recovery_observation_only",
+      "hpa": "enabled",
+      "maxReplicas": "4",
+      "minReplicas": "1",
+      "targetCPUUtilization": "70"
+    },
+    "capacity_baseline_schema_revisions": {
+      "auth-service": "model-v1",
+      "concert-service": "model-v1",
+      "notification-service": "model-v1",
+      "payment-service": "model-v1",
+      "reservation-service": "model-v1",
+      "ticket-service": "model-v1"
+    },
+    "capacity_baseline_seed_row_counts": {
+      "admin_count": 1,
+      "concert_count": 270,
+      "customer_count": 100000,
+      "notification_count": 354000,
+      "payment_count": 184000,
+      "payment_event_count": 184000,
+      "payment_pool_count": 184000,
+      "performance_count": 810,
+      "provider_count": 1,
+      "reservation_history_count": 261000,
+      "seat_count": 567000,
+      "seat_grade_count": 3240,
+      "ticket_count": 170000,
+      "ticket_issue_pool_count": 170000
+    },
+    "capacity_baseline_resource_observation": {
+      "enabled": true,
+      "source": "metrics-api",
+      "prometheusUrl": "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090",
+      "queryWindow": "1m",
+      "pollEveryIterations": 5,
+      "targets": [
+        {
+          "service": "auth-service",
+          "namespace": "ticketing-auth",
+          "podSelector": "app.kubernetes.io/name=auth-service",
+          "podRegex": "auth-service-.*"
+        },
+        {
+          "service": "concert-service",
+          "namespace": "ticketing-concert",
+          "podSelector": "app.kubernetes.io/name=concert-service",
+          "podRegex": "concert-service-.*"
+        },
+        {
+          "service": "reservation-service",
+          "namespace": "ticketing-reservation",
+          "podSelector": "app.kubernetes.io/name=reservation-service",
+          "podRegex": "reservation-service-.*"
+        },
+        {
+          "service": "payment-service",
+          "namespace": "ticketing-payment",
+          "podSelector": "app.kubernetes.io/name=payment-service",
+          "podRegex": "payment-service-.*"
+        },
+        {
+          "service": "ticket-service",
+          "namespace": "ticketing-ticket",
+          "podSelector": "app.kubernetes.io/name=ticket-service",
+          "podRegex": "ticket-service-.*"
+        },
+        {
+          "service": "notification-service",
+          "namespace": "ticketing-notification",
+          "podSelector": "app.kubernetes.io/name=notification-service",
+          "podRegex": "notification-service-.*"
+        }
+      ]
+    },
+    "measurement_window_source": "grafana_time_range",
+    "traffic_model_preset": "notification-400rps",
+    "dataset_profile": "capacity-baseline",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "dataset_title_prefix": "Medikong Loadtest",
+    "dataset_concerts": 270,
+    "dataset_performances_per_concert": 3,
+    "dataset_total_performances": 810,
+    "dataset_seat_sections": 1,
+    "dataset_seat_rows": 20,
+    "dataset_seats_per_row": 35,
+    "dataset_seats_per_performance": 700,
+    "dataset_total_seats": 567000,
+    "dataset_discovery_limit": 200,
+    "customer_pool_size": 100000,
+    "customer_pool_revision": "capacity-baseline-half-year-early-growth-v2",
+    "customer_pool_email_prefix": "capacity-customer",
+    "customer_pool_email_domain": "loadtest.medikong.local"
+  },
+  "scenario_report": {
+    "report_type": "service_hpa_spike",
+    "scenario": "service-hpa-spike-load-test",
+    "traffic_model_preset": "notification-400rps",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "seed_method": "deterministic_bulk_insert",
+    "service_steps": [
+      "notification-service"
+    ],
+    "default_stages": [
+      {
+        "duration": "30s",
+        "target": 40,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 240,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 320,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 400,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 240,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "stage_contract": {
+      "order": [
+        "warmup",
+        "baseline",
+        "spike",
+        "overload",
+        "cooldown"
+      ],
+      "warmup": "excluded_from_decision",
+      "cooldown": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    "resource_observation_source": "metrics-api",
+    "scale_out_results": [
+      {
+        "service": "notification-service",
+        "namespace": "ticketing-notification",
+        "baseline_replicas": 1,
+        "max_desired_replicas": 2,
+        "hpa_decision_seconds": 148.583,
+        "scale_out_ready_seconds": 160.48
+      }
+    ],
+    "service_hpa_results": [
+      {
+        "service": "notification-service",
+        "namespace": "ticketing-notification",
+        "baseline_replicas": 1,
+        "max_desired_replicas": 2,
+        "hpa_decision_seconds": 148.583,
+        "scale_out_ready_seconds": 160.48
+      }
+    ],
+    "stage_results": [
+      {
+        "service": "notification-service",
+        "api": "GET /notifications",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_warmup_rps_40",
+        "stage_role": "warmup",
+        "warmup_excluded": true,
+        "target_rps": 40,
+        "duration": "30s",
+        "slo_p95_ms": 80,
+        "p95_ms": 6.2362,
+        "p99_ms": 19.99399449999997,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "excluded",
+        "decision_reasons": []
+      },
+      {
+        "service": "notification-service",
+        "api": "GET /notifications",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_baseline_rps_240",
+        "stage_role": "baseline",
+        "warmup_excluded": false,
+        "target_rps": 240,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 6.692685299999999,
+        "p99_ms": 30.59935075,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "notification-service",
+        "api": "GET /notifications",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_spike_rps_320",
+        "stage_role": "spike",
+        "warmup_excluded": false,
+        "target_rps": 320,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 22.520431149999997,
+        "p99_ms": 341.6829427199998,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "limit_candidate",
+        "decision_reasons": [
+          "slo_p99_ms"
+        ]
+      },
+      {
+        "service": "notification-service",
+        "api": "GET /notifications",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_overload_rps_400",
+        "stage_role": "overload",
+        "warmup_excluded": false,
+        "target_rps": 400,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 17.691258199999954,
+        "p99_ms": 47.225099679999936,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "notification-service",
+        "api": "GET /notifications",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_cooldown_rps_240",
+        "stage_role": "cooldown",
+        "warmup_excluded": false,
+        "target_rps": 240,
+        "duration": "60s",
+        "slo_p95_ms": 80,
+        "p95_ms": 13.79228174999998,
+        "p99_ms": 42.31554855,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      }
+    ],
+    "first_limit_candidate": {
+      "service": "notification-service",
+      "api": "GET /notifications",
+      "step": "capacity_baseline.notification.list",
+      "stage": "notification_spike_rps_320",
+      "stage_role": "spike",
+      "warmup_excluded": false,
+      "target_rps": 320,
+      "duration": "60s",
+      "slo_p95_ms": 80,
+      "p95_ms": 22.520431149999997,
+      "p99_ms": 341.6829427199998,
+      "error_rate": 0,
+      "checks_pass_rate": 1,
+      "http_reqs_count": null,
+      "http_reqs_rate": null,
+      "rps": null,
+      "cpu_usage_m": 0,
+      "cpu_throttling": 0,
+      "status": "limit_candidate",
+      "decision_reasons": [
+        "slo_p99_ms"
+      ]
+    },
+    "recovery_observations": [
+      {
+        "service": "notification-service",
+        "step": "capacity_baseline.notification.list",
+        "stage": "notification_cooldown_rps_240",
+        "target_rps": 240,
+        "p95_ms": 13.79228174999998,
+        "p99_ms": 42.31554855,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "recovered_within_thresholds": true,
+        "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+      }
+    ]
+  }
+}

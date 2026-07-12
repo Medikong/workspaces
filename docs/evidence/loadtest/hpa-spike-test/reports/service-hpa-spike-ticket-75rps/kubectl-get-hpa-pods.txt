@@ -1,0 +1,7 @@
+NAME                                                 REFERENCE                   TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/ticket-service   Deployment/ticket-service   cpu: 54%/70%   1         4         1          77m
+
+NAME                                             READY   STATUS             RESTARTS      AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/ticket-db-0                                  1/1     Running            0             8h      10.244.2.57    desktop-worker    <none>           <none>
+pod/ticket-service-64d6bf7d58-bzfq5              1/1     Running            0             7m13s   10.244.1.201   desktop-worker3   <none>           <none>
+pod/ticket-service-background-5bfd7c7d68-4gdc8   0/1     CrashLoopBackOff   2 (20s ago)   7m13s   10.244.2.117   desktop-worker    <none>           <none>

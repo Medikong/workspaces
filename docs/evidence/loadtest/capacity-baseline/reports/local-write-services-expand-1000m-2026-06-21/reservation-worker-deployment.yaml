@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "4"
+    meta.helm.sh/release-name: reservation-local-docker-desktop
+    meta.helm.sh/release-namespace: ticketing-reservation
+  creationTimestamp: "2026-06-21T06:07:20Z"
+  generation: 4
+  labels:
+    app.kubernetes.io/instance: reservation-local-docker-desktop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: reservation-service-background
+    app.kubernetes.io/part-of: medikong
+    medikong.io/environment: local-capacity-baseline
+    medikong.io/workload: background
+    ticketing.io/service: reservation
+    ticketing.io/tier: api
+  name: reservation-service-background
+  namespace: ticketing-reservation
+  resourceVersion: "2557429"
+  uid: 93d22fe0-87cc-443d-93ca-93519b15c64b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: reservation-service-background
+      medikong.io/workload: background
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        medikong.io/dev-rollout-id: capacity-baseline-20260621T081819Z
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 25m
+        sidecar.istio.io/proxyMemory: 64Mi
+        sidecar.istio.io/proxyMemoryLimit: 256Mi
+      labels:
+        app: reservation-service-background
+        app.kubernetes.io/instance: reservation-local-docker-desktop
+        app.kubernetes.io/name: reservation-service-background
+        medikong.io/environment: local-capacity-baseline
+        medikong.io/workload: background
+        sidecar.istio.io/inject: "true"
+        ticketing.io/service: reservation
+        ticketing.io/tier: api
+        version: v1
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - args:
+        - cmd/worker/main.py
+        command:
+        - python
+        env:
+        - name: SERVICE_VERSION
+          value: dev
+        - name: SERVICE_ENVIRONMENT
+          value: local-capacity-baseline
+        - name: SQLALCHEMY_POOL_SIZE
+          value: "35"
+        - name: SQLALCHEMY_MAX_OVERFLOW
+          value: "20"
+        - name: SQLALCHEMY_POOL_TIMEOUT_SECONDS
+          value: "15"
+        - name: SQLALCHEMY_POOL_RECYCLE_SECONDS
+          value: "1800"
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://opentelemetry-collector.observability.svc.cluster.local:4317
+        - name: DATABASE_URL
+          value: postgresql+psycopg://user:password@reservation-db:5432/reservation_db
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: kafka.ticketing-messaging.svc.cluster.local:9092
+        - name: RESERVATION_CREATED_TOPIC
+          value: reservation-created
+        - name: RESERVATION_EXPIRED_TOPIC
+          value: reservation-expired
+        - name: TICKET_ISSUED_TOPIC
+          value: ticket-issued
+        image: localhost:5001/reservation-service:dev
+        imagePullPolicy: Always
+        name: background
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: "1"
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: reservation-service
+      serviceAccountName: reservation-service
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-06-21T06:07:22Z"
+    lastUpdateTime: "2026-06-21T06:07:22Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-06-21T06:07:21Z"
+    lastUpdateTime: "2026-06-21T08:18:24Z"
+    message: ReplicaSet "reservation-service-background-59694fb8cf" has successfully
+      progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 4
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

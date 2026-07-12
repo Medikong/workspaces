@@ -1,0 +1,7 @@
+NAMESPACE                NAME                   REFERENCE                         TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+ticketing-auth           auth-service           Deployment/auth-service           cpu: 35%/70%   1         4         2          13m
+ticketing-concert        concert-service        Deployment/concert-service        cpu: 0%/70%    1         4         1          13m
+ticketing-notification   notification-service   Deployment/notification-service   cpu: 0%/70%    1         4         1          13m
+ticketing-payment        payment-service        Deployment/payment-service        cpu: 0%/70%    1         4         1          13m
+ticketing-reservation    reservation-service    Deployment/reservation-service    cpu: 0%/70%    1         4         1          13m
+ticketing-ticket         ticket-service         Deployment/ticket-service         cpu: 0%/70%    1         4         1          13m

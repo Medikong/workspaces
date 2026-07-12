@@ -1,0 +1,4 @@
+NAME                                              READY   STATUS    RESTARTS   AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+reservation-db-0                                  1/1     Running   0          4h11m   10.244.1.86    desktop-worker3   <none>           <none>
+reservation-service-77b6f5799c-998z9              1/1     Running   0          5m5s    10.244.1.140   desktop-worker3   <none>           <none>
+reservation-service-background-64b57b6789-x9mhf   1/1     Running   0          5m5s    10.244.2.80    desktop-worker    <none>           <none>

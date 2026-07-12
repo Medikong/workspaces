@@ -1,0 +1,11 @@
+$ SCENARIO=service-hpa-spike-load-test PRESET=concert-140rps task --dir /Users/danghamo/Documents/gituhb/medikong/gitops dev:loadtest
+Creating loadtest Job scenario=service-hpa-spike-load-test job=read-api-loadtest-read-manual-20260621121910
+Release "read-api-loadtest" has been upgraded. Happy Helming!
+NAME: read-api-loadtest
+LAST DEPLOYED: Sun Jun 21 21:19:10 2026
+NAMESPACE: loadtest
+STATUS: deployed
+REVISION: 200
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Loadtest Job completed job=read-api-loadtest-read-manual-20260621121910

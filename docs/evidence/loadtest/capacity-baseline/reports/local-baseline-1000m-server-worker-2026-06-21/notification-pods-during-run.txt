@@ -1,0 +1,4 @@
+NAME                                              READY   STATUS             RESTARTS      AGE     IP            NODE              NOMINATED NODE   READINESS GATES
+notification-db-0                                 1/1     Running            0             4h11m   10.244.3.62   desktop-worker2   <none>           <none>
+notification-service-7f664c897d-p99p2             1/1     Running            0             5m6s    10.244.2.79   desktop-worker    <none>           <none>
+notification-service-background-957bd7768-vm7fs   0/1     CrashLoopBackOff   4 (56s ago)   5m5s    10.244.3.89   desktop-worker2   <none>           <none>

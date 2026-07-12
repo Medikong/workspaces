@@ -1,0 +1,8 @@
+NAME                                                       REFERENCE                         TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/notification-service   Deployment/notification-service   cpu: 48%/70%   1         4         2          85m
+
+NAME                                                   READY   STATUS             RESTARTS      AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/notification-db-0                                  1/1     Running            0             8h      10.244.3.62    desktop-worker2   <none>           <none>
+pod/notification-service-78bdcfc759-f8l5q              1/1     Running            0             7m22s   10.244.1.204   desktop-worker3   <none>           <none>
+pod/notification-service-78bdcfc759-j4wwh              1/1     Running            0             2m7s    10.244.3.132   desktop-worker2   <none>           <none>
+pod/notification-service-background-68c57bdd45-6qjws   0/1     CrashLoopBackOff   5 (63s ago)   7m22s   10.244.3.130   desktop-worker2   <none>           <none>

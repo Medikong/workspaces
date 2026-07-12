@@ -1,0 +1,3 @@
+helm-template-reservation-local-capacity-baseline.yaml | reservation-service-background | command=python | args=cmd/worker/main.py | has_uvicorn_workers=false
+helm-template-payment-local-capacity-baseline.yaml | payment-service-background | command=python | args=cmd/worker/main.py | has_uvicorn_workers=false
+helm-template-ticket-local-capacity-baseline.yaml | ticket-service-background | command=python | args=cmd/worker/main.py | has_uvicorn_workers=false

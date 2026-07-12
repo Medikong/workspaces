@@ -1,0 +1,10 @@
+NAME                                         READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS        IMAGES                               SELECTOR
+deployment.apps/payment-service              1/1     1            1           17h    payment-service   localhost:5001/payment-service:dev   app=payment-service
+deployment.apps/payment-service-background   0/1     1            0           155m   background        localhost:5001/payment-service:dev   app=payment-service-background,medikong.io/workload=background
+deployment.apps/pgadmin                      1/1     1            1           17h    pgadmin           dpage/pgadmin4:8.14                  app.kubernetes.io/name=pgadmin
+
+NAME                                              READY   STATUS             RESTARTS        AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/payment-db-0                                  1/1     Running            0               6h32m   10.244.3.60    desktop-worker2   <none>           <none>
+pod/payment-service-7cfd678474-2pjdg              1/1     Running            1 (9m9s ago)    24m     10.244.1.148   desktop-worker3   <none>           <none>
+pod/payment-service-background-58d6697c65-drvdw   0/1     CrashLoopBackOff   6 (3m18s ago)   24m     10.244.3.95    desktop-worker2   <none>           <none>
+pod/pgadmin-74bfdb7477-xk7qp                      1/1     Running            0               6h32m   10.244.3.57    desktop-worker2   <none>           <none>

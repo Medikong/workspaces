@@ -1,0 +1,4 @@
+notification-worker-deployment.yaml | notification-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/notification-service:dev
+payment-worker-deployment.yaml | payment-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/payment-service:dev
+reservation-worker-deployment.yaml | reservation-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/reservation-service:dev
+ticket-worker-deployment.yaml | ticket-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/ticket-service:dev

@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621062618-full-9bvvm",
+  "scenario": "capacity-baseline-load-test",
+  "measured_service": null,
+  "execution_conditions": {
+    "traffic_model_preset": "local-baseline-1000m",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "fixed_conditions": {
+      "authTokenTtlSeconds": "7200",
+      "cpuLimit": "none",
+      "cpuRequest": "1000m",
+      "hpa": "disabled",
+      "replicas": "1"
+    }
+  },
+  "services": [
+    {
+      "service": "auth-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 30
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        }
+      ],
+      "max_valid_rps": 40,
+      "cpu_usage_m_at_max_valid_rps": 1476.441056885722,
+      "request_candidate_m": 2110,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "auth_rps_40"
+    },
+    {
+      "service": "concert-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        }
+      ],
+      "max_valid_rps": 160,
+      "cpu_usage_m_at_max_valid_rps": 779.0248990267879,
+      "request_candidate_m": 1113,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "concert_rps_160"
+    },
+    {
+      "service": "reservation-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 120
+        }
+      ],
+      "max_valid_rps": 120,
+      "cpu_usage_m_at_max_valid_rps": 512.1850063400117,
+      "request_candidate_m": 732,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "reservation_rps_120"
+    },
+    {
+      "service": "payment-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 5
+        },
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 30
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        }
+      ],
+      "max_valid_rps": 40,
+      "cpu_usage_m_at_max_valid_rps": 145.18872808571504,
+      "request_candidate_m": 208,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "payment_rps_40"
+    },
+    {
+      "service": "ticket-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 5
+        },
+        {
+          "duration": "60s",
+          "target": 10
+        },
+        {
+          "duration": "60s",
+          "target": 20
+        },
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 60
+        }
+      ],
+      "max_valid_rps": 60,
+      "cpu_usage_m_at_max_valid_rps": 467.94796260999624,
+      "request_candidate_m": 669,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "ticket_rps_60"
+    },
+    {
+      "service": "notification-service",
+      "stages": [
+        {
+          "duration": "60s",
+          "target": 40
+        },
+        {
+          "duration": "60s",
+          "target": 80
+        },
+        {
+          "duration": "60s",
+          "target": 160
+        },
+        {
+          "duration": "60s",
+          "target": 240
+        },
+        {
+          "duration": "60s",
+          "target": 320
+        }
+      ],
+      "max_valid_rps": 320,
+      "cpu_usage_m_at_max_valid_rps": 588.7111297238059,
+      "request_candidate_m": 842,
+      "target_utilization": 0.7,
+      "status": "candidate_ready",
+      "basis_capacity_step": "notification_rps_320"
+    }
+  ]
+}

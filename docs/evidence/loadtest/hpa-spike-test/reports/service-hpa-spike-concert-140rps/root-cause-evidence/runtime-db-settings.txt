@@ -1,0 +1,20 @@
+## concert-service runtime env
+SQLALCHEMY_POOL_SIZE=35
+SQLALCHEMY_MAX_OVERFLOW=10
+SQLALCHEMY_POOL_TIMEOUT_SECONDS=15
+SQLALCHEMY_POOL_RECYCLE_SECONDS=1800
+OTEL_TRACES_EXPORTER=otlp
+OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector.observability.svc.cluster.local:4317
+OTEL_PYTHON_FASTAPI_EXCLUDED_URLS=/health,/healthz,/readyz,/metrics
+PYROSCOPE_ENABLED=true
+PYROSCOPE_SERVER_ADDRESS=http://pyroscope.observability.svc.cluster.local:4040
+PYROSCOPE_SAMPLE_RATE=25
+PYROSCOPE_SPAN_PROFILES_ENABLED=true
+PYROSCOPE_ONCPU=true
+PYROSCOPE_GIL_ONLY=true
+DATABASE_URL=postgresql+psycopg://user:password@concert-db:5432/concert_db
+UVICORN_WORKERS=2
+
+## concert-db live settings after run
+200
+76

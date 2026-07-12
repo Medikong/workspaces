@@ -1,0 +1,68 @@
+[
+  {
+    "service": "auth-service",
+    "namespace": "ticketing-auth",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  },
+  {
+    "service": "concert-service",
+    "namespace": "ticketing-concert",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  },
+  {
+    "service": "reservation-service",
+    "namespace": "ticketing-reservation",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  },
+  {
+    "service": "payment-service",
+    "namespace": "ticketing-payment",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  },
+  {
+    "service": "ticket-service",
+    "namespace": "ticketing-ticket",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  },
+  {
+    "service": "notification-service",
+    "namespace": "ticketing-notification",
+    "replicas": 1,
+    "cpu_request": "500m",
+    "cpu_limit": null,
+    "proxy_cpu_limit": null,
+    "node_selector": null,
+    "maxSurge": 0,
+    "maxUnavailable": 1
+  }
+]

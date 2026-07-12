@@ -1,0 +1,5 @@
+NAME                                         READY   STATUS    RESTARTS      AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+payment-db-0                                 1/1     Running   0             4h11m   10.244.3.60    desktop-worker2   <none>           <none>
+payment-service-6fbbc4cbbd-n4lh6             1/1     Running   0             5m7s    10.244.1.138   desktop-worker3   <none>           <none>
+payment-service-background-7f85f8d55-bj5hj   1/1     Running   2 (42s ago)   5m6s    10.244.1.139   desktop-worker3   <none>           <none>
+pgadmin-74bfdb7477-xk7qp                     1/1     Running   0             4h11m   10.244.3.57    desktop-worker2   <none>           <none>

@@ -1,0 +1,6 @@
+Job completed: read-api-loadtest-read-manual-20260621133024
+Pod: read-api-loadtest-read-manual-20260621133024-lr7tl
+Pod start: 2026-06-21T13:30:25Z
+Pod finish: 2026-06-21T13:37:32Z
+Container exit code: 0
+K6 threshold exit: 99

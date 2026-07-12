@@ -1,0 +1,378 @@
+{
+  "event": "loadtest_run_report",
+  "timestamp": "2026-06-21T10:17:41.136Z",
+  "test_type": "loadtest",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621101259-5vcqs",
+  "scenario": "service-hpa-spike-load-test",
+  "report_phase": "final",
+  "measured_service": null,
+  "environment": "local",
+  "target": "local",
+  "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "status": "PASS",
+  "execution_conditions": {
+    "loadtest_run_id": "read-api-loadtest-read-manual-20260621101259-5vcqs",
+    "phase": "summary",
+    "scenario": "service-hpa-spike-load-test",
+    "environment": "local",
+    "target": "local",
+    "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+    "revision": "dev",
+    "image": "localhost:5001/read-api-loadtest:dev",
+    "image_tag": "dev",
+    "release": "read-api-loadtest",
+    "namespace": "loadtest",
+    "k6_command": "k6",
+    "k6_command_args": [
+      "run",
+      "--log-format=raw",
+      "/loadtest/scenarios/service-hpa-spike-load-test.js"
+    ],
+    "k6_extra_args": [],
+    "k6_output": "",
+    "k6_scenario_file": "/loadtest/scenarios/service-hpa-spike-load-test.js",
+    "executor": "ramping-arrival-rate",
+    "vus": 5,
+    "rate": 1,
+    "time_unit": "1s",
+    "pre_allocated_vus": 400,
+    "max_vus": 1000,
+    "duration": "5m",
+    "service_steps": [
+      "reservation-service"
+    ],
+    "stages": [
+      {
+        "duration": "30s",
+        "target": 20,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 80,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 120,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 140,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 80,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "graceful_stop": "15s",
+    "think_time_seconds": 0,
+    "ticket_list_limit": 20,
+    "active_customer_count": 200,
+    "payment_amount": 50000,
+    "concert_limit": 20,
+    "performance_limit": 20,
+    "seat_limit": 200,
+    "threshold_http_req_failed_rate": 0.01,
+    "threshold_http_req_duration_p95_ms": 150,
+    "threshold_http_req_duration_p99_ms": 300,
+    "threshold_checks_rate": 0.99,
+    "capacity_baseline_target_utilization": 0.7,
+    "capacity_baseline_seed_method": "deterministic_bulk_insert",
+    "capacity_baseline_fixed_conditions": {
+      "cooldownInterpretation": "recovery_observation_only",
+      "hpa": "enabled",
+      "maxReplicas": "4",
+      "minReplicas": "1",
+      "targetCPUUtilization": "70"
+    },
+    "capacity_baseline_schema_revisions": {
+      "auth-service": "model-v1",
+      "concert-service": "model-v1",
+      "notification-service": "model-v1",
+      "payment-service": "model-v1",
+      "reservation-service": "model-v1",
+      "ticket-service": "model-v1"
+    },
+    "capacity_baseline_seed_row_counts": {
+      "admin_count": 1,
+      "concert_count": 270,
+      "customer_count": 100000,
+      "notification_count": 354000,
+      "payment_count": 184000,
+      "payment_event_count": 184000,
+      "payment_pool_count": 184000,
+      "performance_count": 810,
+      "provider_count": 1,
+      "reservation_history_count": 261000,
+      "seat_count": 567000,
+      "seat_grade_count": 3240,
+      "ticket_count": 170000,
+      "ticket_issue_pool_count": 170000
+    },
+    "capacity_baseline_resource_observation": {
+      "enabled": true,
+      "source": "metrics-api",
+      "prometheusUrl": "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090",
+      "queryWindow": "1m",
+      "pollEveryIterations": 5,
+      "targets": [
+        {
+          "service": "auth-service",
+          "namespace": "ticketing-auth",
+          "podSelector": "app.kubernetes.io/name=auth-service",
+          "podRegex": "auth-service-.*"
+        },
+        {
+          "service": "concert-service",
+          "namespace": "ticketing-concert",
+          "podSelector": "app.kubernetes.io/name=concert-service",
+          "podRegex": "concert-service-.*"
+        },
+        {
+          "service": "reservation-service",
+          "namespace": "ticketing-reservation",
+          "podSelector": "app.kubernetes.io/name=reservation-service",
+          "podRegex": "reservation-service-.*"
+        },
+        {
+          "service": "payment-service",
+          "namespace": "ticketing-payment",
+          "podSelector": "app.kubernetes.io/name=payment-service",
+          "podRegex": "payment-service-.*"
+        },
+        {
+          "service": "ticket-service",
+          "namespace": "ticketing-ticket",
+          "podSelector": "app.kubernetes.io/name=ticket-service",
+          "podRegex": "ticket-service-.*"
+        },
+        {
+          "service": "notification-service",
+          "namespace": "ticketing-notification",
+          "podSelector": "app.kubernetes.io/name=notification-service",
+          "podRegex": "notification-service-.*"
+        }
+      ]
+    },
+    "measurement_window_source": "grafana_time_range",
+    "traffic_model_preset": "reservation-140rps",
+    "dataset_profile": "capacity-baseline",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "dataset_title_prefix": "Medikong Loadtest",
+    "dataset_concerts": 270,
+    "dataset_performances_per_concert": 3,
+    "dataset_total_performances": 810,
+    "dataset_seat_sections": 1,
+    "dataset_seat_rows": 20,
+    "dataset_seats_per_row": 35,
+    "dataset_seats_per_performance": 700,
+    "dataset_total_seats": 567000,
+    "dataset_discovery_limit": 200,
+    "customer_pool_size": 100000,
+    "customer_pool_revision": "capacity-baseline-half-year-early-growth-v2",
+    "customer_pool_email_prefix": "capacity-customer",
+    "customer_pool_email_domain": "loadtest.medikong.local"
+  },
+  "scenario_report": {
+    "report_type": "service_hpa_spike",
+    "scenario": "service-hpa-spike-load-test",
+    "traffic_model_preset": "reservation-140rps",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "seed_method": "deterministic_bulk_insert",
+    "service_steps": [
+      "reservation-service"
+    ],
+    "default_stages": [
+      {
+        "duration": "30s",
+        "target": 20,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 80,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 120,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 140,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 80,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "stage_contract": {
+      "order": [
+        "warmup",
+        "baseline",
+        "spike",
+        "overload",
+        "cooldown"
+      ],
+      "warmup": "excluded_from_decision",
+      "cooldown": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    "resource_observation_source": "metrics-api",
+    "scale_out_results": [
+      {
+        "service": "reservation-service",
+        "namespace": "ticketing-reservation",
+        "baseline_replicas": 1,
+        "max_desired_replicas": 2,
+        "hpa_decision_seconds": 217.723,
+        "scale_out_ready_seconds": 229.87
+      }
+    ],
+    "service_hpa_results": [
+      {
+        "service": "reservation-service",
+        "namespace": "ticketing-reservation",
+        "baseline_replicas": 1,
+        "max_desired_replicas": 2,
+        "hpa_decision_seconds": 217.723,
+        "scale_out_ready_seconds": 229.87
+      }
+    ],
+    "stage_results": [
+      {
+        "service": "reservation-service",
+        "api": "POST /reservations",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_warmup_rps_20",
+        "stage_role": "warmup",
+        "warmup_excluded": true,
+        "target_rps": 20,
+        "duration": "30s",
+        "slo_p95_ms": 120,
+        "p95_ms": 17.624745299999997,
+        "p99_ms": 30.720290839999993,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "excluded",
+        "decision_reasons": []
+      },
+      {
+        "service": "reservation-service",
+        "api": "POST /reservations",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_baseline_rps_80",
+        "stage_role": "baseline",
+        "warmup_excluded": false,
+        "target_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 10.320666899999996,
+        "p99_ms": 23.678721659999997,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "reservation-service",
+        "api": "POST /reservations",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_spike_rps_120",
+        "stage_role": "spike",
+        "warmup_excluded": false,
+        "target_rps": 120,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 12.680439249999994,
+        "p99_ms": 26.038320329999983,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "reservation-service",
+        "api": "POST /reservations",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_overload_rps_140",
+        "stage_role": "overload",
+        "warmup_excluded": false,
+        "target_rps": 140,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 20.271512799999996,
+        "p99_ms": 33.139022499999996,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "reservation-service",
+        "api": "POST /reservations",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_cooldown_rps_80",
+        "stage_role": "cooldown",
+        "warmup_excluded": false,
+        "target_rps": 80,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 13.756917,
+        "p99_ms": 27.571625,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      }
+    ],
+    "first_limit_candidate": null,
+    "recovery_observations": [
+      {
+        "service": "reservation-service",
+        "step": "capacity_baseline.reservation.create",
+        "stage": "reservation_cooldown_rps_80",
+        "target_rps": 80,
+        "p95_ms": 13.756917,
+        "p99_ms": 27.571625,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "recovered_within_thresholds": true,
+        "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+      }
+    ]
+  }
+}

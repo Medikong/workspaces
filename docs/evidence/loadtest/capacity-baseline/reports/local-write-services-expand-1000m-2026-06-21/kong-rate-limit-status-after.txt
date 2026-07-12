@@ -1,0 +1,5 @@
+ticketing-rate-limit-concerts minute=120 policy=local
+ticketing-rate-limit-reservations minute=120 policy=local
+ticketing-rate-limit-payments minute=120 policy=local
+ticketing-rate-limit-tickets minute=120 policy=local
+ticketing-rate-limit-notifications minute=120 policy=local

@@ -11,6 +11,14 @@
 | `README.md` | 트러블 인덱스, 작성 규칙, frontmatter 기준 |
 | `templates/trouble.md` | 새 트러블 문서 템플릿 |
 | `YYYY-MM-DD-short-title.md` | 개별 트러블 기록 파일 |
+| `short-title/README.md` | 캡처, 로그, 산출물 등 asset이 필요한 트러블 기록 |
+| `short-title/assets/` | 트러블 문서에서 참조하는 이미지, 로그, 보조 증거 |
+
+## 종합 분석
+
+| 문서 | 용도 |
+| --- | --- |
+| [2026-06-22-service-bottleneck-summary.md](../evidence/services/2026-06-22-service-bottleneck-summary.md) | 서비스별 CPU, memory, network I/O, DB/pool 병목과 capacity/HPA/journey 실험 개선 방향 종합 |
 
 ## 트러블 인덱스
 
@@ -28,6 +36,13 @@
 | TROUBLE-010 | triaged | p2 | observability | 로컬 부하테스트 k6 Pod IP 단위 Kong rate limit | [2026-06-16-local-loadtest-kong-ip-rate-limit.md](2026-06-16-local-loadtest-kong-ip-rate-limit.md) |
 | TROUBLE-011 | in_progress | p1 | observability | 부하테스트 중 auth login trace의 미계측 지연 구간 | [2026-06-16-auth-login-trace-latency-under-load.md](2026-06-16-auth-login-trace-latency-under-load.md) |
 | TROUBLE-012 | triaged | p1 | service | 부하테스트 중 ticket-service /tickets/me 전체 목록 조회 과부하 | [2026-06-17-ticket-service-ticket-list-overload.md](2026-06-17-ticket-service-ticket-list-overload.md) |
+| TROUBLE-013 | triaged | p1 | deployment | Rolling Update 중 ECR registry 403으로 서비스 이미지 pull이 반복 실패하는 문제 | [ecr-registry-403/README.md](ecr-registry-403/README.md) |
+| TROUBLE-014 | triaged | p1 | deployment | arm64 노드에서 이미지 manifest 또는 태그 불일치로 pull이 실패하는 문제 | [image-multi-arch-pull-failure/README.md](image-multi-arch-pull-failure/README.md) |
+| TROUBLE-015 | triaged | p1 | service | concert-service catalog API overfetch로 인한 예매 부하테스트 병목 | [2026-06-20-concert-service-catalog-api-overfetch.md](2026-06-20-concert-service-catalog-api-overfetch.md) |
+| TROUBLE-016 | closed | p1 | service | notification-service 알림 목록 전체 materialize로 인한 heavy 사용자 응답 지연 | [2026-06-20-notification-list-full-materialization.md](2026-06-20-notification-list-full-materialization.md) |
+| TROUBLE-017 | closed | p2 | service | payment-service 정산 기준 API의 중복 집계 쿼리와 인덱스 미스매치 | [2026-06-20-payment-service-settlement-query-aggregate-index.md](2026-06-20-payment-service-settlement-query-aggregate-index.md) |
+| TROUBLE-018 | closed | p1 | service | FastAPI uvicorn worker 수 부족으로 capacity-baseline 병목이 발생한 문제 | [2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md](2026-06-21-fastapi-worker-execution-unit-mixed-bottleneck.md) |
+| TROUBLE-019 | open | p1 | service | HPA scale-out 후 DB connection budget 초과가 다시 병목이 된 문제 | [2026-06-21-hpa-scaleout-db-connection-budget.md](2026-06-21-hpa-scaleout-db-connection-budget.md) |
 
 새 트러블을 추가하면 위 표에 한 줄을 추가한다. 해결된 기록도 삭제하지 않고 `status: closed`로 유지한다.
 

@@ -1,0 +1,150 @@
+Name:             concert-db-0
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  default
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Sun, 21 Jun 2026 11:09:54 +0900
+Labels:           app.kubernetes.io/name=concert-db
+                  app.kubernetes.io/part-of=medikong
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=concert-db-65b5cb8f94
+                  statefulset.kubernetes.io/pod-name=concert-db-0
+Annotations:      <none>
+Status:           Running
+IP:               10.244.1.84
+IPs:
+  IP:           10.244.1.84
+Controlled By:  StatefulSet/concert-db
+Containers:
+  postgres:
+    Container ID:  containerd://e2eeedf942a4afbb20e62304398d09203218f29b82fb9cfef4d23c53536185a8
+    Image:         postgres:15
+    Image ID:      docker.io/library/postgres@sha256:67dc02dae6e27fa8b4333df9bfdf15265b33ce04186cd7e65c0b8fe67ee37b97
+    Port:          5432/TCP (postgres)
+    Host Port:     0/TCP (postgres)
+    Args:
+      -c
+      shared_buffers=128MB
+      -c
+      effective_cache_size=512MB
+      -c
+      work_mem=8MB
+      -c
+      maintenance_work_mem=128MB
+      -c
+      max_connections=200
+    State:          Running
+      Started:      Sun, 21 Jun 2026 11:09:55 +0900
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+      memory:   512Mi
+    Readiness:  exec [pg_isready -U user -d concert_db] delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:
+      POSTGRES_USER:      user
+      POSTGRES_PASSWORD:  password
+      POSTGRES_DB:        concert_db
+      PGDATA:             /var/lib/postgresql/data/pgdata
+    Mounts:
+      /var/lib/postgresql/data from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-vp96m (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-concert-db-0
+    ReadOnly:   false
+  kube-api-access-vp96m:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             concert-service-5566b7768f-p7jz5
+Namespace:        ticketing-concert
+Priority:         0
+Service Account:  concert-service
+Node:             desktop-worker2/172.18.0.6
+Start Time:       Sun, 21 Jun 2026 15:16:14 +0900
+Labels:           app=concert-service
+                  app.kubernetes.io/instance=concert-local-docker-desktop
+                  app.kubernetes.io/name=concert-service
+                  medikong.io/environment=local-capacity-baseline
+                  pod-template-hash=5566b7768f
+                  sidecar.istio.io/inject=true
+                  ticketing.io/service=concert
+                  ticketing.io/tier=api
+Annotations:      medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+                  sidecar.istio.io/inject: true
+                  sidecar.istio.io/proxyCPU: 25m
+                  sidecar.istio.io/proxyMemory: 64Mi
+                  sidecar.istio.io/proxyMemoryLimit: 256Mi
+Status:           Running
+IP:               10.244.3.88
+IPs:
+  IP:           10.244.3.88
+Controlled By:  ReplicaSet/concert-service-5566b7768f
+Containers:
+  concert-service:
+    Container ID:   containerd://de79b22e3c22dbf2caab5afd3961459dff1ae7c096d595d1b0ef66cb7de69e23
+    Image:          localhost:5001/concert-service:dev
+    Image ID:       localhost:5001/concert-service@sha256:50d516100d420f0b899eeb9766bc295780d86af40d08d2b2181aebe2ef16bd0c
+    Port:           8082/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Sun, 21 Jun 2026 15:16:14 +0900
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  512Mi
+    Requests:
+      cpu:      1
+      memory:   128Mi
+    Liveness:   http-get http://:http/health delay=15s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:http/health delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      SERVICE_VERSION:                    dev
+      SERVICE_ENVIRONMENT:                local-capacity-baseline
+      SQLALCHEMY_POOL_SIZE:               35
+      SQLALCHEMY_MAX_OVERFLOW:            20
+      SQLALCHEMY_POOL_TIMEOUT_SECONDS:    15
+      SQLALCHEMY_POOL_RECYCLE_SECONDS:    1800
+      OTEL_TRACES_EXPORTER:               otlp
+      OTEL_EXPORTER_OTLP_ENDPOINT:        http://opentelemetry-collector.observability.svc.cluster.local:4317
+      OTEL_PYTHON_FASTAPI_EXCLUDED_URLS:  /health,/healthz,/readyz,/metrics
+      PYROSCOPE_ENABLED:                  true
+      PYROSCOPE_SERVER_ADDRESS:           http://pyroscope.observability.svc.cluster.local:4040
+      PYROSCOPE_SAMPLE_RATE:              25
+      PYROSCOPE_SPAN_PROFILES_ENABLED:    true
+      PYROSCOPE_ONCPU:                    true
+      PYROSCOPE_GIL_ONLY:                 true
+      DATABASE_URL:                       postgresql+psycopg://user:password@concert-db:5432/concert_db
+      UVICORN_WORKERS:                    2
+    Mounts:                               <none>
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:                      <none>
+QoS Class:                    Burstable
+Node-Selectors:               <none>
+Tolerations:                  node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                       <none>

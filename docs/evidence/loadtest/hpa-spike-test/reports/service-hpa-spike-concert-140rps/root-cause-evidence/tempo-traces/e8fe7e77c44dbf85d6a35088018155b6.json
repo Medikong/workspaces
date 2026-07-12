@@ -1,0 +1,435 @@
+{
+  "batches": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "deployment.environment",
+            "value": {
+              "stringValue": "local-hpa-spike"
+            }
+          },
+          {
+            "key": "service.version",
+            "value": {
+              "stringValue": "dev"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.42.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "concert-service"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "observability.manual"
+          },
+          "spans": [
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "zq+xL1VDSvY=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "concert.dependency.db.session_create",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1782045102743804168",
+              "endTimeUnixNano": "1782045102743894584",
+              "attributes": [
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "get_db"
+                  }
+                },
+                {
+                  "key": "code.location",
+                  "value": {
+                    "stringValue": "app.database.get_db /app/app/database.py:25"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "Ks/gT/oGYec=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "concert.dependency.db.session_close",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1782045105787568003",
+              "endTimeUnixNano": "1782045105787701086",
+              "attributes": [
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "get_db"
+                  }
+                },
+                {
+                  "key": "code.location",
+                  "value": {
+                    "stringValue": "app.database.get_db /app/app/database.py:30"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "opentelemetry.instrumentation.sqlalchemy",
+            "version": "0.63b1"
+          },
+          "spans": [
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "QUz/1YMgzjo=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "connect",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1782045104000023752",
+              "endTimeUnixNano": "1782045105632250377",
+              "attributes": [
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "has_concert"
+                  }
+                },
+                {
+                  "key": "code.location",
+                  "value": {
+                    "stringValue": "app.repositories.concerts.has_concert /app/app/repositories/concerts.py:27"
+                  }
+                },
+                {
+                  "key": "net.peer.name",
+                  "value": {
+                    "stringValue": "concert-db"
+                  }
+                },
+                {
+                  "key": "net.peer.port",
+                  "value": {
+                    "intValue": "5432"
+                  }
+                },
+                {
+                  "key": "db.name",
+                  "value": {
+                    "stringValue": "concert_db"
+                  }
+                },
+                {
+                  "key": "db.user",
+                  "value": {
+                    "stringValue": "user"
+                  }
+                },
+                {
+                  "key": "db.system",
+                  "value": {
+                    "stringValue": "postgresql"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1782045105632239586",
+                  "name": "exception",
+                  "attributes": [
+                    {
+                      "key": "exception.type",
+                      "value": {
+                        "stringValue": "sqlalchemy.exc.OperationalError"
+                      }
+                    },
+                    {
+                      "key": "exception.message",
+                      "value": {
+                        "stringValue": "(psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+                      }
+                    },
+                    {
+                      "key": "exception.stacktrace",
+                      "value": {
+                        "stringValue": "Traceback (most recent call last):\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 143, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3309, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 447, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1264, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 711, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 177, in _do_get\n    with util.safe_reraise():\n         ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 224, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 175, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 388, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 673, in __init__\n    self.__connect()\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 899, in __connect\n    with util.safe_reraise():\n         ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 224, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", "
+                      }
+                    },
+                    {
+                      "key": "exception.escaped",
+                      "value": {
+                        "stringValue": "False"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "status": {
+                "message": "OperationalError: (psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+                "code": "STATUS_CODE_ERROR"
+              }
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "opentelemetry.instrumentation.fastapi",
+            "version": "0.63b1"
+          },
+          "spans": [
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "iequcRydgSw=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "GET /concerts/{id}/calendar http send",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1782045106033879169",
+              "endTimeUnixNano": "1782045106033912669",
+              "attributes": [
+                {
+                  "key": "asgi.event.type",
+                  "value": {
+                    "stringValue": "http.response.start"
+                  }
+                },
+                {
+                  "key": "http.status_code",
+                  "value": {
+                    "intValue": "500"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_ERROR"
+              }
+            },
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "XlqxhkRuWIg=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "GET /concerts/{id}/calendar http send",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1782045106041197961",
+              "endTimeUnixNano": "1782045106041236669",
+              "attributes": [
+                {
+                  "key": "asgi.event.type",
+                  "value": {
+                    "stringValue": "http.response.body"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "6+r52AfJyl4=",
+              "parentSpanId": "srHtpGuHpRo=",
+              "name": "GET /concerts/{id}/calendar http send",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1782045106041268628",
+              "endTimeUnixNano": "1782045106041295669",
+              "attributes": [
+                {
+                  "key": "asgi.event.type",
+                  "value": {
+                    "stringValue": "http.response.body"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "6P5+d8RNv4XWo1CIAYFVtg==",
+              "spanId": "srHtpGuHpRo=",
+              "name": "GET /concerts/{id}/calendar",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1782045102623032418",
+              "endTimeUnixNano": "1782045106041309253",
+              "attributes": [
+                {
+                  "key": "pyroscope.profile.id",
+                  "value": {
+                    "stringValue": "b2b1eda46b87a51a"
+                  }
+                },
+                {
+                  "key": "http.scheme",
+                  "value": {
+                    "stringValue": "http"
+                  }
+                },
+                {
+                  "key": "http.host",
+                  "value": {
+                    "stringValue": "10.244.3.142:8082"
+                  }
+                },
+                {
+                  "key": "net.host.port",
+                  "value": {
+                    "intValue": "8082"
+                  }
+                },
+                {
+                  "key": "http.flavor",
+                  "value": {
+                    "stringValue": "1.1"
+                  }
+                },
+                {
+                  "key": "http.target",
+                  "value": {
+                    "stringValue": "/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar"
+                  }
+                },
+                {
+                  "key": "http.server_name",
+                  "value": {
+                    "stringValue": "kong-kong-proxy.kong.svc.cluster.local"
+                  }
+                },
+                {
+                  "key": "http.user_agent",
+                  "value": {
+                    "stringValue": "Grafana k6/1.0.0"
+                  }
+                },
+                {
+                  "key": "net.peer.ip",
+                  "value": {
+                    "stringValue": "10.244.2.43"
+                  }
+                },
+                {
+                  "key": "net.peer.port",
+                  "value": {
+                    "intValue": "59858"
+                  }
+                },
+                {
+                  "key": "request_id",
+                  "value": {
+                    "stringValue": "loadtest-service-hpa-spike-concert-service-hpa-spike-load-test-1782045100909-capacity-baseline-concert-calendar-12199"
+                  }
+                },
+                {
+                  "key": "http.route",
+                  "value": {
+                    "stringValue": "/concerts/{id}/calendar"
+                  }
+                },
+                {
+                  "key": "error.type",
+                  "value": {
+                    "stringValue": "OperationalError"
+                  }
+                },
+                {
+                  "key": "error.kind",
+                  "value": {
+                    "stringValue": "system_failure"
+                  }
+                },
+                {
+                  "key": "http.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.url",
+                  "value": {
+                    "stringValue": "http://kong-kong-proxy.kong.svc.cluster.local/concerts/23eab99b-5ec6-8d5d-accd-abdafdbcad0a/calendar?yearMonth=2026-07"
+                  }
+                },
+                {
+                  "key": "http.status_code",
+                  "value": {
+                    "intValue": "500"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1782045102636583584",
+                  "name": "http.request.middleware.call_next.start",
+                  "attributes": [
+                    {
+                      "key": "http.method",
+                      "value": {
+                        "stringValue": "GET"
+                      }
+                    },
+                    {
+                      "key": "http.middleware",
+                      "value": {
+                        "stringValue": "request_observability"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "timeUnixNano": "1782045105999913503",
+                  "name": "exception",
+                  "attributes": [
+                    {
+                      "key": "exception.type",
+                      "value": {
+                        "stringValue": "sqlalchemy.exc.OperationalError"
+                      }
+                    },
+                    {
+                      "key": "exception.message",
+                      "value": {
+                        "stringValue": "(psycopg.OperationalError) connection failed: connection to server at \"10.96.52.107\", port 5432 failed: FATAL:  sorry, too many clients already\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+                      }
+                    },
+                    {
+                      "key": "exception.stacktrace",
+                      "value": {
+                        "stringValue": "Traceback (most recent call last):\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 143, in __init__\n    self._dbapi_connection = engine.raw_connection()\n                             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py\", line 3309, in raw_connection\n    return self.pool.connect()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 447, in connect\n    return _ConnectionFairy._checkout(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 1264, in _checkout\n    fairy = _ConnectionRecord.checkout(pool)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 711, in checkout\n    rec = pool._do_get()\n          ^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 177, in _do_get\n    with util.safe_reraise():\n         ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 224, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py\", line 175, in _do_get\n    return self._create_connection()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 388, in _create_connection\n    return _ConnectionRecord(self)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 673, in __init__\n    self.__connect()\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", line 899, in __connect\n    with util.safe_reraise():\n         ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py\", line 224, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py\", "
+                      }
+                    },
+                    {
+                      "key": "exception.escaped",
+                      "value": {
+                        "stringValue": "False"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_ERROR"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

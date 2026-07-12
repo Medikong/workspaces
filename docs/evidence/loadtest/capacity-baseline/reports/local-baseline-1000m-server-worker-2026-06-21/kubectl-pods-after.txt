@@ -1,0 +1,53 @@
+NAMESPACE                NAME                                                        READY   STATUS             RESTARTS         AGE    IP             NODE                    NOMINATED NODE   READINESS GATES
+kong                     kong-kong-6d79997676-d2d2k                                  2/2     Running            0                16h    10.244.2.43    desktop-worker          <none>           <none>
+kube-system              coredns-66bc5c9577-nrgqt                                    1/1     Running            16 (22h ago)     29d    10.244.0.3     desktop-control-plane   <none>           <none>
+kube-system              coredns-66bc5c9577-p2lxd                                    1/1     Running            15 (22h ago)     29d    10.244.0.4     desktop-control-plane   <none>           <none>
+kube-system              etcd-desktop-control-plane                                  1/1     Running            0                22h    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              kindnet-5r55h                                               1/1     Running            12 (22h ago)     29d    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              kindnet-6k5kl                                               1/1     Running            12 (22h ago)     29d    172.18.0.8     desktop-worker3         <none>           <none>
+kube-system              kindnet-jb5rk                                               1/1     Running            13 (22h ago)     29d    172.18.0.7     desktop-worker          <none>           <none>
+kube-system              kindnet-khhph                                               1/1     Running            12 (22h ago)     29d    172.18.0.6     desktop-worker2         <none>           <none>
+kube-system              kube-apiserver-desktop-control-plane                        1/1     Running            0                22h    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              kube-controller-manager-desktop-control-plane               1/1     Running            134 (22h ago)    29d    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              kube-proxy-5n67c                                            1/1     Running            12 (22h ago)     29d    172.18.0.6     desktop-worker2         <none>           <none>
+kube-system              kube-proxy-7ltvh                                            1/1     Running            12 (22h ago)     29d    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              kube-proxy-jlkjg                                            1/1     Running            13 (22h ago)     29d    172.18.0.7     desktop-worker          <none>           <none>
+kube-system              kube-proxy-lmvzt                                            1/1     Running            12 (22h ago)     29d    172.18.0.8     desktop-worker3         <none>           <none>
+kube-system              kube-scheduler-desktop-control-plane                        1/1     Running            128 (22h ago)    29d    172.18.0.5     desktop-control-plane   <none>           <none>
+kube-system              metrics-server-675c6f985d-fg9hq                             1/1     Running            0                16h    172.18.0.8     desktop-worker3         <none>           <none>
+loadtest                 read-api-loadtest-read-manual-20260621062618-full-9bvvm     0/1     Completed          0                51m    10.244.1.144   desktop-worker3         <none>           <none>
+local-path-storage       local-path-provisioner-5c4cdb564f-zhhgq                     1/1     Running            24 (22h ago)     29d    10.244.0.2     desktop-control-plane   <none>           <none>
+monitoring               alertmanager-kube-prometheus-stack-alertmanager-0           2/2     Running            0                16h    10.244.1.44    desktop-worker3         <none>           <none>
+monitoring               kube-prometheus-stack-grafana-7ffd946446-ssxfv              3/3     Running            0                16h    10.244.3.31    desktop-worker2         <none>           <none>
+monitoring               kube-prometheus-stack-kube-state-metrics-6d579c7848-2wtgz   1/1     Running            0                16h    10.244.3.30    desktop-worker2         <none>           <none>
+monitoring               kube-prometheus-stack-operator-7d4c745b5f-dddvq             1/1     Running            0                16h    10.244.2.34    desktop-worker          <none>           <none>
+monitoring               kube-prometheus-stack-prometheus-node-exporter-47nf8        1/1     Running            0                16h    172.18.0.6     desktop-worker2         <none>           <none>
+monitoring               kube-prometheus-stack-prometheus-node-exporter-5vfgt        1/1     Running            0                16h    172.18.0.8     desktop-worker3         <none>           <none>
+monitoring               kube-prometheus-stack-prometheus-node-exporter-kk59z        1/1     Running            0                16h    172.18.0.7     desktop-worker          <none>           <none>
+monitoring               kube-prometheus-stack-prometheus-node-exporter-xxmcf        1/1     Running            0                16h    172.18.0.5     desktop-control-plane   <none>           <none>
+monitoring               prometheus-kube-prometheus-stack-prometheus-0               2/2     Running            0                16h    10.244.2.35    desktop-worker          <none>           <none>
+observability            loki-0                                                      2/2     Running            0                16h    10.244.2.37    desktop-worker          <none>           <none>
+observability            opentelemetry-collector-agent-hk5d8                         1/1     Running            0                16h    10.244.1.48    desktop-worker3         <none>           <none>
+observability            opentelemetry-collector-agent-mmpsc                         1/1     Running            0                16h    10.244.2.38    desktop-worker          <none>           <none>
+observability            opentelemetry-collector-agent-zx7gm                         1/1     Running            0                16h    10.244.3.32    desktop-worker2         <none>           <none>
+observability            pyroscope-0                                                 1/1     Running            0                16h    10.244.1.47    desktop-worker3         <none>           <none>
+observability            tempo-0                                                     1/1     Running            0                16h    10.244.1.46    desktop-worker3         <none>           <none>
+ticketing-auth           auth-db-0                                                   1/1     Running            0                5h7m   10.244.3.63    desktop-worker2         <none>           <none>
+ticketing-auth           auth-service-d94965ddb-hzbt9                                1/1     Running            0                61m    10.244.2.78    desktop-worker          <none>           <none>
+ticketing-concert        concert-db-0                                                1/1     Running            0                5h7m   10.244.1.84    desktop-worker3         <none>           <none>
+ticketing-concert        concert-service-5566b7768f-p7jz5                            1/1     Running            0                61m    10.244.3.88    desktop-worker2         <none>           <none>
+ticketing-messaging      kafka-0                                                     1/1     Running            0                16h    10.244.2.42    desktop-worker          <none>           <none>
+ticketing-messaging      kafka-create-topics-vqz6r                                   0/1     Completed          0                71m    10.244.1.122   desktop-worker3         <none>           <none>
+ticketing-notification   notification-db-0                                           1/1     Running            0                5h7m   10.244.3.62    desktop-worker2         <none>           <none>
+ticketing-notification   notification-service-7f664c897d-p99p2                       1/1     Running            0                61m    10.244.2.79    desktop-worker          <none>           <none>
+ticketing-notification   notification-service-background-957bd7768-vm7fs             0/1     CrashLoopBackOff   15 (65s ago)     61m    10.244.3.89    desktop-worker2         <none>           <none>
+ticketing-payment        payment-db-0                                                1/1     Running            0                5h7m   10.244.3.60    desktop-worker2         <none>           <none>
+ticketing-payment        payment-service-6fbbc4cbbd-n4lh6                            1/1     Running            0                61m    10.244.1.138   desktop-worker3         <none>           <none>
+ticketing-payment        payment-service-background-7f85f8d55-bj5hj                  0/1     CrashLoopBackOff   11 (4m6s ago)    61m    10.244.1.139   desktop-worker3         <none>           <none>
+ticketing-payment        pgadmin-74bfdb7477-xk7qp                                    1/1     Running            0                5h7m   10.244.3.57    desktop-worker2         <none>           <none>
+ticketing-reservation    reservation-db-0                                            1/1     Running            0                5h7m   10.244.1.86    desktop-worker3         <none>           <none>
+ticketing-reservation    reservation-service-77b6f5799c-998z9                        1/1     Running            0                61m    10.244.1.140   desktop-worker3         <none>           <none>
+ticketing-reservation    reservation-service-background-64b57b6789-x9mhf             1/1     Running            2 (17m ago)      61m    10.244.2.80    desktop-worker          <none>           <none>
+ticketing-ticket         ticket-db-0                                                 1/1     Running            0                5h7m   10.244.2.57    desktop-worker          <none>           <none>
+ticketing-ticket         ticket-service-6dd586d94b-kvfqw                             1/1     Running            0                61m    10.244.1.141   desktop-worker3         <none>           <none>
+ticketing-ticket         ticket-service-background-dc5b6dc9b-dc2wh                   0/1     CrashLoopBackOff   11 (3m39s ago)   61m    10.244.3.90    desktop-worker2         <none>           <none>

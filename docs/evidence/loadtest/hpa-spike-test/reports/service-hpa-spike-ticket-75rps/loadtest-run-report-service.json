@@ -1,0 +1,500 @@
+{
+  "event": "loadtest_run_report",
+  "timestamp": "2026-06-21T10:32:54.790Z",
+  "test_type": "loadtest",
+  "loadtest_run_id": "read-api-loadtest-read-manual-20260621102813-mjt9v",
+  "scenario": "service-hpa-spike-load-test",
+  "report_phase": "service_step_complete",
+  "measured_service": "ticket-service",
+  "environment": "local",
+  "target": "local",
+  "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+  "status": "PASS",
+  "execution_conditions": {
+    "loadtest_run_id": "read-api-loadtest-read-manual-20260621102813-mjt9v",
+    "phase": "summary",
+    "scenario": "service-hpa-spike-load-test",
+    "environment": "local",
+    "target": "local",
+    "target_base_url": "http://kong-kong-proxy.kong.svc.cluster.local",
+    "revision": "dev",
+    "image": "localhost:5001/read-api-loadtest:dev",
+    "image_tag": "dev",
+    "release": "read-api-loadtest",
+    "namespace": "loadtest",
+    "k6_command": "k6",
+    "k6_command_args": [
+      "run",
+      "--log-format=raw",
+      "/loadtest/scenarios/service-hpa-spike-load-test.js"
+    ],
+    "k6_extra_args": [],
+    "k6_output": "",
+    "k6_scenario_file": "/loadtest/scenarios/service-hpa-spike-load-test.js",
+    "executor": "ramping-arrival-rate",
+    "vus": 5,
+    "rate": 1,
+    "time_unit": "1s",
+    "pre_allocated_vus": 200,
+    "max_vus": 600,
+    "duration": "5m",
+    "service_steps": [
+      "ticket-service"
+    ],
+    "stages": [
+      {
+        "duration": "30s",
+        "target": 20,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 40,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 60,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 75,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 40,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "graceful_stop": "15s",
+    "think_time_seconds": 0,
+    "ticket_list_limit": 20,
+    "active_customer_count": 200,
+    "payment_amount": 50000,
+    "concert_limit": 20,
+    "performance_limit": 20,
+    "seat_limit": 200,
+    "threshold_http_req_failed_rate": 0.01,
+    "threshold_http_req_duration_p95_ms": 150,
+    "threshold_http_req_duration_p99_ms": 300,
+    "threshold_checks_rate": 0.99,
+    "capacity_baseline_target_utilization": 0.7,
+    "capacity_baseline_seed_method": "deterministic_bulk_insert",
+    "capacity_baseline_fixed_conditions": {
+      "cooldownInterpretation": "recovery_observation_only",
+      "hpa": "enabled",
+      "maxReplicas": "4",
+      "minReplicas": "1",
+      "targetCPUUtilization": "70"
+    },
+    "capacity_baseline_schema_revisions": {
+      "auth-service": "model-v1",
+      "concert-service": "model-v1",
+      "notification-service": "model-v1",
+      "payment-service": "model-v1",
+      "reservation-service": "model-v1",
+      "ticket-service": "model-v1"
+    },
+    "capacity_baseline_seed_row_counts": {
+      "admin_count": 1,
+      "concert_count": 270,
+      "customer_count": 100000,
+      "notification_count": 354000,
+      "payment_count": 184000,
+      "payment_event_count": 184000,
+      "payment_pool_count": 184000,
+      "performance_count": 810,
+      "provider_count": 1,
+      "reservation_history_count": 261000,
+      "seat_count": 567000,
+      "seat_grade_count": 3240,
+      "ticket_count": 170000,
+      "ticket_issue_pool_count": 170000
+    },
+    "capacity_baseline_resource_observation": {
+      "enabled": true,
+      "source": "metrics-api",
+      "prometheusUrl": "http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090",
+      "queryWindow": "1m",
+      "pollEveryIterations": 5,
+      "targets": [
+        {
+          "service": "auth-service",
+          "namespace": "ticketing-auth",
+          "podSelector": "app.kubernetes.io/name=auth-service",
+          "podRegex": "auth-service-.*"
+        },
+        {
+          "service": "concert-service",
+          "namespace": "ticketing-concert",
+          "podSelector": "app.kubernetes.io/name=concert-service",
+          "podRegex": "concert-service-.*"
+        },
+        {
+          "service": "reservation-service",
+          "namespace": "ticketing-reservation",
+          "podSelector": "app.kubernetes.io/name=reservation-service",
+          "podRegex": "reservation-service-.*"
+        },
+        {
+          "service": "payment-service",
+          "namespace": "ticketing-payment",
+          "podSelector": "app.kubernetes.io/name=payment-service",
+          "podRegex": "payment-service-.*"
+        },
+        {
+          "service": "ticket-service",
+          "namespace": "ticketing-ticket",
+          "podSelector": "app.kubernetes.io/name=ticket-service",
+          "podRegex": "ticket-service-.*"
+        },
+        {
+          "service": "notification-service",
+          "namespace": "ticketing-notification",
+          "podSelector": "app.kubernetes.io/name=notification-service",
+          "podRegex": "notification-service-.*"
+        }
+      ]
+    },
+    "measurement_window_source": "grafana_time_range",
+    "traffic_model_preset": "ticket-75rps",
+    "dataset_profile": "capacity-baseline",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "dataset_title_prefix": "Medikong Loadtest",
+    "dataset_concerts": 270,
+    "dataset_performances_per_concert": 3,
+    "dataset_total_performances": 810,
+    "dataset_seat_sections": 1,
+    "dataset_seat_rows": 20,
+    "dataset_seats_per_row": 35,
+    "dataset_seats_per_performance": 700,
+    "dataset_total_seats": 567000,
+    "dataset_discovery_limit": 200,
+    "customer_pool_size": 100000,
+    "customer_pool_revision": "capacity-baseline-half-year-early-growth-v2",
+    "customer_pool_email_prefix": "capacity-customer",
+    "customer_pool_email_domain": "loadtest.medikong.local"
+  },
+  "scenario_report": {
+    "report_type": "service_hpa_spike",
+    "scenario": "service-hpa-spike-load-test",
+    "traffic_model_preset": "ticket-75rps",
+    "dataset_revision": "capacity-baseline-half-year-early-growth-v2",
+    "seed_method": "deterministic_bulk_insert",
+    "service_steps": [
+      "ticket-service"
+    ],
+    "default_stages": [
+      {
+        "duration": "30s",
+        "target": 20,
+        "stageRole": "warmup"
+      },
+      {
+        "duration": "60s",
+        "target": 40,
+        "stageRole": "baseline"
+      },
+      {
+        "duration": "60s",
+        "target": 60,
+        "stageRole": "spike"
+      },
+      {
+        "duration": "60s",
+        "target": 75,
+        "stageRole": "overload"
+      },
+      {
+        "duration": "60s",
+        "target": 40,
+        "stageRole": "cooldown"
+      }
+    ],
+    "service_stages": {},
+    "stage_contract": {
+      "order": [
+        "warmup",
+        "baseline",
+        "spike",
+        "overload",
+        "cooldown"
+      ],
+      "warmup": "excluded_from_decision",
+      "cooldown": "recovery_observation_only_not_scale_down_confirmation"
+    },
+    "resource_observation_source": "metrics-api",
+    "scale_out_results": [
+      {
+        "service": "ticket-service",
+        "namespace": "ticketing-ticket",
+        "baseline_replicas": null,
+        "max_desired_replicas": null,
+        "hpa_decision_seconds": null,
+        "scale_out_ready_seconds": null
+      }
+    ],
+    "service_hpa_results": [
+      {
+        "service": "ticket-service",
+        "namespace": "ticketing-ticket",
+        "baseline_replicas": null,
+        "max_desired_replicas": null,
+        "hpa_decision_seconds": null,
+        "scale_out_ready_seconds": null
+      }
+    ],
+    "stage_results": [
+      {
+        "service": "ticket-service",
+        "api": "POST /tickets/issue",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_warmup_rps_20",
+        "stage_role": "warmup",
+        "warmup_excluded": true,
+        "target_rps": 20,
+        "duration": "30s",
+        "slo_p95_ms": 120,
+        "p95_ms": 15.22144109999999,
+        "p99_ms": 24.017715659999975,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "excluded",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "GET /tickets/me",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_warmup_rps_20",
+        "stage_role": "warmup",
+        "warmup_excluded": true,
+        "target_rps": 20,
+        "duration": "30s",
+        "slo_p95_ms": 100,
+        "p95_ms": 6.6597121999999995,
+        "p99_ms": 18.879437,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "excluded",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "POST /tickets/issue",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_baseline_rps_40",
+        "stage_role": "baseline",
+        "warmup_excluded": false,
+        "target_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 9.279148549999999,
+        "p99_ms": 20.66790926,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "GET /tickets/me",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_baseline_rps_40",
+        "stage_role": "baseline",
+        "warmup_excluded": false,
+        "target_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 100,
+        "p95_ms": 6.300512499999999,
+        "p99_ms": 19.936421669999998,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "POST /tickets/issue",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_spike_rps_60",
+        "stage_role": "spike",
+        "warmup_excluded": false,
+        "target_rps": 60,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 9.933739599999996,
+        "p99_ms": 19.972280739999995,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "GET /tickets/me",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_spike_rps_60",
+        "stage_role": "spike",
+        "warmup_excluded": false,
+        "target_rps": 60,
+        "duration": "60s",
+        "slo_p95_ms": 100,
+        "p95_ms": 6.0073997,
+        "p99_ms": 18.729541759999993,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "POST /tickets/issue",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_overload_rps_75",
+        "stage_role": "overload",
+        "warmup_excluded": false,
+        "target_rps": 75,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 9.303996049999995,
+        "p99_ms": 20.202299919999998,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "GET /tickets/me",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_overload_rps_75",
+        "stage_role": "overload",
+        "warmup_excluded": false,
+        "target_rps": 75,
+        "duration": "60s",
+        "slo_p95_ms": 100,
+        "p95_ms": 6.374630949999995,
+        "p99_ms": 20.29286566999999,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "POST /tickets/issue",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_cooldown_rps_40",
+        "stage_role": "cooldown",
+        "warmup_excluded": false,
+        "target_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 120,
+        "p95_ms": 9.585843599999997,
+        "p99_ms": 20.12415325,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      },
+      {
+        "service": "ticket-service",
+        "api": "GET /tickets/me",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_cooldown_rps_40",
+        "stage_role": "cooldown",
+        "warmup_excluded": false,
+        "target_rps": 40,
+        "duration": "60s",
+        "slo_p95_ms": 100,
+        "p95_ms": 6.439818749999983,
+        "p99_ms": 18.956158489999996,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "http_reqs_count": null,
+        "http_reqs_rate": null,
+        "rps": null,
+        "cpu_usage_m": 0,
+        "cpu_throttling": 0,
+        "status": "ok",
+        "decision_reasons": []
+      }
+    ],
+    "first_limit_candidate": null,
+    "recovery_observations": [
+      {
+        "service": "ticket-service",
+        "step": "capacity_baseline.ticket.issue",
+        "stage": "ticket_cooldown_rps_40",
+        "target_rps": 40,
+        "p95_ms": 9.585843599999997,
+        "p99_ms": 20.12415325,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "recovered_within_thresholds": true,
+        "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+      },
+      {
+        "service": "ticket-service",
+        "step": "capacity_baseline.ticket.list",
+        "stage": "ticket_cooldown_rps_40",
+        "target_rps": 40,
+        "p95_ms": 6.439818749999983,
+        "p99_ms": 18.956158489999996,
+        "error_rate": 0,
+        "checks_pass_rate": 1,
+        "recovered_within_thresholds": true,
+        "interpretation": "recovery_observation_only_not_scale_down_confirmation"
+      }
+    ]
+  }
+}

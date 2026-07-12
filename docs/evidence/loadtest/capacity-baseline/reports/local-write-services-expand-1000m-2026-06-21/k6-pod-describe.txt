@@ -1,0 +1,122 @@
+Name:             read-api-loadtest-read-manual-20260621082125-tq74h
+Namespace:        loadtest
+Priority:         0
+Service Account:  read-api-loadtest-runner
+Node:             desktop-worker3/172.18.0.8
+Start Time:       Sun, 21 Jun 2026 17:21:26 +0900
+Labels:           app.kubernetes.io/component=k6-runner
+                  app.kubernetes.io/instance=read-api-loadtest
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=read-api-loadtest
+                  app.kubernetes.io/part-of=medikong
+                  batch.kubernetes.io/controller-uid=16b7f121-8a7e-47ed-9535-6ddcd79f189a
+                  batch.kubernetes.io/job-name=read-api-loadtest-read-manual-20260621082125
+                  controller-uid=16b7f121-8a7e-47ed-9535-6ddcd79f189a
+                  helm.sh/chart=read-api-loadtest-0.1.0
+                  job-name=read-api-loadtest-read-manual-20260621082125
+                  medikong.io/environment=local
+                  medikong.io/execution=gitops-manual
+                  medikong.io/phase=loadtest
+                  medikong.io/scenario=capacity-baseline-load-test
+                  medikong.io/test-type=loadtest
+Annotations:      <none>
+Status:           Succeeded
+IP:               10.244.1.151
+IPs:
+  IP:           10.244.1.151
+Controlled By:  Job/read-api-loadtest-read-manual-20260621082125
+Containers:
+  runner:
+    Container ID:  containerd://835f4c29489b96075d48a077c6378aa861cf0491af1a2c05fcac8680337c9d98
+    Image:         localhost:5001/read-api-loadtest:dev
+    Image ID:      localhost:5001/read-api-loadtest@sha256:20ae992f25ee1944475b2565c70244b106b6229c53a2e822928fe3e9a3a31953
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      if [ "${LOADTEST_SCENARIO:-}" = "setup-capacity-baseline-dataset" ]; then
+        exec python3 /loadtest/scripts/setup_capacity_baseline_dataset.py
+      fi
+      if [ "${LOADTEST_COLLECTOR_GUARD_ENABLED:-false}" = "true" ]; then
+        python3 /loadtest/scripts/collector_guard.py
+      fi
+      if [ "${LOADTEST_REPORT_ARCHIVE_ENABLED:-false}" = "true" ]; then
+        export LOADTEST_REPORT_DIR="${LOADTEST_REPORT_ROOT%/}/${LOADTEST_RUN_ID}"
+        mkdir -p "${LOADTEST_REPORT_DIR}"
+      fi
+      set +e
+      k6 run --log-format=raw ${K6_OUTPUT:+--out "$K6_OUTPUT"} "/loadtest/scenarios/${LOADTEST_SCENARIO}.js"
+      exit_code="$?"
+      set -e
+      case "${exit_code}" in
+        0)
+          exit 0
+          ;;
+        99|201)
+          if [ "${LOADTEST_SCENARIO:-}" = "capacity-baseline-load-test" ]; then
+            exit 0
+          fi
+          printf '{"event":"loadtest_threshold_exit","timestamp":"%s","test_type":"loadtest","loadtest_run_id":"%s","scenario":"%s","exit_code":%s}\\n' \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${LOADTEST_RUN_ID:-}" "${LOADTEST_SCENARIO:-}" "${exit_code}"
+          exit 0
+          ;;
+        *)
+          exit "${exit_code}"
+          ;;
+      esac
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 21 Jun 2026 17:21:26 +0900
+      Finished:     Sun, 21 Jun 2026 17:38:09 +0900
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     2
+      memory:  4Gi
+    Requests:
+      cpu:     500m
+      memory:  1Gi
+    Environment Variables from:
+      read-api-loadtest              ConfigMap  Optional: false
+      read-api-loadtest-credentials  Secret     Optional: false
+    Environment:
+      LOADTEST_RUN_ID:    read-api-loadtest-read-manual-20260621082125-tq74h (v1:metadata.name)
+      NODE_NAME:           (v1:spec.nodeName)
+      LOADTEST_SCENARIO:  capacity-baseline-load-test
+    Mounts:
+      /loadtest/reports from loadtest-report-archive (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jx2km (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  loadtest-report-archive:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  read-api-loadtest-report-archive
+    ReadOnly:   false
+  kube-api-access-jx2km:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  17m   default-scheduler  Successfully assigned loadtest/read-api-loadtest-read-manual-20260621082125-tq74h to desktop-worker3
+  Normal  Pulling    17m   kubelet            Pulling image "localhost:5001/read-api-loadtest:dev"
+  Normal  Pulled     17m   kubelet            Successfully pulled image "localhost:5001/read-api-loadtest:dev" in 21ms (21ms including waiting). Image size: 60877730 bytes.
+  Normal  Created    17m   kubelet            Created container: runner
+  Normal  Started    17m   kubelet            Started container runner

@@ -1,0 +1,4 @@
+helm-template-notification-local-capacity-baseline.yaml | notification-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/notification-service:dev
+helm-template-payment-local-capacity-baseline.yaml | payment-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/payment-service:dev
+helm-template-reservation-local-capacity-baseline.yaml | reservation-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/reservation-service:dev
+helm-template-ticket-local-capacity-baseline.yaml | ticket-service-background | command=python | args=cmd/worker/main.py | has_UVICORN_WORKERS=false | image=localhost:5001/ticket-service:dev

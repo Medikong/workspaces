@@ -1,0 +1,372 @@
+%%{init: {"theme": "base", "themeVariables": {"primaryTextColor": "#111827", "textColor": "#111827", "lineColor": "#6b7280", "edgeLabelBackground": "#ffffff", "fontFamily": "Arial"}}}%%
+flowchart TB
+  User["External client"]
+  GitOpsRepo["gitops repo"]
+  ServiceRepo["service repo"]
+  Registry["Image registry"]
+
+  ServiceRepo --> Registry
+  GitOpsRepo --> RootApp
+
+  subgraph Cluster["Kubernetes cluster"]
+    subgraph ArgocdNS["namespace: argocd"]
+      RootApp["Application: tempkong private-dev apps"]
+      PlatformApps["Application CRs: platform layer"]
+      ServiceApps["Application CRs: service layer"]
+
+      subgraph ArgoControllerPod["Pod: argocd-application-controller"]
+        ArgoController["container: application-controller"]
+      end
+
+      subgraph ArgoRepoPod["Pod: argocd-repo-server"]
+        ArgoRepo["container: repo-server"]
+      end
+    end
+
+    subgraph KubeSystemNS["namespace: kube-system"]
+      subgraph SealedSecretsPod["Pod: sealed-secrets-controller"]
+        SealedSecrets["container: sealed-secrets-controller"]
+      end
+    end
+
+    subgraph LocalPathNS["namespace: local-path-storage"]
+      StorageClass["StorageClass: local-path"]
+      subgraph LocalPathPod["Pod: local-path-provisioner"]
+        LocalPathProvisioner["container: local-path-provisioner"]
+      end
+    end
+
+    subgraph KongNS["namespace: kong"]
+      KongService["Service: kong-kong-proxy"]
+      KongIngressClass["IngressClass: kong"]
+      KongPlugins["KongClusterPlugins"]
+
+      subgraph KongPod["Pod: kong"]
+        KongProxy["container: proxy"]
+        KongController["container: ingress-controller"]
+      end
+    end
+
+    subgraph IstioNS["namespace: istio-system"]
+      subgraph IstiodPod["Pod: istiod"]
+        Istiod["container: discovery"]
+      end
+
+      subgraph KialiPod["Pod: kiali"]
+        Kiali["container: kiali"]
+      end
+    end
+
+    subgraph MonitoringNS["namespace: monitoring"]
+      ServiceMonitor["ServiceMonitor / PodMonitor CRs"]
+
+      subgraph PrometheusPod["Pod: prometheus"]
+        Prometheus["container: prometheus"]
+        PrometheusReloader["container: config-reloader"]
+      end
+
+      subgraph GrafanaPod["Pod: grafana"]
+        Grafana["container: grafana"]
+        DashboardSidecar["container: dashboard-sidecar"]
+        DatasourceSidecar["container: datasource-sidecar"]
+      end
+
+      subgraph AlertmanagerPod["Pod: alertmanager"]
+        Alertmanager["container: alertmanager"]
+        AlertmanagerReloader["container: config-reloader"]
+      end
+    end
+
+    subgraph ObservabilityNS["namespace: observability"]
+      subgraph CollectorPod["Pod: opentelemetry-collector"]
+        Collector["container: otelcol-contrib"]
+      end
+
+      subgraph TempoPod["Pod: tempo"]
+        Tempo["container: tempo"]
+      end
+
+      subgraph LokiPod["Pod: loki"]
+        Loki["container: loki"]
+      end
+    end
+
+    subgraph AuthNS["namespace: ticketing-auth"]
+      AuthIngress["Ingress: /auth"]
+      AuthService["Service: auth-service"]
+
+      subgraph AuthPod["Pod: auth-service"]
+        AuthContainer["container: auth-service"]
+      end
+
+      subgraph AuthDbPod["Pod: auth-db"]
+        AuthPostgres["container: postgres"]
+        AuthPgExporter["container: postgres-exporter"]
+      end
+    end
+
+    subgraph UserNS["namespace: ticketing-user"]
+      UserIngress["Ingress: /users"]
+      UserService["Service: user-service"]
+
+      subgraph UserPod["Pod: user-service"]
+        UserContainer["container: user-service"]
+      end
+
+      subgraph UserDbPod["Pod: user-db"]
+        UserPostgres["container: postgres"]
+        UserPgExporter["container: postgres-exporter"]
+      end
+    end
+
+    subgraph CouponNS["namespace: ticketing-coupon"]
+      CouponIngress["Ingress: /coupons"]
+      CouponService["Service: coupon-service"]
+
+      subgraph CouponPod["Pod: coupon-service"]
+        CouponContainer["container: coupon-service"]
+      end
+
+      subgraph CouponDbPod["Pod: coupon-db"]
+        CouponPostgres["container: postgres"]
+        CouponPgExporter["container: postgres-exporter"]
+      end
+
+      subgraph CouponRedisPod["Pod: coupon-redis"]
+        CouponRedis["container: redis-compatible valkey"]
+      end
+    end
+
+    subgraph BackofficeNS["namespace: ticketing-backoffice"]
+      BackofficeIngress["Ingress: /admin"]
+      BackofficeService["Service: backoffice-service"]
+
+      subgraph BackofficePod["Pod: backoffice-service"]
+        BackofficeContainer["container: backoffice-service"]
+      end
+
+      subgraph BackofficeDbPod["Pod: backoffice-db"]
+        BackofficePostgres["container: postgres"]
+        BackofficePgExporter["container: postgres-exporter"]
+      end
+    end
+
+    subgraph ReservationNS["namespace: ticketing-reservation"]
+      ReservationIngress["Ingress: /reservations"]
+      ReservationService["Service: reservation-service"]
+      ReservationTraffic["Istio VirtualService / DestinationRule"]
+
+      subgraph ReservationApiPod["Pod: reservation-service API"]
+        ReservationApi["container: reservation-service"]
+        ReservationApiSidecar["container: istio-proxy"]
+      end
+
+      subgraph ReservationWorkerPod["Pod: reservation-service worker"]
+        ReservationWorker["container: background"]
+        ReservationWorkerSidecar["container: istio-proxy"]
+      end
+
+      subgraph ReservationDbPod["Pod: reservation-db"]
+        ReservationPostgres["container: postgres"]
+        ReservationPgExporter["container: postgres-exporter"]
+      end
+    end
+
+    subgraph LegacyTicketingNS["namespaces: inherited ticketing services"]
+      subgraph ConcertPod["Pod: concert-service"]
+        ConcertContainer["container: concert-service"]
+        ConcertSidecar["container: istio-proxy"]
+      end
+
+      subgraph PaymentPod["Pod: payment-service"]
+        PaymentContainer["container: payment-service"]
+        PaymentSidecar["container: istio-proxy"]
+      end
+
+      subgraph TicketPod["Pod: ticket-service"]
+        TicketContainer["container: ticket-service"]
+        TicketSidecar["container: istio-proxy"]
+      end
+
+      subgraph NotificationPod["Pod: notification-service"]
+        NotificationContainer["container: notification-service"]
+        NotificationSidecar["container: istio-proxy"]
+      end
+
+      subgraph NotificationDbPod["Pod: notification-db"]
+        Mongo["container: mongo"]
+      end
+    end
+
+    subgraph MessagingNS["namespace: ticketing-messaging"]
+      KafkaService["Service: kafka"]
+
+      subgraph KafkaPod["Pod: kafka-0"]
+        Kafka["container: kafka"]
+      end
+
+      subgraph TopicJobPod["Job Pod: kafka-create-topics"]
+        TopicCreator["container: kafka-create-topics"]
+      end
+    end
+
+    subgraph DashboardNS["namespace: ticketing-dashboard"]
+      FrontendIngress["Ingress: /"]
+      FrontendService["Service: frontend / dashboard"]
+
+      subgraph FrontendPod["Pod: frontend or dashboard"]
+        Frontend["container: frontend"]
+      end
+    end
+
+    subgraph SyntheticNS["namespace: synthetic"]
+      subgraph SyntheticPod["CronJob Pod: synthetic-traffic"]
+        SyntheticRunner["container: k6-runner"]
+      end
+    end
+  end
+
+  RootApp --> ArgoController
+  ArgoController --> ArgoRepo
+  ArgoController --> PlatformApps
+  ArgoController --> ServiceApps
+
+  PlatformApps --> SealedSecretsPod
+  PlatformApps --> LocalPathPod
+  PlatformApps --> KongPod
+  PlatformApps --> IstiodPod
+  PlatformApps --> PrometheusPod
+  PlatformApps --> GrafanaPod
+  PlatformApps --> AlertmanagerPod
+  PlatformApps --> CollectorPod
+  PlatformApps --> TempoPod
+  PlatformApps --> LokiPod
+  PlatformApps --> KafkaPod
+  PlatformApps --> SyntheticPod
+
+  ServiceApps --> AuthPod
+  ServiceApps --> UserPod
+  ServiceApps --> CouponPod
+  ServiceApps --> BackofficePod
+  ServiceApps --> ReservationApiPod
+  ServiceApps --> ConcertPod
+  ServiceApps --> PaymentPod
+  ServiceApps --> TicketPod
+  ServiceApps --> NotificationPod
+  ServiceApps --> FrontendPod
+
+  Registry --> AuthContainer
+  Registry --> UserContainer
+  Registry --> CouponContainer
+  Registry --> BackofficeContainer
+  Registry --> ReservationApi
+  Registry --> ReservationWorker
+  Registry --> Frontend
+
+  User --> KongService --> KongProxy
+  KongController --> KongIngressClass
+  KongController --> KongPlugins
+
+  KongProxy --> AuthIngress --> AuthService --> AuthContainer
+  KongProxy --> UserIngress --> UserService --> UserContainer
+  KongProxy --> CouponIngress --> CouponService --> CouponContainer
+  KongProxy --> BackofficeIngress --> BackofficeService --> BackofficeContainer
+  KongProxy --> ReservationIngress --> ReservationService --> ReservationApi
+  KongProxy --> FrontendIngress --> FrontendService --> Frontend
+
+  AuthContainer --> AuthPostgres
+  UserContainer --> UserPostgres
+  CouponContainer --> CouponRedis
+  CouponContainer --> CouponPostgres
+  BackofficeContainer --> BackofficePostgres
+  BackofficeContainer --> CouponService
+  ReservationApi --> ReservationPostgres
+  ReservationWorker --> ReservationPostgres
+
+  ReservationApi --> KafkaService
+  ReservationWorker --> KafkaService
+  PaymentContainer --> KafkaService
+  TicketContainer --> KafkaService
+  NotificationContainer --> KafkaService
+  KafkaService --> Kafka
+  TopicCreator --> Kafka
+  Kafka --> NotificationContainer
+  Kafka --> TicketContainer
+
+  ReservationApiSidecar -. "xDS" .-> Istiod
+  ReservationWorkerSidecar -. "xDS" .-> Istiod
+  ConcertSidecar -. "xDS" .-> Istiod
+  PaymentSidecar -. "xDS" .-> Istiod
+  TicketSidecar -. "xDS" .-> Istiod
+  NotificationSidecar -. "xDS" .-> Istiod
+  ReservationTraffic -. "traffic policy" .-> Istiod
+
+  AuthContainer -. "/metrics" .-> ServiceMonitor
+  UserContainer -. "/metrics" .-> ServiceMonitor
+  CouponContainer -. "/metrics" .-> ServiceMonitor
+  BackofficeContainer -. "/metrics" .-> ServiceMonitor
+  ReservationApi -. "/metrics" .-> ServiceMonitor
+  KongProxy -. "gateway metrics" .-> ServiceMonitor
+  Istiod -. "mesh metrics" .-> ServiceMonitor
+  AuthPgExporter -. "db metrics" .-> ServiceMonitor
+  UserPgExporter -. "db metrics" .-> ServiceMonitor
+  CouponPgExporter -. "db metrics" .-> ServiceMonitor
+  BackofficePgExporter -. "db metrics" .-> ServiceMonitor
+  ReservationPgExporter -. "db metrics" .-> ServiceMonitor
+  ServiceMonitor --> Prometheus --> Grafana
+  Alertmanager --> Grafana
+
+  AuthContainer -. "OTLP traces" .-> Collector
+  UserContainer -. "OTLP traces" .-> Collector
+  CouponContainer -. "OTLP traces" .-> Collector
+  BackofficeContainer -. "OTLP traces" .-> Collector
+  ReservationApi -. "OTLP traces" .-> Collector
+  Collector --> Tempo --> Grafana
+
+  AuthContainer -. "stdout JSON logs" .-> Collector
+  UserContainer -. "stdout JSON logs" .-> Collector
+  CouponContainer -. "stdout JSON logs" .-> Collector
+  BackofficeContainer -. "stdout JSON logs" .-> Collector
+  ReservationApi -. "stdout JSON logs" .-> Collector
+  KongProxy -. "gateway logs" .-> Collector
+  Collector --> Loki --> Grafana
+
+  SyntheticRunner --> KongService
+
+  style Cluster fill:#f8fafc,stroke:#334155,stroke-width:2px,color:#111827
+  style ArgocdNS fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#111827
+  style KubeSystemNS fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#111827
+  style LocalPathNS fill:#f8fafc,stroke:#64748b,stroke-width:2px,color:#111827
+  style KongNS fill:#fff7ed,stroke:#f97316,stroke-width:2px,color:#111827
+  style IstioNS fill:#f5f3ff,stroke:#7c3aed,stroke-width:2px,color:#111827
+  style MonitoringNS fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#111827
+  style ObservabilityNS fill:#f0fdfa,stroke:#0f766e,stroke-width:2px,color:#111827
+  style AuthNS fill:#fefce8,stroke:#ca8a04,stroke-width:2px,color:#111827
+  style UserNS fill:#fefce8,stroke:#ca8a04,stroke-width:2px,color:#111827
+  style CouponNS fill:#fefce8,stroke:#ca8a04,stroke-width:2px,color:#111827
+  style BackofficeNS fill:#fefce8,stroke:#ca8a04,stroke-width:2px,color:#111827
+  style ReservationNS fill:#fefce8,stroke:#ca8a04,stroke-width:2px,color:#111827
+  style LegacyTicketingNS fill:#fffbeb,stroke:#d97706,stroke-width:2px,color:#111827
+  style MessagingNS fill:#fdf4ff,stroke:#c026d3,stroke-width:2px,color:#111827
+  style DashboardNS fill:#f0f9ff,stroke:#0284c7,stroke-width:2px,color:#111827
+  style SyntheticNS fill:#fff1f2,stroke:#dc2626,stroke-width:2px,color:#111827
+
+  classDef external fill:#ffffff,stroke:#334155,stroke-width:1px,color:#111827
+  classDef control fill:#eff6ff,stroke:#1d4ed8,stroke-width:1px,color:#111827
+  classDef infra fill:#f8fafc,stroke:#475569,stroke-width:1px,color:#111827
+  classDef gateway fill:#fff7ed,stroke:#ea580c,stroke-width:1px,color:#111827
+  classDef mesh fill:#f5f3ff,stroke:#7c3aed,stroke-width:1px,color:#111827
+  classDef service fill:#fefce8,stroke:#a16207,stroke-width:1px,color:#111827
+  classDef data fill:#fdf4ff,stroke:#a21caf,stroke-width:1px,color:#111827
+  classDef observability fill:#f0fdf4,stroke:#15803d,stroke-width:1px,color:#111827
+  classDef worker fill:#fff1f2,stroke:#b91c1c,stroke-width:1px,color:#111827
+
+  class User,GitOpsRepo,ServiceRepo,Registry external
+  class RootApp,PlatformApps,ServiceApps,ArgoController,ArgoRepo control
+  class SealedSecrets,StorageClass,LocalPathProvisioner infra
+  class KongService,KongIngressClass,KongPlugins,KongProxy,KongController gateway
+  class Istiod,Kiali,ReservationTraffic,ReservationApiSidecar,ReservationWorkerSidecar,ConcertSidecar,PaymentSidecar,TicketSidecar,NotificationSidecar mesh
+  class AuthContainer,UserContainer,CouponContainer,BackofficeContainer,ReservationApi,ConcertContainer,PaymentContainer,TicketContainer,NotificationContainer,Frontend service
+  class AuthPostgres,UserPostgres,CouponPostgres,CouponRedis,BackofficePostgres,ReservationPostgres,KafkaService,Kafka,TopicCreator,Mongo data
+  class ServiceMonitor,Prometheus,PrometheusReloader,Grafana,DashboardSidecar,DatasourceSidecar,Alertmanager,AlertmanagerReloader,Collector,Tempo,Loki observability
+  class ReservationWorker,SyntheticRunner worker

@@ -1,0 +1,8 @@
+NAME                                             READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS            IMAGES                                   SELECTOR
+deployment.apps/reservation-service              1/1     1            1           17h    reservation-service   localhost:5001/reservation-service:dev   app=reservation-service
+deployment.apps/reservation-service-background   1/1     1            1           155m   background            localhost:5001/reservation-service:dev   app=reservation-service-background,medikong.io/workload=background
+
+NAME                                                  READY   STATUS    RESTARTS        AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/reservation-db-0                                  1/1     Running   0               6h32m   10.244.1.86    desktop-worker3   <none>           <none>
+pod/reservation-service-79b8c4dc5-lm6nl               1/1     Running   0               24m     10.244.2.83    desktop-worker    <none>           <none>
+pod/reservation-service-background-59694fb8cf-qf2gv   1/1     Running   1 (2m25s ago)   24m     10.244.1.149   desktop-worker3   <none>           <none>

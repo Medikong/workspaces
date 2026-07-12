@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "3"
+    meta.helm.sh/release-name: payment-local-docker-desktop
+    meta.helm.sh/release-namespace: ticketing-payment
+  creationTimestamp: "2026-06-21T06:07:20Z"
+  generation: 3
+  labels:
+    app.kubernetes.io/instance: payment-local-docker-desktop
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: payment-service-background
+    app.kubernetes.io/part-of: medikong
+    medikong.io/environment: local-capacity-baseline
+    medikong.io/workload: background
+    ticketing.io/service: payment
+    ticketing.io/tier: api
+  name: payment-service-background
+  namespace: ticketing-payment
+  resourceVersion: "2538643"
+  uid: 066e9f1b-353a-4872-ab79-0ac3203d2cb8
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: payment-service-background
+      medikong.io/workload: background
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        medikong.io/dev-rollout-id: capacity-baseline-20260621T061613Z
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 25m
+        sidecar.istio.io/proxyMemory: 64Mi
+        sidecar.istio.io/proxyMemoryLimit: 256Mi
+      labels:
+        app: payment-service-background
+        app.kubernetes.io/instance: payment-local-docker-desktop
+        app.kubernetes.io/name: payment-service-background
+        medikong.io/environment: local-capacity-baseline
+        medikong.io/workload: background
+        sidecar.istio.io/inject: "true"
+        ticketing.io/service: payment
+        ticketing.io/tier: api
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - args:
+        - cmd/worker/main.py
+        command:
+        - python
+        env:
+        - name: SERVICE_VERSION
+          value: dev
+        - name: SERVICE_ENVIRONMENT
+          value: local-capacity-baseline
+        - name: SQLALCHEMY_POOL_SIZE
+          value: "35"
+        - name: SQLALCHEMY_MAX_OVERFLOW
+          value: "20"
+        - name: SQLALCHEMY_POOL_TIMEOUT_SECONDS
+          value: "15"
+        - name: SQLALCHEMY_POOL_RECYCLE_SECONDS
+          value: "1800"
+        - name: OTEL_TRACES_EXPORTER
+          value: otlp
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://opentelemetry-collector.observability.svc.cluster.local:4317
+        - name: DATABASE_URL
+          value: postgresql+psycopg://user:password@payment-db:5432/payment_db
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: kafka.ticketing-messaging.svc.cluster.local:9092
+        - name: PAYMENT_APPROVED_TOPIC
+          value: payment-approved
+        - name: PAYMENT_FAILED_TOPIC
+          value: payment-failed
+        image: localhost:5001/payment-service:dev
+        imagePullPolicy: Always
+        name: background
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: "1"
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: payment-service
+      serviceAccountName: payment-service
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-06-21T06:07:21Z"
+    lastUpdateTime: "2026-06-21T06:07:21Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-06-21T06:07:20Z"
+    lastUpdateTime: "2026-06-21T06:16:16Z"
+    message: ReplicaSet "payment-service-background-7f85f8d55" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 3
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

@@ -1,0 +1,8 @@
+NAME                                                      REFERENCE                        TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/reservation-service   Deployment/reservation-service   cpu: 32%/70%   1         4         2          62m
+
+NAME                                                  READY   STATUS    RESTARTS   AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/reservation-db-0                                  1/1     Running   0          8h      10.244.1.86    desktop-worker3   <none>           <none>
+pod/reservation-service-679574689f-nt29g              1/1     Running   0          7m25s   10.244.2.108   desktop-worker    <none>           <none>
+pod/reservation-service-679574689f-rm6p9              1/1     Running   0          58s     10.244.3.121   desktop-worker2   <none>           <none>
+pod/reservation-service-background-7f96cf9fdf-mmxm8   1/1     Running   0          7m25s   10.244.3.120   desktop-worker2   <none>           <none>

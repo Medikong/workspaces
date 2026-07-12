@@ -1,0 +1,1 @@
+SCENARIO=service-hpa-spike-load-test PRESET=payment-250rps task --dir /Users/danghamo/Documents/gituhb/medikong/gitops dev:loadtest

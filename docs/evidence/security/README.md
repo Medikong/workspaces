@@ -5,3 +5,4 @@
 | 주제 | 문서 |
 | --- | --- |
 | NetworkPolicy DB/Kafka 접근 제어 runtime 검증 | [network-policy-block/README.md](network-policy-block/README.md) |
+| Trivy PR comment와 failed check 검증 | [trivy-pr-comment-gate/README.md](trivy-pr-comment-gate/README.md) |

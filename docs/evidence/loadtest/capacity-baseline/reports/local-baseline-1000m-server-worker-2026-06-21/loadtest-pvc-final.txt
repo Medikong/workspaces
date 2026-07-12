@@ -1,0 +1,15 @@
+NAME                                                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/read-api-loadtest-report-archive   Bound    pvc-75126fa7-3487-4976-8a6d-232682a11696   2Gi        RWO            standard       <unset>                 18h
+
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                           STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+persistentvolume/pvc-22832715-cb1e-473c-b640-542c03117f05   1Gi        RWO            Delete           Bound    ticketing-auth/data-auth-db-0                   standard       <unset>                          5h8m
+persistentvolume/pvc-41485b3b-9238-48f5-b6eb-dc626662255d   1Gi        RWO            Delete           Bound    ticketing-concert/data-concert-db-0             standard       <unset>                          5h8m
+persistentvolume/pvc-4a46e77c-b8d8-4e4b-80fb-fc24478d39b8   1Gi        RWO            Delete           Bound    ticketing-notification/data-notification-db-0   standard       <unset>                          5h8m
+persistentvolume/pvc-75126fa7-3487-4976-8a6d-232682a11696   2Gi        RWO            Delete           Bound    loadtest/read-api-loadtest-report-archive       standard       <unset>                          18h
+persistentvolume/pvc-890f7974-a042-4723-a130-946601caadbd   1Gi        RWO            Delete           Bound    ticketing-messaging/data-kafka-0                standard       <unset>                          16h
+persistentvolume/pvc-90896a30-72a2-4f35-8b22-5cc63b71db89   1Gi        RWO            Delete           Bound    ticketing-reservation/data-reservation-db-0     standard       <unset>                          5h8m
+persistentvolume/pvc-92a83987-3ae8-4460-b482-e22c7b7eca53   2Gi        RWO            Delete           Bound    observability/storage-loki-0                    standard       <unset>                          16h
+persistentvolume/pvc-b35b17dc-65ec-40fd-af68-189774986a45   1Gi        RWO            Delete           Bound    ticketing-payment/data-payment-db-0             standard       <unset>                          5h8m
+persistentvolume/pvc-b61ddac5-8a74-40fa-a5f7-1fd701fe7025   2Gi        RWO            Delete           Bound    observability/storage-tempo-0                   standard       <unset>                          17d
+persistentvolume/pvc-ba3eae1d-9187-4a16-b653-a46384d972f1   1Gi        RWO            Delete           Bound    ticketing-ticket/data-ticket-db-0               standard       <unset>                          5h8m
+persistentvolume/pvc-ff43a6fb-161c-426d-9dc1-fcdb6fddfd8b   2Gi        RWO            Delete           Bound    observability/data-pyroscope-0                  standard       <unset>                          4d22h

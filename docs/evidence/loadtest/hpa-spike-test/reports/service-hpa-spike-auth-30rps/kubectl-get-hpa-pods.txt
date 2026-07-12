@@ -1,0 +1,7 @@
+NAME                                               REFERENCE                 TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/auth-service   Deployment/auth-service   cpu: 35%/70%   1         4         2          13m
+
+NAME                                READY   STATUS    RESTARTS   AGE     IP             NODE              NOMINATED NODE   READINESS GATES
+pod/auth-db-0                       1/1     Running   0          7h19m   10.244.3.63    desktop-worker2   <none>           <none>
+pod/auth-service-7dfb54576d-rczg6   1/1     Running   0          2m50s   10.244.3.107   desktop-worker2   <none>           <none>
+pod/auth-service-7dfb54576d-sk2v9   1/1     Running   0          7m20s   10.244.2.93    desktop-worker    <none>           <none>

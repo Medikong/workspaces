@@ -1,0 +1,11 @@
+# k6 status0 by step
+1048 capacity_baseline.concert.date_performances failed with status 0
+4778 capacity_baseline.concert.seat_map failed with status 0
+# k6 status5xx by step
+   3 capacity_baseline.concert.seat_map failed with status 500
+# service errors
+2360 QueuePool limit
+1180 sqlalchemy.exc.TimeoutError
+# db errors
+  16 FATAL:  connection to client lost
+ 579 unexpected EOF

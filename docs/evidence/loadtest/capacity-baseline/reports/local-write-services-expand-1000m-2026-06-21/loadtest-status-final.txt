@@ -1,0 +1,8 @@
+NAME                                                     STATUS     COMPLETIONS   DURATION   AGE   CONTAINERS   IMAGES                                 SELECTOR
+job.batch/read-api-loadtest-read-manual-20260621082125   Complete   1/1           16m        17m   runner       localhost:5001/read-api-loadtest:dev   batch.kubernetes.io/controller-uid=16b7f121-8a7e-47ed-9535-6ddcd79f189a
+
+NAME                                                     READY   STATUS      RESTARTS   AGE   IP             NODE              NOMINATED NODE   READINESS GATES
+pod/read-api-loadtest-read-manual-20260621082125-tq74h   0/1     Completed   0          17m   10.244.1.151   desktop-worker3   <none>           <none>
+
+NAME                                                     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+persistentvolumeclaim/read-api-loadtest-report-archive   Bound    pvc-75126fa7-3487-4976-8a6d-232682a11696   2Gi        RWO            standard       <unset>                 19h   Filesystem

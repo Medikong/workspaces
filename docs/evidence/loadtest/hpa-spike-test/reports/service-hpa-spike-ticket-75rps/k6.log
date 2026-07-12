@@ -1,0 +1,860 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: /loadtest/scenarios/service-hpa-spike-load-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 600 max VUs, 4m45s max duration (incl. graceful stop):
+              * capacity-baseline-ticket: Up to 75.00 iterations/s for 4m30s over 5 stages (maxVUs: 200-600, exec: measureTicket, gracefulStop: 15s)
+
+{"event":"loadtest_experiment_conditions","timestamp":"2026-06-21T10:28:15.069Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621102813-mjt9v","phase":"service_hpa_spike","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":200,"max_vus":600,"duration":"5m","service_steps":["ticket-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":40,"stageRole":"baseline"},{"duration":"60s","target":60,"stageRole":"spike"},{"duration":"60s","target":75,"stageRole":"overload"},{"duration":"60s","target":40,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"ticket-75rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"}
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+Run                        [ 100% ] setup()
+capacity-baseline-ticket   [   0% ]
+
+running (0m10.5s), 000/200 VUs, 0 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   0% ] 000/200 VUs  0m00.8s/4m30s  00.58 iters/s
+
+running (0m11.5s), 001/200 VUs, 0 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   1% ] 001/200 VUs  0m01.8s/4m30s  01.39 iters/s
+
+running (0m12.5s), 000/200 VUs, 2 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   1% ] 000/200 VUs  0m02.8s/4m30s  01.82 iters/s
+
+running (0m13.5s), 000/200 VUs, 4 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   1% ] 000/200 VUs  0m03.8s/4m30s  02.45 iters/s
+
+running (0m14.5s), 000/200 VUs, 7 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   2% ] 000/200 VUs  0m04.8s/4m30s  03.16 iters/s
+
+running (0m15.5s), 000/200 VUs, 11 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   2% ] 000/200 VUs  0m05.8s/4m30s  03.91 iters/s
+
+running (0m16.5s), 000/200 VUs, 15 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   3% ] 000/200 VUs  0m06.8s/4m30s  04.55 iters/s
+
+running (0m17.5s), 000/200 VUs, 20 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   3% ] 000/200 VUs  0m07.8s/4m30s  05.23 iters/s
+
+running (0m18.5s), 000/200 VUs, 25 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   3% ] 000/200 VUs  0m08.8s/4m30s  05.83 iters/s
+
+running (0m19.5s), 000/200 VUs, 31 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   4% ] 000/200 VUs  0m09.8s/4m30s  06.48 iters/s
+
+running (0m20.5s), 000/200 VUs, 38 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   4% ] 000/200 VUs  0m10.8s/4m30s  07.16 iters/s
+
+running (0m21.5s), 000/200 VUs, 46 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   4% ] 000/200 VUs  0m11.8s/4m30s  07.87 iters/s
+
+running (0m22.5s), 000/200 VUs, 54 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   5% ] 000/200 VUs  0m12.8s/4m30s  08.52 iters/s
+
+running (0m23.5s), 001/200 VUs, 62 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   5% ] 001/200 VUs  0m13.8s/4m30s  09.20 iters/s
+
+running (0m24.5s), 000/200 VUs, 72 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   5% ] 000/200 VUs  0m14.8s/4m30s  09.83 iters/s
+
+running (0m25.5s), 001/200 VUs, 82 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   6% ] 001/200 VUs  0m15.8s/4m30s  10.55 iters/s
+
+running (0m26.5s), 000/200 VUs, 93 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   6% ] 000/200 VUs  0m16.8s/4m30s  11.17 iters/s
+
+running (0m27.5s), 000/200 VUs, 105 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   7% ] 000/200 VUs  0m17.8s/4m30s  11.86 iters/s
+
+running (0m28.5s), 000/200 VUs, 117 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   7% ] 000/200 VUs  0m18.8s/4m30s  12.52 iters/s
+
+running (0m29.5s), 000/200 VUs, 130 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   7% ] 000/200 VUs  0m19.8s/4m30s  13.19 iters/s
+
+running (0m30.5s), 001/200 VUs, 143 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   8% ] 001/200 VUs  0m20.8s/4m30s  13.88 iters/s
+
+running (0m31.5s), 000/200 VUs, 158 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   8% ] 000/200 VUs  0m21.8s/4m30s  14.54 iters/s
+
+running (0m32.5s), 001/200 VUs, 172 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   8% ] 001/200 VUs  0m22.8s/4m30s  15.21 iters/s
+
+running (0m33.5s), 000/200 VUs, 188 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   9% ] 000/200 VUs  0m23.8s/4m30s  15.85 iters/s
+
+running (0m34.5s), 000/200 VUs, 204 complete and 0 interrupted iterations
+capacity-baseline-ticket   [   9% ] 000/200 VUs  0m24.8s/4m30s  16.51 iters/s
+
+running (0m35.5s), 000/200 VUs, 221 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  10% ] 000/200 VUs  0m25.8s/4m30s  17.19 iters/s
+
+running (0m36.5s), 001/200 VUs, 238 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  10% ] 001/200 VUs  0m26.8s/4m30s  17.87 iters/s
+
+running (0m37.5s), 000/200 VUs, 257 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  10% ] 000/200 VUs  0m27.8s/4m30s  18.53 iters/s
+
+running (0m38.5s), 001/200 VUs, 275 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  11% ] 001/200 VUs  0m28.8s/4m30s  19.20 iters/s
+
+running (0m39.5s), 000/200 VUs, 295 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  11% ] 000/200 VUs  0m29.8s/4m30s  19.85 iters/s
+
+running (0m40.5s), 000/200 VUs, 315 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  11% ] 000/200 VUs  0m30.8s/4m30s  20.26 iters/s
+
+running (0m41.5s), 000/200 VUs, 336 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  12% ] 000/200 VUs  0m31.8s/4m30s  20.60 iters/s
+
+running (0m42.5s), 001/200 VUs, 356 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  12% ] 001/200 VUs  0m32.8s/4m30s  20.94 iters/s
+
+running (0m43.5s), 001/200 VUs, 377 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  13% ] 001/200 VUs  0m33.8s/4m30s  21.27 iters/s
+
+running (0m44.5s), 000/200 VUs, 399 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  13% ] 000/200 VUs  0m34.8s/4m30s  21.59 iters/s
+
+running (0m45.5s), 000/200 VUs, 421 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  13% ] 000/200 VUs  0m35.8s/4m30s  21.93 iters/s
+
+running (0m46.5s), 000/200 VUs, 443 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  14% ] 000/200 VUs  0m36.8s/4m30s  22.26 iters/s
+
+running (0m47.5s), 000/200 VUs, 465 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  14% ] 000/200 VUs  0m37.8s/4m30s  22.59 iters/s
+
+running (0m48.5s), 000/200 VUs, 488 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  14% ] 000/200 VUs  0m38.8s/4m30s  22.93 iters/s
+
+running (0m49.5s), 000/200 VUs, 511 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  15% ] 000/200 VUs  0m39.8s/4m30s  23.26 iters/s
+
+running (0m50.5s), 001/200 VUs, 534 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  15% ] 001/200 VUs  0m40.8s/4m30s  23.60 iters/s
+
+running (0m51.5s), 000/200 VUs, 558 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  15% ] 000/200 VUs  0m41.8s/4m30s  23.92 iters/s
+
+running (0m52.5s), 001/200 VUs, 582 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  16% ] 001/200 VUs  0m42.8s/4m30s  24.27 iters/s
+
+running (0m53.5s), 000/200 VUs, 607 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  16% ] 000/200 VUs  0m43.8s/4m30s  24.60 iters/s
+
+running (0m54.5s), 001/200 VUs, 631 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  17% ] 001/200 VUs  0m44.8s/4m30s  24.93 iters/s
+
+running (0m55.5s), 001/200 VUs, 656 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  17% ] 001/200 VUs  0m45.8s/4m30s  25.27 iters/s
+
+running (0m56.5s), 000/200 VUs, 682 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  17% ] 000/200 VUs  0m46.8s/4m30s  25.59 iters/s
+
+running (0m57.5s), 000/200 VUs, 708 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  18% ] 000/200 VUs  0m47.8s/4m30s  25.93 iters/s
+
+running (0m58.5s), 000/200 VUs, 734 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  18% ] 000/200 VUs  0m48.8s/4m30s  26.26 iters/s
+
+running (0m59.5s), 001/200 VUs, 760 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  18% ] 001/200 VUs  0m49.8s/4m30s  26.60 iters/s
+
+running (1m00.5s), 000/200 VUs, 787 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  19% ] 000/200 VUs  0m50.8s/4m30s  26.93 iters/s
+
+running (1m01.5s), 000/200 VUs, 814 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  19% ] 000/200 VUs  0m51.8s/4m30s  27.26 iters/s
+
+running (1m02.5s), 001/200 VUs, 841 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  20% ] 001/200 VUs  0m52.8s/4m30s  27.60 iters/s
+
+running (1m03.5s), 001/200 VUs, 869 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  20% ] 001/200 VUs  0m53.8s/4m30s  27.93 iters/s
+
+running (1m04.5s), 001/200 VUs, 897 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  20% ] 001/200 VUs  0m54.8s/4m30s  28.27 iters/s
+
+running (1m05.5s), 000/200 VUs, 926 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  21% ] 000/200 VUs  0m55.8s/4m30s  28.59 iters/s
+
+running (1m06.5s), 000/200 VUs, 955 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  21% ] 000/200 VUs  0m56.8s/4m30s  28.93 iters/s
+
+running (1m07.5s), 001/200 VUs, 983 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  21% ] 001/200 VUs  0m57.8s/4m30s  29.26 iters/s
+
+running (1m08.5s), 000/200 VUs, 1013 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  22% ] 000/200 VUs  0m58.8s/4m30s  29.59 iters/s
+
+running (1m09.5s), 000/200 VUs, 1043 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  22% ] 000/200 VUs  0m59.8s/4m30s  29.93 iters/s
+
+running (1m10.5s), 000/200 VUs, 1073 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  23% ] 000/200 VUs  1m00.8s/4m30s  30.26 iters/s
+
+running (1m11.5s), 001/200 VUs, 1103 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  23% ] 001/200 VUs  1m01.8s/4m30s  30.60 iters/s
+
+running (1m12.5s), 000/200 VUs, 1134 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  23% ] 000/200 VUs  1m02.8s/4m30s  30.94 iters/s
+
+running (1m13.5s), 001/200 VUs, 1165 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  24% ] 001/200 VUs  1m03.8s/4m30s  31.27 iters/s
+
+running (1m14.5s), 001/200 VUs, 1196 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  24% ] 001/200 VUs  1m04.8s/4m30s  31.60 iters/s
+
+running (1m15.5s), 001/200 VUs, 1228 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  24% ] 001/200 VUs  1m05.8s/4m30s  31.93 iters/s
+
+running (1m16.5s), 001/200 VUs, 1260 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  25% ] 001/200 VUs  1m06.8s/4m30s  32.26 iters/s
+
+running (1m17.5s), 000/200 VUs, 1293 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  25% ] 000/200 VUs  1m07.8s/4m30s  32.59 iters/s
+
+running (1m18.5s), 000/200 VUs, 1326 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  25% ] 000/200 VUs  1m08.8s/4m30s  32.93 iters/s
+
+running (1m19.5s), 000/200 VUs, 1359 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  26% ] 000/200 VUs  1m09.8s/4m30s  33.26 iters/s
+
+running (1m20.5s), 001/200 VUs, 1392 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  26% ] 001/200 VUs  1m10.8s/4m30s  33.60 iters/s
+
+running (1m21.5s), 000/200 VUs, 1426 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  27% ] 000/200 VUs  1m11.8s/4m30s  33.93 iters/s
+
+running (1m22.5s), 000/200 VUs, 1460 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  27% ] 000/200 VUs  1m12.8s/4m30s  34.26 iters/s
+
+running (1m23.5s), 001/200 VUs, 1494 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  27% ] 001/200 VUs  1m13.8s/4m30s  34.60 iters/s
+
+running (1m24.5s), 001/200 VUs, 1529 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  28% ] 001/200 VUs  1m14.8s/4m30s  34.93 iters/s
+
+running (1m25.5s), 001/200 VUs, 1564 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  28% ] 001/200 VUs  1m15.8s/4m30s  35.27 iters/s
+
+running (1m26.5s), 000/200 VUs, 1600 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  28% ] 000/200 VUs  1m16.8s/4m30s  35.59 iters/s
+
+running (1m27.5s), 001/200 VUs, 1635 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  29% ] 001/200 VUs  1m17.8s/4m30s  35.93 iters/s
+
+running (1m28.5s), 000/200 VUs, 1672 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  29% ] 000/200 VUs  1m18.8s/4m30s  36.26 iters/s
+
+running (1m29.5s), 000/200 VUs, 1708 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  30% ] 000/200 VUs  1m19.8s/4m30s  36.59 iters/s
+
+running (1m30.5s), 001/200 VUs, 1744 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  30% ] 001/200 VUs  1m20.8s/4m30s  36.93 iters/s
+
+running (1m31.5s), 000/200 VUs, 1782 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  30% ] 000/200 VUs  1m21.8s/4m30s  37.26 iters/s
+
+running (1m32.5s), 001/200 VUs, 1819 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  31% ] 001/200 VUs  1m22.8s/4m30s  37.60 iters/s
+
+running (1m33.5s), 000/200 VUs, 1857 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  31% ] 000/200 VUs  1m23.8s/4m30s  37.93 iters/s
+
+running (1m34.5s), 001/200 VUs, 1895 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  31% ] 001/200 VUs  1m24.8s/4m30s  38.27 iters/s
+
+running (1m35.5s), 000/200 VUs, 1934 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  32% ] 000/200 VUs  1m25.8s/4m30s  38.60 iters/s
+
+running (1m36.5s), 001/200 VUs, 1972 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  32% ] 001/200 VUs  1m26.8s/4m30s  38.93 iters/s
+
+running (1m37.5s), 001/200 VUs, 2011 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  33% ] 001/200 VUs  1m27.8s/4m30s  39.26 iters/s
+
+running (1m38.5s), 000/200 VUs, 2051 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  33% ] 000/200 VUs  1m28.8s/4m30s  39.59 iters/s
+
+running (1m39.5s), 001/200 VUs, 2090 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  33% ] 001/200 VUs  1m29.8s/4m30s  39.93 iters/s
+
+running (1m40.5s), 000/200 VUs, 2131 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  34% ] 000/200 VUs  1m30.8s/4m30s  40.26 iters/s
+
+running (1m41.5s), 001/200 VUs, 2171 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  34% ] 001/200 VUs  1m31.8s/4m30s  40.60 iters/s
+
+running (1m42.5s), 000/200 VUs, 2212 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  34% ] 000/200 VUs  1m32.8s/4m30s  40.93 iters/s
+
+running (1m43.5s), 001/200 VUs, 2253 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  35% ] 001/200 VUs  1m33.8s/4m30s  41.27 iters/s
+
+running (1m44.5s), 001/200 VUs, 2294 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  35% ] 001/200 VUs  1m34.8s/4m30s  41.60 iters/s
+
+running (1m45.5s), 001/200 VUs, 2336 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  35% ] 001/200 VUs  1m35.8s/4m30s  41.93 iters/s
+
+running (1m46.5s), 001/200 VUs, 2378 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  36% ] 001/200 VUs  1m36.8s/4m30s  42.27 iters/s
+
+running (1m47.5s), 001/200 VUs, 2420 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  36% ] 001/200 VUs  1m37.8s/4m30s  42.59 iters/s
+
+running (1m48.5s), 001/200 VUs, 2463 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  37% ] 001/200 VUs  1m38.8s/4m30s  42.93 iters/s
+
+running (1m49.5s), 000/200 VUs, 2507 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  37% ] 000/200 VUs  1m39.8s/4m30s  43.26 iters/s
+
+running (1m50.5s), 000/200 VUs, 2550 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  37% ] 000/200 VUs  1m40.8s/4m30s  43.59 iters/s
+
+running (1m51.5s), 000/200 VUs, 2594 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  38% ] 000/200 VUs  1m41.8s/4m30s  43.93 iters/s
+
+running (1m52.5s), 000/200 VUs, 2638 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  38% ] 000/200 VUs  1m42.8s/4m30s  44.26 iters/s
+
+running (1m53.5s), 002/200 VUs, 2681 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  38% ] 002/200 VUs  1m43.8s/4m30s  44.60 iters/s
+
+running (1m54.5s), 000/200 VUs, 2727 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  39% ] 000/200 VUs  1m44.8s/4m30s  44.93 iters/s
+
+running (1m55.5s), 001/200 VUs, 2772 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  39% ] 001/200 VUs  1m45.8s/4m30s  45.27 iters/s
+
+running (1m56.5s), 000/200 VUs, 2818 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  40% ] 000/200 VUs  1m46.8s/4m30s  45.60 iters/s
+
+running (1m57.5s), 001/200 VUs, 2863 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  40% ] 001/200 VUs  1m47.8s/4m30s  45.93 iters/s
+
+running (1m58.5s), 001/200 VUs, 2909 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  40% ] 001/200 VUs  1m48.8s/4m30s  46.26 iters/s
+
+running (1m59.5s), 000/200 VUs, 2956 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  41% ] 000/200 VUs  1m49.8s/4m30s  46.59 iters/s
+
+running (2m00.5s), 000/200 VUs, 3003 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  41% ] 000/200 VUs  1m50.8s/4m30s  46.93 iters/s
+
+running (2m01.5s), 000/200 VUs, 3050 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  41% ] 000/200 VUs  1m51.8s/4m30s  47.26 iters/s
+
+running (2m02.5s), 001/200 VUs, 3097 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  42% ] 001/200 VUs  1m52.8s/4m30s  47.60 iters/s
+
+running (2m03.5s), 001/200 VUs, 3145 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  42% ] 001/200 VUs  1m53.8s/4m30s  47.93 iters/s
+
+running (2m04.5s), 001/200 VUs, 3193 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  43% ] 001/200 VUs  1m54.8s/4m30s  48.27 iters/s
+
+running (2m05.5s), 001/200 VUs, 3241 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  43% ] 001/200 VUs  1m55.8s/4m30s  48.60 iters/s
+
+running (2m06.5s), 001/200 VUs, 3290 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  43% ] 001/200 VUs  1m56.8s/4m30s  48.93 iters/s
+
+running (2m07.5s), 001/200 VUs, 3339 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  44% ] 001/200 VUs  1m57.8s/4m30s  49.26 iters/s
+
+running (2m08.5s), 000/200 VUs, 3389 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  44% ] 000/200 VUs  1m58.8s/4m30s  49.60 iters/s
+
+running (2m09.5s), 001/200 VUs, 3438 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  44% ] 001/200 VUs  1m59.8s/4m30s  49.93 iters/s
+
+running (2m10.5s), 001/200 VUs, 3488 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  45% ] 001/200 VUs  2m00.8s/4m30s  50.26 iters/s
+
+running (2m11.5s), 000/200 VUs, 3539 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  45% ] 000/200 VUs  2m01.8s/4m30s  50.59 iters/s
+
+running (2m12.5s), 000/200 VUs, 3590 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  45% ] 000/200 VUs  2m02.8s/4m30s  50.93 iters/s
+
+running (2m13.5s), 000/200 VUs, 3641 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  46% ] 000/200 VUs  2m03.8s/4m30s  51.26 iters/s
+
+running (2m14.5s), 001/200 VUs, 3692 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  46% ] 001/200 VUs  2m04.8s/4m30s  51.60 iters/s
+
+running (2m15.5s), 001/200 VUs, 3744 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  47% ] 001/200 VUs  2m05.8s/4m30s  51.93 iters/s
+
+running (2m16.5s), 001/200 VUs, 3796 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  47% ] 001/200 VUs  2m06.8s/4m30s  52.27 iters/s
+
+running (2m17.5s), 001/200 VUs, 3848 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  47% ] 001/200 VUs  2m07.8s/4m30s  52.60 iters/s
+
+running (2m18.5s), 001/200 VUs, 3901 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  48% ] 001/200 VUs  2m08.8s/4m30s  52.93 iters/s
+
+running (2m19.5s), 001/200 VUs, 3954 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  48% ] 001/200 VUs  2m09.8s/4m30s  53.26 iters/s
+
+running (2m20.5s), 000/200 VUs, 4008 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  48% ] 000/200 VUs  2m10.8s/4m30s  53.59 iters/s
+
+running (2m21.5s), 000/200 VUs, 4062 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  49% ] 000/200 VUs  2m11.8s/4m30s  53.93 iters/s
+
+running (2m22.5s), 001/200 VUs, 4115 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  49% ] 001/200 VUs  2m12.8s/4m30s  54.26 iters/s
+
+running (2m23.5s), 001/200 VUs, 4170 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  50% ] 001/200 VUs  2m13.8s/4m30s  54.60 iters/s
+
+running (2m24.5s), 000/200 VUs, 4225 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  50% ] 000/200 VUs  2m14.8s/4m30s  54.93 iters/s
+
+running (2m25.5s), 001/200 VUs, 4280 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  50% ] 001/200 VUs  2m15.8s/4m30s  55.27 iters/s
+
+running (2m26.5s), 001/200 VUs, 4335 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  51% ] 001/200 VUs  2m16.8s/4m30s  55.60 iters/s
+
+running (2m27.5s), 001/200 VUs, 4391 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  51% ] 001/200 VUs  2m17.8s/4m30s  55.93 iters/s
+
+running (2m28.5s), 001/200 VUs, 4447 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  51% ] 001/200 VUs  2m18.8s/4m30s  56.26 iters/s
+
+running (2m29.5s), 000/200 VUs, 4504 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  52% ] 000/200 VUs  2m19.8s/4m30s  56.60 iters/s
+
+running (2m30.5s), 001/200 VUs, 4560 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  52% ] 001/200 VUs  2m20.8s/4m30s  56.93 iters/s
+
+running (2m31.5s), 001/200 VUs, 4617 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  53% ] 001/200 VUs  2m21.8s/4m30s  57.26 iters/s
+
+running (2m32.5s), 001/200 VUs, 4675 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  53% ] 001/200 VUs  2m22.8s/4m30s  57.60 iters/s
+
+running (2m33.5s), 000/200 VUs, 4733 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  53% ] 000/200 VUs  2m23.8s/4m30s  57.93 iters/s
+
+running (2m34.5s), 000/200 VUs, 4791 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  54% ] 000/200 VUs  2m24.8s/4m30s  58.26 iters/s
+
+running (2m35.5s), 001/200 VUs, 4849 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  54% ] 001/200 VUs  2m25.8s/4m30s  58.60 iters/s
+
+running (2m36.5s), 001/200 VUs, 4908 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  54% ] 001/200 VUs  2m26.8s/4m30s  58.93 iters/s
+
+running (2m37.5s), 001/200 VUs, 4967 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  55% ] 001/200 VUs  2m27.8s/4m30s  59.26 iters/s
+
+running (2m38.5s), 001/200 VUs, 5026 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  55% ] 001/200 VUs  2m28.8s/4m30s  59.60 iters/s
+
+running (2m39.5s), 001/200 VUs, 5086 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  55% ] 001/200 VUs  2m29.8s/4m30s  59.93 iters/s
+
+running (2m40.5s), 001/200 VUs, 5146 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  56% ] 001/200 VUs  2m30.8s/4m30s  60.20 iters/s
+
+running (2m41.5s), 001/200 VUs, 5206 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  56% ] 001/200 VUs  2m31.8s/4m30s  60.45 iters/s
+
+running (2m42.5s), 001/200 VUs, 5267 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  57% ] 001/200 VUs  2m32.8s/4m30s  60.70 iters/s
+
+running (2m43.5s), 001/200 VUs, 5328 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  57% ] 001/200 VUs  2m33.8s/4m30s  60.95 iters/s
+
+running (2m44.5s), 001/200 VUs, 5389 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  57% ] 001/200 VUs  2m34.8s/4m30s  61.20 iters/s
+
+running (2m45.5s), 001/200 VUs, 5450 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  58% ] 001/200 VUs  2m35.8s/4m30s  61.45 iters/s
+
+running (2m46.5s), 001/200 VUs, 5512 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  58% ] 001/200 VUs  2m36.8s/4m30s  61.70 iters/s
+
+running (2m47.5s), 001/200 VUs, 5573 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  58% ] 001/200 VUs  2m37.8s/4m30s  61.95 iters/s
+
+running (2m48.5s), 001/200 VUs, 5636 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  59% ] 001/200 VUs  2m38.8s/4m30s  62.20 iters/s
+
+running (2m49.5s), 001/200 VUs, 5698 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  59% ] 001/200 VUs  2m39.8s/4m30s  62.45 iters/s
+
+running (2m50.5s), 000/200 VUs, 5761 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  60% ] 000/200 VUs  2m40.8s/4m30s  62.70 iters/s
+
+running (2m51.5s), 000/200 VUs, 5824 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  60% ] 000/200 VUs  2m41.8s/4m30s  62.95 iters/s
+
+running (2m52.5s), 000/200 VUs, 5887 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  60% ] 000/200 VUs  2m42.8s/4m30s  63.20 iters/s
+
+running (2m53.5s), 001/200 VUs, 5950 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  61% ] 001/200 VUs  2m43.8s/4m30s  63.45 iters/s
+
+running (2m54.5s), 001/200 VUs, 6013 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  61% ] 001/200 VUs  2m44.8s/4m30s  63.70 iters/s
+
+running (2m55.5s), 001/200 VUs, 6077 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  61% ] 001/200 VUs  2m45.8s/4m30s  63.95 iters/s
+
+running (2m56.5s), 001/200 VUs, 6141 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  62% ] 001/200 VUs  2m46.8s/4m30s  64.20 iters/s
+
+running (2m57.5s), 001/200 VUs, 6205 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  62% ] 001/200 VUs  2m47.8s/4m30s  64.45 iters/s
+
+running (2m58.5s), 001/200 VUs, 6270 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  63% ] 001/200 VUs  2m48.8s/4m30s  64.70 iters/s
+
+running (2m59.5s), 001/200 VUs, 6335 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  63% ] 001/200 VUs  2m49.8s/4m30s  64.95 iters/s
+
+running (3m00.5s), 001/200 VUs, 6400 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  63% ] 001/200 VUs  2m50.8s/4m30s  65.20 iters/s
+
+running (3m01.5s), 001/200 VUs, 6465 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  64% ] 001/200 VUs  2m51.8s/4m30s  65.45 iters/s
+
+running (3m02.5s), 001/200 VUs, 6531 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  64% ] 001/200 VUs  2m52.8s/4m30s  65.70 iters/s
+
+running (3m03.5s), 001/200 VUs, 6597 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  64% ] 001/200 VUs  2m53.8s/4m30s  65.95 iters/s
+
+running (3m04.5s), 001/200 VUs, 6663 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  65% ] 001/200 VUs  2m54.8s/4m30s  66.20 iters/s
+
+running (3m05.5s), 001/200 VUs, 6729 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  65% ] 001/200 VUs  2m55.8s/4m30s  66.45 iters/s
+
+running (3m06.5s), 000/200 VUs, 6796 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  65% ] 000/200 VUs  2m56.8s/4m30s  66.70 iters/s
+
+running (3m07.5s), 000/200 VUs, 6863 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  66% ] 000/200 VUs  2m57.8s/4m30s  66.95 iters/s
+
+running (3m08.5s), 000/200 VUs, 6930 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  66% ] 000/200 VUs  2m58.8s/4m30s  67.20 iters/s
+
+running (3m09.5s), 001/200 VUs, 6997 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  67% ] 001/200 VUs  2m59.8s/4m30s  67.45 iters/s
+
+running (3m10.5s), 000/200 VUs, 7065 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  67% ] 000/200 VUs  3m00.8s/4m30s  67.70 iters/s
+
+running (3m11.5s), 002/200 VUs, 7131 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  67% ] 002/200 VUs  3m01.8s/4m30s  67.95 iters/s
+
+running (3m12.5s), 001/200 VUs, 7200 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  68% ] 001/200 VUs  3m02.8s/4m30s  68.20 iters/s
+
+running (3m13.5s), 001/200 VUs, 7269 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  68% ] 001/200 VUs  3m03.8s/4m30s  68.45 iters/s
+
+running (3m14.5s), 001/200 VUs, 7337 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  68% ] 001/200 VUs  3m04.8s/4m30s  68.70 iters/s
+
+running (3m15.5s), 001/200 VUs, 7406 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  69% ] 001/200 VUs  3m05.8s/4m30s  68.95 iters/s
+
+running (3m16.5s), 001/200 VUs, 7475 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  69% ] 001/200 VUs  3m06.8s/4m30s  69.20 iters/s
+
+running (3m17.5s), 000/200 VUs, 7545 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  70% ] 000/200 VUs  3m07.8s/4m30s  69.45 iters/s
+
+running (3m18.5s), 001/200 VUs, 7614 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  70% ] 001/200 VUs  3m08.8s/4m30s  69.70 iters/s
+
+running (3m19.5s), 001/200 VUs, 7684 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  70% ] 001/200 VUs  3m09.8s/4m30s  69.95 iters/s
+
+running (3m20.5s), 001/200 VUs, 7754 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  71% ] 001/200 VUs  3m10.8s/4m30s  70.20 iters/s
+
+running (3m21.5s), 001/200 VUs, 7824 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  71% ] 001/200 VUs  3m11.8s/4m30s  70.45 iters/s
+
+running (3m22.5s), 001/200 VUs, 7895 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  71% ] 001/200 VUs  3m12.8s/4m30s  70.70 iters/s
+
+running (3m23.5s), 001/200 VUs, 7966 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  72% ] 001/200 VUs  3m13.8s/4m30s  70.95 iters/s
+
+running (3m24.5s), 001/200 VUs, 8037 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  72% ] 001/200 VUs  3m14.8s/4m30s  71.20 iters/s
+
+running (3m25.5s), 001/200 VUs, 8108 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  73% ] 001/200 VUs  3m15.8s/4m30s  71.45 iters/s
+
+running (3m26.5s), 001/200 VUs, 8180 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  73% ] 001/200 VUs  3m16.8s/4m30s  71.70 iters/s
+
+running (3m27.5s), 000/200 VUs, 8252 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  73% ] 000/200 VUs  3m17.8s/4m30s  71.95 iters/s
+
+running (3m28.5s), 000/200 VUs, 8324 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  74% ] 000/200 VUs  3m18.8s/4m30s  72.20 iters/s
+
+running (3m29.5s), 001/200 VUs, 8396 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  74% ] 001/200 VUs  3m19.8s/4m30s  72.45 iters/s
+
+running (3m30.5s), 001/200 VUs, 8468 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  74% ] 001/200 VUs  3m20.8s/4m30s  72.70 iters/s
+
+running (3m31.5s), 001/200 VUs, 8541 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  75% ] 001/200 VUs  3m21.8s/4m30s  72.95 iters/s
+
+running (3m32.5s), 002/200 VUs, 8613 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  75% ] 002/200 VUs  3m22.8s/4m30s  73.20 iters/s
+
+running (3m33.5s), 000/200 VUs, 8688 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  75% ] 000/200 VUs  3m23.8s/4m30s  73.45 iters/s
+
+running (3m34.5s), 001/200 VUs, 8761 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  76% ] 001/200 VUs  3m24.8s/4m30s  73.70 iters/s
+
+running (3m35.5s), 002/200 VUs, 8834 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  76% ] 002/200 VUs  3m25.8s/4m30s  73.95 iters/s
+
+running (3m36.5s), 001/200 VUs, 8909 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  77% ] 001/200 VUs  3m26.8s/4m30s  74.20 iters/s
+
+running (3m37.5s), 001/200 VUs, 8983 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  77% ] 001/200 VUs  3m27.8s/4m30s  74.45 iters/s
+
+running (3m38.5s), 002/200 VUs, 9057 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  77% ] 002/200 VUs  3m28.8s/4m30s  74.70 iters/s
+
+running (3m39.5s), 001/200 VUs, 9133 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  78% ] 001/200 VUs  3m29.8s/4m30s  74.95 iters/s
+
+running (3m40.5s), 001/200 VUs, 9208 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  78% ] 001/200 VUs  3m30.8s/4m30s  74.54 iters/s
+
+running (3m41.5s), 001/200 VUs, 9282 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  78% ] 001/200 VUs  3m31.8s/4m30s  73.95 iters/s
+
+running (3m42.5s), 001/200 VUs, 9355 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  79% ] 001/200 VUs  3m32.8s/4m30s  73.38 iters/s
+
+running (3m43.5s), 002/200 VUs, 9428 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  79% ] 002/200 VUs  3m33.8s/4m30s  72.79 iters/s
+
+running (3m44.5s), 001/200 VUs, 9501 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  80% ] 001/200 VUs  3m34.8s/4m30s  72.21 iters/s
+
+running (3m45.5s), 001/200 VUs, 9573 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  80% ] 001/200 VUs  3m35.8s/4m30s  71.62 iters/s
+
+running (3m46.5s), 001/200 VUs, 9644 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  80% ] 001/200 VUs  3m36.8s/4m30s  71.04 iters/s
+
+running (3m47.5s), 001/200 VUs, 9715 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  81% ] 001/200 VUs  3m37.8s/4m30s  70.46 iters/s
+
+running (3m48.5s), 001/200 VUs, 9785 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  81% ] 001/200 VUs  3m38.8s/4m30s  69.87 iters/s
+
+running (3m49.5s), 001/200 VUs, 9855 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  81% ] 001/200 VUs  3m39.8s/4m30s  69.29 iters/s
+
+running (3m50.5s), 001/200 VUs, 9924 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  82% ] 001/200 VUs  3m40.8s/4m30s  68.70 iters/s
+
+running (3m51.5s), 001/200 VUs, 9992 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  82% ] 001/200 VUs  3m41.8s/4m30s  68.12 iters/s
+
+running (3m52.5s), 001/200 VUs, 10060 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  83% ] 001/200 VUs  3m42.8s/4m30s  67.54 iters/s
+
+running (3m53.5s), 001/200 VUs, 10127 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  83% ] 001/200 VUs  3m43.8s/4m30s  66.96 iters/s
+
+running (3m54.5s), 001/200 VUs, 10194 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  83% ] 001/200 VUs  3m44.8s/4m30s  66.37 iters/s
+
+running (3m55.5s), 001/200 VUs, 10260 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  84% ] 001/200 VUs  3m45.8s/4m30s  65.79 iters/s
+
+running (3m56.5s), 000/200 VUs, 10326 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  84% ] 000/200 VUs  3m46.8s/4m30s  65.21 iters/s
+
+running (3m57.5s), 000/200 VUs, 10391 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  84% ] 000/200 VUs  3m47.8s/4m30s  64.63 iters/s
+
+running (3m58.5s), 001/200 VUs, 10455 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  85% ] 001/200 VUs  3m48.8s/4m30s  64.04 iters/s
+
+running (3m59.5s), 001/200 VUs, 10519 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  85% ] 001/200 VUs  3m49.8s/4m30s  63.45 iters/s
+
+running (4m00.5s), 001/200 VUs, 10582 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  85% ] 001/200 VUs  3m50.8s/4m30s  62.87 iters/s
+
+running (4m01.5s), 001/200 VUs, 10644 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  86% ] 001/200 VUs  3m51.8s/4m30s  62.29 iters/s
+
+running (4m02.5s), 001/200 VUs, 10706 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  86% ] 001/200 VUs  3m52.8s/4m30s  61.71 iters/s
+
+running (4m03.5s), 002/200 VUs, 10767 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  87% ] 002/200 VUs  3m53.8s/4m30s  61.12 iters/s
+
+running (4m04.5s), 000/200 VUs, 10829 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  87% ] 000/200 VUs  3m54.8s/4m30s  60.54 iters/s
+
+running (4m05.5s), 001/200 VUs, 10889 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  87% ] 001/200 VUs  3m55.8s/4m30s  59.95 iters/s
+
+running (4m06.5s), 000/200 VUs, 10949 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  88% ] 000/200 VUs  3m56.8s/4m30s  59.38 iters/s
+
+running (4m07.5s), 000/200 VUs, 11008 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  88% ] 000/200 VUs  3m57.8s/4m30s  58.79 iters/s
+
+running (4m08.5s), 001/200 VUs, 11066 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  88% ] 001/200 VUs  3m58.8s/4m30s  58.21 iters/s
+
+running (4m09.5s), 001/200 VUs, 11124 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  89% ] 001/200 VUs  3m59.8s/4m30s  57.62 iters/s
+
+running (4m10.5s), 000/200 VUs, 11182 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  89% ] 000/200 VUs  4m00.8s/4m30s  57.04 iters/s
+
+running (4m11.5s), 001/200 VUs, 11238 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  90% ] 001/200 VUs  4m01.8s/4m30s  56.46 iters/s
+
+running (4m12.5s), 001/200 VUs, 11294 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  90% ] 001/200 VUs  4m02.8s/4m30s  55.87 iters/s
+
+running (4m13.5s), 001/200 VUs, 11350 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  90% ] 001/200 VUs  4m03.8s/4m30s  55.29 iters/s
+
+running (4m14.5s), 001/200 VUs, 11405 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  91% ] 001/200 VUs  4m04.8s/4m30s  54.70 iters/s
+
+running (4m15.5s), 001/200 VUs, 11459 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  91% ] 001/200 VUs  4m05.8s/4m30s  54.12 iters/s
+
+running (4m16.5s), 002/200 VUs, 11512 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  91% ] 002/200 VUs  4m06.8s/4m30s  53.54 iters/s
+
+running (4m17.5s), 000/200 VUs, 11567 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  92% ] 000/200 VUs  4m07.8s/4m30s  52.96 iters/s
+
+running (4m18.5s), 001/200 VUs, 11619 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  92% ] 001/200 VUs  4m08.8s/4m30s  52.37 iters/s
+
+running (4m19.5s), 001/200 VUs, 11671 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  93% ] 001/200 VUs  4m09.8s/4m30s  51.79 iters/s
+
+running (4m20.5s), 000/200 VUs, 11723 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  93% ] 000/200 VUs  4m10.8s/4m30s  51.21 iters/s
+
+running (4m21.5s), 000/200 VUs, 11774 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  93% ] 000/200 VUs  4m11.8s/4m30s  50.63 iters/s
+
+running (4m22.5s), 001/200 VUs, 11824 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  94% ] 001/200 VUs  4m12.8s/4m30s  50.04 iters/s
+
+running (4m23.5s), 000/200 VUs, 11874 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  94% ] 000/200 VUs  4m13.8s/4m30s  49.46 iters/s
+
+running (4m24.5s), 001/200 VUs, 11923 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  94% ] 001/200 VUs  4m14.8s/4m30s  48.87 iters/s
+
+running (4m25.5s), 000/200 VUs, 11972 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  95% ] 000/200 VUs  4m15.8s/4m30s  48.29 iters/s
+
+running (4m26.5s), 000/200 VUs, 12020 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  95% ] 000/200 VUs  4m16.8s/4m30s  47.71 iters/s
+
+running (4m27.5s), 001/200 VUs, 12067 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  95% ] 001/200 VUs  4m17.8s/4m30s  47.12 iters/s
+
+running (4m28.5s), 000/200 VUs, 12114 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  96% ] 000/200 VUs  4m18.8s/4m30s  46.54 iters/s
+
+running (4m29.5s), 001/200 VUs, 12160 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  96% ] 001/200 VUs  4m19.8s/4m30s  45.95 iters/s
+
+running (4m30.5s), 000/200 VUs, 12206 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  97% ] 000/200 VUs  4m20.8s/4m30s  45.38 iters/s
+
+running (4m31.5s), 000/200 VUs, 12251 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  97% ] 000/200 VUs  4m21.8s/4m30s  44.79 iters/s
+
+running (4m32.5s), 001/200 VUs, 12295 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  97% ] 001/200 VUs  4m22.8s/4m30s  44.21 iters/s
+
+running (4m33.5s), 002/200 VUs, 12338 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  98% ] 002/200 VUs  4m23.8s/4m30s  43.62 iters/s
+
+running (4m34.5s), 000/200 VUs, 12383 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  98% ] 000/200 VUs  4m24.8s/4m30s  43.04 iters/s
+
+running (4m35.5s), 001/200 VUs, 12425 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  98% ] 001/200 VUs  4m25.8s/4m30s  42.45 iters/s
+
+running (4m36.5s), 000/200 VUs, 12468 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  99% ] 000/200 VUs  4m26.8s/4m30s  41.87 iters/s
+
+running (4m37.5s), 001/200 VUs, 12509 complete and 0 interrupted iterations
+capacity-baseline-ticket   [  99% ] 001/200 VUs  4m27.8s/4m30s  41.28 iters/s
+
+running (4m38.5s), 001/200 VUs, 12550 complete and 0 interrupted iterations
+capacity-baseline-ticket   [ 100% ] 001/200 VUs  4m28.8s/4m30s  40.70 iters/s
+
+running (4m39.5s), 000/200 VUs, 12591 complete and 0 interrupted iterations
+capacity-baseline-ticket   [ 100% ] 000/200 VUs  4m29.8s/4m30s  40.12 iters/s
+{"event":"loadtest_run_report","timestamp":"2026-06-21T10:32:54.790Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621102813-mjt9v","scenario":"service-hpa-spike-load-test","report_phase":"service_step_complete","measured_service":"ticket-service","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","status":"PASS","execution_conditions":{"loadtest_run_id":"read-api-loadtest-read-manual-20260621102813-mjt9v","phase":"summary","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":200,"max_vus":600,"duration":"5m","service_steps":["ticket-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":40,"stageRole":"baseline"},{"duration":"60s","target":60,"stageRole":"spike"},{"duration":"60s","target":75,"stageRole":"overload"},{"duration":"60s","target":40,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"ticket-75rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"},"scenario_report":{"report_type":"service_hpa_spike","scenario":"service-hpa-spike-load-test","traffic_model_preset":"ticket-75rps","dataset_revision":"capacity-baseline-half-year-early-growth-v2","seed_method":"deterministic_bulk_insert","service_steps":["ticket-service"],"default_stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":40,"stageRole":"baseline"},{"duration":"60s","target":60,"stageRole":"spike"},{"duration":"60s","target":75,"stageRole":"overload"},{"duration":"60s","target":40,"stageRole":"cooldown"}],"service_stages":{},"stage_contract":{"order":["warmup","baseline","spike","overload","cooldown"],"warmup":"excluded_from_decision","cooldown":"recovery_observation_only_not_scale_down_confirmation"},"resource_observation_source":"metrics-api","scale_out_results":[{"service":"ticket-service","namespace":"ticketing-ticket","baseline_replicas":null,"max_desired_replicas":null,"hpa_decision_seconds":null,"scale_out_ready_seconds":null}],"service_hpa_results":[{"service":"ticket-service","namespace":"ticketing-ticket","baseline_replicas":null,"max_desired_replicas":null,"hpa_decision_seconds":null,"scale_out_ready_seconds":null}],"stage_results":[{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":120,"p95_ms":15.22144109999999,"p99_ms":24.017715659999975,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":100,"p95_ms":6.6597121999999995,"p99_ms":18.879437,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_baseline_rps_40","stage_role":"baseline","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":120,"p95_ms":9.279148549999999,"p99_ms":20.66790926,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_baseline_rps_40","stage_role":"baseline","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":100,"p95_ms":6.300512499999999,"p99_ms":19.936421669999998,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_spike_rps_60","stage_role":"spike","warmup_excluded":false,"target_rps":60,"duration":"60s","slo_p95_ms":120,"p95_ms":9.933739599999996,"p99_ms":19.972280739999995,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_spike_rps_60","stage_role":"spike","warmup_excluded":false,"target_rps":60,"duration":"60s","slo_p95_ms":100,"p95_ms":6.0073997,"p99_ms":18.729541759999993,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_overload_rps_75","stage_role":"overload","warmup_excluded":false,"target_rps":75,"duration":"60s","slo_p95_ms":120,"p95_ms":9.303996049999995,"p99_ms":20.202299919999998,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_overload_rps_75","stage_role":"overload","warmup_excluded":false,"target_rps":75,"duration":"60s","slo_p95_ms":100,"p95_ms":6.374630949999995,"p99_ms":20.29286566999999,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_cooldown_rps_40","stage_role":"cooldown","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":120,"p95_ms":9.585843599999997,"p99_ms":20.12415325,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_cooldown_rps_40","stage_role":"cooldown","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":100,"p95_ms":6.439818749999983,"p99_ms":18.956158489999996,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]}],"first_limit_candidate":null,"recovery_observations":[{"service":"ticket-service","step":"capacity_baseline.ticket.issue","stage":"ticket_cooldown_rps_40","target_rps":40,"p95_ms":9.585843599999997,"p99_ms":20.12415325,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"},{"service":"ticket-service","step":"capacity_baseline.ticket.list","stage":"ticket_cooldown_rps_40","target_rps":40,"p95_ms":6.439818749999983,"p99_ms":18.956158489999996,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"}]}}
+{"event":"loadtest_run_report","timestamp":"2026-06-21T10:32:54.792Z","test_type":"loadtest","loadtest_run_id":"read-api-loadtest-read-manual-20260621102813-mjt9v","scenario":"service-hpa-spike-load-test","report_phase":"final","measured_service":null,"environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","status":"PASS","execution_conditions":{"loadtest_run_id":"read-api-loadtest-read-manual-20260621102813-mjt9v","phase":"summary","scenario":"service-hpa-spike-load-test","environment":"local","target":"local","target_base_url":"http://kong-kong-proxy.kong.svc.cluster.local","revision":"dev","image":"localhost:5001/read-api-loadtest:dev","image_tag":"dev","release":"read-api-loadtest","namespace":"loadtest","k6_command":"k6","k6_command_args":["run","--log-format=raw","/loadtest/scenarios/service-hpa-spike-load-test.js"],"k6_extra_args":[],"k6_output":"","k6_scenario_file":"/loadtest/scenarios/service-hpa-spike-load-test.js","executor":"ramping-arrival-rate","vus":5,"rate":1,"time_unit":"1s","pre_allocated_vus":200,"max_vus":600,"duration":"5m","service_steps":["ticket-service"],"stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":40,"stageRole":"baseline"},{"duration":"60s","target":60,"stageRole":"spike"},{"duration":"60s","target":75,"stageRole":"overload"},{"duration":"60s","target":40,"stageRole":"cooldown"}],"service_stages":{},"graceful_stop":"15s","think_time_seconds":0,"ticket_list_limit":20,"active_customer_count":200,"payment_amount":50000,"concert_limit":20,"performance_limit":20,"seat_limit":200,"threshold_http_req_failed_rate":0.01,"threshold_http_req_duration_p95_ms":150,"threshold_http_req_duration_p99_ms":300,"threshold_checks_rate":0.99,"capacity_baseline_target_utilization":0.7,"capacity_baseline_seed_method":"deterministic_bulk_insert","capacity_baseline_fixed_conditions":{"cooldownInterpretation":"recovery_observation_only","hpa":"enabled","maxReplicas":"4","minReplicas":"1","targetCPUUtilization":"70"},"capacity_baseline_schema_revisions":{"auth-service":"model-v1","concert-service":"model-v1","notification-service":"model-v1","payment-service":"model-v1","reservation-service":"model-v1","ticket-service":"model-v1"},"capacity_baseline_seed_row_counts":{"admin_count":1,"concert_count":270,"customer_count":100000,"notification_count":354000,"payment_count":184000,"payment_event_count":184000,"payment_pool_count":184000,"performance_count":810,"provider_count":1,"reservation_history_count":261000,"seat_count":567000,"seat_grade_count":3240,"ticket_count":170000,"ticket_issue_pool_count":170000},"capacity_baseline_resource_observation":{"enabled":true,"source":"metrics-api","prometheusUrl":"http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090","queryWindow":"1m","pollEveryIterations":5,"targets":[{"service":"auth-service","namespace":"ticketing-auth","podSelector":"app.kubernetes.io/name=auth-service","podRegex":"auth-service-.*"},{"service":"concert-service","namespace":"ticketing-concert","podSelector":"app.kubernetes.io/name=concert-service","podRegex":"concert-service-.*"},{"service":"reservation-service","namespace":"ticketing-reservation","podSelector":"app.kubernetes.io/name=reservation-service","podRegex":"reservation-service-.*"},{"service":"payment-service","namespace":"ticketing-payment","podSelector":"app.kubernetes.io/name=payment-service","podRegex":"payment-service-.*"},{"service":"ticket-service","namespace":"ticketing-ticket","podSelector":"app.kubernetes.io/name=ticket-service","podRegex":"ticket-service-.*"},{"service":"notification-service","namespace":"ticketing-notification","podSelector":"app.kubernetes.io/name=notification-service","podRegex":"notification-service-.*"}]},"measurement_window_source":"grafana_time_range","traffic_model_preset":"ticket-75rps","dataset_profile":"capacity-baseline","dataset_revision":"capacity-baseline-half-year-early-growth-v2","dataset_title_prefix":"Medikong Loadtest","dataset_concerts":270,"dataset_performances_per_concert":3,"dataset_total_performances":810,"dataset_seat_sections":1,"dataset_seat_rows":20,"dataset_seats_per_row":35,"dataset_seats_per_performance":700,"dataset_total_seats":567000,"dataset_discovery_limit":200,"customer_pool_size":100000,"customer_pool_revision":"capacity-baseline-half-year-early-growth-v2","customer_pool_email_prefix":"capacity-customer","customer_pool_email_domain":"loadtest.medikong.local"},"scenario_report":{"report_type":"service_hpa_spike","scenario":"service-hpa-spike-load-test","traffic_model_preset":"ticket-75rps","dataset_revision":"capacity-baseline-half-year-early-growth-v2","seed_method":"deterministic_bulk_insert","service_steps":["ticket-service"],"default_stages":[{"duration":"30s","target":20,"stageRole":"warmup"},{"duration":"60s","target":40,"stageRole":"baseline"},{"duration":"60s","target":60,"stageRole":"spike"},{"duration":"60s","target":75,"stageRole":"overload"},{"duration":"60s","target":40,"stageRole":"cooldown"}],"service_stages":{},"stage_contract":{"order":["warmup","baseline","spike","overload","cooldown"],"warmup":"excluded_from_decision","cooldown":"recovery_observation_only_not_scale_down_confirmation"},"resource_observation_source":"metrics-api","scale_out_results":[{"service":"ticket-service","namespace":"ticketing-ticket","baseline_replicas":null,"max_desired_replicas":null,"hpa_decision_seconds":null,"scale_out_ready_seconds":null}],"service_hpa_results":[{"service":"ticket-service","namespace":"ticketing-ticket","baseline_replicas":null,"max_desired_replicas":null,"hpa_decision_seconds":null,"scale_out_ready_seconds":null}],"stage_results":[{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":120,"p95_ms":15.22144109999999,"p99_ms":24.017715659999975,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_warmup_rps_20","stage_role":"warmup","warmup_excluded":true,"target_rps":20,"duration":"30s","slo_p95_ms":100,"p95_ms":6.6597121999999995,"p99_ms":18.879437,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"excluded","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_baseline_rps_40","stage_role":"baseline","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":120,"p95_ms":9.279148549999999,"p99_ms":20.66790926,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_baseline_rps_40","stage_role":"baseline","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":100,"p95_ms":6.300512499999999,"p99_ms":19.936421669999998,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_spike_rps_60","stage_role":"spike","warmup_excluded":false,"target_rps":60,"duration":"60s","slo_p95_ms":120,"p95_ms":9.933739599999996,"p99_ms":19.972280739999995,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_spike_rps_60","stage_role":"spike","warmup_excluded":false,"target_rps":60,"duration":"60s","slo_p95_ms":100,"p95_ms":6.0073997,"p99_ms":18.729541759999993,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_overload_rps_75","stage_role":"overload","warmup_excluded":false,"target_rps":75,"duration":"60s","slo_p95_ms":120,"p95_ms":9.303996049999995,"p99_ms":20.202299919999998,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_overload_rps_75","stage_role":"overload","warmup_excluded":false,"target_rps":75,"duration":"60s","slo_p95_ms":100,"p95_ms":6.374630949999995,"p99_ms":20.29286566999999,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"POST /tickets/issue","step":"capacity_baseline.ticket.issue","stage":"ticket_cooldown_rps_40","stage_role":"cooldown","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":120,"p95_ms":9.585843599999997,"p99_ms":20.12415325,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]},{"service":"ticket-service","api":"GET /tickets/me","step":"capacity_baseline.ticket.list","stage":"ticket_cooldown_rps_40","stage_role":"cooldown","warmup_excluded":false,"target_rps":40,"duration":"60s","slo_p95_ms":100,"p95_ms":6.439818749999983,"p99_ms":18.956158489999996,"error_rate":0,"checks_pass_rate":1,"http_reqs_count":null,"http_reqs_rate":null,"rps":null,"cpu_usage_m":0,"cpu_throttling":0,"status":"ok","decision_reasons":[]}],"first_limit_candidate":null,"recovery_observations":[{"service":"ticket-service","step":"capacity_baseline.ticket.issue","stage":"ticket_cooldown_rps_40","target_rps":40,"p95_ms":9.585843599999997,"p99_ms":20.12415325,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"},{"service":"ticket-service","step":"capacity_baseline.ticket.list","stage":"ticket_cooldown_rps_40","target_rps":40,"p95_ms":6.439818749999983,"p99_ms":18.956158489999996,"error_rate":0,"checks_pass_rate":1,"recovered_within_thresholds":true,"interpretation":"recovery_observation_only_not_scale_down_confirmation"}]}}
+
+running (4m39.7s), 000/200 VUs, 12599 complete and 0 interrupted iterations
+capacity-baseline-ticket ✓ [ 100% ] 000/200 VUs  4m30s  40.01 iters/s

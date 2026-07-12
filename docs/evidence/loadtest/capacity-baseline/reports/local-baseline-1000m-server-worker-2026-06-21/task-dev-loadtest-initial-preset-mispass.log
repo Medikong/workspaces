@@ -1,0 +1,443 @@
+task: [dev:registry] set -eu
+registry='localhost:5001'
+container='medikong-registry'
+case "${registry}" in
+  localhost:*|127.0.0.1:*) ;;
+  *)
+    printf 'DEV_REGISTRY=%s is not a local Docker Desktop registry; skipping local registry bootstrap.\n' "${registry}"
+    exit 0
+    ;;
+esac
+if ! command -v docker >/dev/null 2>&1; then
+  printf '%s\n' 'docker command is required for task dev:registry.' >&2
+  exit 2
+fi
+host_port="${registry##*:}"
+if [ "${host_port}" = "${registry}" ]; then
+  host_port=5000
+fi
+if docker inspect "${container}" >/dev/null 2>&1; then
+  running_container="$(docker ps --filter "name=^/${container}$" --filter status=running -q)"
+  if [ -z "${running_container}" ]; then
+    docker start "${container}" >/dev/null
+  fi
+else
+  docker run -d --restart=always -p "127.0.0.1:${host_port}:5000" --name "${container}" registry:2 >/dev/null
+fi
+nodes="$(docker ps --filter ancestor=kindest/node -q)"
+if [ -z "${nodes}" ]; then
+  printf '%s\n' 'No kindest/node containers found. Registry is running, but no node mirror was configured.'
+  exit 0
+fi
+for node in ${nodes}; do
+  network="$(docker inspect --format '{{range $name, $_ := .NetworkSettings.Networks}}{{println $name}}{{end}}' "${node}" | head -n 1)"
+  if [ -z "${network}" ]; then
+    printf 'Could not resolve Docker network for node container %s.\n' "${node}" >&2
+    exit 2
+  fi
+  docker network connect "${network}" "${container}" 2>/dev/null || true
+  docker exec "${node}" sh -c "mkdir -p '/etc/containerd/certs.d/${registry}' && printf '%s\n' 'server = \"http://${registry}\"' '' '[host.\"http://${container}:5000\"]' '  capabilities = [\"pull\", \"resolve\"]' > '/etc/containerd/certs.d/${registry}/hosts.toml' && systemctl restart containerd"
+done
+
+No kindest/node containers found. Registry is running, but no node mirror was configured.
+task: [dev:registry:check] set -eu
+registry='localhost:5001'
+case "${registry}" in
+  localhost:*|127.0.0.1:*) ;;
+  *)
+    printf 'DEV_REGISTRY=%s is not a local Docker Desktop registry; skipping local registry check.\n' "${registry}"
+    exit 0
+    ;;
+esac
+for attempt in 1 2 3 4 5; do
+  if curl -fsS "http://${registry}/v2/" >/dev/null; then
+    break
+  fi
+  if [ "${attempt}" = "5" ]; then
+    printf 'Docker Desktop dev registry is not reachable: http://%s/v2/\n' "${registry}" >&2
+    exit 2
+  fi
+  sleep 1
+done
+nodes="$(docker ps --filter ancestor=kindest/node -q)"
+if [ -z "${nodes}" ]; then
+  printf '%s\n' 'Registry API is reachable; no kindest/node containers were found to check.'
+  exit 0
+fi
+for node in ${nodes}; do
+  docker exec "${node}" test -f "/etc/containerd/certs.d/${registry}/hosts.toml"
+done
+
+Registry API is reachable; no kindest/node containers were found to check.
+task: [dev:loadtest] task --taskfile platform/monitoring/Taskfile.yml up
+task: [up] task render
+task: [render] task repo
+task: [repo] helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update >/dev/null
+task: [repo] helm repo update prometheus-community >/dev/null
+task: [render] kubectl kustomize ../../platform/monitoring >/dev/null
+task: [render] helm template kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --include-crds -f ../../platform/monitoring/values/kube-prometheus-stack-private-dev.yaml >/dev/null
+task: [render] helm template kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --include-crds -f ../../platform/monitoring/values/kube-prometheus-stack-local.yaml >/dev/null
+task: [up] kubectl delete configmap medikong-service-metrics-dashboards medikong-app-dashboards medikong-infra-dashboards --namespace monitoring --ignore-not-found
+task: [up] kubectl apply -k ../../platform/monitoring
+namespace/monitoring unchanged
+configmap/medikong-db-dashboards unchanged
+configmap/medikong-load-dashboards unchanged
+configmap/medikong-logs-dashboards unchanged
+configmap/medikong-ops-dashboards unchanged
+podmonitor.monitoring.coreos.com/istiod unchanged
+podmonitor.monitoring.coreos.com/ticketing-envoy-sidecars unchanged
+prometheusrule.monitoring.coreos.com/service-slo-alerts unchanged
+prometheusrule.monitoring.coreos.com/system-kubernetes-alerts unchanged
+servicemonitor.monitoring.coreos.com/kong-gateway unchanged
+ingress.networking.k8s.io/grafana unchanged
+task: [up] helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 86.1.0 --namespace monitoring --create-namespace -f ../../platform/monitoring/values/kube-prometheus-stack-local.yaml --wait --timeout=600s
+Release "kube-prometheus-stack" has been upgraded. Happy Helming!
+NAME: kube-prometheus-stack
+LAST DEPLOYED: Sun Jun 21 15:15:02 2026
+NAMESPACE: monitoring
+STATUS: deployed
+REVISION: 12
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+kube-prometheus-stack has been installed. Check its status by running:
+  kubectl --namespace monitoring get pods -l "release=kube-prometheus-stack"
+
+Get Grafana 'admin' user password by running:
+
+  kubectl --namespace monitoring get secrets kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+Access Grafana local instance:
+
+  export POD_NAME=$(kubectl --namespace monitoring get pod -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=kube-prometheus-stack" -oname)
+  kubectl --namespace monitoring port-forward $POD_NAME 3000
+
+Get your grafana admin user password by running:
+
+  kubectl get secret --namespace monitoring -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode ; echo
+
+
+Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+task: [metrics-server:up] task render
+task: [render] task repo
+task: [repo] helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ --force-update >/dev/null
+task: [repo] helm repo update metrics-server >/dev/null
+task: [render] helm template metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/aws-dev.yaml >/dev/null
+task: [render] helm template metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/local.yaml >/dev/null
+task: [metrics-server:up] helm upgrade --install metrics-server metrics-server/metrics-server --version 3.13.1 --namespace kube-system -f ../../platform/metrics-server/values/local.yaml --wait --timeout=300s
+Release "metrics-server" has been upgraded. Happy Helming!
+NAME: metrics-server
+LAST DEPLOYED: Sun Jun 21 15:15:15 2026
+NAMESPACE: kube-system
+STATUS: deployed
+REVISION: 12
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+***********************************************************************
+* Metrics Server                                                      *
+***********************************************************************
+  Chart version: 3.13.1
+  App version:   0.8.1
+  Image tag:     registry.k8s.io/metrics-server/metrics-server:v0.8.1
+***********************************************************************
+task: [metrics-server:up] kubectl wait --for=condition=Available apiservice/v1beta1.metrics.k8s.io --timeout=180s
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io condition met
+task: [dev:loadtest] set -eu
+preset="${PRESET:-${LOADTEST_PRESET:-${LOADTEST_SCENARIO_PRESET:-}}}"
+scenario="${SCENARIO:-${LOADTEST_SCENARIO:-}}"
+if [ -z "${scenario}" ] && [ -n "${preset}" ]; then
+  scenario="reservation-journey-load-test"
+fi
+scenario="${scenario:-capacity-baseline-load-test}"
+if [ "${scenario}" = "capacity-baseline-load-test" ]; then
+  preset="${preset:-local-smoke}"
+  scenario_values_file="${LOADTEST_SCENARIO_VALUES_FILE:-}"
+  if [ -z "${scenario_values_file}" ] && [ -n "${preset}" ]; then
+    scenario_base="${scenario%-load-test}"
+    for candidate in \
+      "platform/loadtest/values/presets/${scenario}/${preset}.yaml" \
+      "platform/loadtest/values/presets/${scenario_base}/${preset}.yaml" \
+      "platform/loadtest/values/presets/${preset}.yaml"; do
+      if [ -f "${candidate}" ]; then
+        scenario_values_file="${candidate}"
+        break
+      fi
+    done
+  fi
+  if [ -z "${scenario_values_file}" ] && [ -f "platform/loadtest/values/scenarios/${scenario}.yaml" ]; then
+    scenario_values_file="platform/loadtest/values/scenarios/${scenario}.yaml"
+  fi
+  capacity_cpu_request="${LOADTEST_CAPACITY_BASELINE_CPU_REQUEST:-}"
+  capacity_auth_token_ttl_seconds="${LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS:-}"
+  if [ -z "${capacity_cpu_request}" ] && [ -n "${scenario_values_file}" ]; then
+    if command -v ruby >/dev/null 2>&1; then
+      capacity_cpu_request="$(ruby -ryaml -e 'value = YAML.load_file(ARGV[0]).dig("scenarios", "capacityBaseline", "fixedConditions", "cpuRequest"); puts value if value' "${scenario_values_file}")"
+    fi
+  fi
+  if [ -z "${capacity_auth_token_ttl_seconds}" ] && [ -n "${scenario_values_file}" ]; then
+    if command -v ruby >/dev/null 2>&1; then
+      capacity_auth_token_ttl_seconds="$(ruby -ryaml -e 'value = YAML.load_file(ARGV[0]).dig("scenarios", "capacityBaseline", "fixedConditions", "authTokenTtlSeconds"); puts value if value' "${scenario_values_file}")"
+    fi
+  fi
+  capacity_cpu_request="${capacity_cpu_request:-500m}"
+  capacity_auth_token_ttl_seconds="${capacity_auth_token_ttl_seconds:-7200}"
+  printf 'Capacity baseline service CPU request=%s auth token ttl=%ss values=%s\n' "${capacity_cpu_request}" "${capacity_auth_token_ttl_seconds}" "${scenario_values_file:-default}"
+  task dev:services \
+    LOCAL_DOCKER_DESKTOP_ENV=local-capacity-baseline \
+    DEV_ROLLOUT_ID="capacity-baseline-$(date -u +%Y%m%dT%H%M%SZ)" \
+    LOADTEST_CAPACITY_BASELINE_CPU_REQUEST="${capacity_cpu_request}" \
+    LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS="${capacity_auth_token_ttl_seconds}"
+  warmup_seconds="${LOADTEST_CAPACITY_BASELINE_PROMETHEUS_WARMUP_SECONDS:-90}"
+  printf 'Waiting %ss for Prometheus scrape warmup before capacity baseline run.\n' "${warmup_seconds}"
+  sleep "${warmup_seconds}"
+else
+  if [ "${scenario}" = "reservation-journey-load-test" ] && { [ "${preset}" = "local-hpa-spike-3m" ] || [ "${preset}" = "local-hpa-spike-smoke-1m" ] || [ "${preset}" = "local-hpa-spike-scaleout-6m" ]; }; then
+    printf 'Redeploying local dev services with HPA enabled for preset=%s.\n' "${preset}"
+    task dev:services \
+      LOCAL_DOCKER_DESKTOP_ENV=local-hpa-spike \
+      DEV_ROLLOUT_ID="local-hpa-spike-$(date -u +%Y%m%dT%H%M%SZ)"
+    if [ "${preset}" = "local-hpa-spike-smoke-1m" ]; then
+      warmup_seconds="${LOADTEST_LOCAL_HPA_SPIKE_WARMUP_SECONDS:-15}"
+    else
+      warmup_seconds="${LOADTEST_LOCAL_HPA_SPIKE_WARMUP_SECONDS:-60}"
+    fi
+    printf 'Waiting %ss for metrics-server/HPA warmup before local HPA spike run.\n' "${warmup_seconds}"
+    sleep "${warmup_seconds}"
+  fi
+fi
+
+Capacity baseline service CPU request=1000m auth token ttl=7200s values=platform/loadtest/values/presets/capacity-baseline/local-smoke.yaml
+task: [dev:services] set -eu
+image_registry='localhost:5001'
+image_namespace=''
+rollout_id='capacity-baseline-20260621T061516Z'
+if [ -z "${rollout_id}" ]; then
+  rollout_id="$(date -u +%Y%m%dT%H%M%SZ)"
+fi
+if [ -n "${image_namespace}" ]; then
+  image_registry="${image_registry%/}/${image_namespace#/}"
+fi
+extra_helm_args=""
+if [ "local-capacity-baseline" = "local-capacity-baseline" ]; then
+  capacity_cpu_request='1000m'
+  capacity_cpu_request="${capacity_cpu_request:-${LOADTEST_CAPACITY_BASELINE_CPU_REQUEST:-500m}}"
+  capacity_auth_token_ttl_seconds='7200'
+  capacity_auth_token_ttl_seconds="${capacity_auth_token_ttl_seconds:-${LOADTEST_CAPACITY_BASELINE_AUTH_TOKEN_TTL_SECONDS:-7200}}"
+  extra_helm_args="${extra_helm_args} --set hpa.enabled=false"
+  extra_helm_args="${extra_helm_args} --set-string container.resources.requests.cpu=${capacity_cpu_request}"
+  extra_helm_args="${extra_helm_args} --set container.resources.limits.cpu=null"
+  extra_helm_args="${extra_helm_args} --set nodeSelector=null"
+  extra_helm_args="${extra_helm_args} --set deployment.podAnnotations.sidecar\\.istio\\.io/proxyCPULimit=null"
+fi
+if [ "local-capacity-baseline" = "local-hpa-spike" ]; then
+  extra_helm_args="${extra_helm_args} --set nodeSelector=null"
+fi
+yaml_section_field() {
+  awk -v section="$2" -v wanted="$3" '
+    $1 == section ":" { in_section = 1; next }
+    in_section && /^[^[:space:]]/ { in_section = 0 }
+    in_section {
+      line = $0
+      sub(/^[[:space:]]+/, "", line)
+      key = line
+      sub(/:.*/, "", key)
+      if (key == wanted) {
+        sub(/^[^:]*:[[:space:]]*/, "", line)
+        gsub(/^"|"$/, "", line)
+        print line
+        exit
+      }
+    }
+  ' "$1"
+}
+pids=""
+for service in auth concert notification payment reservation ticket; do
+  service_file="values/services/${service}.yaml"
+  if [ ! -f "${service_file}" ]; then
+    printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+    exit 2
+  fi
+  service="$(basename "${service_file}" .yaml)"
+  namespace="$(yaml_section_field "${service_file}" app namespace)"
+  release="${service}-local-docker-desktop"
+  service_helm_args="${extra_helm_args}"
+  override_file="values/overrides/local-capacity-baseline/${service}.yaml"
+  override_args=""
+  if [ -f "${override_file}" ]; then
+    override_args="-f ${override_file}"
+  fi
+  if [ "local-capacity-baseline" = "local-capacity-baseline" ] && [ "${service}" = "auth" ]; then
+    service_helm_args="${service_helm_args} --set-string container.env[1].value=${capacity_auth_token_ttl_seconds}"
+  fi
+  (
+    helm upgrade --install "${release}" charts/medikong-service \
+      --namespace "${namespace}" \
+      --create-namespace \
+      -f values/base.yaml \
+      -f "${service_file}" \
+      -f values/env/local-capacity-baseline.yaml \
+      ${override_args} \
+      --set-string image.registry="${image_registry}" \
+      --set-string image.tag="dev" \
+      --set-string image.pullPolicy=Always \
+      --set-string 'deployment.podAnnotations.medikong\.io/dev-rollout-id='"${rollout_id}" \
+      ${service_helm_args}
+  ) &
+  pids="${pids} $!"
+done
+failed=0
+for pid in ${pids}; do
+  if ! wait "${pid}"; then
+    failed=1
+  fi
+done
+if [ "${failed}" -ne 0 ]; then
+  exit 1
+fi
+if [ "local-capacity-baseline" = "local-capacity-baseline" ]; then
+  for service in auth concert notification payment reservation ticket; do
+    service_file="values/services/${service}.yaml"
+    if [ ! -f "${service_file}" ]; then
+      printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+      exit 2
+    fi
+    app_name="$(yaml_section_field "${service_file}" app name)"
+    namespace="$(yaml_section_field "${service_file}" app namespace)"
+    kubectl scale "deployment/${app_name}" -n "${namespace}" --replicas=1
+  done
+fi
+pids=""
+rollout_failures="$(mktemp)"
+diagnose_rollout_failure() {
+  namespace="$1"
+  app_name="$2"
+  printf '\n===== Rollout diagnostics: %s/%s =====\n' "${namespace}" "${app_name}" >&2
+  kubectl get deployment "${app_name}" -n "${namespace}" -o wide >&2 || true
+  kubectl describe deployment "${app_name}" -n "${namespace}" >&2 || true
+  kubectl get rs,pods,hpa -n "${namespace}" -l "app=${app_name}" -o wide >&2 || true
+  kubectl describe pods -n "${namespace}" -l "app=${app_name}" >&2 || true
+  kubectl top pods -n "${namespace}" -l "app=${app_name}" >&2 || true
+  kubectl get events -n "${namespace}" --sort-by=.lastTimestamp >&2 | tail -n 40 >&2 || true
+  for pod in $(kubectl get pods -n "${namespace}" -l "app=${app_name}" -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null || true); do
+    printf '\n----- Recent logs: %s/%s -----\n' "${namespace}" "${pod}" >&2
+    kubectl logs -n "${namespace}" "${pod}" --all-containers --tail=80 --prefix=true >&2 || true
+  done
+}
+for service in auth concert notification payment reservation ticket; do
+  service_file="values/services/${service}.yaml"
+  if [ ! -f "${service_file}" ]; then
+    printf 'Unknown DEV_SERVICES entry: %s (expected values/services/%s.yaml).\n' "${service}" "${service}" >&2
+    exit 2
+  fi
+  app_name="$(yaml_section_field "${service_file}" app name)"
+  namespace="$(yaml_section_field "${service_file}" app namespace)"
+  (
+    if ! kubectl rollout status "deployment/${app_name}" -n "${namespace}" --timeout=180s; then
+      printf '%s %s\n' "${namespace}" "${app_name}" >> "${rollout_failures}"
+      exit 1
+    fi
+  ) &
+  pids="${pids} $!"
+done
+failed=0
+for pid in ${pids}; do
+  if ! wait "${pid}"; then
+    failed=1
+  fi
+done
+if [ "${failed}" -ne 0 ]; then
+  if [ -s "${rollout_failures}" ]; then
+    sort -u "${rollout_failures}" | while read -r namespace app_name; do
+      diagnose_rollout_failure "${namespace}" "${app_name}"
+    done
+  fi
+  rm -f "${rollout_failures}"
+  exit 1
+fi
+rm -f "${rollout_failures}"
+
+Release "auth-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: auth-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-auth
+STATUS: deployed
+REVISION: 13
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "concert-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: concert-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-concert
+STATUS: deployed
+REVISION: 15
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "ticket-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: ticket-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-ticket
+STATUS: deployed
+REVISION: 13
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "payment-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: payment-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-payment
+STATUS: deployed
+REVISION: 13
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "notification-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: notification-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-notification
+STATUS: deployed
+REVISION: 13
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+Release "reservation-local-docker-desktop" has been upgraded. Happy Helming!
+NAME: reservation-local-docker-desktop
+LAST DEPLOYED: Sun Jun 21 15:15:16 2026
+NAMESPACE: ticketing-reservation
+STATUS: deployed
+REVISION: 13
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+deployment.apps/auth-service scaled
+deployment.apps/concert-service scaled
+deployment.apps/notification-service scaled
+deployment.apps/payment-service scaled
+deployment.apps/reservation-service scaled
+deployment.apps/ticket-service scaled
+Waiting for deployment "payment-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "concert-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "auth-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ticket-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment spec update to be observed...
+Waiting for deployment "notification-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "reservation-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "auth-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ticket-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "notification-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "concert-service" rollout to finish: 0 of 1 updated replicas are available...
+Waiting for deployment "payment-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "auth-service" rollout to finish: 0 of 1 updated replicas are available...
+Waiting for deployment "reservation-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "payment-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "ticket-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "notification-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "reservation-service" rollout to finish: 0 out of 1 new replicas have been updated...
+Waiting for deployment "payment-service" rollout to finish: 0 of 1 updated replicas are available...
+Waiting for deployment "ticket-service" rollout to finish: 0 of 1 updated replicas are available...
+Waiting for deployment "notification-service" rollout to finish: 0 of 1 updated replicas are available...
+Waiting for deployment "reservation-service" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "reservation-service" rollout to finish: 0 of 1 updated replicas are available...
+deployment "concert-service" successfully rolled out
+deployment "payment-service" successfully rolled out
+deployment "ticket-service" successfully rolled out
+deployment "auth-service" successfully rolled out
+deployment "reservation-service" successfully rolled out
+deployment "notification-service" successfully rolled out
+Waiting 90s for Prometheus scrape warmup before capacity baseline run.

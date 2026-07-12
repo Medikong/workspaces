@@ -1,0 +1,23 @@
+{
+  "title": "Service HPA Spike concert 140RPS second run",
+  "service": "concert-service",
+  "scenario": "service-hpa-spike-load-test",
+  "preset": "concert-140rps",
+  "command": "SCENARIO=service-hpa-spike-load-test PRESET=concert-140rps task --dir gitops dev:loadtest",
+  "job": "read-api-loadtest-read-manual-20260621143331",
+  "run_id": "read-api-loadtest-read-manual-20260621143331-7wpl8",
+  "started_at_utc": "2026-06-21T14:33:31Z",
+  "environment": "local-hpa-spike",
+  "pool_size": 15,
+  "max_overflow": 0,
+  "pool_timeout_seconds": 15,
+  "pool_recycle_seconds": 1800,
+  "uvicorn_workers": 2,
+  "hpa_min_replicas": 1,
+  "hpa_max_replicas": 4,
+  "job_status": "Failed",
+  "job_reason": "DeadlineExceeded",
+  "report_archive_path": "/loadtest/reports/read-api-loadtest-read-manual-20260621143331-7wpl8",
+  "report_archive_file_count": 0,
+  "image": ".assets/ingress-rps-by-service.png"
+}

@@ -1,0 +1,89 @@
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data/pgdata ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data/pgdata -l logfile start
+
+initdb: warning: enabling "trust" authentication for local connections
+initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+waiting for server to start....2026-06-21 02:09:56.844 UTC [52] LOG:  starting PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-06-21 02:09:56.845 UTC [52] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-06-21 02:09:56.848 UTC [55] LOG:  database system was shut down at 2026-06-21 02:09:56 UTC
+2026-06-21 02:09:56.852 UTC [52] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down....2026-06-21 02:09:57.025 UTC [52] LOG:  received fast shutdown request
+2026-06-21 02:09:57.027 UTC [52] LOG:  aborting any active transactions
+2026-06-21 02:09:57.028 UTC [52] LOG:  background worker "logical replication launcher" (PID 58) exited with exit code 1
+2026-06-21 02:09:57.029 UTC [53] LOG:  shutting down
+2026-06-21 02:09:57.030 UTC [53] LOG:  checkpoint starting: shutdown immediate
+2026-06-21 02:09:57.075 UTC [53] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.033 s, total=0.046 s; sync files=301, longest=0.013 s, average=0.001 s; distance=4240 kB, estimate=4240 kB
+2026-06-21 02:09:57.078 UTC [52] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+2026-06-21 02:09:57.140 UTC [1] LOG:  starting PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-06-21 02:09:57.141 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-06-21 02:09:57.141 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-06-21 02:09:57.142 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-06-21 02:09:57.146 UTC [68] LOG:  database system was shut down at 2026-06-21 02:09:57 UTC
+2026-06-21 02:09:57.154 UTC [1] LOG:  database system is ready to accept connections
+2026-06-21 02:14:57.246 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:15:06.763 UTC [66] LOG:  checkpoint complete: wrote 97 buffers (0.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=9.504 s, sync=0.008 s, total=9.518 s; sync files=60, longest=0.004 s, average=0.001 s; distance=452 kB, estimate=452 kB
+2026-06-21 02:23:01.669 UTC [1195] ERROR:  null value in column "id" of relation "tickets" violates not-null constraint
+2026-06-21 02:23:01.669 UTC [1195] DETAIL:  Failing row contains (null, 614caed5-38a5-8d0c-8498-8055a3568d3a, 920001, 23eab99b-5ec6-8d5d-accd-abdafdbcad0a, 37e92c38-5b59-8989-a685-2a6d6ca5d603, ISSUED, https://tickets.local/capacity-baseline-half-year-early-growth-v..., https://tickets.local/capacity-baseline-half-year-early-growth-v..., 2026-06-21 02:22:58.66393+00).
+2026-06-21 02:23:01.669 UTC [1195] CONTEXT:  COPY tickets, line 1: "614caed5-38a5-8d0c-8498-8055a3568d3a	920001	23eab99b-5ec6-8d5d-accd-abdafdbcad0a	37e92c38-5b59-8989-..."
+2026-06-21 02:23:01.669 UTC [1195] STATEMENT:  copy tickets (reservation_id, user_id, concert_id, seat_id, status, qr_url, pdf_url, issued_at) from stdin with (format csv, delimiter E'\t', null '\N')
+2026-06-21 02:24:57.966 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:24:59.086 UTC [66] LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.113 s, sync=0.002 s, total=1.120 s; sync files=6, longest=0.002 s, average=0.001 s; distance=8 kB, estimate=408 kB
+2026-06-21 02:29:57.723 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:34:27.038 UTC [66] LOG:  checkpoint complete: wrote 5177 buffers (31.6%); 0 WAL file(s) added, 0 removed, 6 recycled; write=269.304 s, sync=0.002 s, total=269.315 s; sync files=13, longest=0.001 s, average=0.001 s; distance=99120 kB, estimate=99120 kB
+2026-06-21 02:44:57.263 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:46:30.751 UTC [66] LOG:  checkpoint complete: wrote 928 buffers (5.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=93.474 s, sync=0.009 s, total=93.488 s; sync files=21, longest=0.002 s, average=0.001 s; distance=6361 kB, estimate=89844 kB
+2026-06-21 02:49:57.830 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:51:47.430 UTC [66] LOG:  checkpoint complete: wrote 1088 buffers (6.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=109.590 s, sync=0.004 s, total=109.601 s; sync files=17, longest=0.002 s, average=0.001 s; distance=8714 kB, estimate=81731 kB
+2026-06-21 02:52:12.895 UTC [3643] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:52:12.895 UTC [3641] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:52:12.895 UTC [3640] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:52:12.895 UTC [3642] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:52:12.895 UTC [3617] LOG:  unexpected EOF on client connection with an open transaction
+2026-06-21 02:54:57.526 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 02:55:02.886 UTC [66] LOG:  checkpoint complete: wrote 55 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=5.351 s, sync=0.004 s, total=5.361 s; sync files=7, longest=0.003 s, average=0.001 s; distance=496 kB, estimate=73608 kB
+2026-06-21 03:49:58.748 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 03:54:28.016 UTC [66] LOG:  checkpoint complete: wrote 12611 buffers (77.0%); 0 WAL file(s) added, 0 removed, 11 recycled; write=269.248 s, sync=0.004 s, total=269.268 s; sync files=12, longest=0.002 s, average=0.001 s; distance=173477 kB, estimate=173477 kB
+2026-06-21 04:09:58.334 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 04:10:35.149 UTC [66] LOG:  checkpoint complete: wrote 365 buffers (2.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=36.807 s, sync=0.004 s, total=36.815 s; sync files=10, longest=0.002 s, average=0.001 s; distance=1612 kB, estimate=156290 kB
+2026-06-21 04:14:58.245 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 04:17:24.571 UTC [66] LOG:  checkpoint complete: wrote 1454 buffers (8.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=146.320 s, sync=0.001 s, total=146.326 s; sync files=8, longest=0.001 s, average=0.001 s; distance=8654 kB, estimate=141527 kB
+2026-06-21 05:04:59.539 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 05:09:29.037 UTC [66] LOG:  checkpoint complete: wrote 10587 buffers (64.6%); 0 WAL file(s) added, 0 removed, 11 recycled; write=269.480 s, sync=0.002 s, total=269.499 s; sync files=14, longest=0.001 s, average=0.001 s; distance=171578 kB, estimate=171578 kB
+2026-06-21 06:20:00.458 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 06:24:30.025 UTC [66] LOG:  checkpoint complete: wrote 10311 buffers (62.9%); 0 WAL file(s) added, 0 removed, 10 recycled; write=269.552 s, sync=0.003 s, total=269.568 s; sync files=14, longest=0.002 s, average=0.001 s; distance=169313 kB, estimate=171351 kB
+2026-06-21 07:10:00.900 UTC [66] LOG:  checkpoint starting: time
+2026-06-21 07:11:52.831 UTC [66] LOG:  checkpoint complete: wrote 1113 buffers (6.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=111.917 s, sync=0.004 s, total=111.931 s; sync files=12, longest=0.002 s, average=0.001 s; distance=5359 kB, estimate=154752 kB

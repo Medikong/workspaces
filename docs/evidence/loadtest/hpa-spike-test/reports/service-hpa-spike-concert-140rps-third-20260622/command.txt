@@ -1,0 +1,5 @@
+SCENARIO=service-hpa-spike-load-test PRESET=concert-140rps LOADTEST_READ_JOB_WAIT_SECONDS=3600 task --dir gitops dev:loadtest
+dataset_job=read-api-loadtest-dataset-manual-20260621160659
+read_job=read-api-loadtest-read-manual-20260621160921
+read_pod=read-api-loadtest-read-manual-20260621160921-fhfxw
+report_dir=workspace/docs/evidence/loadtest/hpa-spike-test/reports/service-hpa-spike-concert-140rps-third-20260622
