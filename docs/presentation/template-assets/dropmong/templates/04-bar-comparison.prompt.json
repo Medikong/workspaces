@@ -1,0 +1,119 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 4,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "slide_title": "API 응답 시간 비교",
+      "layout_family": "hero bar chart",
+      "prompt": {
+        "objective": "가로 막대와 정확한 ms 값을 비교하는 재사용 템플릿",
+        "narrative_function": "여러 항목의 크기 비교",
+        "visual_intent": "그래프 하나와 강조 수치 하나",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "데이터 상태와 주제",
+            "content_instruction": "예시 데이터 · 실제 측정값 아님, API 응답 시간 비교",
+            "placement_instruction": "상단",
+            "style_instruction": "상태 라벨 18px, 제목 48px"
+          },
+          {
+            "block_type": "chart",
+            "purpose": "응답 시간 비교",
+            "content_instruction": "검색 API 420 ms, 주문 API 680 ms, 결제 API 530 ms, x축 0~800 ms",
+            "placement_instruction": "본문 중앙 70%",
+            "style_instruction": "가로 막대 3개, 주문 API 보라색 강조, 나머지 옅은 회색과 라벤더"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단",
+            "style_instruction": "작은 마스코트"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 중앙 대형 가로 막대, 하단 footer",
+          "header_body_footer": {
+            "header": "로고와 데이터 상태",
+            "body": "가로 막대 그래프",
+            "footer": "발표 정보"
+          },
+          "reading_order": [
+            "제목",
+            "막대 길이",
+            "정확한 값",
+            "footer"
+          ],
+          "alignment": "왼쪽 라벨과 숫자 오른쪽 정렬",
+          "spacing": "막대 사이 24px 이상",
+          "density": "낮음",
+          "body_slide_consistency": "공통 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "보라색 한 항목 강조"
+          ],
+          "typography_rules": [
+            "tabular numerals"
+          ],
+          "component_rules": [
+            "카드 없음"
+          ],
+          "chart_rules": [
+            "축과 ms 단위",
+            "데이터 라벨 표시"
+          ],
+          "table_rules": [],
+          "icon_rules": [],
+          "infographic_rules": [],
+          "diagram_rules": [],
+          "imagery_rules": [
+            "작은 마스코트"
+          ],
+          "anti_patterns_to_avoid": [
+            "3D 막대",
+            "그라데이션",
+            "다크 테마",
+            "근거 수치처럼 보이는 표현"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "예시 데이터 · 실제 측정값 아님",
+            "ms"
+          ],
+          "must_not_include": [
+            "개선",
+            "감소율",
+            "HPA 수치"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": []
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "숫자와 축 텍스트 정확성 우선",
+          "fallback_if_content_is_sparse": "막대를 크게 표시"
+        }
+      }
+    }
+  ]
+}

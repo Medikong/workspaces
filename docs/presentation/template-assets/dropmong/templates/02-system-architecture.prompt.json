@@ -1,0 +1,123 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 2,
+      "slide_role": "context",
+      "page_family": "body",
+      "slide_title": "DropMong 서비스 구성",
+      "layout_family": "full-page architecture",
+      "prompt": {
+        "objective": "DropMong 서비스, 데이터, messaging과 observability 관계를 한눈에 보여 주는 템플릿",
+        "narrative_function": "시스템 책임과 연결 관계 설명",
+        "visual_intent": "하나의 큰 시스템 경계 안에 좌우 방향으로 서비스 구성 배치",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 주제",
+            "content_instruction": "SYSTEM OVERVIEW, DropMong 서비스 구성",
+            "placement_instruction": "상단 왼쪽",
+            "style_instruction": "짙은 잉크색 48px"
+          },
+          {
+            "block_type": "diagram_flow",
+            "purpose": "서비스 구성",
+            "content_instruction": "사용자 앱 → Istio Ingress → Auth, Catalog, Order, Payment, Notification; Kafka; PostgreSQL; Redis; Prometheus와 Grafana",
+            "placement_instruction": "본문의 70% 이상",
+            "style_instruction": "서비스 보라색, 네트워크 초록색, messaging 주황색, 데이터 파랑색"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보 자리",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단",
+            "style_instruction": "작은 마스코트"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 중앙 대형 시스템 구성도, 하단 footer",
+          "header_body_footer": {
+            "header": "로고와 제목",
+            "body": "하나의 system boundary와 3개 하위 영역",
+            "footer": "발표 정보와 마스코트"
+          },
+          "reading_order": [
+            "사용자 앱",
+            "Ingress",
+            "서비스",
+            "messaging과 데이터",
+            "observability"
+          ],
+          "alignment": "좌에서 우",
+          "spacing": "넓은 노드 간격",
+          "density": "중간",
+          "body_slide_consistency": "공통 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "역할별 의미색",
+            "넓은 보라색 면 금지"
+          ],
+          "typography_rules": [
+            "18px 이상"
+          ],
+          "component_rules": [
+            "1px 경계",
+            "2px 연결선"
+          ],
+          "chart_rules": [],
+          "table_rules": [],
+          "icon_rules": [
+            "DropMong 아키텍처 아이콘 스타일"
+          ],
+          "infographic_rules": [],
+          "diagram_rules": [
+            "동기·event·관측 연결선 구분"
+          ],
+          "imagery_rules": [
+            "작은 마스코트"
+          ],
+          "anti_patterns_to_avoid": [
+            "컴포넌트 시트",
+            "대시보드",
+            "다크 테마",
+            "제품 UI"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "Kafka",
+            "Prometheus",
+            "Grafana"
+          ],
+          "must_not_include": [
+            "KEDA를 중심 노드로 사용",
+            "성능 결과"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": []
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "기반 아키텍처 시트와 새 구성을 결합",
+          "fallback_if_content_is_sparse": "노드를 키우고 연결 설명을 추가하지 않음"
+        }
+      }
+    }
+  ]
+}

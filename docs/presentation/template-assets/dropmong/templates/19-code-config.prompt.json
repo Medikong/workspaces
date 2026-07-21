@@ -1,0 +1,169 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고, 얇은 선, 넓은 여백과 하나의 중심 시각물",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "DESIGN.md를 공통 시각 규칙으로 사용",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "좌우 80px, 위 56px, 아래 48px 안전 여백",
+      "본문 페이지의 상단 왼쪽 DropMong 로고",
+      "footer에 프로젝트명·발표자명·날짜 자리",
+      "출처 영역과 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나",
+      "화면 문구의 금지어와 동사형 종결 제외"
+    ],
+    "body_slide_system": "header 150px, body 620px, footer 56px의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 19,
+      "slide_role": "solution",
+      "page_family": "body",
+      "slide_title": "설정값과 적용 위치",
+      "layout_family": "annotated configuration",
+      "prompt": {
+        "objective": "Kubernetes 또는 KEDA YAML의 핵심 필드와 변경 위치를 읽기 쉽게 설명",
+        "narrative_function": "실험 구성에서 실제 설정 파일로 연결",
+        "visual_intent": "밝은 코드 패널과 오른쪽 주석 rail",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 제목",
+            "content_instruction": "`설정값과 적용 위치`",
+            "placement_instruction": "header 왼쪽",
+            "style_instruction": "58px, Ink"
+          },
+          {
+            "block_type": "image",
+            "purpose": "YAML 코드",
+            "content_instruction": "`apiVersion: keda.sh/v1alpha1` `kind: ScaledObject` `scaleTargetRef` `minReplicaCount: 0` `maxReplicaCount: 00` `type: prometheus` `metricName: queue_lag` `threshold: \"000\"`",
+            "placement_instruction": "본문 왼쪽 68%",
+            "style_instruction": "밝은 Soft Gray 코드 패널, line number, monospaced"
+          },
+          {
+            "block_type": "callout",
+            "purpose": "필드 설명",
+            "content_instruction": "`확장 대상` `Pod 범위` `trigger` `threshold`",
+            "placement_instruction": "본문 오른쪽 28%",
+            "style_instruction": "코드 라인과 얇은 선으로 연결"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "설정 상태",
+            "content_instruction": "`설정 예시 · 운영값 아님`과 발표 정보",
+            "placement_instruction": "footer 위와 footer",
+            "style_instruction": "16px, Slate"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "왼쪽 코드 70%, 오른쪽 주석 30%",
+          "header_body_footer": {
+            "header": "로고, CONFIGURATION 라벨과 제목",
+            "body": "밝은 YAML 패널과 4개 주석",
+            "footer": "설정 상태와 발표 정보"
+          },
+          "reading_order": [
+            "제목",
+            "YAML",
+            "확장 대상",
+            "Pod 범위",
+            "trigger",
+            "threshold"
+          ],
+          "alignment": "코드 기준선과 주석 연결선 일치",
+          "spacing": "코드와 주석 사이 48px",
+          "density": "중간",
+          "body_slide_consistency": "기존 01~06과 같은 header 150px, body 620px, footer 56px"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "배경 #FCFCFD",
+            "Ink #111827",
+            "Primary Purple #6C3DF5",
+            "Lavender #B69BFF",
+            "의미색은 데이터와 상태 구분에만 사용",
+            "보라색 면적 20% 이내"
+          ],
+          "typography_rules": [
+            "Pretendard 계열",
+            "제목 58~64px",
+            "본문 22px 이상",
+            "화면 제목과 라벨은 명사형 종결",
+            "기술 용어는 원문 유지"
+          ],
+          "component_rules": [
+            "코드 패널 1개",
+            "주석 rail 1개",
+            "syntax 색상 4개 이하"
+          ],
+          "chart_rules": [
+            "차트가 중심이 아닌 페이지에서는 차트 생성 금지"
+          ],
+          "table_rules": [
+            "표가 중심이 아닌 페이지에서는 표 생성 금지"
+          ],
+          "icon_rules": [
+            "필수 의미가 없으면 아이콘 제외",
+            "사용 시 DropMong 2px 선 스타일"
+          ],
+          "infographic_rules": [
+            "장식이 아닌 정보 구조 설명에만 사용"
+          ],
+          "diagram_rules": [
+            "도식이 중심이 아닌 페이지에서는 연결선 남용 금지"
+          ],
+          "imagery_rules": [
+            "마스코트 제외"
+          ],
+          "anti_patterns_to_avoid": [
+            "다크 테마",
+            "네온과 글로우",
+            "강한 그라데이션",
+            "축소 페이지 모음",
+            "컴포넌트 카탈로그",
+            "대시보드형 복합 구성",
+            "동일 카드 4개 이상",
+            "상품 UI",
+            "출처 footer",
+            "페이지 번호",
+            "워터마크"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "ScaledObject",
+            "scaleTargetRef",
+            "minReplicaCount",
+            "maxReplicaCount",
+            "prometheus",
+            "queue_lag",
+            "threshold",
+            "설정 예시 · 운영값 아님"
+          ],
+          "must_not_include": [
+            "다크 코드 블록",
+            "실제 운영 secret",
+            "API token",
+            "실제 endpoint",
+            "KEDA 성능 결과"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": [
+            "secret",
+            "credential",
+            "이전 HPA 수치",
+            "새 실험 결과"
+          ]
+        },
+        "generator_notes": {
+          "ppt_generation_note": "텍스트와 도형을 별도 편집 가능한 요소로 구성하고 16:9 안전 여백 유지",
+          "image_generation_note": "1600×900 단일 PNG. 밝은 코드 패널과 오른쪽 주석 rail. 레퍼런스는 시각 규칙만 참고하고 새 화면으로 구성",
+          "fallback_if_content_is_sparse": "빈 공간을 카드나 장식으로 채우지 않고 중심 시각물의 크기와 여백 유지"
+        }
+      }
+    }
+  ]
+}

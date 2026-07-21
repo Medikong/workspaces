@@ -1,0 +1,164 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고, 얇은 선, 넓은 여백과 하나의 중심 시각물",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "DESIGN.md를 공통 시각 규칙으로 사용",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "좌우 80px, 위 56px, 아래 48px 안전 여백",
+      "본문 페이지의 상단 왼쪽 DropMong 로고",
+      "footer에 프로젝트명·발표자명·날짜 자리",
+      "출처 영역과 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나",
+      "화면 문구의 금지어와 동사형 종결 제외"
+    ],
+    "body_slide_system": "header 150px, body 620px, footer 56px의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 21,
+      "slide_role": "problem",
+      "page_family": "body",
+      "slide_title": "이번 발표에서 다루지 않은 범위",
+      "layout_family": "scope boundary",
+      "prompt": {
+        "objective": "이번 발표에서 확인하는 범위와 다음에 확인할 항목을 구분",
+        "narrative_function": "결론 전에 적용 범위와 남은 조건 공개",
+        "visual_intent": "하나의 큰 경계 안쪽과 바깥쪽을 나눈 범위 지도",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 제목",
+            "content_instruction": "`이번 발표에서 다루지 않은 범위`",
+            "placement_instruction": "header 왼쪽",
+            "style_instruction": "58px, Ink"
+          },
+          {
+            "block_type": "infographic",
+            "purpose": "이번 범위",
+            "content_instruction": "`대상 서비스 1개` `기본 트래픽 1종` `Fixed·CPU HPA·KEDA`",
+            "placement_instruction": "본문 왼쪽 큰 경계 안",
+            "style_instruction": "Neutral 배경과 Purple 경계"
+          },
+          {
+            "block_type": "infographic",
+            "purpose": "다음 확인",
+            "content_instruction": "`다지역` `장기 운영` `비용 최적화` `여러 트래픽 유형`",
+            "placement_instruction": "본문 오른쪽 경계 밖",
+            "style_instruction": "Amber 점선 경계"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "범위 상태",
+            "content_instruction": "`범위 예시 · 프로젝트에 맞게 교체`와 발표 정보",
+            "placement_instruction": "footer 위와 footer",
+            "style_instruction": "16px, Slate"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "왼쪽 이번 범위, 오른쪽 다음 확인",
+          "header_body_footer": {
+            "header": "로고, SCOPE 라벨과 제목",
+            "body": "하나의 경계 지도 안팎",
+            "footer": "범위 상태와 발표 정보"
+          },
+          "reading_order": [
+            "이번 범위",
+            "다음 확인",
+            "범위 상태"
+          ],
+          "alignment": "두 영역 상단 정렬",
+          "spacing": "영역 사이 64px",
+          "density": "낮음",
+          "body_slide_consistency": "기존 01~06과 같은 header 150px, body 620px, footer 56px"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "배경 #FCFCFD",
+            "Ink #111827",
+            "Primary Purple #6C3DF5",
+            "Lavender #B69BFF",
+            "의미색은 데이터와 상태 구분에만 사용",
+            "보라색 면적 20% 이내"
+          ],
+          "typography_rules": [
+            "Pretendard 계열",
+            "제목 58~64px",
+            "본문 22px 이상",
+            "화면 제목과 라벨은 명사형 종결",
+            "기술 용어는 원문 유지"
+          ],
+          "component_rules": [
+            "1px 경계선",
+            "12px 중심 모서리",
+            "독립 카드 최대 3개"
+          ],
+          "chart_rules": [
+            "차트가 중심이 아닌 페이지에서는 차트 생성 금지"
+          ],
+          "table_rules": [
+            "표가 중심이 아닌 페이지에서는 표 생성 금지"
+          ],
+          "icon_rules": [
+            "필수 의미가 없으면 아이콘 제외",
+            "사용 시 DropMong 2px 선 스타일"
+          ],
+          "infographic_rules": [
+            "안쪽은 실선",
+            "바깥쪽은 점선",
+            "항목은 짧은 라벨"
+          ],
+          "diagram_rules": [
+            "도식이 중심이 아닌 페이지에서는 연결선 남용 금지"
+          ],
+          "imagery_rules": [
+            "마스코트 제외"
+          ],
+          "anti_patterns_to_avoid": [
+            "다크 테마",
+            "네온과 글로우",
+            "강한 그라데이션",
+            "축소 페이지 모음",
+            "컴포넌트 카탈로그",
+            "대시보드형 복합 구성",
+            "동일 카드 4개 이상",
+            "상품 UI",
+            "출처 footer",
+            "페이지 번호",
+            "워터마크"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "대상 서비스 1개",
+            "기본 트래픽 1종",
+            "Fixed·CPU HPA·KEDA",
+            "다지역",
+            "장기 운영",
+            "비용 최적화",
+            "여러 트래픽 유형",
+            "범위 예시 · 프로젝트에 맞게 교체"
+          ],
+          "must_not_include": [
+            "실패 표현",
+            "과장된 한계",
+            "실험 결과",
+            "동일 카드 4개"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": [
+            "이전 HPA 수치"
+          ]
+        },
+        "generator_notes": {
+          "ppt_generation_note": "텍스트와 도형을 별도 편집 가능한 요소로 구성하고 16:9 안전 여백 유지",
+          "image_generation_note": "1600×900 단일 PNG. 하나의 큰 경계 안쪽과 바깥쪽을 나눈 범위 지도. 레퍼런스는 시각 규칙만 참고하고 새 화면으로 구성",
+          "fallback_if_content_is_sparse": "빈 공간을 카드나 장식으로 채우지 않고 중심 시각물의 크기와 여백 유지"
+        }
+      }
+    }
+  ]
+}

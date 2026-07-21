@@ -1,0 +1,119 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 3,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "slide_title": "알림 처리 방식 비교",
+      "layout_family": "before-after architecture",
+      "prompt": {
+        "objective": "동기 호출과 event 분리 구성을 결과 주장 없이 비교하는 템플릿",
+        "narrative_function": "구조 변경 전후 설명",
+        "visual_intent": "좌우 두 구성도와 중앙 전환 화살표",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 주제",
+            "content_instruction": "ARCHITECTURE COMPARISON, 알림 처리 방식 비교",
+            "placement_instruction": "상단",
+            "style_instruction": "48px"
+          },
+          {
+            "block_type": "comparison",
+            "purpose": "구성 차이",
+            "content_instruction": "BEFORE: Order API → Payment API → Notification API 동기 호출 3회. AFTER: Order API → Payment API, PaymentCompleted event → Kafka → Notification Worker",
+            "placement_instruction": "본문 좌우 각각 42%, 중앙 8%",
+            "style_instruction": "BEFORE 회색, AFTER 보라색과 주황색 event"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보 자리",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단",
+            "style_instruction": "작은 마스코트"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 좌우 비교, 하단 footer",
+          "header_body_footer": {
+            "header": "로고와 제목",
+            "body": "BEFORE와 AFTER 구성",
+            "footer": "발표 정보"
+          },
+          "reading_order": [
+            "BEFORE",
+            "구성 전환",
+            "AFTER"
+          ],
+          "alignment": "좌우 대칭",
+          "spacing": "중앙 차이 공간 확보",
+          "density": "낮음",
+          "body_slide_consistency": "공통 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "BEFORE neutral",
+            "AFTER purple and orange"
+          ],
+          "typography_rules": [
+            "짧은 한국어 라벨"
+          ],
+          "component_rules": [
+            "각 영역 큰 경계 1개"
+          ],
+          "chart_rules": [],
+          "table_rules": [],
+          "icon_rules": [
+            "서비스와 Kafka 아이콘"
+          ],
+          "infographic_rules": [],
+          "diagram_rules": [
+            "동기 실선과 event 점선"
+          ],
+          "imagery_rules": [
+            "작은 마스코트"
+          ],
+          "anti_patterns_to_avoid": [
+            "성능 개선 수치",
+            "우월 표현",
+            "다크 테마"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "동기 호출 3회",
+            "PaymentCompleted event"
+          ],
+          "must_not_include": [
+            "더 빠름",
+            "개선율",
+            "KEDA"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": []
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "결과 비교가 아니라 구성 비교",
+          "fallback_if_content_is_sparse": "노드를 크게 표시"
+        }
+      }
+    }
+  ]
+}

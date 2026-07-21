@@ -1,0 +1,160 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고, 얇은 선, 넓은 여백과 하나의 중심 시각물",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "DESIGN.md를 공통 시각 규칙으로 사용",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "좌우 80px, 위 56px, 아래 48px 안전 여백",
+      "본문 페이지의 상단 왼쪽 DropMong 로고",
+      "footer에 프로젝트명·발표자명·날짜 자리",
+      "출처 영역과 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나",
+      "화면 문구의 금지어와 동사형 종결 제외"
+    ],
+    "body_slide_system": "header 150px, body 620px, footer 56px의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 9,
+      "slide_role": "context",
+      "page_family": "title",
+      "slide_title": "장 전환",
+      "layout_family": "section divider",
+      "prompt": {
+        "objective": "발표의 다음 구간을 분명하게 나누는 공통 장 전환 페이지",
+        "narrative_function": "주제 전환과 청중의 시선 재정렬",
+        "visual_intent": "큰 장 번호, 짧은 제목과 작은 마스코트",
+        "content_blocks": [
+          {
+            "block_type": "callout",
+            "purpose": "장 번호",
+            "content_instruction": "`SECTION 00`",
+            "placement_instruction": "왼쪽 상단에서 본문으로 이어지는 위치",
+            "style_instruction": "24px, Primary Purple"
+          },
+          {
+            "block_type": "title",
+            "purpose": "장 제목",
+            "content_instruction": "`장 제목` placeholder",
+            "placement_instruction": "왼쪽 중앙",
+            "style_instruction": "68px, Ink, ExtraBold"
+          },
+          {
+            "block_type": "subtitle",
+            "purpose": "한 줄 안내",
+            "content_instruction": "`이 장에서 확인할 내용` placeholder",
+            "placement_instruction": "장 제목 아래",
+            "style_instruction": "26px, Slate"
+          },
+          {
+            "block_type": "image",
+            "purpose": "브랜드 표시",
+            "content_instruction": "작은 DropMong 마스코트",
+            "placement_instruction": "오른쪽 아래",
+            "style_instruction": "화면 높이 24% 이내"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "큰 장 번호와 제목 중심의 낮은 밀도",
+          "header_body_footer": {
+            "header": "DropMong 로고",
+            "body": "장 번호, 제목, 한 줄 안내와 마스코트",
+            "footer": "프로젝트명·발표자명·날짜"
+          },
+          "reading_order": [
+            "로고",
+            "장 번호",
+            "장 제목",
+            "한 줄 안내",
+            "마스코트"
+          ],
+          "alignment": "왼쪽 기준선",
+          "spacing": "제목 위아래 40px",
+          "density": "매우 낮음",
+          "body_slide_consistency": "DESIGN.md의 title/end 페이지군 규칙"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "배경 #FCFCFD",
+            "Ink #111827",
+            "Primary Purple #6C3DF5",
+            "Lavender #B69BFF",
+            "의미색은 데이터와 상태 구분에만 사용",
+            "보라색 면적 20% 이내"
+          ],
+          "typography_rules": [
+            "Pretendard 계열",
+            "제목 58~64px",
+            "본문 22px 이상",
+            "화면 제목과 라벨은 명사형 종결",
+            "기술 용어는 원문 유지"
+          ],
+          "component_rules": [
+            "장식 카드는 사용하지 않음",
+            "얇은 lavender 선 또는 작은 별 표시 1개 이하"
+          ],
+          "chart_rules": [
+            "차트가 중심이 아닌 페이지에서는 차트 생성 금지"
+          ],
+          "table_rules": [
+            "표가 중심이 아닌 페이지에서는 표 생성 금지"
+          ],
+          "icon_rules": [
+            "필수 의미가 없으면 아이콘 제외",
+            "사용 시 DropMong 2px 선 스타일"
+          ],
+          "infographic_rules": [
+            "장식이 아닌 정보 구조 설명에만 사용"
+          ],
+          "diagram_rules": [
+            "도식이 중심이 아닌 페이지에서는 연결선 남용 금지"
+          ],
+          "imagery_rules": [
+            "마스코트 사용",
+            "원본 캐릭터 형태 유지"
+          ],
+          "anti_patterns_to_avoid": [
+            "다크 테마",
+            "네온과 글로우",
+            "강한 그라데이션",
+            "축소 페이지 모음",
+            "컴포넌트 카탈로그",
+            "대시보드형 복합 구성",
+            "동일 카드 4개 이상",
+            "상품 UI",
+            "출처 footer",
+            "페이지 번호",
+            "워터마크"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "SECTION 00",
+            "장 제목",
+            "이 장에서 확인할 내용",
+            "마스코트"
+          ],
+          "must_not_include": [
+            "데이터 차트",
+            "긴 문단",
+            "목차 전체",
+            "페이지 번호"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": [
+            "이전 HPA 수치"
+          ]
+        },
+        "generator_notes": {
+          "ppt_generation_note": "텍스트와 도형을 별도 편집 가능한 요소로 구성하고 16:9 안전 여백 유지",
+          "image_generation_note": "1600×900 단일 PNG. 큰 장 번호, 짧은 제목과 작은 마스코트. 레퍼런스는 시각 규칙만 참고하고 새 화면으로 구성",
+          "fallback_if_content_is_sparse": "빈 공간을 카드나 장식으로 채우지 않고 중심 시각물의 크기와 여백 유지"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 1,
+      "slide_role": "context",
+      "page_family": "body",
+      "slide_title": "주문부터 알림까지",
+      "layout_family": "full-page sequence",
+      "prompt": {
+        "objective": "DropMong 주문 처리의 동기 요청과 비동기 event 전달 순서를 설명하는 재사용 템플릿",
+        "narrative_function": "참여자 사이 호출 순서 설명",
+        "visual_intent": "5개 참여자와 5개 메시지를 화면 중심에 크게 배치",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 주제",
+            "content_instruction": "TECHNICAL SEQUENCE, 주문부터 알림까지",
+            "placement_instruction": "상단 왼쪽 로고 오른쪽",
+            "style_instruction": "짙은 잉크색 48px, 최대 한 줄"
+          },
+          {
+            "block_type": "diagram_flow",
+            "purpose": "요청과 event 순서",
+            "content_instruction": "사용자 앱, Order API, Payment API, Kafka, Notification Worker와 주문 요청, 결제 요청, 결제 완료, OrderCreated event, 알림 발송",
+            "placement_instruction": "본문 전체 너비의 75% 이상",
+            "style_instruction": "동기 요청은 보라색 실선, 응답은 회색 실선, event는 주황색 점선"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보 자리",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단 얇은 구분선 아래",
+            "style_instruction": "작은 마스코트와 16px 회색 글자"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 중앙 대형 시퀀스, 하단 footer",
+          "header_body_footer": {
+            "header": "DropMong 로고와 제목",
+            "body": "수평 배치한 5개 참여자와 수직 lifeline",
+            "footer": "프로젝트·발표자·날짜와 작은 마스코트"
+          },
+          "reading_order": [
+            "제목",
+            "참여자",
+            "메시지 순서",
+            "footer"
+          ],
+          "alignment": "80px 바깥 여백과 일정한 참여자 간격",
+          "spacing": "넓은 여백",
+          "density": "낮음",
+          "body_slide_consistency": "다른 템플릿과 같은 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "밝은 배경",
+            "보라색 중심",
+            "event만 주황색"
+          ],
+          "typography_rules": [
+            "Pretendard 계열",
+            "한국어 설명과 원문 기술 용어"
+          ],
+          "component_rules": [
+            "둥근 참여자 헤더",
+            "카드 반복 금지"
+          ],
+          "chart_rules": [],
+          "table_rules": [],
+          "icon_rules": [
+            "DropMong 아키텍처 시트의 2px 선 아이콘"
+          ],
+          "infographic_rules": [],
+          "diagram_rules": [
+            "참여자 5개",
+            "메시지 5개",
+            "화살표 종류 구분"
+          ],
+          "imagery_rules": [
+            "작은 마스코트만 사용"
+          ],
+          "anti_patterns_to_avoid": [
+            "다크 테마",
+            "네온",
+            "축소판 모음",
+            "코드 블록",
+            "출처 footer"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "OrderCreated event",
+            "프로젝트·발표자·날짜 자리"
+          ],
+          "must_not_include": [
+            "KEDA 중심 설명",
+            "실험 결과",
+            "페이지 번호"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": [
+            "이전 HPA 수치"
+          ]
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "로고와 마스코트 형태는 제공된 에셋 참고",
+          "fallback_if_content_is_sparse": "참여자 간 간격을 넓히고 메시지 설명을 추가하지 않음"
+        }
+      }
+    }
+  ]
+}

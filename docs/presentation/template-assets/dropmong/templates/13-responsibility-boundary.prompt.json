@@ -1,0 +1,164 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고, 얇은 선, 넓은 여백과 하나의 중심 시각물",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "DESIGN.md를 공통 시각 규칙으로 사용",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "좌우 80px, 위 56px, 아래 48px 안전 여백",
+      "본문 페이지의 상단 왼쪽 DropMong 로고",
+      "footer에 프로젝트명·발표자명·날짜 자리",
+      "출처 영역과 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나",
+      "화면 문구의 금지어와 동사형 종결 제외"
+    ],
+    "body_slide_system": "header 150px, body 620px, footer 56px의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 13,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "slide_title": "구성 요소별 담당 범위",
+      "layout_family": "responsibility boundary map",
+      "prompt": {
+        "objective": "오토스케일링 구성 요소가 조절하는 대상과 해결하지 못하는 문제를 구분",
+        "narrative_function": "실험 비교군을 정하기 전 책임 범위 안내",
+        "visual_intent": "네 개의 수평 책임 구간과 하단 공유 병목 경계",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "페이지 제목",
+            "content_instruction": "`구성 요소별 담당 범위`",
+            "placement_instruction": "header 왼쪽",
+            "style_instruction": "58px, Ink"
+          },
+          {
+            "block_type": "infographic",
+            "purpose": "책임 구간",
+            "content_instruction": "`HPA | CPU·custom metric → Pod replica` `KEDA | event·backlog → Pod replica` `VPA/rightsizing | requests·limits → Pod 크기` `Node Autoscaler | Pending Pod → Node 용량`",
+            "placement_instruction": "본문 중앙 세로 4행",
+            "style_instruction": "독립 카드가 아닌 하나의 경계 지도"
+          },
+          {
+            "block_type": "callout",
+            "purpose": "공유 병목",
+            "content_instruction": "`공유 DB·외부 한도 | 확장으로 직접 해결되지 않는 범위`",
+            "placement_instruction": "책임 구간 아래 전체 폭",
+            "style_instruction": "Red가 아닌 Slate와 Amber 경계선"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보",
+            "content_instruction": "프로젝트명·발표자명·날짜",
+            "placement_instruction": "footer",
+            "style_instruction": "16px, Slate"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 중앙 책임 구간 4행, 하단 공유 병목 경계",
+          "header_body_footer": {
+            "header": "로고, RESPONSIBILITY 라벨과 제목",
+            "body": "구성 요소별 조절 대상과 입력 신호",
+            "footer": "프로젝트명·발표자명·날짜"
+          },
+          "reading_order": [
+            "HPA",
+            "KEDA",
+            "VPA/rightsizing",
+            "Node Autoscaler",
+            "공유 병목"
+          ],
+          "alignment": "왼쪽 구성 요소명, 중앙 입력, 오른쪽 조절 대상",
+          "spacing": "행 높이 84px 이상",
+          "density": "중간",
+          "body_slide_consistency": "기존 01~06과 같은 header 150px, body 620px, footer 56px"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "배경 #FCFCFD",
+            "Ink #111827",
+            "Primary Purple #6C3DF5",
+            "Lavender #B69BFF",
+            "의미색은 데이터와 상태 구분에만 사용",
+            "보라색 면적 20% 이내"
+          ],
+          "typography_rules": [
+            "Pretendard 계열",
+            "제목 58~64px",
+            "본문 22px 이상",
+            "화면 제목과 라벨은 명사형 종결",
+            "기술 용어는 원문 유지"
+          ],
+          "component_rules": [
+            "1px 경계선",
+            "12px 중심 모서리",
+            "독립 카드 최대 3개"
+          ],
+          "chart_rules": [
+            "차트가 중심이 아닌 페이지에서는 차트 생성 금지"
+          ],
+          "table_rules": [
+            "표가 중심이 아닌 페이지에서는 표 생성 금지"
+          ],
+          "icon_rules": [
+            "각 구성 요소당 선 아이콘 1개 이하"
+          ],
+          "infographic_rules": [
+            "행별 의미색 제한",
+            "입력에서 조절 대상으로 가는 2px 화살표"
+          ],
+          "diagram_rules": [
+            "도식이 중심이 아닌 페이지에서는 연결선 남용 금지"
+          ],
+          "imagery_rules": [
+            "마스코트 제외"
+          ],
+          "anti_patterns_to_avoid": [
+            "다크 테마",
+            "네온과 글로우",
+            "강한 그라데이션",
+            "축소 페이지 모음",
+            "컴포넌트 카탈로그",
+            "대시보드형 복합 구성",
+            "동일 카드 4개 이상",
+            "상품 UI",
+            "출처 footer",
+            "페이지 번호",
+            "워터마크"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "HPA",
+            "KEDA",
+            "VPA/rightsizing",
+            "Node Autoscaler",
+            "Pod replica",
+            "Pod 크기",
+            "Node 용량",
+            "공유 DB·외부 한도"
+          ],
+          "must_not_include": [
+            "가장 좋은 전략",
+            "KEDA 중심 결론",
+            "실험 결과",
+            "동일 카드 4개"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": [
+            "이전 HPA 수치"
+          ]
+        },
+        "generator_notes": {
+          "ppt_generation_note": "텍스트와 도형을 별도 편집 가능한 요소로 구성하고 16:9 안전 여백 유지",
+          "image_generation_note": "1600×900 단일 PNG. 네 개의 수평 책임 구간과 하단 공유 병목 경계. 레퍼런스는 시각 규칙만 참고하고 새 화면으로 구성",
+          "fallback_if_content_is_sparse": "빈 공간을 카드나 장식으로 채우지 않고 중심 시각물의 크기와 여백 유지"
+        }
+      }
+    }
+  ]
+}

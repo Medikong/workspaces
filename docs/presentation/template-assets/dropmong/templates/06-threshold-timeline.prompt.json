@@ -1,0 +1,129 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 6,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "slide_title": "대기열 증가와 처리 회복",
+      "layout_family": "threshold timeline",
+      "prompt": {
+        "objective": "Queue lag의 기준 초과와 회복 시간을 보여 주는 재사용 템플릿",
+        "narrative_function": "임계값과 시간 구간 설명",
+        "visual_intent": "대형 시계열 그래프와 최대값·회복 시간",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "데이터 상태와 주제",
+            "content_instruction": "예시 데이터 · 실제 측정값 아님, 대기열 증가와 처리 회복",
+            "placement_instruction": "상단",
+            "style_instruction": "48px"
+          },
+          {
+            "block_type": "chart",
+            "purpose": "Queue lag 시계열",
+            "content_instruction": "0s 20, 10s 50, 20s 130, 30s 240, 40s 150, 50s 80 messages; threshold 100 messages; 기준 복귀 42s",
+            "placement_instruction": "본문 왼쪽 70%",
+            "style_instruction": "보라색 선, 주황색 threshold 점선, 초과 구간 옅은 주황색 면"
+          },
+          {
+            "block_type": "metric_cards",
+            "purpose": "핵심 수치",
+            "content_instruction": "최대 240 messages, 기준 복귀 42 s",
+            "placement_instruction": "본문 오른쪽 22%",
+            "style_instruction": "수치 블록 2개"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단",
+            "style_instruction": "작은 마스코트"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 왼쪽 시계열, 오른쪽 수치, 하단 footer",
+          "header_body_footer": {
+            "header": "로고와 데이터 상태",
+            "body": "Queue lag와 threshold",
+            "footer": "발표 정보"
+          },
+          "reading_order": [
+            "제목",
+            "threshold",
+            "최대값",
+            "회복 시간"
+          ],
+          "alignment": "그래프와 수치 블록 상단 정렬",
+          "spacing": "본문 사이 48px",
+          "density": "낮음",
+          "body_slide_consistency": "공통 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "보라색 데이터",
+            "주황색 threshold",
+            "초록색 회복점"
+          ],
+          "typography_rules": [
+            "tabular numerals"
+          ],
+          "component_rules": [
+            "수치 블록 2개 이하"
+          ],
+          "chart_rules": [
+            "초 단위 x축",
+            "messages y축",
+            "threshold 라벨"
+          ],
+          "table_rules": [],
+          "icon_rules": [],
+          "infographic_rules": [],
+          "diagram_rules": [],
+          "imagery_rules": [
+            "작은 마스코트"
+          ],
+          "anti_patterns_to_avoid": [
+            "KEDA 결과로 보이는 표현",
+            "대시보드",
+            "다크 테마"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "예시 데이터 · 실제 측정값 아님",
+            "Queue lag",
+            "threshold"
+          ],
+          "must_not_include": [
+            "KEDA scaler",
+            "HPA 수치",
+            "성능 개선 결론"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": []
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "threshold와 초과 구간을 명확히 구분",
+          "fallback_if_content_is_sparse": "그래프 영역 확대"
+        }
+      }
+    }
+  ]
+}

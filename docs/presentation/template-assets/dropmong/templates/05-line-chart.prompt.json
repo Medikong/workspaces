@@ -1,0 +1,126 @@
+{
+  "deck_prompt_meta": {
+    "design_system_name": "DropMong Presentation System",
+    "global_theme_summary": "밝은 16:9 화면, DropMong 로고와 마스코트, 얇은 선, 하나의 큰 도식 또는 그래프",
+    "global_consistency_rules": [
+      "1600×900 PNG",
+      "배경 #FCFCFD, 제목 #111827, 중심색 #6C3DF5",
+      "상단 왼쪽 DropMong 로고",
+      "하단 56px footer 공간과 프로젝트·발표자·날짜 자리",
+      "작은 마스코트 표시",
+      "출처와 페이지 번호 없음",
+      "설명은 한국어, 기술 용어는 원문 유지",
+      "한 페이지에 중심 시각물 하나"
+    ],
+    "body_slide_system": "상단 18%, 본문 72%, footer 10%의 공통 배치",
+    "json_version": "1.0"
+  },
+  "slides": [
+    {
+      "slide_number": 5,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "slide_title": "시간대별 주문 요청량",
+      "layout_family": "hero line chart",
+      "prompt": {
+        "objective": "시간 변화와 핵심 수치를 동시에 보여 주는 재사용 템플릿",
+        "narrative_function": "시간에 따른 RPS 변화 설명",
+        "visual_intent": "왼쪽 대형 선 그래프와 오른쪽 수치 2개",
+        "content_blocks": [
+          {
+            "block_type": "title",
+            "purpose": "데이터 상태와 주제",
+            "content_instruction": "예시 데이터 · 실제 측정값 아님, 시간대별 주문 요청량",
+            "placement_instruction": "상단",
+            "style_instruction": "48px"
+          },
+          {
+            "block_type": "chart",
+            "purpose": "시간대별 RPS",
+            "content_instruction": "09:00 40, 10:00 70, 11:00 115, 12:00 160, 13:00 120, 14:00 145 RPS",
+            "placement_instruction": "본문 왼쪽 68%",
+            "style_instruction": "보라색 선, 옅은 라벤더 면, 최대점만 초록색"
+          },
+          {
+            "block_type": "metric_cards",
+            "purpose": "핵심 수치",
+            "content_instruction": "최대 160 RPS, 평균 108 RPS",
+            "placement_instruction": "본문 오른쪽 24%",
+            "style_instruction": "독립 수치 블록 2개"
+          },
+          {
+            "block_type": "footer_note",
+            "purpose": "발표 정보",
+            "content_instruction": "프로젝트 [프로젝트명] · 발표자 [이름] · [YYYY.MM.DD]",
+            "placement_instruction": "하단",
+            "style_instruction": "작은 마스코트"
+          }
+        ],
+        "layout_instructions": {
+          "structure": "상단 제목, 왼쪽 그래프, 오른쪽 수치, 하단 footer",
+          "header_body_footer": {
+            "header": "로고와 데이터 상태",
+            "body": "선 그래프와 수치 2개",
+            "footer": "발표 정보"
+          },
+          "reading_order": [
+            "제목",
+            "그래프",
+            "최대값",
+            "평균값"
+          ],
+          "alignment": "그래프와 수치 블록 상단 정렬",
+          "spacing": "본문 사이 48px",
+          "density": "낮음",
+          "body_slide_consistency": "공통 header·footer"
+        },
+        "design_constraints": {
+          "palette_rules": [
+            "보라색 선",
+            "초록색 최대점"
+          ],
+          "typography_rules": [
+            "tabular numerals"
+          ],
+          "component_rules": [
+            "수치 블록 2개 이하"
+          ],
+          "chart_rules": [
+            "시간 x축",
+            "RPS y축",
+            "모든 점에 라벨 금지"
+          ],
+          "table_rules": [],
+          "icon_rules": [],
+          "infographic_rules": [],
+          "diagram_rules": [],
+          "imagery_rules": [
+            "작은 마스코트"
+          ],
+          "anti_patterns_to_avoid": [
+            "대시보드",
+            "다중 그래프",
+            "다크 테마"
+          ]
+        },
+        "content_constraints": {
+          "must_include": [
+            "예시 데이터 · 실제 측정값 아님",
+            "RPS"
+          ],
+          "must_not_include": [
+            "성능 개선 결론",
+            "HPA 수치"
+          ],
+          "evidence_to_use": [],
+          "evidence_to_avoid": []
+        },
+        "generator_notes": {
+          "ppt_generation_note": "해당 없음",
+          "image_generation_note": "선 그래프와 숫자 정확성 우선",
+          "fallback_if_content_is_sparse": "그래프 영역 확대"
+        }
+      }
+    }
+  ]
+}

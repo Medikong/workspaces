@@ -1,0 +1,1059 @@
+{
+  "deck_meta": {
+    "working_title": "DropMong 기술 발표 단일 페이지 템플릿",
+    "deck_goal": "DropMong 실무 프로젝트와 기술 실험 발표에서 재사용할 수 있는 완성형 16:9 페이지 체계 제공",
+    "target_audience": "DropMong 팀원, 강사와 기술 발표 청중",
+    "speaker_mode": "presented",
+    "tone": "자연스러운 한국어와 근거 중심 기술 설명",
+    "target_length": {
+      "slides": 22,
+      "reasoning": "1차로 제작한 도식·차트 6종에 오프닝, 실험 구성, 해석과 마무리 16종 추가"
+    }
+  },
+  "design_dependency": {
+    "design_system_name": "DropMong Presentation System",
+    "body_slide_rule": "공통 header와 footer 사이에 한 페이지당 하나의 중심 시각물 배치",
+    "page_flow_rule": "각 파일은 독립적으로 재사용하되 title, body, end 페이지군 차이 유지",
+    "allowed_layout_families": [
+      "full-page sequence",
+      "full-page architecture",
+      "before-after architecture",
+      "hero bar chart",
+      "hero line chart",
+      "threshold timeline",
+      "editorial cover",
+      "agenda rail",
+      "section divider",
+      "project context path",
+      "problem framing",
+      "previous evidence strip",
+      "responsibility boundary map",
+      "experiment topology",
+      "fixed-changed conditions",
+      "execution steps",
+      "experiment matrix",
+      "metric definition timeline",
+      "annotated configuration",
+      "interpretation table",
+      "scope boundary",
+      "conclusion next steps"
+    ],
+    "consistency_notes": [
+      "DESIGN.md를 시각 규칙의 기준으로 사용",
+      "밝은 배경, Pretendard, 얇은 선과 넓은 여백",
+      "로고는 모든 페이지, 마스코트는 표지·장 전환·마무리에만 사용",
+      "footer에 프로젝트명·발표자명·날짜 자리",
+      "출처 영역과 페이지 번호 제외",
+      "기존 6장과 새 16장의 배치 규칙 일치"
+    ]
+  },
+  "content_inventory": [
+    {
+      "source_id": "dropmong-brand-assets",
+      "source_type": "file",
+      "summary": "DropMong 로고, 마스코트, 대표색과 아이콘 규칙",
+      "relevance": "high",
+      "usable_for": [
+        "all pages"
+      ]
+    },
+    {
+      "source_id": "existing-template-assets",
+      "source_type": "file",
+      "summary": "이미 제작한 도식 3종과 데이터 시각화 3종",
+      "relevance": "high",
+      "usable_for": [
+        "body layout consistency",
+        "spacing",
+        "footer"
+      ]
+    },
+    {
+      "source_id": "user-template-contract",
+      "source_type": "prompt",
+      "summary": "DropMong 공통 템플릿, 실제 결과와 계획 구분, footer 필요, 출처 영역 제외",
+      "relevance": "high",
+      "usable_for": [
+        "all pages"
+      ]
+    },
+    {
+      "source_id": "previous-hpa-evidence",
+      "source_type": "file",
+      "summary": "이전 HPA 실험의 decision→Ready, replica, 실패율과 p99",
+      "relevance": "high",
+      "usable_for": [
+        "slide 12 only"
+      ]
+    }
+  ],
+  "story_arc": {
+    "narrative_shape": "오프닝 → 배경과 문제 → 시스템과 실험 → 측정과 해석 → 범위와 마무리",
+    "why_this_order_is_persuasive": "템플릿을 실제 기술 발표에서 선택하는 순서와 비슷하게 묶어 필요한 페이지를 빠르게 찾을 수 있는 구성"
+  },
+  "slides": [
+    {
+      "slide_number": 1,
+      "slide_role": "context",
+      "page_family": "body",
+      "topic_group": "diagram",
+      "continuation_of": null,
+      "working_title": "주문부터 알림까지",
+      "core_message": "서비스 사이 요청과 event 전달 순서",
+      "audience_takeaway": "동기 요청과 비동기 event의 구분",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "전체 화면 시퀀스 다이어그램",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "full-page sequence",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "서비스 사이 요청과 event 전달 순서",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 2,
+      "slide_role": "context",
+      "page_family": "body",
+      "topic_group": "diagram",
+      "continuation_of": null,
+      "working_title": "DropMong 서비스 구성",
+      "core_message": "사용자 요청, 서비스, 데이터와 관측 도구의 관계",
+      "audience_takeaway": "서비스 책임과 연결 방식",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "전체 시스템 구성도",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "DropMong 2px 선 아이콘만 사용",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "full-page architecture",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "사용자 요청, 서비스, 데이터와 관측 도구의 관계",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 3,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "topic_group": "diagram",
+      "continuation_of": null,
+      "working_title": "알림 처리 방식 비교",
+      "core_message": "동기 호출과 event 분리 구성의 구조 차이",
+      "audience_takeaway": "성능 결과가 아닌 구성 선택의 비교",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "변경 전후 구성도",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "DropMong 2px 선 아이콘만 사용",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "before-after architecture",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "동기 호출과 event 분리 구성의 구조 차이",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 4,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "data",
+      "continuation_of": null,
+      "working_title": "API 응답 시간 비교",
+      "core_message": "여러 API 값의 크기 비교",
+      "audience_takeaway": "막대 길이와 정확한 단위의 동시 확인",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "대형 가로 막대",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "대형 가로 막대",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "hero bar chart",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "여러 API 값의 크기 비교",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 5,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "data",
+      "continuation_of": null,
+      "working_title": "시간대별 주문 요청량",
+      "core_message": "시간에 따른 RPS 변화",
+      "audience_takeaway": "최대값과 평균값의 위치",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "대형 선 그래프",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "대형 선 그래프",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "hero line chart",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "시간에 따른 RPS 변화",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 6,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "data",
+      "continuation_of": null,
+      "working_title": "대기열 증가와 처리 회복",
+      "core_message": "Queue lag의 기준 초과와 복귀 시점",
+      "audience_takeaway": "임계값, 최대값과 회복 시간의 구분",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "임계값 시계열",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "임계값 시계열",
+      "supporting_context": [
+        "PNG와 같은 이름의 prompt JSON 제작 완료"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "threshold timeline",
+      "why_here": "1차로 시각 기준을 확인한 기존 템플릿",
+      "must_include": [
+        "Queue lag의 기준 초과와 복귀 시점",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "rendered"
+    },
+    {
+      "slide_number": 7,
+      "slide_role": "cover",
+      "page_family": "title",
+      "topic_group": "opening",
+      "continuation_of": null,
+      "working_title": "DropMong 기술 발표",
+      "core_message": "발표 주제와 발표 정보",
+      "audience_takeaway": "발표 제목, 발표자와 날짜",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 큰 제목",
+        "body": "큰 제목과 우측 하단 마스코트",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "title/end 페이지군 규칙",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "editorial cover",
+      "why_here": "opening 페이지군에서 발표 제목, 발표자와 날짜 제시",
+      "must_include": [
+        "발표 주제와 발표 정보",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 8,
+      "slide_role": "context",
+      "page_family": "body",
+      "topic_group": "opening",
+      "continuation_of": null,
+      "working_title": "오늘 살펴볼 내용",
+      "core_message": "발표의 네 구간",
+      "audience_takeaway": "발표 순서와 예상 시간",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "하나의 수평 agenda rail",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "하나의 수평 agenda rail",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "agenda rail",
+      "why_here": "opening 페이지군에서 발표 순서와 예상 시간 제시",
+      "must_include": [
+        "발표의 네 구간",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 9,
+      "slide_role": "context",
+      "page_family": "title",
+      "topic_group": "opening",
+      "continuation_of": null,
+      "working_title": "장 전환",
+      "core_message": "다음 구간의 시작",
+      "audience_takeaway": "현재 위치와 다음 주제",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 큰 제목",
+        "body": "큰 장 번호와 마스코트",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "title/end 페이지군 규칙",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "section divider",
+      "why_here": "opening 페이지군에서 현재 위치와 다음 주제 제시",
+      "must_include": [
+        "다음 구간의 시작",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 10,
+      "slide_role": "context",
+      "page_family": "body",
+      "topic_group": "framing",
+      "continuation_of": null,
+      "working_title": "프로젝트 배경",
+      "core_message": "사용자, 핵심 기능과 운영 조건",
+      "audience_takeaway": "기술 선택이 필요한 서비스 맥락",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "세 지점을 연결한 서비스 맥락 도식",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "세 지점을 연결한 서비스 맥락 도식",
+      "icon_strategy": "DropMong 2px 선 아이콘만 사용",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "project context path",
+      "why_here": "framing 페이지군에서 기술 선택이 필요한 서비스 맥락 제시",
+      "must_include": [
+        "사용자, 핵심 기능과 운영 조건",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 11,
+      "slide_role": "problem",
+      "page_family": "body",
+      "topic_group": "framing",
+      "continuation_of": null,
+      "working_title": "확인하려는 문제",
+      "core_message": "관찰한 현상과 확인할 대상",
+      "audience_takeaway": "조건, 현상과 비교 기준의 구분",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "중앙 문제 문구와 양쪽 근거",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "problem framing",
+      "why_here": "framing 페이지군에서 조건, 현상과 비교 기준의 구분 제시",
+      "must_include": [
+        "관찰한 현상과 확인할 대상",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 12,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "framing",
+      "continuation_of": null,
+      "working_title": "이전 HPA 실험에서 남은 문제",
+      "core_message": "파드 증가와 사용자 품질 미회복의 구분",
+      "audience_takeaway": "이전 실험 수치와 새 실험 계획의 분리",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "상단 상태 라벨과 단일 수치 스트립",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [
+        "docs/research/autoscale/kubernetes-autoscaling-strategy-research-design.md:20",
+        "docs/research/autoscale/kubernetes-autoscaling-strategy-research-design.md:191"
+      ],
+      "recommended_layout_family": "previous evidence strip",
+      "why_here": "framing 페이지군에서 이전 실험 수치와 새 실험 계획의 분리 제시",
+      "must_include": [
+        "이전 HPA 실험 · 새 실험 결과 아님",
+        "decision→Ready 약 11~14초",
+        "concert 1→4",
+        "실패율 34.64%",
+        "p99 약 14.9초"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 13,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "topic_group": "system",
+      "continuation_of": null,
+      "working_title": "구성 요소별 담당 범위",
+      "core_message": "HPA, KEDA, VPA/rightsizing, Node Autoscaler의 역할",
+      "audience_takeaway": "조절 대상과 해결하지 못하는 문제",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "네 개의 수평 책임 구간",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "네 개의 수평 책임 구간",
+      "icon_strategy": "DropMong 2px 선 아이콘만 사용",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "responsibility boundary map",
+      "why_here": "system 페이지군에서 조절 대상과 해결하지 못하는 문제 제시",
+      "must_include": [
+        "HPA, KEDA, VPA/rightsizing, Node Autoscaler의 역할",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 14,
+      "slide_role": "solution",
+      "page_family": "body",
+      "topic_group": "experiment",
+      "continuation_of": null,
+      "working_title": "실험 환경과 요청 경로",
+      "core_message": "부하 입력, 서비스, 의존성, 관측과 확장 제어",
+      "audience_takeaway": "무엇을 연결하고 어디서 기록하는지",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "대형 실험 topology와 조건 rail",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "DropMong 2px 선 아이콘만 사용",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "experiment topology",
+      "why_here": "experiment 페이지군에서 무엇을 연결하고 어디서 기록하는지 제시",
+      "must_include": [
+        "부하 입력, 서비스, 의존성, 관측과 확장 제어",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 15,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "topic_group": "experiment",
+      "continuation_of": null,
+      "working_title": "같게 두는 조건과 바꾸는 조건",
+      "core_message": "비교 실험의 고정 항목과 변경 항목",
+      "audience_takeaway": "공정한 비교를 위한 설정 구분",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "두 영역으로 나눈 조건 표",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표를 중심 시각물로 사용하고 행 수 제한",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "fixed-changed conditions",
+      "why_here": "experiment 페이지군에서 공정한 비교를 위한 설정 구분 제시",
+      "must_include": [
+        "비교 실험의 고정 항목과 변경 항목",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 16,
+      "slide_role": "roadmap",
+      "page_family": "body",
+      "topic_group": "experiment",
+      "continuation_of": null,
+      "working_title": "실험 실행 순서",
+      "core_message": "단일 파드부터 노드 연계까지의 실행 단계",
+      "audience_takeaway": "다음 단계로 넘어가는 확인 조건",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "다섯 단계 수평 실행선",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "다섯 단계 수평 실행선",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "execution steps",
+      "why_here": "experiment 페이지군에서 다음 단계로 넘어가는 확인 조건 제시",
+      "must_include": [
+        "단일 파드부터 노드 연계까지의 실행 단계",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 17,
+      "slide_role": "comparison",
+      "page_family": "body",
+      "topic_group": "experiment",
+      "continuation_of": null,
+      "working_title": "비교 조건",
+      "core_message": "고정 용량, CPU HPA, KEDA의 설정 차이",
+      "audience_takeaway": "각 비교군에서 바뀌는 값",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "대형 실험 matrix",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표를 중심 시각물로 사용하고 행 수 제한",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "experiment matrix",
+      "why_here": "experiment 페이지군에서 각 비교군에서 바뀌는 값 제시",
+      "must_include": [
+        "고정 용량, CPU HPA, KEDA의 설정 차이",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 18,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "measurement",
+      "continuation_of": null,
+      "working_title": "기록할 시간과 지표",
+      "core_message": "부하 시작부터 SLO 회복까지의 시점 정의",
+      "audience_takeaway": "decision, Ready, 처리 증가와 회복의 분리",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "t0~t4 시간선과 계산식",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "metric definition timeline",
+      "why_here": "measurement 페이지군에서 decision, Ready, 처리 증가와 회복의 분리 제시",
+      "must_include": [
+        "부하 시작부터 SLO 회복까지의 시점 정의",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 19,
+      "slide_role": "solution",
+      "page_family": "body",
+      "topic_group": "implementation",
+      "continuation_of": null,
+      "working_title": "설정값과 적용 위치",
+      "core_message": "YAML 설정과 핵심 필드의 연결",
+      "audience_takeaway": "어떤 값을 어디에서 바꾸는지",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "밝은 코드 패널과 주석 rail",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "annotated configuration",
+      "why_here": "implementation 페이지군에서 어떤 값을 어디에서 바꾸는지 제시",
+      "must_include": [
+        "YAML 설정과 핵심 필드의 연결",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "should",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 20,
+      "slide_role": "evidence",
+      "page_family": "body",
+      "topic_group": "analysis",
+      "continuation_of": null,
+      "working_title": "결과를 읽는 기준",
+      "core_message": "관측 조합별 다음 확인 항목",
+      "audience_takeaway": "결과를 단정하지 않는 해석 규칙",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "세 행 결과 해석표",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표를 중심 시각물로 사용하고 행 수 제한",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "interpretation table",
+      "why_here": "analysis 페이지군에서 결과를 단정하지 않는 해석 규칙 제시",
+      "must_include": [
+        "관측 조합별 다음 확인 항목",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 21,
+      "slide_role": "problem",
+      "page_family": "body",
+      "topic_group": "closing",
+      "continuation_of": null,
+      "working_title": "이번 발표에서 다루지 않은 범위",
+      "core_message": "이번 범위와 다음 확인 항목",
+      "audience_takeaway": "적용 범위와 남은 제약",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "안쪽과 바깥쪽 경계 구분",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "공통 header 150px와 footer 56px",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "안쪽과 바깥쪽 경계 구분",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "scope boundary",
+      "why_here": "closing 페이지군에서 적용 범위와 남은 제약 제시",
+      "must_include": [
+        "이번 범위와 다음 확인 항목",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "should",
+      "asset_status": "prompt-ready"
+    },
+    {
+      "slide_number": 22,
+      "slide_role": "summary",
+      "page_family": "end",
+      "topic_group": "closing",
+      "continuation_of": null,
+      "working_title": "확인한 내용과 다음 작업",
+      "core_message": "핵심 내용과 바로 이어질 작업",
+      "audience_takeaway": "발표 종료 시 기억할 세 항목",
+      "header_body_footer_plan": {
+        "header": "로고, 분류 라벨과 제목",
+        "body": "세 줄 요약과 다음 작업 rail",
+        "footer": "프로젝트명, 발표자명과 날짜 자리"
+      },
+      "layout_placement_notes": [
+        "1600×900",
+        "title/end 페이지군 규칙",
+        "중심 시각물 하나"
+      ],
+      "infographic_strategy": "장식용 infographic 제외",
+      "icon_strategy": "필수 의미가 없으면 아이콘 제외",
+      "table_strategy": "표 사용 없음",
+      "chart_strategy": "차트 사용 없음",
+      "supporting_context": [
+        "PNG 제작 전 prompt JSON 준비"
+      ],
+      "evidence_sources": [],
+      "recommended_layout_family": "conclusion next steps",
+      "why_here": "closing 페이지군에서 발표 종료 시 기억할 세 항목 제시",
+      "must_include": [
+        "핵심 내용과 바로 이어질 작업",
+        "공통 footer"
+      ],
+      "can_exclude": [
+        "출처 영역",
+        "페이지 번호",
+        "장식용 카드"
+      ],
+      "priority": "must",
+      "asset_status": "prompt-ready"
+    }
+  ],
+  "ordering_notes": {
+    "page_flow": {
+      "title_page_strategy": "큰 제목, 넓은 여백, 제한적인 마스코트",
+      "body_page_strategy": "공통 header·body·footer와 한 개의 중심 시각물",
+      "end_page_strategy": "세 줄 요약, 다음 작업과 작은 마스코트"
+    },
+    "split_topics": [
+      {
+        "topic": "실험 구성",
+        "slides": [
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "reason": "환경, 조건, 실행, 비교군과 측정 시점을 한 화면에 압축하지 않기 위한 분리"
+      }
+    ],
+    "merged_topics": [
+      {
+        "topic": "확인 질문과 예상",
+        "slide": 11,
+        "reason": "논문 형식의 별도 가설 페이지 대신 실제 발표에서 읽기 쉬운 한 페이지로 통합"
+      }
+    ],
+    "deferred_topics": [
+      "References 전용 페이지",
+      "대시보드형 복합 차트",
+      "상품 UI 화면"
+    ],
+    "appendix_candidates": [
+      "상세 설정값",
+      "전체 raw log",
+      "실험 환경 버전 목록"
+    ],
+    "production_queue": [
+      "07-cover",
+      "08-agenda",
+      "09-section-divider",
+      "10-project-context",
+      "11-problem-and-question",
+      "12-previous-hpa-evidence",
+      "13-responsibility-boundary",
+      "14-experiment-topology",
+      "15-fixed-and-changed-conditions",
+      "16-execution-steps",
+      "17-experiment-matrix",
+      "18-metric-definition",
+      "19-code-config",
+      "20-result-interpretation",
+      "21-limitations",
+      "22-conclusion-next-steps"
+    ]
+  }
+}
