@@ -1,0 +1,24 @@
+{
+  "name": "dropmong-autoscale-presentations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "npm install && npm --prefix slidev install && npm --prefix revealjs install",
+    "dev:slidev": "npm --prefix slidev run dev",
+    "dev:slidev:catalog": "npm --prefix slidev run dev:catalog",
+    "dev:reveal": "npm --prefix revealjs run dev",
+    "build:slidev": "npm --prefix slidev run build:all",
+    "build:reveal": "npm --prefix revealjs run check",
+    "build": "npm run build:slidev && npm run build:reveal",
+    "lint:language": "node scripts/lint-visible-language.mjs",
+    "verify:evidence": "node scripts/verify-evidence.mjs",
+    "verify:visual": "node scripts/visual-check.mjs",
+    "check": "npm run lint:language && npm run verify:evidence && npm run build && npm run verify:visual"
+  },
+  "devDependencies": {
+    "axe-core": "4.12.1",
+    "playwright-chromium": "1.61.1"
+  }
+}
+

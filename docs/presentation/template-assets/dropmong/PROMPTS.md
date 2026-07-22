@@ -44,7 +44,7 @@ Client, Ingress, API, Worker, Kafka, KEDA, HPA, Prometheus, DB, Redis 노드와 
 
 ## 단일 페이지 템플릿
 
-`templates/`에서는 여러 축소 화면을 한 장에 모으지 않고 하나의 파일에 하나의 완성된 16:9 페이지를 관리합니다. 현재 01~06번 PNG 제작이 끝났고, 07~22번은 같은 이름의 prompt JSON까지 준비했습니다.
+`templates/`에서는 여러 축소 화면을 한 장에 모으지 않고 하나의 파일에 하나의 완성된 16:9 페이지를 관리합니다. 01~22번 PNG와 같은 이름의 prompt JSON 제작을 마쳤습니다.
 
 1. 전체 화면 시퀀스 다이어그램
 2. 전체 시스템 구성도

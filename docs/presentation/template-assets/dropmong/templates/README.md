@@ -17,28 +17,26 @@
 
 PNG 안의 프로젝트명, 발표자명과 날짜는 배치 예시입니다. 실제 발표에서는 해당 영역을 편집 가능한 텍스트로 다시 입력합니다.
 
-## 이미지 제작 준비
+다음 16개 페이지도 PNG와 개별 prompt JSON 제작을 마쳤습니다.
 
-다음 16개 페이지는 개별 prompt JSON과 제작 순서를 확정한 상태입니다. PNG는 아직 만들지 않았습니다.
-
-| 구조 변경·제작 프롬프트 | 중심 구성 |
-| --- | --- |
-| `07-cover.prompt.json` | 표지 |
-| `08-agenda.prompt.json` | 수평 목차 |
-| `09-section-divider.prompt.json` | 장 전환 |
-| `10-project-context.prompt.json` | 프로젝트 맥락 도식 |
-| `11-problem-and-question.prompt.json` | 문제와 확인 대상 |
-| `12-previous-hpa-evidence.prompt.json` | 이전 HPA 근거 수치 |
-| `13-responsibility-boundary.prompt.json` | 구성 요소별 담당 범위 |
-| `14-experiment-topology.prompt.json` | 실험 환경과 요청 경로 |
-| `15-fixed-and-changed-conditions.prompt.json` | 고정 조건과 변경 조건 |
-| `16-execution-steps.prompt.json` | 실험 실행 순서 |
-| `17-experiment-matrix.prompt.json` | 비교 조건 표 |
-| `18-metric-definition.prompt.json` | 시간 지표 정의 |
-| `19-code-config.prompt.json` | 설정 코드와 주석 |
-| `20-result-interpretation.prompt.json` | 결과 해석표 |
-| `21-limitations.prompt.json` | 범위와 한계 |
-| `22-conclusion-next-steps.prompt.json` | 마무리와 다음 작업 |
+| 이미지 | 구조 변경 프롬프트 | 중심 구성 |
+| --- | --- | --- |
+| `07-cover.png` | `07-cover.prompt.json` | 표지 |
+| `08-agenda.png` | `08-agenda.prompt.json` | 수평 목차 |
+| `09-section-divider.png` | `09-section-divider.prompt.json` | 장 전환 |
+| `10-project-context.png` | `10-project-context.prompt.json` | 프로젝트 맥락 도식 |
+| `11-problem-and-question.png` | `11-problem-and-question.prompt.json` | 문제와 확인 대상 |
+| `12-previous-hpa-evidence.png` | `12-previous-hpa-evidence.prompt.json` | 이전 HPA 근거 수치 |
+| `13-responsibility-boundary.png` | `13-responsibility-boundary.prompt.json` | 구성 요소별 담당 범위 |
+| `14-experiment-topology.png` | `14-experiment-topology.prompt.json` | 실험 환경과 요청 경로 |
+| `15-fixed-and-changed-conditions.png` | `15-fixed-and-changed-conditions.prompt.json` | 고정 조건과 변경 조건 |
+| `16-execution-steps.png` | `16-execution-steps.prompt.json` | 실험 실행 순서 |
+| `17-experiment-matrix.png` | `17-experiment-matrix.prompt.json` | 비교 조건 표 |
+| `18-metric-definition.png` | `18-metric-definition.prompt.json` | 시간 지표 정의 |
+| `19-code-config.png` | `19-code-config.prompt.json` | 설정 코드와 주석 |
+| `20-result-interpretation.png` | `20-result-interpretation.prompt.json` | 결과 해석표 |
+| `21-limitations.png` | `21-limitations.prompt.json` | 범위와 한계 |
+| `22-conclusion-next-steps.png` | `22-conclusion-next-steps.prompt.json` | 마무리와 다음 작업 |
 
 ## 공통 배치
 

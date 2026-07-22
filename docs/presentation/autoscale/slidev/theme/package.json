@@ -1,0 +1,26 @@
+{
+  "name": "slidev-theme-research",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [
+    "slidev",
+    "slidev-theme",
+    "research-presentation"
+  ],
+  "engines": {
+    "slidev": ">=52.0.0"
+  },
+  "slidev": {
+    "colorSchema": "light",
+    "defaults": {
+      "aspectRatio": "16/9",
+      "canvasWidth": 1600,
+      "fonts": {
+        "provider": "none",
+        "sans": "Pretendard",
+        "mono": "ui-monospace"
+      }
+    }
+  }
+}
+

@@ -1,0 +1,197 @@
+@import '../../slidev/theme/styles/theme.css';
+
+html,
+body,
+.reveal {
+  background: var(--research-canvas);
+}
+
+.reveal {
+  color: var(--research-ink);
+  font-family: Pretendard, sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section.research-slide {
+  position: absolute;
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 56px 80px 48px;
+  overflow: hidden;
+  color: var(--research-ink);
+  background:
+    linear-gradient(var(--research-line) 1px, transparent 1px) 0 0 / 100% 180px,
+    var(--research-canvas);
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal p {
+  font-family: Pretendard, sans-serif;
+  text-transform: none;
+}
+
+.reveal .slide-body {
+  width: 100%;
+  max-height: none;
+}
+
+.reveal .slide-body.agenda-shell,
+.reveal .slide-body.background-shell,
+.reveal .slide-body.evidence-shell,
+.reveal .slide-body.question-shell,
+.reveal .slide-body.hypothesis-shell,
+.reveal .slide-body.comparison-shell,
+.reveal .slide-body.system-shell,
+.reveal .slide-body.traffic-shell,
+.reveal .slide-body.design-shell,
+.reveal .slide-body.matrix-shell,
+.reveal .slide-body.metric-shell,
+.reveal .slide-body.limitation-shell,
+.reveal .slide-body.conclusion-shell,
+.reveal .slide-body.references-shell {
+  display: grid;
+}
+
+.reveal .fragment {
+  transition-duration: 180ms;
+}
+
+.reveal .slides section.layout-cover .slide-body {
+  flex: 0;
+  height: auto;
+}
+
+.reveal .metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--research-line-strong);
+  border-radius: var(--research-radius-md);
+  background: var(--research-surface);
+}
+
+.reveal .metric-card {
+  min-width: 0;
+  padding: 20px 22px;
+  border-right: 1px solid var(--research-line-strong);
+}
+
+.reveal .metric-card:last-child {
+  border-right: 0;
+}
+
+.reveal .metric-card strong,
+.reveal .metric-card span,
+.reveal .metric-card small {
+  display: block;
+}
+
+.reveal .metric-card strong {
+  color: var(--research-purple-ink);
+  font-size: 44px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.reveal .metric-card span {
+  margin-top: 10px;
+  color: var(--research-ink);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.reveal .metric-card small {
+  margin-top: 4px;
+  color: var(--research-muted);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.reveal .metric-card[data-tone='danger'] strong {
+  color: var(--research-danger);
+}
+
+.reveal .metric-card[data-tone='success'] strong {
+  color: var(--research-success);
+}
+
+.reveal .metric-card[data-tone='info'] strong {
+  color: var(--research-info);
+}
+
+.reveal .traffic-profile {
+  position: relative;
+  height: 100%;
+  min-height: 430px;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--research-line-strong);
+  border-radius: var(--research-radius-md);
+  background: var(--research-surface);
+}
+
+.reveal .traffic-profile svg {
+  width: 100%;
+  height: 100%;
+}
+
+.reveal .traffic-profile text {
+  fill: var(--research-muted);
+  font-family: Pretendard, sans-serif;
+  font-size: 18px;
+}
+
+.reveal .traffic-profile .grid-line {
+  stroke: var(--research-line-strong);
+  stroke-width: 1;
+}
+
+.reveal .traffic-profile .line {
+  fill: none;
+  stroke: var(--research-purple);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.reveal .traffic-profile .area {
+  fill: rgba(108, 61, 245, 0.08);
+}
+
+.reveal .traffic-profile circle {
+  fill: var(--research-surface);
+  stroke: var(--research-purple);
+  stroke-width: 4;
+}
+
+.reveal .chart-status {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.reveal .controls {
+  color: var(--research-purple-ink);
+}
+
+.reveal .progress {
+  color: var(--research-purple);
+  height: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .fragment {
+    transition: none;
+  }
+}

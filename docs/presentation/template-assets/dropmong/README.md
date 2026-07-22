@@ -21,6 +21,7 @@
 | `templates/04-bar-comparison.png` | API 응답 시간 가로 막대 비교 예시 |
 | `templates/05-line-chart.png` | 시간대별 주문 요청량 선 그래프 예시 |
 | `templates/06-threshold-timeline.png` | Queue lag 임계값과 회복 시간 예시 |
+| `templates/07-cover.png`~`templates/22-conclusion-next-steps.png` | 표지부터 실험 구성, 결과 해석과 마무리까지의 단일 페이지 템플릿 16종 |
 
 ## 공통 원칙
 
@@ -37,7 +38,7 @@
 
 1. `templates/`에서 발표 목적과 가까운 단일 페이지 PNG를 선택합니다.
 2. 같은 이름의 `.prompt.json`을 열어 화면 구조, 문구와 데이터 변경 지시를 확인합니다.
-3. 새 PNG 제작은 `templates/DESIGN.md`와 `templates/REMAINING-META-PROMPT.md`를 먼저 확인합니다.
+3. 새 PNG 제작이나 기존 화면 재생성은 `templates/DESIGN.md`와 `templates/REMAINING-META-PROMPT.md`를 먼저 확인합니다.
 4. `foundations/`, `brand/`, `components/`는 디자인 규칙 참고 자료로 사용합니다.
 5. 실제 발표에서는 템플릿의 예시 문구와 수치를 프로젝트 내용으로 교체합니다.
 6. 오토스케일링 발표 문구는 `../../autoscale/LANGUAGE-POLICY.json`과 `npm run lint:language`로 확인합니다.

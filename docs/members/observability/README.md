@@ -9,3 +9,9 @@
 - 01. 프로젝트 제안: `live-commerce/01-proposal.md`
 - 02. 검증 계획: `live-commerce/02-validation-plan.md`
 - 03. 발표 구성안: `live-commerce/03-presentation-plan.md`
+
+## 연계 연구
+
+위 프로젝트 검증에서 발전한 HPA 지표 선택 및 Kubernetes 오토스케일링 전략 연구는 별도 연구 영역에서 관리한다.
+
+- [Kubernetes 오토스케일링 전략 연구](../../research/autoscale/README.md)

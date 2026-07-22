@@ -1,0 +1,19 @@
+{
+  "name": "autoscale-research-slidev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3030",
+    "dev:catalog": "slidev layout-catalog.md --port 3031",
+    "build": "slidev build slides.md --out dist",
+    "build:catalog": "slidev build layout-catalog.md --out dist-catalog",
+    "build:all": "npm run build && npm run build:catalog"
+  },
+  "devDependencies": {
+    "@fontsource/pretendard": "5.3.0",
+    "@slidev/cli": "52.18.0",
+    "vue": "3.5.24"
+  }
+}
+

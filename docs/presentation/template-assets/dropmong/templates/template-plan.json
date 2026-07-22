@@ -377,7 +377,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 8,
@@ -418,7 +418,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 9,
@@ -459,7 +459,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 10,
@@ -500,7 +500,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 11,
@@ -541,7 +541,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 12,
@@ -588,7 +588,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 13,
@@ -629,7 +629,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 14,
@@ -670,7 +670,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 15,
@@ -711,7 +711,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 16,
@@ -752,7 +752,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 17,
@@ -793,7 +793,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 18,
@@ -834,7 +834,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 19,
@@ -875,7 +875,7 @@
         "장식용 카드"
       ],
       "priority": "should",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 20,
@@ -916,7 +916,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 21,
@@ -957,7 +957,7 @@
         "장식용 카드"
       ],
       "priority": "should",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     },
     {
       "slide_number": 22,
@@ -998,7 +998,7 @@
         "장식용 카드"
       ],
       "priority": "must",
-      "asset_status": "prompt-ready"
+      "asset_status": "rendered"
     }
   ],
   "ordering_notes": {
