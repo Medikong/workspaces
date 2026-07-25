@@ -1,0 +1,5778 @@
+{
+  "schema_version": "dropmong.loadtest.bottleneck-ramp-result/v2",
+  "run": {
+    "id": "baseline90d-ramp-20260725t122500z",
+    "definition": "local-baseline-90days-ramp-replicas-1",
+    "scenario": "service-bottleneck-ramp-load-test",
+    "preset": "baseline-90days-replicas-1",
+    "mode": "bottleneck-ramp",
+    "replicas": 1,
+    "status": "fail",
+    "started_at": "2026-07-25T12:27:14.053Z",
+    "finished_at": "2026-07-25T12:38:15.291Z",
+    "namespace": "dropmong-loadtest-local",
+    "release": "dm-load-baseline90d-ramp-20260725t122500z"
+  },
+  "configuration": {
+    "experiment": {
+      "path": "platform/loadtest/values/runs/local-baseline-90days-ramp-replicas-1.yaml",
+      "schema_version": "dropmong.loadtest.experiment/v1",
+      "sources": {
+        "run": "platform/loadtest/values/runs/local-baseline-90days-ramp-replicas-1.yaml",
+        "scenario": "platform/loadtest/values/scenarios/service-bottleneck-ramp-load-test.yaml",
+        "preset": "platform/loadtest/values/presets/service-bottleneck-ramp-load-test/baseline-90days-replicas-1.yaml",
+        "environment": "platform/loadtest/values/environments/local.yaml",
+        "dataset": "platform/loadtest/values/datasets/baseline-90days.yaml",
+        "loadtestHelmValues": "platform/loadtest/values/local.yaml"
+      }
+    },
+    "dataset": {
+      "profile": "baseline-90days",
+      "seed": "20260723",
+      "revision": "baseline-90days-v2",
+      "runtime_addressing_strategy": "deterministic-seed-addressing-with-disjoint-write-ranges",
+      "cache": {
+        "key": "897eea884f104869b22c584d966e67add3b56ed8d7135d7823954b0d230305ab",
+        "local_directory": "tmp/datasets/897eea884f104869b22c584d966e67add3b56ed8d7135d7823954b0d230305ab",
+        "candidate": false,
+        "status": "mixed",
+        "service_status": {
+          "auth-service": "hit",
+          "user-service": "miss",
+          "catalog-service": "miss",
+          "coupon-service": "miss",
+          "interest-service": "miss",
+          "order-service": "miss",
+          "payment-service": "hit",
+          "notification-service": "miss"
+        },
+        "events": [
+          {
+            "trial_id": "auth-servi-r1-ramp-dataset",
+            "status": "miss",
+            "services": {
+              "auth-service": "miss"
+            }
+          },
+          {
+            "trial_id": "user-servi-r1-ramp-dataset",
+            "status": "mixed",
+            "services": {
+              "auth-service": "hit",
+              "user-service": "miss"
+            }
+          },
+          {
+            "trial_id": "catalog-se-r1-ramp-dataset",
+            "status": "miss",
+            "services": {
+              "catalog-service": "miss"
+            }
+          },
+          {
+            "trial_id": "coupon-ser-r1-ramp-dataset",
+            "status": "mixed",
+            "services": {
+              "auth-service": "hit",
+              "coupon-service": "miss"
+            }
+          },
+          {
+            "trial_id": "interest-s-r1-ramp-dataset",
+            "status": "mixed",
+            "services": {
+              "auth-service": "hit",
+              "interest-service": "miss"
+            }
+          },
+          {
+            "trial_id": "order-serv-r1-ramp-dataset",
+            "status": "mixed",
+            "services": {
+              "auth-service": "hit",
+              "order-service": "miss",
+              "payment-service": "miss"
+            }
+          },
+          {
+            "trial_id": "payment-se-r1-ramp-dataset",
+            "status": "hit",
+            "services": {
+              "auth-service": "hit",
+              "payment-service": "hit"
+            }
+          },
+          {
+            "trial_id": "notificati-r1-ramp-dataset",
+            "status": "mixed",
+            "services": {
+              "auth-service": "hit",
+              "notification-service": "miss"
+            }
+          }
+        ],
+        "totals": {
+          "generation_seconds": 0,
+          "copy_seconds": 0,
+          "snapshot_seconds": 0,
+          "restore_seconds": 0,
+          "analyze_seconds": 0,
+          "rows": 0,
+          "snapshot_bytes": 0
+        },
+        "candidate_rejection": "kubectl exited 137: E0725 21:27:35.652626    9360 websocket.go:514] Websocket Ping failed: write tcp 127.0.0.1:53705->127.0.0.1:52975: write: broken pipe\ncommand terminated with exit code 137\n"
+      },
+      "status": "success"
+    },
+    "deployment": {
+      "replicas": 1
+    },
+    "ramp": {},
+    "git": {
+      "gitops": {
+        "sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+        "dirty": true
+      },
+      "service": {
+        "sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+        "dirty": true
+      }
+    },
+    "images": {
+      "k6": {
+        "reference": "localhost:5001/dropmong-loadtest-runner:dev",
+        "identity": "configured-not-inspected"
+      },
+      "tools": {
+        "reference": "localhost:5001/dropmong-loadtest-tools:dev",
+        "identity": "configured-not-inspected"
+      },
+      "seeder": {
+        "reference": "localhost:5001/dropmong-dataset-seeder:dev",
+        "identity": "configured-not-inspected"
+      },
+      "auth-service": {
+        "reference": "localhost:5001/auth-service:dev",
+        "identity": "localhost:5001/auth-service@sha256:156f33ad52e9947ad9c50384eb8e03e1978865c602821813d8ba1d7d89a13916"
+      },
+      "user-service": {
+        "reference": "localhost:5001/user-service:dev",
+        "identity": "localhost:5001/user-service@sha256:f52553b11047d7c91514ed2f6ee0dbb6d6fa34650631f0cc57426c872979bee2"
+      },
+      "catalog-service": {
+        "reference": "localhost:5001/catalog-service:dev",
+        "identity": "localhost:5001/catalog-service@sha256:0294aaa91d2cfcf68493e3c838212c865ded4b532890a51e84e53b7402f09a48"
+      },
+      "coupon-service": {
+        "reference": "localhost:5001/coupon-service:dev",
+        "identity": "localhost:5001/coupon-service@sha256:e72d97129dbc60cd136c3dd4f65def574781301b2a98afe764ba8c5fef403ebe"
+      },
+      "interest-service": {
+        "reference": "localhost:5001/interest-service:dev",
+        "identity": "localhost:5001/interest-service@sha256:65225318a2009462b7b98239da898c7ba86686305771438613651515d254df2c"
+      },
+      "order-service": {
+        "reference": "localhost:5001/order-service:dev",
+        "identity": "localhost:5001/order-service@sha256:698995d893c8c5b6cc7f983ef3eb2d4dccbd8443632208b234ce3622c0737687"
+      },
+      "payment-service": {
+        "reference": "localhost:5001/payment-service:dev",
+        "identity": "localhost:5001/payment-service@sha256:18233f421dbac9db6e344789815378bdf0ed3dfc6e50955127df61f10963f20d"
+      },
+      "notification-service": {
+        "reference": "localhost:5001/notification-service:dev",
+        "identity": "localhost:5001/notification-service@sha256:04ee6731bfb53af87479278d6f4a0211bccb3c40c494853d042c1ec67c0791bf"
+      }
+    },
+    "environment": {
+      "name": "local",
+      "gitops_environment": "dev",
+      "checked_at": "2026-07-25T12:27:15.606Z",
+      "kubernetes_context": "docker-desktop",
+      "nodes": [
+        {
+          "name": "desktop-control-plane",
+          "cpu": "6",
+          "memory": "16356048Ki",
+          "ready": true
+        },
+        {
+          "name": "desktop-worker",
+          "cpu": "6",
+          "memory": "16356048Ki",
+          "ready": true
+        },
+        {
+          "name": "desktop-worker2",
+          "cpu": "6",
+          "memory": "16356048Ki",
+          "ready": true
+        },
+        {
+          "name": "desktop-worker3",
+          "cpu": "6",
+          "memory": "16356048Ki",
+          "ready": true
+        }
+      ],
+      "tools": {
+        "docker": "29.3.1",
+        "kubectl": "{\n  \"clientVersion\": {\n    \"major\": \"1\",\n    \"minor\": \"34\",\n    \"gitVersion\": \"v1.34.1\",\n    \"gitCommit\": \"93248f9ae092f571eb870b7664c534bfc7d00f03\",\n    \"gitTreeState\": \"clean\",\n    \"buildDate\": \"2025-09-09T19:44:50Z\",\n    \"goVersion\": \"go1.24.6\",\n    \"compiler\": \"gc\",\n    \"platform\": \"darwin/arm64\"\n  },\n  \"kustomizeVersion\": \"v5.7.1\"\n}",
+        "helm": "v4.1.0+g4553a0a",
+        "task": "3.51.1",
+        "k6": "k6 v2.0.0 (commit/devel, go1.26.3, darwin/arm64)",
+        "node": "v22.16.0"
+      }
+    }
+  },
+  "services": {
+    "auth-service": {
+      "status": "bottleneck_reached",
+      "workload": "auth-intent-and-email-signin",
+      "dependencies": {
+        "postgresql": [
+          "auth-db"
+        ],
+        "kafka": false,
+        "redis": true,
+        "redisNamespaces": [
+          "dropmong-system"
+        ],
+        "workers": []
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/auth-service@sha256:156f33ad52e9947ad9c50384eb8e03e1978865c602821813d8ba1d7d89a13916",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/auth.yaml",
+          "values/services/dev/auth.yaml"
+        ],
+        "verified_at": "2026-07-25T12:27:26.139Z"
+      },
+      "restoration": {
+        "release": "auth-local-docker-desktop",
+        "namespace": "dropmong-auth",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/auth.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/dev/auth.yaml"
+          ],
+          "namespace": "dropmong-auth",
+          "release": "auth-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:38:15.291Z"
+      },
+      "ramp": {
+        "status": "bottleneck_reached",
+        "schedule": {
+          "startRps": 2,
+          "maxRps": 80,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 39,
+          "stages": [
+            {
+              "duration": "39s",
+              "target": 80
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "auth-servi-r1-ramp-01",
+        "windows": [
+          {
+            "index": 1,
+            "started_at": "2026-07-25T12:27:48.949Z",
+            "ended_at": "2026-07-25T12:27:58.949Z",
+            "target_rps_start": 2,
+            "target_rps_end": 22,
+            "target_rps": 12,
+            "actual_rps": 8.6,
+            "request_count": 86,
+            "error_rate": 0,
+            "check_pass_rate": 1,
+            "check_sample_count": 172,
+            "dropped_iterations": 0,
+            "p50_ms": 183.602292,
+            "p95_ms": 696.72242725,
+            "p99_ms": 917.0953947500002,
+            "latency_sample_count": 86,
+            "reference_window_index": null,
+            "reference_target_rps": null,
+            "reference_actual_rps": null,
+            "actual_rps_delta_from_reference": null,
+            "p95_ms_delta_from_reference": null,
+            "p99_ms_delta_from_reference": null,
+            "eligible": true,
+            "breached": false,
+            "reasons": [],
+            "apis": {
+              "POST /api/v1/auth/intents": {
+                "requests": 57,
+                "actual_rps": 5.7,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 27.034125,
+                "p95_ms": 447.8114389999999,
+                "p99_ms": 479.49235539999995,
+                "status": "observed"
+              },
+              "GET /api/v1/auth/methods": {
+                "requests": 1,
+                "actual_rps": 0.1,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 1.60125,
+                "p95_ms": 1.60125,
+                "p99_ms": 1.60125,
+                "status": "observed"
+              },
+              "POST /api/v1/auth/signins/email": {
+                "requests": 28,
+                "actual_rps": 2.8,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 244.7299165,
+                "p95_ms": 905.59626535,
+                "p99_ms": 934.52591725,
+                "status": "observed"
+              }
+            },
+            "status": "reference"
+          },
+          {
+            "index": 2,
+            "started_at": "2026-07-25T12:27:58.949Z",
+            "ended_at": "2026-07-25T12:28:08.949Z",
+            "target_rps_start": 22,
+            "target_rps_end": 42,
+            "target_rps": 32,
+            "actual_rps": 15.1,
+            "request_count": 151,
+            "error_rate": 0.026490066225165563,
+            "check_pass_rate": 0.9735099337748344,
+            "check_sample_count": 302,
+            "dropped_iterations": 19,
+            "p50_ms": 1900.812876,
+            "p95_ms": 3796.1435014999997,
+            "p99_ms": 3992.2708979999998,
+            "latency_sample_count": 151,
+            "reference_window_index": 1,
+            "reference_target_rps": 12,
+            "reference_actual_rps": 8.6,
+            "actual_rps_delta_from_reference": 6.5,
+            "p95_ms_delta_from_reference": 3099.42107425,
+            "p99_ms_delta_from_reference": 3075.1755032499996,
+            "eligible": true,
+            "breached": true,
+            "reasons": [
+              {
+                "code": "dropped_iterations_observed",
+                "observed": 19,
+                "limit": 0
+              },
+              {
+                "code": "http_error_observed",
+                "observed": 0.026490066225165563,
+                "limit": 0
+              },
+              {
+                "code": "check_failure_observed",
+                "observed": 0.9735099337748344,
+                "limit": 1
+              }
+            ],
+            "apis": {
+              "POST /api/v1/auth/intents": {
+                "requests": 111,
+                "actual_rps": 11.1,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 1617.62275,
+                "p95_ms": 3561.7022105,
+                "p99_ms": 3746.7182647,
+                "status": "observed"
+              },
+              "GET /api/v1/auth/methods": {
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": null,
+                "checks_rate": null,
+                "p50_ms": null,
+                "p95_ms": null,
+                "p99_ms": null,
+                "status": "unavailable"
+              },
+              "POST /api/v1/auth/signins/email": {
+                "requests": 40,
+                "actual_rps": 4,
+                "error_rate": 0.1,
+                "checks_rate": 0.9,
+                "p50_ms": 2361.214897,
+                "p95_ms": 3986.6561913,
+                "p99_ms": 4239.55772102,
+                "status": "observed"
+              }
+            },
+            "status": "degraded"
+          },
+          {
+            "index": 3,
+            "started_at": "2026-07-25T12:28:08.949Z",
+            "ended_at": "2026-07-25T12:28:18.949Z",
+            "target_rps_start": 42,
+            "target_rps_end": 62,
+            "target_rps": 52,
+            "actual_rps": 37.2,
+            "request_count": 372,
+            "error_rate": 0.543010752688172,
+            "check_pass_rate": 0.45698924731182794,
+            "check_sample_count": 744,
+            "dropped_iterations": 70,
+            "p50_ms": 1.036187,
+            "p95_ms": 7747.8772453,
+            "p99_ms": 8241.471103030002,
+            "latency_sample_count": 372,
+            "reference_window_index": 1,
+            "reference_target_rps": 12,
+            "reference_actual_rps": 8.6,
+            "actual_rps_delta_from_reference": 28.6,
+            "p95_ms_delta_from_reference": 7051.15481805,
+            "p99_ms_delta_from_reference": 7324.375708280002,
+            "eligible": true,
+            "breached": true,
+            "reasons": [
+              {
+                "code": "dropped_iterations_observed",
+                "observed": 70,
+                "limit": 0
+              },
+              {
+                "code": "http_error_observed",
+                "observed": 0.543010752688172,
+                "limit": 0
+              },
+              {
+                "code": "check_failure_observed",
+                "observed": 0.45698924731182794,
+                "limit": 1
+              }
+            ],
+            "apis": {
+              "POST /api/v1/auth/intents": {
+                "requests": 266,
+                "actual_rps": 26.6,
+                "error_rate": 0.5601503759398496,
+                "checks_rate": 0.4398496240601504,
+                "p50_ms": 0.6996454999999999,
+                "p95_ms": 7732.5654095,
+                "p99_ms": 8086.390387100001,
+                "status": "observed"
+              },
+              "GET /api/v1/auth/methods": {
+                "requests": 9,
+                "actual_rps": 0.9,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 43.110291,
+                "p95_ms": 7638.9741538,
+                "p99_ms": 7713.2635675599995,
+                "status": "observed"
+              },
+              "POST /api/v1/auth/signins/email": {
+                "requests": 97,
+                "actual_rps": 9.7,
+                "error_rate": 0.5463917525773195,
+                "checks_rate": 0.4536082474226804,
+                "p50_ms": 1.595125,
+                "p95_ms": 8153.1512376,
+                "p99_ms": 8395.44358172,
+                "status": "observed"
+              }
+            },
+            "status": "degraded"
+          }
+        ],
+        "last_healthy_rps": 12,
+        "first_degraded_rps": 32,
+        "reference": {
+          "last_healthy_window_index": 1,
+          "last_healthy_target_rps": 12,
+          "last_healthy_actual_rps": 8.6,
+          "peak_target_rps": 52,
+          "peak_actual_rps": 37.2
+        },
+        "degradation": {
+          "first": {
+            "window_index": 2,
+            "target_rps": 32,
+            "actual_rps": 15.1,
+            "reference_target_rps": 12,
+            "reference_actual_rps": 8.6
+          }
+        },
+        "terminated_at": "2026-07-25T12:28:19.814Z",
+        "stop_condition": {
+          "reason": "consecutive_reference_degradation_windows",
+          "required_windows": 2,
+          "first_window_index": 2,
+          "last_window_index": 3,
+          "first_degraded_rps": 32,
+          "detected_at": "2026-07-25T12:28:18.949Z",
+          "reasons": [
+            "dropped_iterations_observed",
+            "http_error_observed",
+            "check_failure_observed"
+          ]
+        },
+        "first_bottleneck_candidate": {
+          "candidate": "service-capacity-growth-stalled",
+          "evidence": [
+            {
+              "code": "dropped_iterations_observed",
+              "observed": 19,
+              "limit": 0
+            },
+            {
+              "code": "http_error_observed",
+              "observed": 0.026490066225165563,
+              "limit": 0
+            },
+            {
+              "code": "check_failure_observed",
+              "observed": 0.9735099337748344,
+              "limit": 1
+            }
+          ]
+        },
+        "k6_exit_code": 105,
+        "execution_reasons": [],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:27:48.949Z",
+            "finished_at": "2026-07-25T12:28:19Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "auth-service",
+          "namespace": "dropmong-auth",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982468.949,
+                      0.2220963715978426
+                    ],
+                    [
+                      1784982483.949,
+                      2.0098316228758932
+                    ],
+                    [
+                      1784982498.949,
+                      21.492144790794622
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982468.949,
+                      6.272633870442708
+                    ],
+                    [
+                      1784982483.949,
+                      5.482991536458333
+                    ],
+                    [
+                      1784982498.949,
+                      7.684326171875
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "unavailable",
+              "value": null,
+              "unit": "restarts",
+              "required": false,
+              "reason": "no samples in requested window",
+              "series": []
+            }
+          }
+        },
+        "traces": {
+          "POST /api/v1/auth/intents": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "GET /api/v1/auth/methods": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /api/v1/auth/signins/email": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "auth-servi-r1-ramp-01",
+          "service": "auth-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "auth-servi-r1-ramp-01",
+            "service": "auth-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "auth-intent-and-email-signin",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 80,
+            "actual_rps": 20.003555796928442,
+            "request_count": 626,
+            "successful_requests": 420,
+            "failed_requests": 206,
+            "success_rate": 0.670926517571885,
+            "error_rate": 0.329073482428115,
+            "check_pass_rate": 0.670926517571885,
+            "failed_checks": 412,
+            "dropped_iterations": 89,
+            "p50_ms": 599.070959,
+            "p95_ms": 7499.5402635,
+            "p99_ms": 8153.33429575,
+            "max_latency_ms": 8444.152463,
+            "thresholds_passed": true,
+            "endpoints": [
+              {
+                "endpoint": "auth.intent",
+                "route": "POST /api/v1/auth/intents",
+                "classification": "state_change",
+                "requests": 445,
+                "actual_rps": 14.219780079286194,
+                "error_rate": 0.3348314606741573,
+                "checks_rate": 0.6651685393258427,
+                "p50_ms": 465.903195,
+                "p95_ms": 7307.6226036,
+                "p99_ms": 8041.127947,
+                "max_latency_ms": 8202.432838,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "auth.methods",
+                "route": "GET /api/v1/auth/methods",
+                "classification": "read",
+                "requests": 10,
+                "actual_rps": 0.3195456197592403,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 23.3522285,
+                "p95_ms": 7627.366432899999,
+                "p99_ms": 7710.94202338,
+                "max_latency_ms": 7731.835921,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "auth.email-signin",
+                "route": "POST /api/v1/auth/signins/email",
+                "classification": "state_change",
+                "requests": 171,
+                "actual_rps": 5.464230097883009,
+                "error_rate": 0.3333333333333333,
+                "checks_rate": 0.6666666666666666,
+                "p50_ms": 1192.583737,
+                "p95_ms": 7673.247712,
+                "p99_ms": 8356.9016376,
+                "max_latency_ms": 8444.152463,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:27:48.949Z",
+              "finished_at": "2026-07-25T12:28:19Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "auth-service",
+            "namespace": "dropmong-auth",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982468.949,
+                        0.2220963715978426
+                      ],
+                      [
+                        1784982483.949,
+                        2.0098316228758932
+                      ],
+                      [
+                        1784982498.949,
+                        21.492144790794622
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982468.949,
+                        6.272633870442708
+                      ],
+                      [
+                        1784982483.949,
+                        5.482991536458333
+                      ],
+                      [
+                        1784982498.949,
+                        7.684326171875
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "unavailable",
+                "value": null,
+                "unit": "restarts",
+                "required": false,
+                "reason": "no samples in requested window",
+                "series": []
+              }
+            }
+          },
+          "traces": {
+            "POST /api/v1/auth/intents": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "GET /api/v1/auth/methods": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /api/v1/auth/signins/email": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": 12,
+            "first_degraded_rps": 32,
+            "window_count": 3
+          },
+          "decision": {
+            "passed": true,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": []
+          },
+          "started_at": "2026-07-25T12:27:48.949Z",
+          "finished_at": "2026-07-25T12:28:19.814Z",
+          "error": null,
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "auth.intent",
+                "method": "POST",
+                "route": "POST /api/v1/auth/intents",
+                "classification": "state_change",
+                "weight": 50,
+                "expectedStatuses": [
+                  201
+                ]
+              },
+              {
+                "name": "auth.methods",
+                "method": "GET",
+                "route": "GET /api/v1/auth/methods",
+                "classification": "read",
+                "weight": 20,
+                "expectedStatuses": [
+                  200
+                ]
+              },
+              {
+                "name": "auth.email-signin",
+                "method": "POST",
+                "route": "POST /api/v1/auth/signins/email",
+                "classification": "state_change",
+                "weight": 30,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "authUsers",
+                "addressAccess": "read"
+              }
+            ],
+            "ramp": {
+              "startRps": 2,
+              "maxRps": 80,
+              "durationSeconds": 39,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 2,
+                "maxRps": 80,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 39,
+                "stages": [
+                  {
+                    "duration": "39s",
+                    "target": 80
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "POST /api/v1/auth/intents": {
+          "endpoint": "auth.intent",
+          "classification": "state_change",
+          "requests": 445,
+          "actual_rps": 14.219780079286194,
+          "error_rate": 0.3348314606741573,
+          "checks_rate": 0.6651685393258427,
+          "p50_ms": 465.903195,
+          "p95_ms": 7307.6226036,
+          "p99_ms": 8041.127947,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "GET /api/v1/auth/methods": {
+          "endpoint": "auth.methods",
+          "classification": "read",
+          "requests": 10,
+          "actual_rps": 0.3195456197592403,
+          "error_rate": 0,
+          "checks_rate": 1,
+          "p50_ms": 23.3522285,
+          "p95_ms": 7627.366432899999,
+          "p99_ms": 7710.94202338,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /api/v1/auth/signins/email": {
+          "endpoint": "auth.email-signin",
+          "classification": "state_change",
+          "requests": 171,
+          "actual_rps": 5.464230097883009,
+          "error_rate": 0.3333333333333333,
+          "checks_rate": 0.6666666666666666,
+          "p50_ms": 1192.583737,
+          "p95_ms": 7673.247712,
+          "p99_ms": 8356.9016376,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:27:48.949Z",
+          "finished_at": "2026-07-25T12:28:19Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "auth-service",
+        "namespace": "dropmong-auth",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982468.949,
+                    0.2220963715978426
+                  ],
+                  [
+                    1784982483.949,
+                    2.0098316228758932
+                  ],
+                  [
+                    1784982498.949,
+                    21.492144790794622
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982468.949,
+                    6.272633870442708
+                  ],
+                  [
+                    1784982483.949,
+                    5.482991536458333
+                  ],
+                  [
+                    1784982498.949,
+                    7.684326171875
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "unavailable",
+            "value": null,
+            "unit": "restarts",
+            "required": false,
+            "reason": "no samples in requested window",
+            "series": []
+          }
+        }
+      },
+      "failure_categories": []
+    },
+    "user-service": {
+      "status": "failed",
+      "workload": "profile-read-and-update",
+      "dependencies": {
+        "postgresql": [
+          "user-db"
+        ],
+        "kafka": false,
+        "redis": false,
+        "workers": []
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/user-service@sha256:f52553b11047d7c91514ed2f6ee0dbb6d6fa34650631f0cc57426c872979bee2",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/user.yaml",
+          "values/services/dev/user.yaml"
+        ],
+        "verified_at": "2026-07-25T12:28:34.209Z"
+      },
+      "restoration": {
+        "release": "user-local-docker-desktop",
+        "namespace": "dropmong-user",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/user.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/dev/user.yaml"
+          ],
+          "namespace": "dropmong-user",
+          "release": "user-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:38:07.785Z"
+      },
+      "ramp": {
+        "status": "failed",
+        "schedule": {
+          "startRps": 5,
+          "maxRps": 100,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 47.5,
+          "stages": [
+            {
+              "duration": "47.5s",
+              "target": 100
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "user-servi-r1-ramp-01",
+        "windows": [],
+        "last_healthy_rps": null,
+        "first_degraded_rps": null,
+        "reference": {
+          "last_healthy_window_index": null,
+          "last_healthy_target_rps": null,
+          "last_healthy_actual_rps": null,
+          "peak_target_rps": null,
+          "peak_actual_rps": null
+        },
+        "degradation": {
+          "first": null
+        },
+        "terminated_at": "2026-07-25T12:29:47Z",
+        "stop_condition": null,
+        "first_bottleneck_candidate": {
+          "candidate": "not-observed",
+          "evidence": []
+        },
+        "k6_exit_code": 100,
+        "execution_reasons": [
+          {
+            "code": "k6_execution_exit",
+            "category": "execution",
+            "message": "k6 exited 100"
+          }
+        ],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:28:47Z",
+            "finished_at": "2026-07-25T12:29:47Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "user-service",
+          "namespace": "dropmong-user",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982527,
+                      0.09603791286776261
+                    ],
+                    [
+                      1784982542,
+                      0.08026008745100746
+                    ],
+                    [
+                      1784982557,
+                      0.07113931233717646
+                    ],
+                    [
+                      1784982572,
+                      0.0896362173757597
+                    ],
+                    [
+                      1784982587,
+                      0.0646236078539572
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982527,
+                      3.2745361328125
+                    ],
+                    [
+                      1784982542,
+                      3.365325927734375
+                    ],
+                    [
+                      1784982557,
+                      3.365325927734375
+                    ],
+                    [
+                      1784982572,
+                      3.3660888671875
+                    ],
+                    [
+                      1784982587,
+                      3.3660888671875
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982527,
+                      0
+                    ],
+                    [
+                      1784982542,
+                      0
+                    ],
+                    [
+                      1784982557,
+                      0
+                    ],
+                    [
+                      1784982572,
+                      0
+                    ],
+                    [
+                      1784982587,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /api/v1/users/me/profile": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "PATCH /api/v1/users/me/profile": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "user-servi-r1-ramp-01",
+          "service": "user-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "user-servi-r1-ramp-01",
+            "service": "user-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "profile-read-and-update",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 100,
+            "actual_rps": 0,
+            "request_count": 0,
+            "successful_requests": 0,
+            "failed_requests": 0,
+            "success_rate": 0,
+            "error_rate": 0,
+            "check_pass_rate": 0,
+            "failed_checks": 0,
+            "dropped_iterations": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_latency_ms": 0,
+            "thresholds_passed": false,
+            "endpoints": [
+              {
+                "endpoint": "user.profile-read",
+                "route": "GET /api/v1/users/me/profile",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "user.profile-update",
+                "route": "PATCH /api/v1/users/me/profile",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:28:47Z",
+              "finished_at": "2026-07-25T12:29:47Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "user-service",
+            "namespace": "dropmong-user",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982527,
+                        0.09603791286776261
+                      ],
+                      [
+                        1784982542,
+                        0.08026008745100746
+                      ],
+                      [
+                        1784982557,
+                        0.07113931233717646
+                      ],
+                      [
+                        1784982572,
+                        0.0896362173757597
+                      ],
+                      [
+                        1784982587,
+                        0.0646236078539572
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982527,
+                        3.2745361328125
+                      ],
+                      [
+                        1784982542,
+                        3.365325927734375
+                      ],
+                      [
+                        1784982557,
+                        3.365325927734375
+                      ],
+                      [
+                        1784982572,
+                        3.3660888671875
+                      ],
+                      [
+                        1784982587,
+                        3.3660888671875
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982527,
+                        0
+                      ],
+                      [
+                        1784982542,
+                        0
+                      ],
+                      [
+                        1784982557,
+                        0
+                      ],
+                      [
+                        1784982572,
+                        0
+                      ],
+                      [
+                        1784982587,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /api/v1/users/me/profile": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "PATCH /api/v1/users/me/profile": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": null,
+            "first_degraded_rps": null,
+            "window_count": 0
+          },
+          "decision": {
+            "passed": false,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": [
+              {
+                "code": "k6_execution_exit",
+                "category": "execution",
+                "message": "k6 exited 100"
+              }
+            ]
+          },
+          "started_at": "2026-07-25T12:28:47Z",
+          "finished_at": "2026-07-25T12:29:47Z",
+          "error": "k6 exited 100",
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "user.profile-read",
+                "method": "GET",
+                "route": "GET /api/v1/users/me/profile",
+                "classification": "read",
+                "weight": 75,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "profileRead",
+                "addressAccess": "read"
+              },
+              {
+                "name": "user.profile-update",
+                "method": "PATCH",
+                "route": "PATCH /api/v1/users/me/profile",
+                "classification": "state_change",
+                "weight": 25,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "profileWrite",
+                "addressAccess": "write"
+              }
+            ],
+            "ramp": {
+              "startRps": 5,
+              "maxRps": 100,
+              "durationSeconds": 47.5,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 5,
+                "maxRps": 100,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 47.5,
+                "stages": [
+                  {
+                    "duration": "47.5s",
+                    "target": 100
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /api/v1/users/me/profile": {
+          "endpoint": "user.profile-read",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "PATCH /api/v1/users/me/profile": {
+          "endpoint": "user.profile-update",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:28:47Z",
+          "finished_at": "2026-07-25T12:29:47Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "user-service",
+        "namespace": "dropmong-user",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982527,
+                    0.09603791286776261
+                  ],
+                  [
+                    1784982542,
+                    0.08026008745100746
+                  ],
+                  [
+                    1784982557,
+                    0.07113931233717646
+                  ],
+                  [
+                    1784982572,
+                    0.0896362173757597
+                  ],
+                  [
+                    1784982587,
+                    0.0646236078539572
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982527,
+                    3.2745361328125
+                  ],
+                  [
+                    1784982542,
+                    3.365325927734375
+                  ],
+                  [
+                    1784982557,
+                    3.365325927734375
+                  ],
+                  [
+                    1784982572,
+                    3.3660888671875
+                  ],
+                  [
+                    1784982587,
+                    3.3660888671875
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982527,
+                    0
+                  ],
+                  [
+                    1784982542,
+                    0
+                  ],
+                  [
+                    1784982557,
+                    0
+                  ],
+                  [
+                    1784982572,
+                    0
+                  ],
+                  [
+                    1784982587,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": [
+        "performance"
+      ]
+    },
+    "catalog-service": {
+      "status": "bottleneck_reached",
+      "workload": "drop-list-and-detail",
+      "dependencies": {
+        "postgresql": [
+          "catalog-db"
+        ],
+        "kafka": true,
+        "redis": false,
+        "workers": [
+          "inventory-consumer"
+        ],
+        "requireKafkaLag": false
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/catalog-service@sha256:0294aaa91d2cfcf68493e3c838212c865ded4b532890a51e84e53b7402f09a48",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/catalog.yaml"
+        ],
+        "verified_at": "2026-07-25T12:30:01.129Z"
+      },
+      "restoration": {
+        "release": "catalog-local-docker-desktop",
+        "namespace": "dropmong-catalog",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/catalog.yaml"
+          ],
+          "namespace": "dropmong-catalog",
+          "release": "catalog-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:38:07.274Z"
+      },
+      "ramp": {
+        "status": "bottleneck_reached",
+        "schedule": {
+          "startRps": 10,
+          "maxRps": 300,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 145,
+          "stages": [
+            {
+              "duration": "145s",
+              "target": 300
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "catalog-se-r1-ramp-01",
+        "windows": [
+          {
+            "index": 1,
+            "started_at": "2026-07-25T12:30:12.559Z",
+            "ended_at": "2026-07-25T12:30:22.559Z",
+            "target_rps_start": 10,
+            "target_rps_end": 30,
+            "target_rps": 20,
+            "actual_rps": 2.4,
+            "request_count": 24,
+            "error_rate": 0,
+            "check_pass_rate": 1,
+            "check_sample_count": 48,
+            "dropped_iterations": 0,
+            "p50_ms": 4808.55946,
+            "p95_ms": 8634.1375611,
+            "p99_ms": 8873.31577891,
+            "latency_sample_count": 24,
+            "reference_window_index": null,
+            "reference_target_rps": null,
+            "reference_actual_rps": null,
+            "actual_rps_delta_from_reference": null,
+            "p95_ms_delta_from_reference": null,
+            "p99_ms_delta_from_reference": null,
+            "eligible": false,
+            "breached": false,
+            "reasons": [],
+            "apis": {
+              "GET /drops": {
+                "requests": 13,
+                "actual_rps": 1.3,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 4978.573502,
+                "p95_ms": 8764.4347382,
+                "p99_ms": 8905.68581804,
+                "status": "observed"
+              },
+              "GET /drops/{dropId}": {
+                "requests": 11,
+                "actual_rps": 1.1,
+                "error_rate": 0,
+                "checks_rate": 1,
+                "p50_ms": 4479.281043,
+                "p95_ms": 8011.0375035,
+                "p99_ms": 8157.9551703,
+                "status": "observed"
+              }
+            },
+            "status": "insufficient_samples"
+          },
+          {
+            "index": 2,
+            "started_at": "2026-07-25T12:30:22.559Z",
+            "ended_at": "2026-07-25T12:30:32.559Z",
+            "target_rps_start": 30,
+            "target_rps_end": 50,
+            "target_rps": 40,
+            "actual_rps": 32.1,
+            "request_count": 321,
+            "error_rate": 0.9813084112149533,
+            "check_pass_rate": 0.018691588785046728,
+            "check_sample_count": 642,
+            "dropped_iterations": 0,
+            "p50_ms": 10000.493838,
+            "p95_ms": 10003.062949,
+            "p99_ms": 10034.9511908,
+            "latency_sample_count": 321,
+            "reference_window_index": null,
+            "reference_target_rps": null,
+            "reference_actual_rps": null,
+            "actual_rps_delta_from_reference": null,
+            "p95_ms_delta_from_reference": null,
+            "p99_ms_delta_from_reference": null,
+            "eligible": true,
+            "breached": false,
+            "reasons": [],
+            "apis": {
+              "GET /drops": {
+                "requests": 193,
+                "actual_rps": 19.3,
+                "error_rate": 0.9844559585492227,
+                "checks_rate": 0.015544041450777202,
+                "p50_ms": 10000.586796,
+                "p95_ms": 10004.3533966,
+                "p99_ms": 10034.96216264,
+                "status": "observed"
+              },
+              "GET /drops/{dropId}": {
+                "requests": 128,
+                "actual_rps": 12.8,
+                "error_rate": 0.9765625,
+                "checks_rate": 0.0234375,
+                "p50_ms": 10000.1814845,
+                "p95_ms": 10003.0022821,
+                "p99_ms": 10032.74777393,
+                "status": "observed"
+              }
+            },
+            "status": "reference"
+          },
+          {
+            "index": 3,
+            "started_at": "2026-07-25T12:30:32.559Z",
+            "ended_at": "2026-07-25T12:30:42.559Z",
+            "target_rps_start": 50,
+            "target_rps_end": 70,
+            "target_rps": 60,
+            "actual_rps": 89.3,
+            "request_count": 893,
+            "error_rate": 0.9966405375139977,
+            "check_pass_rate": 0.0033594624860022394,
+            "check_sample_count": 1786,
+            "dropped_iterations": 0,
+            "p50_ms": 0.596542,
+            "p95_ms": 10002.0536736,
+            "p99_ms": 10002.63807536,
+            "latency_sample_count": 893,
+            "reference_window_index": 2,
+            "reference_target_rps": 40,
+            "reference_actual_rps": 32.1,
+            "actual_rps_delta_from_reference": 57.199999999999996,
+            "p95_ms_delta_from_reference": -1.0092753999997512,
+            "p99_ms_delta_from_reference": -32.31311543999982,
+            "eligible": true,
+            "breached": true,
+            "reasons": [
+              {
+                "code": "http_error_observed",
+                "observed": 0.9966405375139977,
+                "limit": 0
+              },
+              {
+                "code": "check_failure_observed",
+                "observed": 0.0033594624860022394,
+                "limit": 1
+              }
+            ],
+            "apis": {
+              "GET /drops": {
+                "requests": 537,
+                "actual_rps": 53.7,
+                "error_rate": 0.9962756052141527,
+                "checks_rate": 0.0037243947858473,
+                "p50_ms": 0.599667,
+                "p95_ms": 10002.1578408,
+                "p99_ms": 10002.650617120002,
+                "status": "observed"
+              },
+              "GET /drops/{dropId}": {
+                "requests": 356,
+                "actual_rps": 35.6,
+                "error_rate": 0.9971910112359551,
+                "checks_rate": 0.0028089887640449437,
+                "p50_ms": 0.590562,
+                "p95_ms": 10001.73714025,
+                "p99_ms": 10002.478972249999,
+                "status": "observed"
+              }
+            },
+            "status": "degraded"
+          },
+          {
+            "index": 4,
+            "started_at": "2026-07-25T12:30:42.559Z",
+            "ended_at": "2026-07-25T12:30:52.559Z",
+            "target_rps_start": 70,
+            "target_rps_end": 90,
+            "target_rps": 80,
+            "actual_rps": 81.1,
+            "request_count": 811,
+            "error_rate": 1,
+            "check_pass_rate": 0,
+            "check_sample_count": 1622,
+            "dropped_iterations": 0,
+            "p50_ms": 0.556209,
+            "p95_ms": 0.8233125,
+            "p99_ms": 1.4099954999999973,
+            "latency_sample_count": 811,
+            "reference_window_index": 2,
+            "reference_target_rps": 40,
+            "reference_actual_rps": 32.1,
+            "actual_rps_delta_from_reference": 48.99999999999999,
+            "p95_ms_delta_from_reference": -10002.239636499999,
+            "p99_ms_delta_from_reference": -10033.5411953,
+            "eligible": true,
+            "breached": true,
+            "reasons": [
+              {
+                "code": "http_error_observed",
+                "observed": 1,
+                "limit": 0
+              },
+              {
+                "code": "check_failure_observed",
+                "observed": 0,
+                "limit": 1
+              }
+            ],
+            "apis": {
+              "GET /drops": {
+                "requests": 486,
+                "actual_rps": 48.6,
+                "error_rate": 1,
+                "checks_rate": 0,
+                "p50_ms": 0.551021,
+                "p95_ms": 0.7845840000000001,
+                "p99_ms": 1.6140750999999989,
+                "status": "observed"
+              },
+              "GET /drops/{dropId}": {
+                "requests": 325,
+                "actual_rps": 32.5,
+                "error_rate": 1,
+                "checks_rate": 0,
+                "p50_ms": 0.566666,
+                "p95_ms": 0.8642668,
+                "p99_ms": 1.1399712399999995,
+                "status": "observed"
+              }
+            },
+            "status": "degraded"
+          }
+        ],
+        "last_healthy_rps": 40,
+        "first_degraded_rps": 60,
+        "reference": {
+          "last_healthy_window_index": 2,
+          "last_healthy_target_rps": 40,
+          "last_healthy_actual_rps": 32.1,
+          "peak_target_rps": 80,
+          "peak_actual_rps": 89.3
+        },
+        "degradation": {
+          "first": {
+            "window_index": 3,
+            "target_rps": 60,
+            "actual_rps": 89.3,
+            "reference_target_rps": 40,
+            "reference_actual_rps": 32.1
+          }
+        },
+        "terminated_at": "2026-07-25T12:30:54.230Z",
+        "stop_condition": {
+          "reason": "consecutive_reference_degradation_windows",
+          "required_windows": 2,
+          "first_window_index": 3,
+          "last_window_index": 4,
+          "first_degraded_rps": 60,
+          "detected_at": "2026-07-25T12:30:52.559Z",
+          "reasons": [
+            "http_error_observed",
+            "check_failure_observed"
+          ]
+        },
+        "first_bottleneck_candidate": {
+          "candidate": "http-or-check-regression",
+          "evidence": [
+            {
+              "code": "http_error_observed",
+              "observed": 0.9966405375139977,
+              "limit": 0
+            },
+            {
+              "code": "check_failure_observed",
+              "observed": 0.0033594624860022394,
+              "limit": 1
+            }
+          ]
+        },
+        "k6_exit_code": 105,
+        "execution_reasons": [],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:30:12.559Z",
+            "finished_at": "2026-07-25T12:30:54Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "catalog-service",
+          "namespace": "dropmong-catalog",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982612.559,
+                      3.4915789435611826
+                    ],
+                    [
+                      1784982627.559,
+                      1.7683106865325489
+                    ],
+                    [
+                      1784982642.559,
+                      51.07104666188085
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982612.559,
+                      33.245849609375
+                    ],
+                    [
+                      1784982627.559,
+                      33.245849609375
+                    ],
+                    [
+                      1784982642.559,
+                      69.232177734375
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982612.559,
+                      0
+                    ],
+                    [
+                      1784982642.559,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /drops": {
+            "trace_status": "available",
+            "trace_samples": [
+              {
+                "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                "span_id": "9b7ed3fe135778cc",
+                "service": "catalog-service",
+                "route": "GET /drops",
+                "http_status_code": 200,
+                "duration_ms": 447.65,
+                "started_at": "2026-07-25T12:30:12.109Z",
+                "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+              },
+              {
+                "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                "span_id": "12ef1719a4fc5e8c",
+                "service": "catalog-service",
+                "route": "GET /drops",
+                "http_status_code": 200,
+                "duration_ms": 988.292,
+                "started_at": "2026-07-25T12:30:12.520Z",
+                "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+              }
+            ],
+            "reason": null
+          },
+          "GET /drops/{dropId}": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "no matching Tempo span with the injected traceparent was found in the run window"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "catalog-se-r1-ramp-01",
+          "service": "catalog-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "catalog-se-r1-ramp-01",
+            "service": "catalog-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "drop-list-and-detail",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 300,
+            "actual_rps": 52.19276264194658,
+            "request_count": 2204,
+            "successful_requests": 33,
+            "failed_requests": 2171,
+            "success_rate": 0.014972776769509982,
+            "error_rate": 0.98502722323049,
+            "check_pass_rate": 0.014972776769509982,
+            "failed_checks": 4342,
+            "dropped_iterations": 0,
+            "p50_ms": 0.584875,
+            "p95_ms": 10001.693631400001,
+            "p99_ms": 10002.79321749,
+            "max_latency_ms": 10051.353532,
+            "thresholds_passed": true,
+            "endpoints": [
+              {
+                "endpoint": "catalog.drop-list",
+                "route": "GET /drops",
+                "classification": "read",
+                "requests": 1322,
+                "actual_rps": 31.30618521445253,
+                "error_rate": 0.9863842662632375,
+                "checks_rate": 0.01361573373676248,
+                "p50_ms": 0.5778125000000001,
+                "p95_ms": 10001.75592125,
+                "p99_ms": 10002.78665139,
+                "max_latency_ms": 10036.869032,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "catalog.drop-detail",
+                "route": "GET /drops/{dropId}",
+                "classification": "read",
+                "requests": 882,
+                "actual_rps": 20.886577427494046,
+                "error_rate": 0.9829931972789115,
+                "checks_rate": 0.017006802721088437,
+                "p50_ms": 0.594187,
+                "p95_ms": 10001.58473025,
+                "p99_ms": 10002.78802723,
+                "max_latency_ms": 10051.353532,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:30:12.559Z",
+              "finished_at": "2026-07-25T12:30:54Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "catalog-service",
+            "namespace": "dropmong-catalog",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982612.559,
+                        3.4915789435611826
+                      ],
+                      [
+                        1784982627.559,
+                        1.7683106865325489
+                      ],
+                      [
+                        1784982642.559,
+                        51.07104666188085
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982612.559,
+                        33.245849609375
+                      ],
+                      [
+                        1784982627.559,
+                        33.245849609375
+                      ],
+                      [
+                        1784982642.559,
+                        69.232177734375
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982612.559,
+                        0
+                      ],
+                      [
+                        1784982642.559,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /drops": {
+              "trace_status": "available",
+              "trace_samples": [
+                {
+                  "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                  "span_id": "9b7ed3fe135778cc",
+                  "service": "catalog-service",
+                  "route": "GET /drops",
+                  "http_status_code": 200,
+                  "duration_ms": 447.65,
+                  "started_at": "2026-07-25T12:30:12.109Z",
+                  "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+                },
+                {
+                  "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                  "span_id": "12ef1719a4fc5e8c",
+                  "service": "catalog-service",
+                  "route": "GET /drops",
+                  "http_status_code": 200,
+                  "duration_ms": 988.292,
+                  "started_at": "2026-07-25T12:30:12.520Z",
+                  "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+                }
+              ],
+              "reason": null
+            },
+            "GET /drops/{dropId}": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "no matching Tempo span with the injected traceparent was found in the run window"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": 40,
+            "first_degraded_rps": 60,
+            "window_count": 4
+          },
+          "decision": {
+            "passed": true,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": []
+          },
+          "started_at": "2026-07-25T12:30:12.559Z",
+          "finished_at": "2026-07-25T12:30:54.230Z",
+          "error": null,
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "catalog.drop-list",
+                "method": "GET",
+                "route": "GET /drops",
+                "classification": "read",
+                "weight": 60,
+                "expectedStatuses": [
+                  200
+                ]
+              },
+              {
+                "name": "catalog.drop-detail",
+                "method": "GET",
+                "route": "GET /drops/{dropId}",
+                "classification": "read",
+                "weight": 40,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "drops",
+                "addressAccess": "read"
+              }
+            ],
+            "ramp": {
+              "startRps": 10,
+              "maxRps": 300,
+              "durationSeconds": 145,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 10,
+                "maxRps": 300,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 145,
+                "stages": [
+                  {
+                    "duration": "145s",
+                    "target": 300
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ],
+              "requireKafkaLag": false,
+              "requirePostgresqlPoolExhaustions": false
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /drops": {
+          "endpoint": "catalog.drop-list",
+          "classification": "read",
+          "requests": 1322,
+          "actual_rps": 31.30618521445253,
+          "error_rate": 0.9863842662632375,
+          "checks_rate": 0.01361573373676248,
+          "p50_ms": 0.5778125000000001,
+          "p95_ms": 10001.75592125,
+          "p99_ms": 10002.78665139,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "available",
+            "trace_samples": [
+              {
+                "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                "span_id": "9b7ed3fe135778cc",
+                "service": "catalog-service",
+                "route": "GET /drops",
+                "http_status_code": 200,
+                "duration_ms": 447.65,
+                "started_at": "2026-07-25T12:30:12.109Z",
+                "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+              },
+              {
+                "trace_id": "5cb0d14756395361bb2633545fbbb177",
+                "span_id": "12ef1719a4fc5e8c",
+                "service": "catalog-service",
+                "route": "GET /drops",
+                "http_status_code": 200,
+                "duration_ms": 988.292,
+                "started_at": "2026-07-25T12:30:12.520Z",
+                "tempo_reference": "/api/traces/5cb0d14756395361bb2633545fbbb177"
+              }
+            ],
+            "reason": null
+          }
+        },
+        "GET /drops/{dropId}": {
+          "endpoint": "catalog.drop-detail",
+          "classification": "read",
+          "requests": 882,
+          "actual_rps": 20.886577427494046,
+          "error_rate": 0.9829931972789115,
+          "checks_rate": 0.017006802721088437,
+          "p50_ms": 0.594187,
+          "p95_ms": 10001.58473025,
+          "p99_ms": 10002.78802723,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "no matching Tempo span with the injected traceparent was found in the run window"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:30:12.559Z",
+          "finished_at": "2026-07-25T12:30:54Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "catalog-service",
+        "namespace": "dropmong-catalog",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982612.559,
+                    3.4915789435611826
+                  ],
+                  [
+                    1784982627.559,
+                    1.7683106865325489
+                  ],
+                  [
+                    1784982642.559,
+                    51.07104666188085
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982612.559,
+                    33.245849609375
+                  ],
+                  [
+                    1784982627.559,
+                    33.245849609375
+                  ],
+                  [
+                    1784982642.559,
+                    69.232177734375
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982612.559,
+                    0
+                  ],
+                  [
+                    1784982642.559,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": []
+    },
+    "coupon-service": {
+      "status": "failed",
+      "workload": "coupon-wallet-and-issuance",
+      "dependencies": {
+        "postgresql": [
+          "coupon-db"
+        ],
+        "kafka": false,
+        "redis": true,
+        "redisNamespaces": [
+          "dropmong-system"
+        ],
+        "workers": [
+          "coupon-worker"
+        ]
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/coupon-service@sha256:e72d97129dbc60cd136c3dd4f65def574781301b2a98afe764ba8c5fef403ebe",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/coupon.yaml",
+          "values/services/dev/coupon.yaml"
+        ],
+        "verified_at": "2026-07-25T12:31:07.842Z"
+      },
+      "restoration": {
+        "release": "coupon-local-docker-desktop",
+        "namespace": "dropmong-coupon",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/coupon.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/dev/coupon.yaml"
+          ],
+          "namespace": "dropmong-coupon",
+          "release": "coupon-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:37:55.128Z"
+      },
+      "ramp": {
+        "status": "failed",
+        "schedule": {
+          "startRps": 3,
+          "maxRps": 60,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 28.5,
+          "stages": [
+            {
+              "duration": "28.5s",
+              "target": 60
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "coupon-ser-r1-ramp-01",
+        "windows": [],
+        "last_healthy_rps": null,
+        "first_degraded_rps": null,
+        "reference": {
+          "last_healthy_window_index": null,
+          "last_healthy_target_rps": null,
+          "last_healthy_actual_rps": null,
+          "peak_target_rps": null,
+          "peak_actual_rps": null
+        },
+        "degradation": {
+          "first": null
+        },
+        "terminated_at": "2026-07-25T12:32:37Z",
+        "stop_condition": null,
+        "first_bottleneck_candidate": {
+          "candidate": "not-observed",
+          "evidence": []
+        },
+        "k6_exit_code": 100,
+        "execution_reasons": [
+          {
+            "code": "k6_execution_exit",
+            "category": "execution",
+            "message": "k6 exited 100"
+          }
+        ],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:31:37Z",
+            "finished_at": "2026-07-25T12:32:37Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "coupon-service",
+          "namespace": "dropmong-coupon",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982697,
+                      0.20732878469615215
+                    ],
+                    [
+                      1784982712,
+                      0.21080398008111373
+                    ],
+                    [
+                      1784982727,
+                      0.22954214650531335
+                    ],
+                    [
+                      1784982742,
+                      0.2857529044678272
+                    ],
+                    [
+                      1784982757,
+                      0.2823756147197474
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982697,
+                      7.628885904947917
+                    ],
+                    [
+                      1784982712,
+                      7.62786865234375
+                    ],
+                    [
+                      1784982727,
+                      7.595316569010417
+                    ],
+                    [
+                      1784982742,
+                      7.598368326822917
+                    ],
+                    [
+                      1784982757,
+                      7.608540852864583
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982697,
+                      0
+                    ],
+                    [
+                      1784982712,
+                      0
+                    ],
+                    [
+                      1784982727,
+                      0
+                    ],
+                    [
+                      1784982742,
+                      0
+                    ],
+                    [
+                      1784982757,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /api/v1/users/me/coupons": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "GET /api/v1/users/me/coupons/{userCouponId}": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /api/v1/coupon-campaigns/{campaignId}/claims": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "coupon-ser-r1-ramp-01",
+          "service": "coupon-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "coupon-ser-r1-ramp-01",
+            "service": "coupon-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "coupon-wallet-and-issuance",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 60,
+            "actual_rps": 0,
+            "request_count": 0,
+            "successful_requests": 0,
+            "failed_requests": 0,
+            "success_rate": 0,
+            "error_rate": 0,
+            "check_pass_rate": 0,
+            "failed_checks": 0,
+            "dropped_iterations": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_latency_ms": 0,
+            "thresholds_passed": false,
+            "endpoints": [
+              {
+                "endpoint": "coupon.wallet-list",
+                "route": "GET /api/v1/users/me/coupons",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "coupon.wallet-detail",
+                "route": "GET /api/v1/users/me/coupons/{userCouponId}",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "coupon.claim",
+                "route": "POST /api/v1/coupon-campaigns/{campaignId}/claims",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:31:37Z",
+              "finished_at": "2026-07-25T12:32:37Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "coupon-service",
+            "namespace": "dropmong-coupon",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982697,
+                        0.20732878469615215
+                      ],
+                      [
+                        1784982712,
+                        0.21080398008111373
+                      ],
+                      [
+                        1784982727,
+                        0.22954214650531335
+                      ],
+                      [
+                        1784982742,
+                        0.2857529044678272
+                      ],
+                      [
+                        1784982757,
+                        0.2823756147197474
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982697,
+                        7.628885904947917
+                      ],
+                      [
+                        1784982712,
+                        7.62786865234375
+                      ],
+                      [
+                        1784982727,
+                        7.595316569010417
+                      ],
+                      [
+                        1784982742,
+                        7.598368326822917
+                      ],
+                      [
+                        1784982757,
+                        7.608540852864583
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982697,
+                        0
+                      ],
+                      [
+                        1784982712,
+                        0
+                      ],
+                      [
+                        1784982727,
+                        0
+                      ],
+                      [
+                        1784982742,
+                        0
+                      ],
+                      [
+                        1784982757,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /api/v1/users/me/coupons": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "GET /api/v1/users/me/coupons/{userCouponId}": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /api/v1/coupon-campaigns/{campaignId}/claims": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": null,
+            "first_degraded_rps": null,
+            "window_count": 0
+          },
+          "decision": {
+            "passed": false,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": [
+              {
+                "code": "k6_execution_exit",
+                "category": "execution",
+                "message": "k6 exited 100"
+              }
+            ]
+          },
+          "started_at": "2026-07-25T12:31:37Z",
+          "finished_at": "2026-07-25T12:32:37Z",
+          "error": "k6 exited 100",
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "coupon.wallet-list",
+                "method": "GET",
+                "route": "GET /api/v1/users/me/coupons",
+                "classification": "read",
+                "weight": 50,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "couponWallet",
+                "addressAccess": "read"
+              },
+              {
+                "name": "coupon.wallet-detail",
+                "method": "GET",
+                "route": "GET /api/v1/users/me/coupons/{userCouponId}",
+                "classification": "read",
+                "weight": 25,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "couponWallet",
+                "addressAccess": "read"
+              },
+              {
+                "name": "coupon.claim",
+                "method": "POST",
+                "route": "POST /api/v1/coupon-campaigns/{campaignId}/claims",
+                "classification": "state_change",
+                "weight": 25,
+                "expectedStatuses": [
+                  202
+                ],
+                "addressPool": "couponClaim",
+                "addressAccess": "write"
+              }
+            ],
+            "ramp": {
+              "startRps": 3,
+              "maxRps": 60,
+              "durationSeconds": 28.5,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 3,
+                "maxRps": 60,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 28.5,
+                "stages": [
+                  {
+                    "duration": "28.5s",
+                    "target": 60
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /api/v1/users/me/coupons": {
+          "endpoint": "coupon.wallet-list",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "GET /api/v1/users/me/coupons/{userCouponId}": {
+          "endpoint": "coupon.wallet-detail",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /api/v1/coupon-campaigns/{campaignId}/claims": {
+          "endpoint": "coupon.claim",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:31:37Z",
+          "finished_at": "2026-07-25T12:32:37Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "coupon-service",
+        "namespace": "dropmong-coupon",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982697,
+                    0.20732878469615215
+                  ],
+                  [
+                    1784982712,
+                    0.21080398008111373
+                  ],
+                  [
+                    1784982727,
+                    0.22954214650531335
+                  ],
+                  [
+                    1784982742,
+                    0.2857529044678272
+                  ],
+                  [
+                    1784982757,
+                    0.2823756147197474
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982697,
+                    7.628885904947917
+                  ],
+                  [
+                    1784982712,
+                    7.62786865234375
+                  ],
+                  [
+                    1784982727,
+                    7.595316569010417
+                  ],
+                  [
+                    1784982742,
+                    7.598368326822917
+                  ],
+                  [
+                    1784982757,
+                    7.608540852864583
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982697,
+                    0
+                  ],
+                  [
+                    1784982712,
+                    0
+                  ],
+                  [
+                    1784982727,
+                    0
+                  ],
+                  [
+                    1784982742,
+                    0
+                  ],
+                  [
+                    1784982757,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": [
+        "performance"
+      ]
+    },
+    "interest-service": {
+      "status": "failed",
+      "workload": "interest-and-ranking",
+      "dependencies": {
+        "postgresql": [
+          "interest-db"
+        ],
+        "kafka": true,
+        "redis": false,
+        "workers": [],
+        "requireKafkaLag": false
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/interest-service@sha256:65225318a2009462b7b98239da898c7ba86686305771438613651515d254df2c",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/interest.yaml"
+        ],
+        "verified_at": "2026-07-25T12:32:51.193Z"
+      },
+      "restoration": {
+        "release": "interest-local-docker-desktop",
+        "namespace": "dropmong-interest",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/interest.yaml"
+          ],
+          "namespace": "dropmong-interest",
+          "release": "interest-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:37:54.606Z"
+      },
+      "ramp": {
+        "trial_id": null,
+        "apis": {},
+        "observability": {
+          "status": "unavailable",
+          "reason": "observability snapshot is unavailable",
+          "window": {
+            "started_at": null,
+            "finished_at": null
+          },
+          "service": {
+            "cpu_utilization": null,
+            "memory_utilization": null,
+            "pod_restarts": null,
+            "metrics": {
+              "cpu_utilization": {
+                "metric_id": "cpu_utilization",
+                "value": null,
+                "status": "unavailable",
+                "reason": "metric cpu_utilization was not returned",
+                "unit": null
+              },
+              "memory_utilization": {
+                "metric_id": "memory_utilization",
+                "value": null,
+                "status": "unavailable",
+                "reason": "metric memory_utilization was not returned",
+                "unit": null
+              },
+              "pod_restarts": {
+                "metric_id": "pod_restarts",
+                "value": null,
+                "status": "unavailable",
+                "reason": "metric pod_restarts was not returned",
+                "unit": null
+              }
+            }
+          }
+        },
+        "k6_exit_code": null
+      },
+      "trials": [],
+      "apis": {},
+      "observability": {
+        "status": "unavailable",
+        "reason": "observability snapshot is unavailable",
+        "window": {
+          "started_at": null,
+          "finished_at": null
+        },
+        "service": {
+          "cpu_utilization": null,
+          "memory_utilization": null,
+          "pod_restarts": null,
+          "metrics": {
+            "cpu_utilization": {
+              "metric_id": "cpu_utilization",
+              "value": null,
+              "status": "unavailable",
+              "reason": "metric cpu_utilization was not returned",
+              "unit": null
+            },
+            "memory_utilization": {
+              "metric_id": "memory_utilization",
+              "value": null,
+              "status": "unavailable",
+              "reason": "metric memory_utilization was not returned",
+              "unit": null
+            },
+            "pod_restarts": {
+              "metric_id": "pod_restarts",
+              "value": null,
+              "status": "unavailable",
+              "reason": "metric pod_restarts was not returned",
+              "unit": null
+            }
+          }
+        }
+      },
+      "failure_categories": []
+    },
+    "order-service": {
+      "status": "failed",
+      "workload": "order-create-read-cancel",
+      "dependencies": {
+        "postgresql": [
+          "order-db"
+        ],
+        "kafka": true,
+        "redis": false,
+        "workers": [
+          "outbox-relay",
+          "payment-refund-consumer"
+        ],
+        "requireKafkaLag": true,
+        "kafkaLagQuery": "sum(kafka_consumergroup_lag{consumergroup=\"order-service-payment-events\"})",
+        "downstreamNamespaces": [
+          "dropmong-payment"
+        ]
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/order-service@sha256:698995d893c8c5b6cc7f983ef3eb2d4dccbd8443632208b234ce3622c0737687",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/order.yaml"
+        ],
+        "verified_at": "2026-07-25T12:33:09.805Z"
+      },
+      "restoration": {
+        "release": "order-local-docker-desktop",
+        "namespace": "dropmong-order",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/order.yaml"
+          ],
+          "namespace": "dropmong-order",
+          "release": "order-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:37:54.095Z"
+      },
+      "ramp": {
+        "status": "failed",
+        "schedule": {
+          "startRps": 3,
+          "maxRps": 70,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 33.5,
+          "stages": [
+            {
+              "duration": "33.5s",
+              "target": 70
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "order-serv-r1-ramp-01",
+        "windows": [],
+        "last_healthy_rps": null,
+        "first_degraded_rps": null,
+        "reference": {
+          "last_healthy_window_index": null,
+          "last_healthy_target_rps": null,
+          "last_healthy_actual_rps": null,
+          "peak_target_rps": null,
+          "peak_actual_rps": null
+        },
+        "degradation": {
+          "first": null
+        },
+        "terminated_at": "2026-07-25T12:34:30Z",
+        "stop_condition": null,
+        "first_bottleneck_candidate": {
+          "candidate": "not-observed",
+          "evidence": []
+        },
+        "k6_exit_code": 100,
+        "execution_reasons": [
+          {
+            "code": "k6_execution_exit",
+            "category": "execution",
+            "message": "k6 exited 100"
+          }
+        ],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:33:30Z",
+            "finished_at": "2026-07-25T12:34:30Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "order-service",
+          "namespace": "dropmong-order",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982810,
+                      3.340390116307563
+                    ],
+                    [
+                      1784982825,
+                      3.4989420554132233
+                    ],
+                    [
+                      1784982840,
+                      3.369998318455336
+                    ],
+                    [
+                      1784982855,
+                      3.6334931196489446
+                    ],
+                    [
+                      1784982870,
+                      3.42580348112253
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982810,
+                      22.368367513020832
+                    ],
+                    [
+                      1784982825,
+                      22.367350260416668
+                    ],
+                    [
+                      1784982840,
+                      22.368367513020832
+                    ],
+                    [
+                      1784982855,
+                      22.369384765625
+                    ],
+                    [
+                      1784982870,
+                      22.371419270833332
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982810,
+                      0
+                    ],
+                    [
+                      1784982825,
+                      0
+                    ],
+                    [
+                      1784982840,
+                      0
+                    ],
+                    [
+                      1784982855,
+                      0
+                    ],
+                    [
+                      1784982870,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /orders/{orderId}": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /orders": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /orders/{orderId}/cancellations": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "order-serv-r1-ramp-01",
+          "service": "order-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "order-serv-r1-ramp-01",
+            "service": "order-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "order-create-read-cancel",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 70,
+            "actual_rps": 0,
+            "request_count": 0,
+            "successful_requests": 0,
+            "failed_requests": 0,
+            "success_rate": 0,
+            "error_rate": 0,
+            "check_pass_rate": 0,
+            "failed_checks": 0,
+            "dropped_iterations": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_latency_ms": 0,
+            "thresholds_passed": false,
+            "endpoints": [
+              {
+                "endpoint": "order.read",
+                "route": "GET /orders/{orderId}",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "order.create",
+                "route": "POST /orders",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "order.cancel",
+                "route": "POST /orders/{orderId}/cancellations",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:33:30Z",
+              "finished_at": "2026-07-25T12:34:30Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "order-service",
+            "namespace": "dropmong-order",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982810,
+                        3.340390116307563
+                      ],
+                      [
+                        1784982825,
+                        3.4989420554132233
+                      ],
+                      [
+                        1784982840,
+                        3.369998318455336
+                      ],
+                      [
+                        1784982855,
+                        3.6334931196489446
+                      ],
+                      [
+                        1784982870,
+                        3.42580348112253
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982810,
+                        22.368367513020832
+                      ],
+                      [
+                        1784982825,
+                        22.367350260416668
+                      ],
+                      [
+                        1784982840,
+                        22.368367513020832
+                      ],
+                      [
+                        1784982855,
+                        22.369384765625
+                      ],
+                      [
+                        1784982870,
+                        22.371419270833332
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982810,
+                        0
+                      ],
+                      [
+                        1784982825,
+                        0
+                      ],
+                      [
+                        1784982840,
+                        0
+                      ],
+                      [
+                        1784982855,
+                        0
+                      ],
+                      [
+                        1784982870,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /orders/{orderId}": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /orders": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /orders/{orderId}/cancellations": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": null,
+            "first_degraded_rps": null,
+            "window_count": 0
+          },
+          "decision": {
+            "passed": false,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": [
+              {
+                "code": "k6_execution_exit",
+                "category": "execution",
+                "message": "k6 exited 100"
+              }
+            ]
+          },
+          "started_at": "2026-07-25T12:33:30Z",
+          "finished_at": "2026-07-25T12:34:30Z",
+          "error": "k6 exited 100",
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "order.read",
+                "method": "GET",
+                "route": "GET /orders/{orderId}",
+                "classification": "read",
+                "weight": 60,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "orderRead",
+                "addressAccess": "read"
+              },
+              {
+                "name": "order.create",
+                "method": "POST",
+                "route": "POST /orders",
+                "classification": "state_change",
+                "weight": 25,
+                "expectedStatuses": [
+                  201
+                ],
+                "addressPool": "orderCreate",
+                "addressAccess": "write"
+              },
+              {
+                "name": "order.cancel",
+                "method": "POST",
+                "route": "POST /orders/{orderId}/cancellations",
+                "classification": "state_change",
+                "weight": 15,
+                "expectedStatuses": [
+                  202
+                ],
+                "addressPool": "orderCancel",
+                "addressAccess": "write"
+              }
+            ],
+            "ramp": {
+              "startRps": 3,
+              "maxRps": 70,
+              "durationSeconds": 33.5,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 3,
+                "maxRps": 70,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 33.5,
+                "stages": [
+                  {
+                    "duration": "33.5s",
+                    "target": 70
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /orders/{orderId}": {
+          "endpoint": "order.read",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /orders": {
+          "endpoint": "order.create",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /orders/{orderId}/cancellations": {
+          "endpoint": "order.cancel",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:33:30Z",
+          "finished_at": "2026-07-25T12:34:30Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "order-service",
+        "namespace": "dropmong-order",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982810,
+                    3.340390116307563
+                  ],
+                  [
+                    1784982825,
+                    3.4989420554132233
+                  ],
+                  [
+                    1784982840,
+                    3.369998318455336
+                  ],
+                  [
+                    1784982855,
+                    3.6334931196489446
+                  ],
+                  [
+                    1784982870,
+                    3.42580348112253
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982810,
+                    22.368367513020832
+                  ],
+                  [
+                    1784982825,
+                    22.367350260416668
+                  ],
+                  [
+                    1784982840,
+                    22.368367513020832
+                  ],
+                  [
+                    1784982855,
+                    22.369384765625
+                  ],
+                  [
+                    1784982870,
+                    22.371419270833332
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982810,
+                    0
+                  ],
+                  [
+                    1784982825,
+                    0
+                  ],
+                  [
+                    1784982840,
+                    0
+                  ],
+                  [
+                    1784982855,
+                    0
+                  ],
+                  [
+                    1784982870,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": [
+        "performance"
+      ]
+    },
+    "payment-service": {
+      "status": "failed",
+      "workload": "payment-read-approve-fail",
+      "dependencies": {
+        "postgresql": [
+          "payment-db"
+        ],
+        "kafka": true,
+        "redis": false,
+        "workers": [
+          "outbox-relay",
+          "refund-consumer"
+        ],
+        "requireKafkaLag": true,
+        "kafkaLagQuery": "sum(kafka_consumergroup_lag{consumergroup=~\"payment-service-.*\"})"
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/payment-service@sha256:18233f421dbac9db6e344789815378bdf0ed3dfc6e50955127df61f10963f20d",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/payment.yaml",
+          "values/services/dev/payment.yaml"
+        ],
+        "verified_at": "2026-07-25T12:34:42.742Z"
+      },
+      "restoration": {
+        "release": "payment-local-docker-desktop",
+        "namespace": "dropmong-payment",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/payment.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/dev/payment.yaml"
+          ],
+          "namespace": "dropmong-payment",
+          "release": "payment-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:37:53.595Z"
+      },
+      "ramp": {
+        "status": "failed",
+        "schedule": {
+          "startRps": 2,
+          "maxRps": 50,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 24,
+          "stages": [
+            {
+              "duration": "24s",
+              "target": 50
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "payment-se-r1-ramp-01",
+        "windows": [],
+        "last_healthy_rps": null,
+        "first_degraded_rps": null,
+        "reference": {
+          "last_healthy_window_index": null,
+          "last_healthy_target_rps": null,
+          "last_healthy_actual_rps": null,
+          "peak_target_rps": null,
+          "peak_actual_rps": null
+        },
+        "degradation": {
+          "first": null
+        },
+        "terminated_at": "2026-07-25T12:36:00Z",
+        "stop_condition": null,
+        "first_bottleneck_candidate": {
+          "candidate": "not-observed",
+          "evidence": []
+        },
+        "k6_exit_code": 100,
+        "execution_reasons": [
+          {
+            "code": "k6_execution_exit",
+            "category": "execution",
+            "message": "k6 exited 100"
+          }
+        ],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:35:00Z",
+            "finished_at": "2026-07-25T12:36:00Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "payment-service",
+          "namespace": "dropmong-payment",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982900,
+                      10.541845872331567
+                    ],
+                    [
+                      1784982915,
+                      11.626020987196645
+                    ],
+                    [
+                      1784982930,
+                      10.663649769025572
+                    ],
+                    [
+                      1784982945,
+                      10.602992069489988
+                    ],
+                    [
+                      1784982960,
+                      9.886238098427425
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982900,
+                      45.414225260416664
+                    ],
+                    [
+                      1784982915,
+                      45.4315185546875
+                    ],
+                    [
+                      1784982930,
+                      45.398966471354164
+                    ],
+                    [
+                      1784982945,
+                      45.414225260416664
+                    ],
+                    [
+                      1784982960,
+                      45.414225260416664
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982900,
+                      0
+                    ],
+                    [
+                      1784982915,
+                      0
+                    ],
+                    [
+                      1784982930,
+                      0
+                    ],
+                    [
+                      1784982945,
+                      0
+                    ],
+                    [
+                      1784982960,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /payments/{paymentId}": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /payments/mock-approvals": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          },
+          "POST /payments/mock-failures": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "payment-se-r1-ramp-01",
+          "service": "payment-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "payment-se-r1-ramp-01",
+            "service": "payment-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "payment-read-approve-fail",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 50,
+            "actual_rps": 0,
+            "request_count": 0,
+            "successful_requests": 0,
+            "failed_requests": 0,
+            "success_rate": 0,
+            "error_rate": 0,
+            "check_pass_rate": 0,
+            "failed_checks": 0,
+            "dropped_iterations": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_latency_ms": 0,
+            "thresholds_passed": false,
+            "endpoints": [
+              {
+                "endpoint": "payment.read",
+                "route": "GET /payments/{paymentId}",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "payment.approve",
+                "route": "POST /payments/mock-approvals",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              },
+              {
+                "endpoint": "payment.fail",
+                "route": "POST /payments/mock-failures",
+                "classification": "state_change",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:35:00Z",
+              "finished_at": "2026-07-25T12:36:00Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "payment-service",
+            "namespace": "dropmong-payment",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982900,
+                        10.541845872331567
+                      ],
+                      [
+                        1784982915,
+                        11.626020987196645
+                      ],
+                      [
+                        1784982930,
+                        10.663649769025572
+                      ],
+                      [
+                        1784982945,
+                        10.602992069489988
+                      ],
+                      [
+                        1784982960,
+                        9.886238098427425
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982900,
+                        45.414225260416664
+                      ],
+                      [
+                        1784982915,
+                        45.4315185546875
+                      ],
+                      [
+                        1784982930,
+                        45.398966471354164
+                      ],
+                      [
+                        1784982945,
+                        45.414225260416664
+                      ],
+                      [
+                        1784982960,
+                        45.414225260416664
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982900,
+                        0
+                      ],
+                      [
+                        1784982915,
+                        0
+                      ],
+                      [
+                        1784982930,
+                        0
+                      ],
+                      [
+                        1784982945,
+                        0
+                      ],
+                      [
+                        1784982960,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /payments/{paymentId}": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /payments/mock-approvals": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            },
+            "POST /payments/mock-failures": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": null,
+            "first_degraded_rps": null,
+            "window_count": 0
+          },
+          "decision": {
+            "passed": false,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": [
+              {
+                "code": "k6_execution_exit",
+                "category": "execution",
+                "message": "k6 exited 100"
+              }
+            ]
+          },
+          "started_at": "2026-07-25T12:35:00Z",
+          "finished_at": "2026-07-25T12:36:00Z",
+          "error": "k6 exited 100",
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "payment.read",
+                "method": "GET",
+                "route": "GET /payments/{paymentId}",
+                "classification": "read",
+                "weight": 60,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "paymentRead",
+                "addressAccess": "read"
+              },
+              {
+                "name": "payment.approve",
+                "method": "POST",
+                "route": "POST /payments/mock-approvals",
+                "classification": "state_change",
+                "weight": 25,
+                "expectedStatuses": [
+                  201
+                ],
+                "addressPool": "paymentReadyApprove",
+                "addressAccess": "write"
+              },
+              {
+                "name": "payment.fail",
+                "method": "POST",
+                "route": "POST /payments/mock-failures",
+                "classification": "state_change",
+                "weight": 15,
+                "expectedStatuses": [
+                  201
+                ],
+                "addressPool": "paymentReadyFail",
+                "addressAccess": "write"
+              }
+            ],
+            "ramp": {
+              "startRps": 2,
+              "maxRps": 50,
+              "durationSeconds": 24,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 2,
+                "maxRps": 50,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 24,
+                "stages": [
+                  {
+                    "duration": "24s",
+                    "target": 50
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /payments/{paymentId}": {
+          "endpoint": "payment.read",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /payments/mock-approvals": {
+          "endpoint": "payment.approve",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        },
+        "POST /payments/mock-failures": {
+          "endpoint": "payment.fail",
+          "classification": "state_change",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:35:00Z",
+          "finished_at": "2026-07-25T12:36:00Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "payment-service",
+        "namespace": "dropmong-payment",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982900,
+                    10.541845872331567
+                  ],
+                  [
+                    1784982915,
+                    11.626020987196645
+                  ],
+                  [
+                    1784982930,
+                    10.663649769025572
+                  ],
+                  [
+                    1784982945,
+                    10.602992069489988
+                  ],
+                  [
+                    1784982960,
+                    9.886238098427425
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982900,
+                    45.414225260416664
+                  ],
+                  [
+                    1784982915,
+                    45.4315185546875
+                  ],
+                  [
+                    1784982930,
+                    45.398966471354164
+                  ],
+                  [
+                    1784982945,
+                    45.414225260416664
+                  ],
+                  [
+                    1784982960,
+                    45.414225260416664
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982900,
+                    0
+                  ],
+                  [
+                    1784982915,
+                    0
+                  ],
+                  [
+                    1784982930,
+                    0
+                  ],
+                  [
+                    1784982945,
+                    0
+                  ],
+                  [
+                    1784982960,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": [
+        "performance"
+      ]
+    },
+    "notification-service": {
+      "status": "failed",
+      "workload": "notification-read-with-kafka-ingress",
+      "dependencies": {
+        "postgresql": [
+          "notification-db"
+        ],
+        "kafka": true,
+        "redis": false,
+        "workers": [
+          "notification-consumer"
+        ],
+        "requireKafkaLag": true,
+        "kafkaLagQuery": "sum(kafka_consumergroup_lag{consumergroup=\"notification-service-notification-requested\"})"
+      },
+      "profile": null,
+      "replicas": 1,
+      "conditions": {
+        "replicas": 1,
+        "hpa_enabled": false,
+        "keda_enabled": false,
+        "service_image_id": "localhost:5001/notification-service@sha256:04ee6731bfb53af87479278d6f4a0211bccb3c40c494853d042c1ec67c0791bf",
+        "layered_values": [
+          "values/base.yaml",
+          "values/env/dev.yaml",
+          "values/services/notification.yaml",
+          "values/services/dev/notification.yaml"
+        ],
+        "verified_at": "2026-07-25T12:36:14.781Z"
+      },
+      "restoration": {
+        "release": "notification-local-docker-desktop",
+        "namespace": "dropmong-notification",
+        "contract": {
+          "chart": "/Users/danghamo/Documents/gituhb/tempkong/gitops/charts/medikong-service",
+          "files": [
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/base.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/env/dev.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/notification.yaml",
+            "/Users/danghamo/Documents/gituhb/tempkong/gitops/values/services/dev/notification.yaml"
+          ],
+          "namespace": "dropmong-notification",
+          "release": "notification-local-docker-desktop",
+          "autoscaler": {},
+          "baseHelmSet": {
+            "nodeSelector": {},
+            "image.registry": "localhost:5001",
+            "image.tag": "dev",
+            "image.digest": "",
+            "image.pullPolicy": "Always"
+          }
+        },
+        "restoration_method": "reapply-layered-dev-values",
+        "status": "restored",
+        "restored_at": "2026-07-25T12:37:53.065Z"
+      },
+      "ramp": {
+        "status": "failed",
+        "schedule": {
+          "startRps": 8,
+          "maxRps": 150,
+          "increaseRpsPerSecond": 2,
+          "durationSeconds": 71,
+          "stages": [
+            {
+              "duration": "71s",
+              "target": 150
+            }
+          ]
+        },
+        "evaluation_window_seconds": 10,
+        "minimum_samples_per_window": 50,
+        "consecutive_breach_windows": 2,
+        "dataset_preparations": 1,
+        "dataset_profile": "baseline-90days",
+        "replicas": 1,
+        "trial_id": "notificati-r1-ramp-01",
+        "windows": [],
+        "last_healthy_rps": null,
+        "first_degraded_rps": null,
+        "reference": {
+          "last_healthy_window_index": null,
+          "last_healthy_target_rps": null,
+          "last_healthy_actual_rps": null,
+          "peak_target_rps": null,
+          "peak_actual_rps": null
+        },
+        "degradation": {
+          "first": null
+        },
+        "terminated_at": "2026-07-25T12:37:39Z",
+        "stop_condition": null,
+        "first_bottleneck_candidate": {
+          "candidate": "not-observed",
+          "evidence": []
+        },
+        "k6_exit_code": 100,
+        "execution_reasons": [
+          {
+            "code": "k6_execution_exit",
+            "category": "execution",
+            "message": "k6 exited 100"
+          }
+        ],
+        "observability": {
+          "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+          "status": "available",
+          "window": {
+            "started_at": "2026-07-25T12:36:39Z",
+            "finished_at": "2026-07-25T12:37:39Z"
+          },
+          "run_id": "baseline90d-ramp-20260725t122500z",
+          "service": "notification-service",
+          "namespace": "dropmong-notification",
+          "replicas": 1,
+          "metrics": {
+            "cpu_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982999,
+                      4.248492979465445
+                    ],
+                    [
+                      1784983014,
+                      11.40392731838605
+                    ],
+                    [
+                      1784983029,
+                      20.30317224810467
+                    ],
+                    [
+                      1784983044,
+                      31.00262852295339
+                    ],
+                    [
+                      1784983059,
+                      34.50084441083412
+                    ]
+                  ]
+                }
+              ]
+            },
+            "memory_utilization": {
+              "status": "available",
+              "unit": "percent",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982999,
+                      41.748046875
+                    ],
+                    [
+                      1784983014,
+                      43.201700846354164
+                    ],
+                    [
+                      1784983029,
+                      43.748982747395836
+                    ],
+                    [
+                      1784983044,
+                      43.863932291666664
+                    ],
+                    [
+                      1784983059,
+                      44.9737548828125
+                    ]
+                  ]
+                }
+              ]
+            },
+            "pod_restarts": {
+              "status": "available",
+              "unit": "restarts",
+              "required": false,
+              "reason": null,
+              "series": [
+                {
+                  "labels": {},
+                  "values": [
+                    [
+                      1784982999,
+                      0
+                    ],
+                    [
+                      1784983014,
+                      0
+                    ],
+                    [
+                      1784983029,
+                      0
+                    ],
+                    [
+                      1784983044,
+                      0
+                    ],
+                    [
+                      1784983059,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "traces": {
+          "GET /notifications": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "trials": [
+        {
+          "trial_id": "notificati-r1-ramp-01",
+          "service": "notification-service",
+          "replicas": 1,
+          "phase": "ramp",
+          "raw_k6_summary": {
+            "schema_version": 1,
+            "event": "loadtest_run_report",
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "trial_id": "notificati-r1-ramp-01",
+            "service": "notification-service",
+            "scenario": "service-bottleneck-ramp-load-test",
+            "replicas": 1,
+            "workload": "notification-read-with-kafka-ingress",
+            "phase": "ramp",
+            "dataset_profile": "baseline-90days",
+            "dataset_seed": "20260723",
+            "target_rps": 150,
+            "actual_rps": 0,
+            "request_count": 0,
+            "successful_requests": 0,
+            "failed_requests": 0,
+            "success_rate": 0,
+            "error_rate": 0,
+            "check_pass_rate": 0,
+            "failed_checks": 0,
+            "dropped_iterations": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_latency_ms": 0,
+            "thresholds_passed": false,
+            "endpoints": [
+              {
+                "endpoint": "notification.list",
+                "route": "GET /notifications",
+                "classification": "read",
+                "requests": 0,
+                "actual_rps": 0,
+                "error_rate": 0,
+                "checks_rate": 0,
+                "p50_ms": 0,
+                "p95_ms": 0,
+                "p99_ms": 0,
+                "max_latency_ms": 0,
+                "failed_requests": null,
+                "source": "k6-summary"
+              }
+            ],
+            "metadata": {
+              "gitops_git_sha": "a6fd7f4fd3fa14ad9cae526705f71adab55cc62e",
+              "service_git_sha": "fc7d37d5e2bac5e5e4445f7ac4e348d979638f00",
+              "gitops_dirty": "true",
+              "service_dirty": "true",
+              "k6_image": "configured-not-inspected",
+              "seeder_image": "configured-not-inspected",
+              "service_image": "unknown",
+              "kubernetes_context": "docker-desktop",
+              "namespace": "dropmong-loadtest-local",
+              "runtime_addressing_strategy": "deterministic-seed-addressing"
+            }
+          },
+          "observability": {
+            "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+            "status": "available",
+            "window": {
+              "started_at": "2026-07-25T12:36:39Z",
+              "finished_at": "2026-07-25T12:37:39Z"
+            },
+            "run_id": "baseline90d-ramp-20260725t122500z",
+            "service": "notification-service",
+            "namespace": "dropmong-notification",
+            "replicas": 1,
+            "metrics": {
+              "cpu_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982999,
+                        4.248492979465445
+                      ],
+                      [
+                        1784983014,
+                        11.40392731838605
+                      ],
+                      [
+                        1784983029,
+                        20.30317224810467
+                      ],
+                      [
+                        1784983044,
+                        31.00262852295339
+                      ],
+                      [
+                        1784983059,
+                        34.50084441083412
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "memory_utilization": {
+                "status": "available",
+                "unit": "percent",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982999,
+                        41.748046875
+                      ],
+                      [
+                        1784983014,
+                        43.201700846354164
+                      ],
+                      [
+                        1784983029,
+                        43.748982747395836
+                      ],
+                      [
+                        1784983044,
+                        43.863932291666664
+                      ],
+                      [
+                        1784983059,
+                        44.9737548828125
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "pod_restarts": {
+                "status": "available",
+                "unit": "restarts",
+                "required": false,
+                "reason": null,
+                "series": [
+                  {
+                    "labels": {},
+                    "values": [
+                      [
+                        1784982999,
+                        0
+                      ],
+                      [
+                        1784983014,
+                        0
+                      ],
+                      [
+                        1784983029,
+                        0
+                      ],
+                      [
+                        1784983044,
+                        0
+                      ],
+                      [
+                        1784983059,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "traces": {
+            "GET /notifications": {
+              "trace_status": "unavailable",
+              "trace_samples": [],
+              "reason": "Tempo trace query failed"
+            }
+          },
+          "metrics": {
+            "last_healthy_rps": null,
+            "first_degraded_rps": null,
+            "window_count": 0
+          },
+          "decision": {
+            "passed": false,
+            "conclusive": true,
+            "criteria": "execution_success",
+            "reasons": [
+              {
+                "code": "k6_execution_exit",
+                "category": "execution",
+                "message": "k6 exited 100"
+              }
+            ]
+          },
+          "started_at": "2026-07-25T12:36:39Z",
+          "finished_at": "2026-07-25T12:37:39Z",
+          "error": "k6 exited 100",
+          "profile": {
+            "endpointMix": [
+              {
+                "name": "notification.list",
+                "method": "GET",
+                "route": "GET /notifications",
+                "classification": "read",
+                "weight": 100,
+                "expectedStatuses": [
+                  200
+                ],
+                "addressPool": "notificationRead",
+                "addressAccess": "read"
+              }
+            ],
+            "ramp": {
+              "startRps": 8,
+              "maxRps": 150,
+              "durationSeconds": 71,
+              "warmupSeconds": 0,
+              "increaseRpsPerSecond": 2,
+              "evaluationWindowSeconds": 10,
+              "minimumSamplesPerWindow": 50,
+              "consecutiveBreachWindows": 2,
+              "workerLatencyHintMs": 1000,
+              "schedule": {
+                "startRps": 8,
+                "maxRps": 150,
+                "increaseRpsPerSecond": 2,
+                "durationSeconds": 71,
+                "stages": [
+                  {
+                    "duration": "71s",
+                    "target": 150
+                  }
+                ]
+              }
+            },
+            "observability": {
+              "snapshot": {
+                "timing": "once-after-k6",
+                "source": "gitops-prometheus-read-only",
+                "unavailableValue": "null-with-unavailable-status"
+              },
+              "metricSpecs": [
+                {
+                  "id": "cpu_utilization",
+                  "query": "100 * sum(rate(container_cpu_usage_seconds_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}[1m])) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"cpu\",unit=\"core\",container!=\"\",container!=\"POD\"}), 0.001)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "memory_utilization",
+                  "query": "100 * sum(container_memory_working_set_bytes{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\",image!=\"\"}) / clamp_min(sum(kube_pod_container_resource_limits{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",resource=\"memory\",unit=\"byte\",container!=\"\",container!=\"POD\"}), 1)",
+                  "unit": "percent",
+                  "required": false
+                },
+                {
+                  "id": "pod_restarts",
+                  "query": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{namespace}}\",pod=~\"{{service}}-.*\",container!=\"\",container!=\"POD\"}[{{window}}]))",
+                  "unit": "restarts",
+                  "required": false
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "apis": {
+        "GET /notifications": {
+          "endpoint": "notification.list",
+          "classification": "read",
+          "requests": 0,
+          "actual_rps": 0,
+          "error_rate": 0,
+          "checks_rate": 0,
+          "p50_ms": 0,
+          "p95_ms": 0,
+          "p99_ms": 0,
+          "decision": {
+            "applied": false,
+            "passed": null,
+            "conclusive": null,
+            "reason": "reference_ramp_has_no_fixed_slo"
+          },
+          "traces": {
+            "trace_status": "unavailable",
+            "trace_samples": [],
+            "reason": "Tempo trace query failed"
+          }
+        }
+      },
+      "observability": {
+        "schema_version": "dropmong.loadtest.observability-snapshot/v1",
+        "status": "available",
+        "window": {
+          "started_at": "2026-07-25T12:36:39Z",
+          "finished_at": "2026-07-25T12:37:39Z"
+        },
+        "run_id": "baseline90d-ramp-20260725t122500z",
+        "service": "notification-service",
+        "namespace": "dropmong-notification",
+        "replicas": 1,
+        "metrics": {
+          "cpu_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982999,
+                    4.248492979465445
+                  ],
+                  [
+                    1784983014,
+                    11.40392731838605
+                  ],
+                  [
+                    1784983029,
+                    20.30317224810467
+                  ],
+                  [
+                    1784983044,
+                    31.00262852295339
+                  ],
+                  [
+                    1784983059,
+                    34.50084441083412
+                  ]
+                ]
+              }
+            ]
+          },
+          "memory_utilization": {
+            "status": "available",
+            "unit": "percent",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982999,
+                    41.748046875
+                  ],
+                  [
+                    1784983014,
+                    43.201700846354164
+                  ],
+                  [
+                    1784983029,
+                    43.748982747395836
+                  ],
+                  [
+                    1784983044,
+                    43.863932291666664
+                  ],
+                  [
+                    1784983059,
+                    44.9737548828125
+                  ]
+                ]
+              }
+            ]
+          },
+          "pod_restarts": {
+            "status": "available",
+            "unit": "restarts",
+            "required": false,
+            "reason": null,
+            "series": [
+              {
+                "labels": {},
+                "values": [
+                  [
+                    1784982999,
+                    0
+                  ],
+                  [
+                    1784983014,
+                    0
+                  ],
+                  [
+                    1784983029,
+                    0
+                  ],
+                  [
+                    1784983044,
+                    0
+                  ],
+                  [
+                    1784983059,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "failure_categories": [
+        "performance"
+      ]
+    }
+  },
+  "failures": [
+    {
+      "timestamp": "2026-07-25T12:29:59.507Z",
+      "category": "execution",
+      "message": "LoadtestError: k6 exited 100",
+      "service": "user-service"
+    },
+    {
+      "timestamp": "2026-07-25T12:32:49.382Z",
+      "category": "execution",
+      "message": "LoadtestError: k6 exited 100",
+      "service": "coupon-service"
+    },
+    {
+      "timestamp": "2026-07-25T12:33:07.627Z",
+      "category": "runtime_addressing",
+      "message": "LoadtestError: runtime address range existingInterests exhausted: required end 322, capacity unknown",
+      "service": "interest-service"
+    },
+    {
+      "timestamp": "2026-07-25T12:34:41.116Z",
+      "category": "execution",
+      "message": "LoadtestError: k6 exited 100",
+      "service": "order-service"
+    },
+    {
+      "timestamp": "2026-07-25T12:36:13.151Z",
+      "category": "execution",
+      "message": "LoadtestError: k6 exited 100",
+      "service": "payment-service"
+    },
+    {
+      "timestamp": "2026-07-25T12:37:51.730Z",
+      "category": "execution",
+      "message": "LoadtestError: k6 exited 100",
+      "service": "notification-service"
+    }
+  ],
+  "artifacts": {
+    "analysis": "analysis.md",
+    "evidence_archive": "evidence.tar.gz",
+    "evidence_status": "archived",
+    "evidence_sha256": "c996caa8fffb24a354bf68bc8de778d77cf0522c5f5161bb3dda2e566f47c394",
+    "evidence_bytes": 854929
+  },
+  "report": {
+    "generated_at": "2026-07-25T12:38:23.712Z",
+    "service_count": 8
+  }
+}
