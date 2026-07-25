@@ -1,0 +1,12 @@
+run_id,scenario,phase,signal,value,unit,verdict,source_artifact,redaction
+aws-purchase-20260724T014919Z-c4e07388,04,F,auth_intent_status,201,http_status,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,email_login_status,200,http_status,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,order_create_and_replay,201/201,http_status,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,payment_approve_and_replay,201/201,http_status,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,order_status,CONFIRMED,state,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,order_confirmed_notification_count,1,count,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,catalog_remaining_quantity,41_to_40,count,PASS,README.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,p95,UNMEASURED,ms,OBSERVABILITY_BLOCKED,assets/manifest.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,gateway_5xx,UNMEASURED,count,OBSERVABILITY_BLOCKED,assets/manifest.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,kafka_consumer_lag,UNMEASURED,count,OBSERVABILITY_BLOCKED,assets/manifest.md,redacted
+aws-purchase-20260724T014919Z-c4e07388,04,F,tempo_trace,UNMEASURED,trace,OBSERVABILITY_BLOCKED,assets/manifest.md,redacted

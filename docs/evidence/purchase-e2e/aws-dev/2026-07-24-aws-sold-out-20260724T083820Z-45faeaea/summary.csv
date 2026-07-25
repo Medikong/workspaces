@@ -1,0 +1,12 @@
+run_id,scenario,phase,signal,value,unit,verdict,source_artifact,redaction
+aws-sold-out-20260724T083820Z-45faeaea,06,F,barrier_workers,5,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,synthetic_users,2,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,starting_stock,42,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,order_201,4,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,expected_order_409,1,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,final_reserved,40,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,final_sold,0,count,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,F,retry_after_release,201,http_status,PASS,README.md,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,L1,order_p95,7.789597336128749,ms,PASS,raw/prometheus/scenario-06-window-20260724T084100Z.json,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,L1,payment_p95,23.499999999999996,ms,PASS,raw/prometheus/scenario-06-window-20260724T084100Z.json,redacted
+aws-sold-out-20260724T083820Z-45faeaea,06,L1,istio_5xx_increase,0,count,PASS,raw/prometheus/scenario-06-window-20260724T084100Z.json,redacted

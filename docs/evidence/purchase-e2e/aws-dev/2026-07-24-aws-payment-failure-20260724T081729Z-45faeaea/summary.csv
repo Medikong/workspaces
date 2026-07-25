@@ -1,0 +1,11 @@
+run_id,scenario,phase,signal,value,unit,verdict,source_artifact,redaction
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,failure_journey,1,count,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,http_contract_assertions,9/9,count,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,payment_status,FAILED,enum,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,order_status,PAYMENT_FAILED,enum,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,stock_before,41,count,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,stock_after,41,count,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,F,false_confirmation,0,count,PASS,README.md,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,L1,order_p95,24.399999999999995,ms,PASS,raw/prometheus/scenario-05-window-20260724T082000Z.json,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,L1,payment_p95,21.999999999999996,ms,PASS,raw/prometheus/scenario-05-window-20260724T082000Z.json,redacted
+aws-payment-failure-20260724T081729Z-45faeaea,05,L1,istio_5xx_increase,0,count,PASS,raw/prometheus/scenario-05-window-20260724T082000Z.json,redacted

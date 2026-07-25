@@ -1,0 +1,28 @@
+{
+  "window_end": "2026-07-24T08:02:00Z",
+  "window": "3m",
+  "scope": "destination reporter; target services only; background traffic may be present",
+  "traffic_query": "sum by (destination_service_name,response_code) (increase(istio_requests_total{reporter=\"destination\",destination_service_name=~\"auth-service|order-service|payment-service|notification-service|catalog-service\"}[3m]))",
+  "traffic_result": [
+    {"service": "auth-service", "response_code": "200", "increase": 2.4},
+    {"service": "auth-service", "response_code": "404", "increase": 29.999920001066652},
+    {"service": "order-service", "response_code": "200", "increase": 24},
+    {"service": "order-service", "response_code": "201", "increase": 0},
+    {"service": "order-service", "response_code": "503", "increase": 0},
+    {"service": "payment-service", "response_code": "200", "increase": 6},
+    {"service": "payment-service", "response_code": "201", "increase": 0},
+    {"service": "payment-service", "response_code": "409", "increase": 0},
+    {"service": "notification-service", "response_code": "200", "increase": 5.999880002399952},
+    {"service": "notification-service", "response_code": "503", "increase": 0},
+    {"service": "catalog-service", "response_code": "200", "increase": 6},
+    {"service": "catalog-service", "response_code": "503", "increase": 0}
+  ],
+  "p95_query": "histogram_quantile(0.95, sum by (le,destination_service_name) (increase(istio_request_duration_milliseconds_bucket{reporter=\"destination\",destination_service_name=~\"auth-service|order-service|payment-service|notification-service|catalog-service\"}[3m])))",
+  "p95_milliseconds": {
+    "auth-service": 4.20000666657777,
+    "order-service": 10,
+    "payment-service": 19.749999999999996,
+    "notification-service": 4.8,
+    "catalog-service": 20.499999999999996
+  }
+}

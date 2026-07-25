@@ -1,0 +1,11 @@
+{
+  "query_window": {
+    "start": "2026-07-24T07:58:45Z",
+    "end": "2026-07-24T08:01:30Z"
+  },
+  "query": "{namespace=~\"dropmong-(auth|order|payment|notification|catalog)\"} |= \"aws-purchase-persistent-20260724T075859Z-45faeaea\"",
+  "stream_count": 0,
+  "entry_count": 0,
+  "verdict": "OBSERVABILITY_BLOCKED",
+  "redaction": "No log bodies were stored."
+}

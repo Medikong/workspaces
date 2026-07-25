@@ -1,0 +1,32 @@
+{
+  "order_database": {
+    "fixture_order_count": 1,
+    "status": "CONFIRMED",
+    "amount": 50000,
+    "payment_link_present": true,
+    "created_at": "2026-07-24T07:58:59.810306Z",
+    "confirmed_at": "2026-07-24T07:59:02.953381Z"
+  },
+  "inventory": {
+    "total_quantity": 42,
+    "reserved_quantity": 0,
+    "sold_quantity": 1,
+    "version": 2
+  },
+  "payment_database": {
+    "recent_amount": 50000,
+    "approved_count": 1
+  },
+  "workloads": {
+    "order-service": {
+      "ready_pods": 2,
+      "restart_count_per_pod": 0
+    },
+    "payment-service": {
+      "ready_pods": 1,
+      "observed_restart_count": 1,
+      "note": "Pre/post baseline was not captured; do not attribute this restart to Scenario 04."
+    }
+  },
+  "redaction": "No user IDs, order IDs, payment IDs, credentials, JWTs, or emails were stored."
+}

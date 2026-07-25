@@ -1,0 +1,10 @@
+run_id,scenario,phase,signal,value,unit,verdict,source_artifact,redaction
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,F,functional_flow,confirmed_order_approved_payment_single_notification_stock_42_to_41,boolean,PASS,README.md,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,F,order_pod_ready,2/2,pods,PASS,raw/kubernetes/scenario-04-state-20260724T080000Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,F,order_pod_restarts,0,count,PASS,raw/kubernetes/scenario-04-state-20260724T080000Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,F,inventory_sold,1,count,PASS,raw/kubernetes/scenario-04-state-20260724T080000Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,L1,istio_5xx_increase,0,count,PASS,raw/prometheus/scenario-04-window-20260724T080200Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,L1,order_p95,10,ms,PASS,raw/prometheus/scenario-04-window-20260724T080200Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,L1,payment_p95,19.75,ms,PASS,raw/prometheus/scenario-04-window-20260724T080200Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,L1,loki_run_id_entries,0,count,OBSERVABILITY_BLOCKED,raw/loki/scenario-04-run-id-20260724T080130Z.json,redacted
+aws-purchase-persistent-20260724T075859Z-45faeaea,04,L1,tempo_trace_correlation,UNMEASURED,trace,OBSERVABILITY_BLOCKED,README.md,redacted
